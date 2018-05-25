@@ -1,0 +1,12 @@
+<!-- <app-navbar></app-navbar> -->
+<!-- <app-sidebar></app-sidebar> -->
+
+<mat-sidenav-container>	
+	<mat-sidenav #sidenav mode="side" [(opened)]="opened">
+		<app-sidebar></app-sidebar>
+	</mat-sidenav>
+
+	<mat-sidenav-content>
+		<app-navbar></app-navbar>
+	</mat-sidenav-content>
+</mat-sidenav-container>
