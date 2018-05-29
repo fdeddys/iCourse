@@ -2,11 +2,24 @@
 <!-- <app-sidebar></app-sidebar> -->
 
 <mat-sidenav-container>	
-	<mat-sidenav #sidenav mode="side" [(opened)]="opened">
-		<app-sidebar></app-sidebar>
+	<mat-sidenav #sidenav mode="side" [(opened)]="opened"  class="mat-elevation-z8">
+		<app-sidebar (menuNm)="onChangeMenu($event)"></app-sidebar>
 	</mat-sidenav>
 
 	<mat-sidenav-content>
-		<app-navbar></app-navbar>
+		<div style="height: 98vh;">
+			<app-navbar></app-navbar>
+			<div style="margin: 10px">
+				<router-outlet></router-outlet>
+			</div>
+			<!-- <mat-card class="main-container">
+				<mat-card-header>
+					<mat-card-title>{{ menuTitle }}</mat-card-title>
+				</mat-card-header>			
+				<mat-card-content>
+					<router-outlet></router-outlet>
+				</mat-card-content>				
+			</mat-card> -->			
+		</div>
 	</mat-sidenav-content>
 </mat-sidenav-container>

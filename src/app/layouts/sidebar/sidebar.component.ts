@@ -1,17 +1,26 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 
 @Component({
 	selector: 'app-sidebar',
 	templateUrl: './sidebar.component.html',
 	styleUrls: ['./sidebar.component.css']
 })
-export class SidebarComponent implements OnInit {
+export class SidebarComponent {
 
-	links: string[];
+	@Output() menuNm = new EventEmitter<string>();
+	links: object[] = [
+			{Name: 'Member', Link: 'member'}, 
+			{Name: 'Biller', Link: 'biller'},
+			{Name: 'Product', Link: 'product'}
+	];
 	constructor() { }
 
-	ngOnInit() {
-		this.links = ['menu 1', 'menu 2', 'menu 3'];
+	// ngOnInit() {		
+	// }
+
+	setMenuName(name: string) {
+		// console.log('Name : ',name);
+		this.menuNm.emit(name);
 	}
 
 }

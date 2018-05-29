@@ -1,0 +1,33 @@
+<!-- <button mat-raised-button color="primary" style="float: right; margin-bottom: 10px;">Create Product</button> -->
+<!-- <table mat-table [dataSource]="dataSource">
+	<ng-container matColumnDef="name">
+		<th mat-header-cell *matHeaderCellDef> Product Name </th>
+		<td mat-cell *matCellDef="let element"> {{element.name}} </td>
+	</ng-container>
+
+	<ng-container matColumnDef="sales_price">
+		<th mat-header-cell *matHeaderCellDef> Sales Price </th>
+		<td mat-cell *matCellDef="let element"> {{element.sales_price}} </td>
+	</ng-container>
+
+	<ng-container matColumnDef="denom">
+		<th mat-header-cell *matHeaderCellDef> Denom </th>
+		<td mat-cell *matCellDef="let element"> {{element.denom}} </td>
+	</ng-container>
+
+	<ng-container matColumnDef="status">
+		<th mat-header-cell *matHeaderCellDef> Status </th>
+		<td mat-cell *matCellDef="let element"> {{element.status}} </td>
+	</ng-container>
+
+	<tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+	<tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+</table> -->
+
+<button mat-raised-button color="primary" style="margin-bottom: 10px;">Create Product</button>
+<ag-grid-angular 
+    style="height: 400px;" 
+    class="ag-theme-balham"
+    [gridOptions]="gridOptions"
+    >
+</ag-grid-angular>

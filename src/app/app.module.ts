@@ -1,6 +1,7 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
+import { AgGridModule } from 'ag-grid-angular';
 
 import { CdkTableModule } from '@angular/cdk/table';
 import { CustomMaterialModule } from './material.module';
@@ -15,6 +16,9 @@ import { MainComponent } from './layouts/main/main.component';
 import { SidebarComponent } from './layouts/sidebar/sidebar.component';
 import { LoginComponent } from './shared/login/login.component';
 import { NavbarComponent } from './layouts/navbar/navbar.component';
+import { MemberComponent } from './entities/member/member.component';
+import { BillerComponent } from './entities/biller/biller.component';
+import { ProductComponent } from './entities/product/product.component';
 
 @NgModule({
 	declarations: [
@@ -22,14 +26,18 @@ import { NavbarComponent } from './layouts/navbar/navbar.component';
 		MainComponent,
 		SidebarComponent,
 		LoginComponent,
-		NavbarComponent
+		NavbarComponent,
+		MemberComponent,
+		BillerComponent,
+		ProductComponent
 	],
 	imports: [
 		BrowserModule,
 		FormsModule,
     	BrowserAnimationsModule,
     	CustomMaterialModule,
-    	AppRoutingModule
+    	AppRoutingModule,
+    	AgGridModule.withComponents([])
 	],
 	providers: [],
 	bootstrap: [AppComponent]
