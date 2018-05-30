@@ -1,0 +1,12 @@
+<button mat-raised-button color="primary" (click)="openNewDialog()" style="margin-bottom: 10px;">Create Product</button>
+<ag-grid-angular 
+#agGrid
+    style="height: 400px;" 
+    class="ag-theme-balham"
+    [gridOptions]="gridOptions" 
+    (gridReady)="onGridReady($event)"
+    (rowClicked)="onRowClicked($event)"
+    >
+</ag-grid-angular>
+
+<!-- [rowData]="billerCompanies"  -->
