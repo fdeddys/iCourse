@@ -1,3 +1,15 @@
-<p>
-	Dialog Product..
-</p>
+<!-- <p>
+	Product dialog..
+</p> -->
+<form class="example-form">
+	<mat-form-field class="example-full-width">
+		<input matInput placeholder="Product Name" name="name" [(ngModel)]="product.name">
+	</mat-form-field>
+	<mat-form-field class="example-full-width">
+		<mat-select placeholder="Biller Type" name="billerType" [(ngModel)]="product.id_biller_type">
+			<mat-option *ngFor="let billerType of billerTypeList" [value]="billerType.id">
+				{{ billerType.name }}
+			</mat-option>
+		</mat-select>
+	</mat-form-field>
+</form>

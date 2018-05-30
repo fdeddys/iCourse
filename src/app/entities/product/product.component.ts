@@ -1,4 +1,11 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Inject } from '@angular/core';
+import { HttpResponse, HttpErrorResponse } from '@angular/common/http';
+import { Product } from './product.model';
+import { ProductService } from './product.service';
+
+import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
+
+import { ProductDialogComponent } from './product-dialog.component';
 
 @Component({
 	selector: 'app-product',
@@ -10,6 +17,7 @@ export class ProductComponent implements OnInit {
 	// displayedColumns = ['name', 'denom', 'sales_price', 'status'];
 	// dataSource = ELEMENT_DATA;
 
+	products: Product[];
 	gridOptions = {
 		columnDefs: [
 	        // { headerName: 'Name', field: 'name', checkboxSelection: true, width: 250, pinned: 'left', editable: true },
@@ -28,10 +36,48 @@ export class ProductComponent implements OnInit {
     	paginationPageSize: 10
 	};
 
-	constructor() { }
+	constructor(
+		private dialog: MatDialog,
+		private productService: ProductService
+	) { }
+
+	loadAll() {
+        console.log('Start call function all header');
+        this.productService.query({
+            page: 10,
+            // size: this.itemsPerPage,
+            // sort: this.sort()
+        })
+        .subscribe(
+                (res: HttpResponse<Product[]>) => this.onSuccess(res.body, res.headers),
+                (res: HttpErrorResponse) => this.onError(res.message),
+                () => { console.log('finally'); }
+        );
+    }
 
 	ngOnInit() {
+		this.loadAll();
 	}
+
+	openNewDialog(): void {
+		let dialogRef = this.dialog.open(ProductDialogComponent, {
+			width: '1000px',
+			// data: { name: this.name, animal: this.animal }
+		});
+
+		dialogRef.afterClosed().subscribe(result => {
+			console.log('The dialog was closed');
+			// this.animal = result;
+		});
+	}
+
+	private onSuccess(data, headers) {
+        console.log('success..');
+    }
+
+    private onError(error) {
+		console.log('error..');
+    }
 
 }
 
@@ -62,3 +108,4 @@ const ELEMENT_DATA: ProductElement[] = [
 	{ id: 3, id_biller_type: 2, id_biller_company: 6, name: 'Product 3', denom: '50000', sales_price: 52500, status: 1, search_by: 1, search_by_biller_id: 1 },
 	// { id: null, id_biller_type: null, id_biller_company: null, name: null, denom: null, sales_price: null, status: null, search_by: null, search_by_biller_id: null }
 ]
+
