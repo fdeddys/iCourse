@@ -22,9 +22,9 @@ export class BillerCompanyComponent implements OnInit {
     columnDefs: [
       { headerName: 'id', field: 'id', width: 250, pinned: 'left', editable: false },
       { headerName: 'Name', field: 'name', width: 250, editable: false },
-      { headerName: 'Created at', field: 'createdAt', width: 250 },
-      { headerName: 'Update at', field: 'updatedAt', width: 250 },
-      { headerName: 'Created By', field: 'createdBy', width: 250 },
+      { headerName: 'Created at', field: 'createdAt | date:"medium"', width: 250, cellFilter: 'date:\`dd-MMM-yyyy\`' },
+      { headerName: 'Update at', field: 'updatedAt', width: 250, valueFormatter: this.currencyFormatter },
+      { headerName: 'Created By', field: 'createdBy' , width: 250 },
       { headerName: 'Updated By', field: 'updatedBy', width: 250 },
       { headerName: 'action', suppressMenu: true,
         suppressSorting: true,
@@ -46,11 +46,15 @@ export class BillerCompanyComponent implements OnInit {
       maxConcurrentDatasourceRequests : 2,
       infiniteInitialRowCount : 1,
       maxBlocksInCache : 2,
-      // getRowNodeId = function(item) {
-      //   return item.id;
-      // },
       onPaginationChanged: this.onPaginationChanged()
   };
+
+  currencyFormatter(params): string {
+    const dt  = new Date(params.value);
+    console.log('cur format ', dt.toISOString().slice(0, 10).replace(/-/g, '') );
+    console.log('cur format ', dt.toLocaleTimeString());
+    return 'dadada ' + params ;
+  }
 
   constructor(  private dialog: MatDialog,
                 private billerCompanyService: BillerCompanyService) { }
@@ -77,7 +81,10 @@ export class BillerCompanyComponent implements OnInit {
       });
 
       dialogRef.afterClosed().subscribe(result => {
-        console.log('The dialog was closed');
+        console.log('The dialog was closed = [', result, ']');
+        if (result === 'refresh') {
+          this.loadAll();
+        }
       });
   }
 
@@ -137,7 +144,10 @@ export class BillerCompanyComponent implements OnInit {
     });
 
     dialogRef.afterClosed().subscribe(result => {
-      console.log('The dialog was closed');
+      console.log('The dialog was closed = [', result, ']');
+      if (result === 'refresh') {
+        this.loadAll();
+      }
     });
   }
 

@@ -43,7 +43,12 @@ export class BillerCompanyDialogComponent implements OnInit {
         console.log('isi biller company ', this.billerCompany);
         if (this.billerCompany.id === undefined) {
             console.log('send to service ', this.billerCompany);
-            this.billerCompanyService.save(this.billerCompany).subscribe((res: HttpResponse<BillerCompany>) => {
+            this.billerCompanyService.create(this.billerCompany).subscribe((res: HttpResponse<BillerCompany>) => {
+                this.dialogRef.close('refresh');
+            });
+        } else {
+            console.log('send to service ', this.billerCompany);
+            this.billerCompanyService.update(this.billerCompany.id, this.billerCompany).subscribe((res: HttpResponse<BillerCompany>) => {
                 this.dialogRef.close('refresh');
             });
         }
