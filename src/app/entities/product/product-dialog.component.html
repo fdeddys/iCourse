@@ -12,4 +12,25 @@
 			</mat-option>
 		</mat-select>
 	</mat-form-field>
+	<!-- <mat-form-field class="example-full-width">
+		<input matInput placeholder="Biller Type" aria-label="Biller Type" [matAutocomplete]="auto" [formControl]="billTypeCtrl">
+		<mat-autocomplete #auto="matAutocomplete">
+		    <mat-option *ngFor="let billerType of filteredBillType | async" [value]="billerType.id">
+				<span>{{ billerType.name }}</span>
+		    </mat-option>
+		</mat-autocomplete>
+	</mat-form-field> -->
+	<mat-form-field class="example-full-width">
+		<mat-select placeholder="Biller Company" name="billerCompany" [(ngModel)]="product.id_biller_company">
+			<mat-option *ngFor="let billerCompany of billerCompanyList" [value]="billerCompany.id">
+				{{ billerCompany.name }}
+			</mat-option>
+		</mat-select>
+	</mat-form-field>
+	<mat-form-field class="example-full-width">
+		<input matInput placeholder="Denom" name="denom" [(ngModel)]="product.denom">
+	</mat-form-field>
+	<mat-form-field class="example-full-width">
+		<input type="number" matInput placeholder="Sales Price" name="salesPrice" [(ngModel)]="product.sales_price">
+	</mat-form-field>
 </form>

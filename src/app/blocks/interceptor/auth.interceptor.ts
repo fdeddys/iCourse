@@ -12,7 +12,9 @@ export class AuthInterceptor implements HttpInterceptor {
     }
 
     intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
-        if (!request || !request.url || (/^http/.test(request.url) && !('http://localhost:8080/' && request.url.startsWith('http://localhost:8080/')))) {
+        console.log(request);
+        if (!request || !request.url || (/^http/.test(request.url) &&
+        !('http://localhost:8080/' && request.url.startsWith('http://localhost:8080/')))) {
             return next.handle(request);
         }
 

@@ -18,29 +18,29 @@ import { SidebarComponent } from './layouts/sidebar/sidebar.component';
 import { LoginComponent } from './shared/login/login.component';
 import { NavbarComponent } from './layouts/navbar/navbar.component';
 
-import { HttpClientModule } from '@angular/common/http'; 
+import { HttpClientModule } from '@angular/common/http';
 import { EntityModule } from './entities/entity.module';
 
 @NgModule({
-	declarations: [
-		AppComponent,
-		MainComponent,
-		SidebarComponent,
-		LoginComponent,
-		NavbarComponent,
-	],
-	imports: [
-		BrowserModule,
-		FormsModule,
-    	BrowserAnimationsModule,
-    	CustomMaterialModule,
-    	AppRoutingModule,
-    	// AgGridModule.withComponents([]),
-    	HttpClientModule,
-    	EntityModule
-	],
-	providers: [
-		{
+    declarations: [
+        AppComponent,
+        MainComponent,
+        SidebarComponent,
+        LoginComponent,
+        NavbarComponent,
+    ],
+    imports: [
+        BrowserModule,
+        FormsModule,
+        BrowserAnimationsModule,
+        CustomMaterialModule,
+        AppRoutingModule,
+        // AgGridModule.withComponents([]),
+        HttpClientModule,
+        EntityModule
+    ],
+    providers: [
+        {
             provide: HTTP_INTERCEPTORS,
             useClass: AuthInterceptor,
             multi: true,
@@ -49,8 +49,8 @@ import { EntityModule } from './entities/entity.module';
                 SessionStorageService
             ]
         }
-	],
-	bootstrap: [AppComponent]
+    ],
+    bootstrap: [AppComponent]
 })
 
 export class AppModule { }

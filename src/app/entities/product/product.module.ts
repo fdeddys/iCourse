@@ -10,6 +10,8 @@ import {
     ProductDialogComponent
 } from './';
 
+import { LocalStorageService, SessionStorageService } from 'ngx-webstorage';
+
 @NgModule({
     imports: [
         FormsModule,
@@ -26,6 +28,8 @@ import {
     ],
     providers: [
         ProductService,
+        LocalStorageService,
+        SessionStorageService
     ],
     schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })

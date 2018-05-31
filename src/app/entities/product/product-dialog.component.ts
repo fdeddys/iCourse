@@ -1,50 +1,69 @@
 import { Component, OnInit, Inject } from '@angular/core';
-import { Product } from './product.model'; 
+import { Product } from './product.model';
 
-import { FormsModule } from '@angular/forms';
+import { Observable } from 'rxjs';
+import { map, startWith } from 'rxjs/operators';
+
+import { FormControl } from '@angular/forms';
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
 
 @Component({
-	selector: 'app-product-dialog',
-	templateUrl: './product-dialog.component.html',
-	styleUrls: ['./product-dialog.component.css']
+    selector: 'app-product-dialog',
+    templateUrl: './product-dialog.component.html',
+    styleUrls: ['./product-dialog.component.css']
 })
 export class ProductDialogComponent implements OnInit {
 
-	product: Product;
-	billerTypeList = [];
+    billTypeCtrl: FormControl;
+    filteredBillType: Observable<any[]>;
 
-	constructor(
-		public dialogRef: MatDialogRef<ProductDialogComponent>,
-		@Inject(MAT_DIALOG_DATA) public data: any
-	) { }
+    product: Product;
+    billerTypeList = [];
 
-	ngOnInit() {
-		this.product = {};
-		this.billerTypeList = BILLER_TYPE;
-	}
+    constructor(
+        public dialogRef: MatDialogRef<ProductDialogComponent>,
+        @Inject(MAT_DIALOG_DATA) public data: any
+    ) {
+        this.billTypeCtrl = new FormControl();
+        this.filteredBillType = this.billTypeCtrl.valueChanges
+        .pipe(
+            startWith(''),
+            map(billerType => billerType ? this.filterBillType(billerType) : this.billerTypeList.slice())
+        );
+    }
 
-	onNoClick(): void {
-		this.dialogRef.close();
-	}
+    filterBillType(name: string) {
+        return this.billerTypeList.filter(billerType =>
+        billerType.name.toLowerCase().indexOf(name.toLowerCase()) === 0);
+    }
+
+    ngOnInit() {
+        this.product = {};
+        this.billerTypeList = BILLER_TYPE;
+    }
+
+    onNoClick(): void {
+        this.dialogRef.close();
+    }
 }
 
-// id: Number;
-// id_biller_type: Number;
-// id_biller_company: Number;
-// name: string;
-// denom: string;
-// sales_price: Number;
-// status: Number;
-// search_by: Number;
-// search_by_biller_id: Number;
+// billerCompany : {id: 1, name: "Telkomsel"}
+// billerType : {id: 1, ispostpaid: false, name: "Pulsa Handphone"}
+// denom : "5000"
+// id : 1
+// name : "Pulsa HP"
+// productCode : "PLSTSEL5"
+// searchBy : 1
+// searchByMemberId : 10
+// sellPrice : 8000
+// status : "ACTIVE"
 
 export interface BillerType {
-	id: Number;
-	name: string;
+    id: Number;
+    name: string;
 }
 
 const BILLER_TYPE: BillerType[] = [
-	{id:1, name:'Tipe 1'},
-	{id:2, name:'Tipe 2'}
-]
+    {id: 1, name: 'Tipe 1'},
+    {id: 2, name: 'Tipe 2'}
+];
