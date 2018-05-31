@@ -29,12 +29,12 @@ export class BillerCompanyComponent implements OnInit {
       { headerName: 'action', suppressMenu: true,
         suppressSorting: true,
         template:
-          `<button mat-raised-button type="button" data-action-type="view" >
-            View
+          `<button mat-raised-button type="button" data-action-type="edit" >
+            Edit
           </button>
 
-          <button type="button" data-action-type="remove" class="btn btn-default">
-            Edit
+          <button type="button" data-action-type="inactive" class="btn btn-default">
+            Inactive
           </button>` }
     ],
       rowData: this.billerCompanies,
@@ -61,16 +61,24 @@ export class BillerCompanyComponent implements OnInit {
         const actionType = e.event.target.getAttribute('data-action-type');
 
         switch (actionType) {
-            case 'view':
-                return this.onActionViewClick(data);
-            case 'remove':
+            case 'edit':
+                return this.onActionEditClick(data);
+            case 'inactive':
                 return this.onActionRemoveClick(data);
         }
     }
   }
 
-  public onActionViewClick(data: any) {
+  public onActionEditClick(data: any) {
       console.log('View action clicked', data);
+      const dialogRef = this.dialog.open(BillerCompanyDialogComponent, {
+        width: '1000px',
+        data: { action: 'EDIT', entity: 'Biller Company', billerCompany: data }
+      });
+
+      dialogRef.afterClosed().subscribe(result => {
+        console.log('The dialog was closed');
+      });
   }
 
   public onActionRemoveClick(data: any) {
@@ -125,6 +133,7 @@ export class BillerCompanyComponent implements OnInit {
   openNewDialog(): void {
     const dialogRef = this.dialog.open(BillerCompanyDialogComponent, {
       width: '1000px',
+      data: { action: 'Add', entity: 'Biller Company' }
     });
 
     dialogRef.afterClosed().subscribe(result => {

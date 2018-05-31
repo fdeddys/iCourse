@@ -19,11 +19,19 @@ export class BillerCompanyService {
             .pipe(map((res: EntityResponseType) => this.convertResponse(res)));
     }
 
+    save(billerCompany: BillerCompany): Observable<EntityResponseType> {
+        const copy = this.convert(billerCompany);
+        console.log('mapp to ' , this.resourceUrl, billerCompany);
+        return this.http.post<BillerCompany>(this.resourceUrl, billerCompany, { observe: 'response'})
+            .pipe(map((res: EntityResponseType) => this.convertResponse(res)));
+    }
+
     query(req?: any): Observable<HttpResponse<BillerCompany[]>> {
         console.log('isi reg  ', req);
         const options = createRequestOption(req);
         let pageNumber = null;
         let pageCount = null;
+        let newresourceUrl = null;
         Object.keys(req).forEach((key) => {
             if (key === 'page') {
                 pageNumber = req[key];
@@ -34,14 +42,22 @@ export class BillerCompanyService {
 
         });
         if (pageNumber !== null ) {
-            this.resourceUrl = this.resourceUrl + `/page/${pageNumber}/count/${pageCount}`;
-        }
-        return this.http.get<BillerCompany[]>(this.resourceUrl, {  observe: 'response' })
+            newresourceUrl = this.resourceUrl + `/page/${pageNumber}/count/${pageCount}`;
+            return this.http.get<BillerCompany[]>(newresourceUrl, {  observe: 'response' })
+                .pipe(
+                    // map((res: HttpResponse<BillerCompany[]>) => this.convertArrayResponse(res))
+                    tap(billerCompanies => console.log('raw ', billerCompanies ) )
+                        // console.log('observable ', billerCompanies)
+                    );
+        } else {
+            return this.http.get<BillerCompany[]>(`${this.resourceUrl}`, {  observe: 'response' })
             .pipe(
                 // map((res: HttpResponse<BillerCompany[]>) => this.convertArrayResponse(res))
                 tap(billerCompanies => console.log('raw ', billerCompanies ) )
                     // console.log('observable ', billerCompanies)
                 );
+        }
+
     }
 
     private convertResponse(res: EntityResponseType): EntityResponseType {
@@ -62,7 +78,7 @@ export class BillerCompanyService {
      * Convert a returned JSON object to BillerCompany.
      */
     private convertItemFromServer(billerCompany: BillerCompany): BillerCompany {
-        const copyOb: BillerCompany = Object.assign({}, BillerCompany);
+        const copyOb: BillerCompany = Object.assign({}, billerCompany);
         return copyOb;
     }
 
@@ -70,7 +86,7 @@ export class BillerCompanyService {
      * Convert a BillerCompany to a JSON which can be sent to the server.
      */
     private convert( billerCompany: BillerCompany): BillerCompany {
-        const copy: BillerCompany = Object.assign({}, BillerCompany);
+        const copy: BillerCompany = Object.assign({}, billerCompany);
         return copy;
     }
 }
