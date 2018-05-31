@@ -12,7 +12,8 @@ export class SidebarComponent {
     {Name: 'Member', Link: 'member'},
     {Name: 'Biller', Link: 'biller'},
     {Name: 'Product', Link: 'product'},
-    {Name: 'Biller Company', Link: 'biller-company'}
+    {Name: 'Biller Company', Link: 'biller-company'},
+    {Name: 'Biller Type', Link: 'biller-type'},
   ];
 
   constructor() { }

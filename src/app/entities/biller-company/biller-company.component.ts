@@ -4,6 +4,7 @@ import { MatDialog } from '@angular/material';
 import { HttpResponse, HttpErrorResponse } from '@angular/common/http';
 import { BillerCompanyService } from './biller-company.service';
 import { BillerCompanyDialogComponent } from './biller-company-dialog.component';
+import { BillerCompanyConfirmComponent } from './biller-company-confirm.component';
 
 @Component({
   selector: 'app-biller-company',
@@ -22,19 +23,15 @@ export class BillerCompanyComponent implements OnInit {
     columnDefs: [
       { headerName: 'id', field: 'id', width: 250, pinned: 'left', editable: false },
       { headerName: 'Name', field: 'name', width: 250, editable: false },
-      { headerName: 'Created at', field: 'createdAt | date:"medium"', width: 250, cellFilter: 'date:\`dd-MMM-yyyy\`' },
+      { headerName: 'Created at', field: 'createdAt', width: 250, valueFormatter: this.currencyFormatter },
       { headerName: 'Update at', field: 'updatedAt', width: 250, valueFormatter: this.currencyFormatter },
-      { headerName: 'Created By', field: 'createdBy' , width: 250 },
+      { headerName: 'Created By', field: 'createdBy', width: 250 },
       { headerName: 'Updated By', field: 'updatedBy', width: 250 },
       { headerName: 'action', suppressMenu: true,
         suppressSorting: true,
         template:
           `<button mat-raised-button type="button" data-action-type="edit" >
             Edit
-          </button>
-
-          <button type="button" data-action-type="inactive" class="btn btn-default">
-            Inactive
           </button>` }
     ],
       rowData: this.billerCompanies,
@@ -49,11 +46,16 @@ export class BillerCompanyComponent implements OnInit {
       onPaginationChanged: this.onPaginationChanged()
   };
 
+  // <button type="button" data-action-type="inactive" class="btn btn-default">
+  //           Inactive
+  //         </button>
+
   currencyFormatter(params): string {
     const dt  = new Date(params.value);
-    console.log('cur format ', dt.toISOString().slice(0, 10).replace(/-/g, '') );
-    console.log('cur format ', dt.toLocaleTimeString());
-    return 'dadada ' + params ;
+    // console.log('cur format ', dt.toISOString().slice(0, 10) , ' ', dt.toISOString().slice(0, 10).replace(/-/g, ''));
+    // console.log('cur format ', dt.toLocaleString('id', { timeZone: 'UTC' }));
+    // return dt.toLocaleString('id', { timeZone: 'UTC' });
+    return dt.toLocaleString(['id']);
   }
 
   constructor(  private dialog: MatDialog,
@@ -88,9 +90,30 @@ export class BillerCompanyComponent implements OnInit {
       });
   }
 
-  public onActionRemoveClick(data: any) {
+  public onActionRemoveClick(data: BillerCompany) {
       console.log('Remove action clicked', data);
-  }
+      const biller: string = data.name;
+      const dialogConfirm = this.dialog.open(BillerCompanyConfirmComponent, {
+        width: '50%',
+        data: { warningMessage: 'Apakah anda yakin untuk menonaktifkan [  ' + `${biller}` + '  ]  ?',  idCompanyBiller: data.id }
+      });
+
+      dialogConfirm.afterClosed().subscribe(result => {
+        console.log('The dialog was closed');
+      });
+
+    }
+
+  // openConfirm(): void {
+  //   const dialogConfirm = this.dialog.open(BillerCompanyConfirmComponent, {
+  //     width: '250px',
+  //     data: { name: 'confirm inactive' }
+  //   });
+
+  //   dialogConfirm.afterClosed().subscribe(result => {
+  //     console.log('The dialog was closed');
+  //   });
+  // }
 
 
   loadAll() {

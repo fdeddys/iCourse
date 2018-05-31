@@ -5,10 +5,10 @@ import { AgGridModule } from 'ag-grid-angular';
 import { CustomMaterialModule } from './../../material.module';
 
 import {
-    BillerCompanyService,
-    BillerCompanyComponent,
-    BillerCompanyDialogComponent,
-    BillerCompanyConfirmComponent,
+    BillerTypeService,
+    BillerTypeComponent,
+    BillerTypeDialogComponent,
+    BillerTypeConfirmComponent,
 } from './';
 
 @NgModule({
@@ -18,18 +18,18 @@ import {
         CustomMaterialModule
     ],
     declarations: [
-        BillerCompanyComponent,
-        BillerCompanyDialogComponent,
-        BillerCompanyConfirmComponent
+        BillerTypeComponent,
+        BillerTypeDialogComponent,
+        BillerTypeConfirmComponent
     ],
     entryComponents: [
-        BillerCompanyComponent,
-        BillerCompanyDialogComponent,
-        BillerCompanyConfirmComponent
+        BillerTypeComponent,
+        BillerTypeDialogComponent,
+        BillerTypeConfirmComponent
     ],
     providers: [
-        BillerCompanyService,
+        BillerTypeService,
     ],
     schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })
-export class BillerCompanyModule {}
+export class BillerTypeModule {}

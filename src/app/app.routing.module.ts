@@ -7,6 +7,7 @@ import { MemberComponent } from './entities/member/member.component';
 import { BillerComponent } from './entities/biller/biller.component';
 import { ProductComponent } from './entities/product/product.component';
 import { BillerCompanyComponent } from './entities/biller-company/biller-company.component';
+import { BillerTypeComponent } from './entities/biller-type';
 
 const routes: Routes = [
     { path : '', component : LoginComponent },
@@ -18,7 +19,8 @@ const routes: Routes = [
             {path: 'member', component: MemberComponent},
             {path: 'biller', component: BillerComponent},
             {path: 'product', component: ProductComponent},
-            {path: 'biller-company', component: BillerCompanyComponent}
+            {path: 'biller-company', component: BillerCompanyComponent},
+            {path: 'biller-type', component: BillerTypeComponent},
         ]
     },
     // {path: 'member', component: MemberComponent}
