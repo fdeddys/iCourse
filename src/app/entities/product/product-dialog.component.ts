@@ -1,5 +1,9 @@
 import { Component, OnInit, Inject } from '@angular/core';
+import { HttpResponse, HttpErrorResponse } from '@angular/common/http';
 import { Product } from './product.model';
+
+// added
+import { BillerCompany, BillerCompanyService } from '../biller-company';
 
 import { Observable } from 'rxjs';
 import { map, startWith } from 'rxjs/operators';
@@ -19,8 +23,10 @@ export class ProductDialogComponent implements OnInit {
 
     product: Product;
     billerTypeList = [];
+    billerCompanyList = [];
 
     constructor(
+        private billerCompanyService: BillerCompanyService,
         public dialogRef: MatDialogRef<ProductDialogComponent>,
         @Inject(MAT_DIALOG_DATA) public data: any
     ) {
@@ -39,7 +45,23 @@ export class ProductDialogComponent implements OnInit {
 
     ngOnInit() {
         this.product = {};
-        this.billerTypeList = BILLER_TYPE;
+        this.billerCompanyService.query({})
+        .subscribe(
+                (res: HttpResponse<BillerCompany[]>) => this.onSuccess(res.body, res.headers),
+                (res: HttpErrorResponse) => this.onError(res.message),
+                () => { console.log('finally'); }
+        );
+        // this.billerTypeList = BILLER_TYPE;
+    }
+
+    private onSuccess(data, headers) {
+        console.log('success biller company..', data);
+        // this.products = data.content;
+        // this.gridApi.setRowData(this.products);
+    }
+
+    private onError(error) {
+        console.log('error..');
     }
 
     onNoClick(): void {

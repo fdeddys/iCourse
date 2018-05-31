@@ -62,7 +62,7 @@ export class BillerCompanyService {
      * Convert a returned JSON object to BillerCompany.
      */
     private convertItemFromServer(billerCompany: BillerCompany): BillerCompany {
-        const copyOb: BillerCompany = Object.assign({}, BillerCompany);
+        const copyOb: BillerCompany = Object.assign({}, billerCompany);
         return copyOb;
     }
 
@@ -70,7 +70,7 @@ export class BillerCompanyService {
      * Convert a BillerCompany to a JSON which can be sent to the server.
      */
     private convert( billerCompany: BillerCompany): BillerCompany {
-        const copy: BillerCompany = Object.assign({}, BillerCompany);
+        const copy: BillerCompany = Object.assign({}, billerCompany);
         return copy;
     }
 }

@@ -24,12 +24,13 @@
 	<tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
 </table> -->
 
-<button mat-raised-button color="primary" (click)="openNewDialog()" style="margin-bottom: 10px;">Create Product</button>
+<button mat-raised-button color="primary" (click)="openDialog('create')" style="margin-bottom: 10px;">Create Product</button>
 <ag-grid-angular 
     style="height: 400px;" 
-    class="ag-theme-balham"
+    class="ag-theme-material"
     [gridOptions]="gridOptions"
     (gridReady)="onGridReady($event)"
+    (rowClicked)="onRowClicked($event)"
     >
 </ag-grid-angular>
 <!-- <div>
