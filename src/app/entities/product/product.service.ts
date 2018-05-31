@@ -25,6 +25,7 @@ export class ProductService {
         const options = createRequestOption(req);
         let pageNumber = null;
         let pageCount = null;
+        let newresourceUrl = null;
         Object.keys(req).forEach((key) => {
             if (key === 'page') {
                 pageNumber = req[key];
@@ -33,14 +34,19 @@ export class ProductService {
                 pageCount = req[key];
             }
         });
+
         if (pageNumber !== null ) {
-            this.resourceUrl = this.resourceUrl + `/page/${pageNumber}/count/${pageCount}`;
-        }
-        return this.http.get<Product[]>(this.resourceUrl, { params: options, observe: 'response' })
-            // .pipe(map((res: HttpResponse<Product[]>) => this.convertArrayResponse(res)));
+            newresourceUrl = this.resourceUrl + `/page/${pageNumber}/count/${pageCount}`;
+            return this.http.get<Product[]>(newresourceUrl, { observe: 'response' })
             .pipe(
-                tap(res => this.convertArrayResponse(res))
+                tap(billerCompanies => console.log('raw ', billerCompanies ))
             );
+        } else {
+            return this.http.get<Product[]>(`${this.resourceUrl}`, {  observe: 'response' })
+            .pipe(
+                tap(billerCompanies => console.log('raw ', billerCompanies ))
+            );
+        }
     }
 
     private convertResponse(res: EntityResponseType): EntityResponseType {
