@@ -2,11 +2,19 @@
 <mat-dialog-content>
     <form class="container-form">
         <mat-form-field class="container-full-width">
-            <input matInput placeholder="Id" value="{{billerCompany.id}}" [disabled]="true" >
+            <input matInput placeholder="Id" value="{{billerType.id}}" [disabled]="true" >
         </mat-form-field>
         <mat-form-field class="container-full-width">
-            <input matInput placeholder="Name " [(ngModel)]="billerCompany.name" cdkFocusInitial name ="namee">
+            <input matInput placeholder="Name " [(ngModel)]="billerType.name" cdkFocusInitial name ="namee" >
         </mat-form-field>
+        <mat-slide-toggle
+          class="example-margin"
+          [checked]="ispostpaid"
+          [color]="primary">
+            IsPostPaid
+      </mat-slide-toggle>
+      <br><br>
+
     </form>
     
 </mat-dialog-content>

@@ -22,14 +22,14 @@ export class BillerCompanyService {
     create(billerCompany: BillerCompany): Observable<EntityResponseType> {
         const copy = this.convert(billerCompany);
         // console.log('mapp to ' , this.resourceUrl, billerCompany);
-        return this.http.post<BillerCompany>(`${this.resourceUrl}`, billerCompany, { observe: 'response'})
+        return this.http.post<BillerCompany>(`${this.resourceUrl}`, copy, { observe: 'response'})
             .pipe(map((res: EntityResponseType) => this.convertResponse(res)));
     }
 
     update(id: number, billerCompany: BillerCompany): Observable<EntityResponseType> {
         const copy = this.convert(billerCompany);
         console.log('mapp to ' , `${this.resourceUrl}/${id}`, billerCompany);
-        return this.http.put<BillerCompany>(`${this.resourceUrl}/${id}`, billerCompany, { observe: 'response'})
+        return this.http.put<BillerCompany>(`${this.resourceUrl}/${id}`, copy, { observe: 'response'})
             .pipe(map((res: EntityResponseType) => this.convertResponse(res)));
     }
 

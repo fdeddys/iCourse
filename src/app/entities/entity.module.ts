@@ -4,6 +4,7 @@ import { BillerModule } from './biller/biller.module';
 import { MemberModule } from './member/member.module';
 import { ProductModule } from './product/product.module';
 import { BillerCompanyModule } from './biller-company/biller-company.module';
+import { BillerTypeModule } from './biller-type/biller-type.module';
 
 /* jhipster-needle-add-entity-module-import - JHipster will add entity modules imports here */
 
@@ -13,6 +14,7 @@ import { BillerCompanyModule } from './biller-company/biller-company.module';
         MemberModule,
         ProductModule,
         BillerCompanyModule,
+        BillerTypeModule,
     ],
     entryComponents: [],
     providers: [],
