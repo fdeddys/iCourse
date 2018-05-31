@@ -1,29 +1,30 @@
-<h1 mat-dialog-title>{{ data.mode }} Biller Product</h1>
+<h1 mat-dialog-title>{{ modeTitle }} Biller Product</h1>
 <div mat-dialog-content>
     <form class="form-container">
 		<mat-form-field class="form-full-width">
-			<input matInput placeholder="Product Name" name="name" [(ngModel)]="data.name">
+			<input matInput placeholder="Product Name" name="name" [(ngModel)]="rowData.name">
 		</mat-form-field>
 		<mat-form-field class="form-full-width">
 			<input matInput placeholder="Biller Type" aria-label="Biller Type" [matAutocomplete]="auto" [formControl]="billTypeCtrl">
 			<mat-autocomplete #auto="matAutocomplete">
-				<mat-option *ngFor="let billerType of filteredBillType | async" [value]="billerType.id">
+				<mat-option *ngFor="let billerType of filteredBillType | async" [value]="billerType.name">
 					<span>{{ billerType.name }}</span>
 				</mat-option>
 			</mat-autocomplete>
 		</mat-form-field>
 		<mat-form-field class="form-full-width">
-			<mat-select placeholder="Biller Company" name="billerCompany" [(ngModel)]="data.id_biller_company">
-				<mat-option *ngFor="let billerCompany of billerCompanyList" [value]="billerCompany.id">
-					{{ billerCompany.name }}
+			<input matInput placeholder="Biller Company" aria-label="Biller Company" [matAutocomplete]="autoComp" [formControl]="billCompanyCtrl">
+			<mat-autocomplete #autoComp="matAutocomplete">
+				<mat-option *ngFor="let billerCompany of filteredBillCompany | async" [value]="billerCompany.name">
+					<span>{{ billerCompany.name }}</span>
 				</mat-option>
-			</mat-select>
+			</mat-autocomplete>
 		</mat-form-field>
 		<mat-form-field class="form-full-width">
-			<input matInput placeholder="Denom" name="denom" [(ngModel)]="data.denom">
+			<input matInput placeholder="Denom" name="denom" [(ngModel)]="rowData.denom">
 		</mat-form-field>
 		<mat-form-field class="form-full-width">
-			<input type="number" matInput placeholder="Sell Price" name="sellPrice" [(ngModel)]="data.sellPrice">
+			<input type="number" matInput placeholder="Sell Price" name="sellPrice" [(ngModel)]="rowData.sellPrice">
 		</mat-form-field>
 	</form>
 </div>

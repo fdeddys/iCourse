@@ -3,6 +3,8 @@ import { HttpResponse, HttpErrorResponse } from '@angular/common/http';
 import { Product } from './product.model';
 import { ProductService } from './product.service';
 
+import { BillerCompany, BillerCompanyService } from '../biller-company';
+
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
 
 import { ProductDialogComponent } from './product-dialog.component';
@@ -21,6 +23,9 @@ export class ProductComponent implements OnInit {
     private gridColumnApi;
     products: Product[];
     product: Product;
+    billerTypeList = [];
+    billerCompanyList = [];
+
     gridOptions = {
         columnDefs: [
             // { headerName: 'Name', field: 'name', checkboxSelection: true, width: 250, pinned: 'left', editable: true },
@@ -53,6 +58,7 @@ export class ProductComponent implements OnInit {
 
     constructor(
         private dialog: MatDialog,
+        private billerCompanyService: BillerCompanyService,
         private productService: ProductService
     ) { }
 
@@ -81,6 +87,16 @@ export class ProductComponent implements OnInit {
     ngOnInit() {
         // this.loadAll();
         // this.load(1);
+
+        this.billerCompanyService.query({})
+        .subscribe(
+                // (res: HttpResponse<BillerCompany[]>) => this.onSuccess(res.body, res.headers),
+                (res: HttpResponse<BillerCompany[]>) => {
+                    this.billerCompanyList = res.body;
+                },
+                (res: HttpErrorResponse) => this.onError(res.message),
+                () => { console.log('finally'); }
+        );
     }
 
     onGridReady(params) {
@@ -100,32 +116,39 @@ export class ProductComponent implements OnInit {
 
             switch (actionType) {
                 case 'view':
-                    data.mode = 'view';
-                    console.log('Data row : ', data);
+                    // console.log('Data row : ', data);
                     return this.openDialog('view', data);
                 case 'edit':
-                    data.mode = 'edit';
-                    console.log('Data row : ', data);
+                    // console.log('Data row : ', data);
                     return this.openDialog('edit', data);
             }
         }
     }
 
     openDialog(mode, data): void {
-        const newData = {
-            mode : 'create',
-            denom : null,
-            id : null,
-            name : null,
-            productCode : null,
-            searchBy : null,
-            searchByMemberId : null,
-            sellPrice : null,
-            status : null
+        const datasend = {
+            mode : 'Create',
+            billerCompanyData : this.billerCompanyList,
+            rowData : {
+                billerCompany : {id: null, name: null},
+                billerType : {id: null, ispostpaid: null, name: null},
+                denom : null,
+                id : null,
+                name : null,
+                productCode : null,
+                searchBy : null,
+                searchByMemberId : null,
+                sellPrice : null,
+                status : null
+            },
         };
+        if (mode !== 'create') {
+            datasend.mode = (mode === 'view' ? 'View' : 'Edit');
+            datasend.rowData = data;
+        }
         const dialogRef = this.dialog.open(ProductDialogComponent, {
             width: '1000px',
-            data: (mode === 'create' ? newData : data)
+            data: datasend
         });
 
         dialogRef.afterClosed().subscribe(result => {
