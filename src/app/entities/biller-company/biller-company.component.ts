@@ -22,19 +22,19 @@ export class BillerCompanyComponent implements OnInit {
     columnDefs: [
       { headerName: 'id', field: 'id', width: 250, pinned: 'left', editable: false },
       { headerName: 'Name', field: 'name', width: 250, editable: false },
-      { headerName: 'Created at', field: 'createdAt', width: 250 },
-      { headerName: 'Update at', field: 'updatedAt', width: 250 },
-      { headerName: 'Created By', field: 'createdBy', width: 250 },
+      { headerName: 'Created at', field: 'createdAt | date:"medium"', width: 250, cellFilter: 'date:\`dd-MMM-yyyy\`' },
+      { headerName: 'Update at', field: 'updatedAt', width: 250, valueFormatter: this.currencyFormatter },
+      { headerName: 'Created By', field: 'createdBy' , width: 250 },
       { headerName: 'Updated By', field: 'updatedBy', width: 250 },
       { headerName: 'action', suppressMenu: true,
         suppressSorting: true,
         template:
-          `<button mat-raised-button type="button" data-action-type="view" >
-            View
+          `<button mat-raised-button type="button" data-action-type="edit" >
+            Edit
           </button>
 
-          <button type="button" data-action-type="remove" class="btn btn-default">
-            Edit
+          <button type="button" data-action-type="inactive" class="btn btn-default">
+            Inactive
           </button>` }
     ],
       rowData: this.billerCompanies,
@@ -46,11 +46,15 @@ export class BillerCompanyComponent implements OnInit {
       maxConcurrentDatasourceRequests : 2,
       infiniteInitialRowCount : 1,
       maxBlocksInCache : 2,
-      // getRowNodeId = function(item) {
-      //   return item.id;
-      // },
       onPaginationChanged: this.onPaginationChanged()
   };
+
+  currencyFormatter(params): string {
+    const dt  = new Date(params.value);
+    console.log('cur format ', dt.toISOString().slice(0, 10).replace(/-/g, '') );
+    console.log('cur format ', dt.toLocaleTimeString());
+    return 'dadada ' + params ;
+  }
 
   constructor(  private dialog: MatDialog,
                 private billerCompanyService: BillerCompanyService) { }
@@ -61,16 +65,27 @@ export class BillerCompanyComponent implements OnInit {
         const actionType = e.event.target.getAttribute('data-action-type');
 
         switch (actionType) {
-            case 'view':
-                return this.onActionViewClick(data);
-            case 'remove':
+            case 'edit':
+                return this.onActionEditClick(data);
+            case 'inactive':
                 return this.onActionRemoveClick(data);
         }
     }
   }
 
-  public onActionViewClick(data: any) {
+  public onActionEditClick(data: any) {
       console.log('View action clicked', data);
+      const dialogRef = this.dialog.open(BillerCompanyDialogComponent, {
+        width: '1000px',
+        data: { action: 'EDIT', entity: 'Biller Company', billerCompany: data }
+      });
+
+      dialogRef.afterClosed().subscribe(result => {
+        console.log('The dialog was closed = [', result, ']');
+        if (result === 'refresh') {
+          this.loadAll();
+        }
+      });
   }
 
   public onActionRemoveClick(data: any) {
@@ -125,10 +140,14 @@ export class BillerCompanyComponent implements OnInit {
   openNewDialog(): void {
     const dialogRef = this.dialog.open(BillerCompanyDialogComponent, {
       width: '1000px',
+      data: { action: 'Add', entity: 'Biller Company' }
     });
 
     dialogRef.afterClosed().subscribe(result => {
-      console.log('The dialog was closed');
+      console.log('The dialog was closed = [', result, ']');
+      if (result === 'refresh') {
+        this.loadAll();
+      }
     });
   }
 

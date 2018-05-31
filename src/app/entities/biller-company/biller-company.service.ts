@@ -19,11 +19,26 @@ export class BillerCompanyService {
             .pipe(map((res: EntityResponseType) => this.convertResponse(res)));
     }
 
+    create(billerCompany: BillerCompany): Observable<EntityResponseType> {
+        const copy = this.convert(billerCompany);
+        // console.log('mapp to ' , this.resourceUrl, billerCompany);
+        return this.http.post<BillerCompany>(`${this.resourceUrl}`, billerCompany, { observe: 'response'})
+            .pipe(map((res: EntityResponseType) => this.convertResponse(res)));
+    }
+
+    update(id: number, billerCompany: BillerCompany): Observable<EntityResponseType> {
+        const copy = this.convert(billerCompany);
+        console.log('mapp to ' , `${this.resourceUrl}/${id}`, billerCompany);
+        return this.http.put<BillerCompany>(`${this.resourceUrl}/${id}`, billerCompany, { observe: 'response'})
+            .pipe(map((res: EntityResponseType) => this.convertResponse(res)));
+    }
+
     query(req?: any): Observable<HttpResponse<BillerCompany[]>> {
         console.log('isi reg  ', req);
         const options = createRequestOption(req);
         let pageNumber = null;
         let pageCount = null;
+        let newresourceUrl = null;
         Object.keys(req).forEach((key) => {
             if (key === 'page') {
                 pageNumber = req[key];
@@ -34,14 +49,22 @@ export class BillerCompanyService {
 
         });
         if (pageNumber !== null ) {
-            this.resourceUrl = this.resourceUrl + `/page/${pageNumber}/count/${pageCount}`;
-        }
-        return this.http.get<BillerCompany[]>(this.resourceUrl, {  observe: 'response' })
+            newresourceUrl = this.resourceUrl + `/page/${pageNumber}/count/${pageCount}`;
+            return this.http.get<BillerCompany[]>(newresourceUrl, {  observe: 'response' })
+                .pipe(
+                    // map((res: HttpResponse<BillerCompany[]>) => this.convertArrayResponse(res))
+                    tap(billerCompanies => console.log('raw ', billerCompanies ) )
+                        // console.log('observable ', billerCompanies)
+                    );
+        } else {
+            return this.http.get<BillerCompany[]>(`${this.resourceUrl}`, {  observe: 'response' })
             .pipe(
                 // map((res: HttpResponse<BillerCompany[]>) => this.convertArrayResponse(res))
                 tap(billerCompanies => console.log('raw ', billerCompanies ) )
                     // console.log('observable ', billerCompanies)
                 );
+        }
+
     }
 
     private convertResponse(res: EntityResponseType): EntityResponseType {

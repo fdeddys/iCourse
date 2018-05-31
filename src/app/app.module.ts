@@ -40,15 +40,15 @@ import { EntityModule } from './entities/entity.module';
         EntityModule
     ],
     providers: [
-        {
-            provide: HTTP_INTERCEPTORS,
-            useClass: AuthInterceptor,
-            multi: true,
-            deps: [
-                LocalStorageService,
-                SessionStorageService
-            ]
-        }
+        // {
+        //     provide: HTTP_INTERCEPTORS,
+        //     useClass: AuthInterceptor,
+        //     multi: true,
+        //     deps: [
+        //         LocalStorageService,
+        //         SessionStorageService
+        //     ]
+        // }
     ],
     bootstrap: [AppComponent]
 })
