@@ -29,7 +29,19 @@ export class ProductComponent implements OnInit {
             { headerName: 'Sell Price', field: 'sellPrice', width: 250 },
             { headerName: 'Status', field: 'status', width: 250 },
             { headerName: 'Search By', field: 'searchBy', width: 250 },
-            { headerName: 'Search By Biller', field: 'searchByMemberId', width: 250 }
+            { headerName: 'Search By Biller', field: 'searchByMemberId', width: 250 },
+            { headerName: 'Action', suppressMenu: true,
+                suppressSorting: true,
+                template: `
+                <button mat-button color="primary" data-action-type="view">
+                    View
+                </button>
+
+                <button mat-button color="primary" data-action-type="edit">
+                    Edit
+                </button>
+                `
+            }
         ],
         rowData: this.products,
         enableSorting: true,
@@ -81,10 +93,39 @@ export class ProductComponent implements OnInit {
         this.loadAll();
     }
 
-    openNewDialog(): void {
+    onRowClicked(e) {
+        if (e.event.target !== undefined) {
+            const data = e.data;
+            const actionType = e.event.target.getAttribute('data-action-type');
+
+            switch (actionType) {
+                case 'view':
+                    data.mode = 'view';
+                    console.log('Data row : ', data);
+                    return this.openDialog('view', data);
+                case 'edit':
+                    data.mode = 'edit';
+                    console.log('Data row : ', data);
+                    return this.openDialog('edit', data);
+            }
+        }
+    }
+
+    openDialog(mode, data): void {
+        const newData = {
+            mode : 'create',
+            denom : null,
+            id : null,
+            name : null,
+            productCode : null,
+            searchBy : null,
+            searchByMemberId : null,
+            sellPrice : null,
+            status : null
+        };
         const dialogRef = this.dialog.open(ProductDialogComponent, {
             width: '1000px',
-            // data: { name: this.name, animal: this.animal }
+            data: (mode === 'create' ? newData : data)
         });
 
         dialogRef.afterClosed().subscribe(result => {
