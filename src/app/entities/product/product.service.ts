@@ -49,6 +49,18 @@ export class ProductService {
         }
     }
 
+    create(product: Product): Observable<EntityResponseType> {
+        const copy = this.convert(product);
+        return this.http.post<Product>(`${this.resourceUrl}`, copy, { observe: 'response'})
+            .pipe(map((res: EntityResponseType) => this.convertResponse(res)));
+    }
+
+    update(id: number, product: Product): Observable<EntityResponseType> {
+        const copy = this.convert(product);
+        return this.http.put<Product>(`${this.resourceUrl}/${id}`, copy, { observe: 'response'})
+            .pipe(map((res: EntityResponseType) => this.convertResponse(res)));
+    }
+
     private convertResponse(res: EntityResponseType): EntityResponseType {
         const body: Product = this.convertItemFromServer(res.body);
         return res.clone({body});

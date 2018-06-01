@@ -4,6 +4,7 @@ import { Product } from './product.model';
 import { ProductService } from './product.service';
 
 import { BillerCompany, BillerCompanyService } from '../biller-company';
+import { BillerType, BillerTypeService } from '../biller-type';
 
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
 
@@ -59,6 +60,7 @@ export class ProductComponent implements OnInit {
     constructor(
         private dialog: MatDialog,
         private billerCompanyService: BillerCompanyService,
+        private billerTypeService: BillerTypeService,
         private productService: ProductService
     ) { }
 
@@ -97,6 +99,19 @@ export class ProductComponent implements OnInit {
                 (res: HttpErrorResponse) => this.onError(res.message),
                 () => { console.log('finally'); }
         );
+        this.billerTypeService.query({
+            page: 1,
+            count: 10000,
+        })
+        .subscribe(
+                (res: HttpResponse<BillerType[]>) => this.onSuccessBillType(res.body, res.headers),
+                // (res: HttpResponse<BillerType[]>) => {
+                //     console.log(res.body);
+                //     this.billerTypeList = res.body;
+                // },
+                (res: HttpErrorResponse) => this.onError(res.message),
+                () => { console.log('finally'); }
+        );
     }
 
     onGridReady(params) {
@@ -127,13 +142,14 @@ export class ProductComponent implements OnInit {
 
     openDialog(mode, data): void {
         const datasend = {
-            mode : 'Create',
+            mode : 'create',
+            modeTitle : 'Create',
             billerCompanyData : this.billerCompanyList,
+            billerTypeData : this.billerTypeList,
             rowData : {
                 billerCompany : {id: null, name: null},
                 billerType : {id: null, ispostpaid: null, name: null},
                 denom : null,
-                id : null,
                 name : null,
                 productCode : null,
                 searchBy : null,
@@ -143,7 +159,8 @@ export class ProductComponent implements OnInit {
             },
         };
         if (mode !== 'create') {
-            datasend.mode = (mode === 'view' ? 'View' : 'Edit');
+            datasend.mode = mode;
+            datasend.modeTitle = (mode === 'view' ? 'View' : 'Edit');
             datasend.rowData = data;
         }
         const dialogRef = this.dialog.open(ProductDialogComponent, {
@@ -155,6 +172,10 @@ export class ProductComponent implements OnInit {
             console.log('The dialog was closed');
             // this.animal = result;
         });
+    }
+
+    private onSuccessBillType(data, headers) {
+        this.billerTypeList = data.content;
     }
 
     private onSuccess(data, headers) {

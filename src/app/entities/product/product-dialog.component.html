@@ -2,7 +2,7 @@
 <div mat-dialog-content>
     <form class="form-container">
 		<mat-form-field class="form-full-width">
-			<input matInput placeholder="Product Name" name="name" [(ngModel)]="rowData.name">
+			<input matInput placeholder="Product Name" name="name" [(ngModel)]="product.name">
 		</mat-form-field>
 		<mat-form-field class="form-full-width">
 			<input matInput placeholder="Biller Type" aria-label="Biller Type" [matAutocomplete]="auto" [formControl]="billTypeCtrl">
@@ -21,14 +21,14 @@
 			</mat-autocomplete>
 		</mat-form-field>
 		<mat-form-field class="form-full-width">
-			<input matInput placeholder="Denom" name="denom" [(ngModel)]="rowData.denom">
+			<input matInput placeholder="Denom" name="denom" [(ngModel)]="product.denom">
 		</mat-form-field>
 		<mat-form-field class="form-full-width">
-			<input type="number" matInput placeholder="Sell Price" name="sellPrice" [(ngModel)]="rowData.sellPrice">
+			<input type="number" matInput placeholder="Sell Price" name="sellPrice" [(ngModel)]="product.sellPrice">
 		</mat-form-field>
 	</form>
 </div>
 <div mat-dialog-actions>
     <button mat-raised-button (click)="onNoClick()">Cancel</button>
-    <button mat-raised-button color="primary" cdkFocusInitial>Save</button>
+    <button mat-raised-button color="primary" cdkFocusInitial (click)="save()">Save</button>
 </div>

@@ -1,9 +1,7 @@
 import { Component, OnInit, Inject } from '@angular/core';
 import { HttpResponse, HttpErrorResponse } from '@angular/common/http';
 import { Product } from './product.model';
-
-// added
-// import { BillerCompany, BillerCompanyService } from '../biller-company';
+import { ProductService } from './product.service';
 
 import { Observable } from 'rxjs';
 import { map, startWith } from 'rxjs/operators';
@@ -24,14 +22,14 @@ export class ProductDialogComponent implements OnInit {
     filteredBillCompany: Observable<any[]>;
 
     product: Product;
+    productSave: Product;
     billerTypeList = [];
     billerCompanyList = [];
 
     modeTitle = '';
-    rowData = {};
 
     constructor(
-        // private billerCompanyService: BillerCompanyService,
+        public productService: ProductService,
         public dialogRef: MatDialogRef<ProductDialogComponent>,
         @Inject(MAT_DIALOG_DATA) public data: any
     ) {
@@ -56,17 +54,21 @@ export class ProductDialogComponent implements OnInit {
     }
 
     filterBillCompany(name: string) {
-        console.log('is it called??');
         return this.billerCompanyList.filter(billerCompany =>
         billerCompany.name.toLowerCase().indexOf(name.toLowerCase()) === 0);
     }
 
     ngOnInit() {
         this.product = {};
-        this.modeTitle = this.data.mode;
-        this.rowData = this.data.rowData;
+        this.modeTitle = this.data.modeTitle;
+        if (this.data.mode !== 'create') {
+            // console.log('edit mode..');
+            this.billCompanyCtrl.setValue(this.data.rowData.billerCompany.name);
+            this.billTypeCtrl.setValue(this.data.rowData.billerType.name);
+        }
+        this.product = this.data.rowData;
         this.billerCompanyList = this.data.billerCompanyData;
-        this.billerTypeList = BILLER_TYPE;
+        this.billerTypeList = this.data.billerTypeData;
     }
 
     private onError(error) {
@@ -75,6 +77,31 @@ export class ProductDialogComponent implements OnInit {
 
     onNoClick(): void {
         this.dialogRef.close();
+    }
+
+    save(): void {
+        this.productSave = {
+            id: this.product.id,
+            name: this.product.name,
+            denom: this.product.denom,
+            sellPrice: this.product.sellPrice,
+            billerCompanyId: this.billCompanyCtrl.value,
+            billerTypeId: this.billTypeCtrl.value,
+            searchBy: this.product.searchBy,
+            searchByMemberId: this.product.searchByMemberId,
+        };
+        console.log(this.productSave);
+        // if (this.product.id === undefined || this.product.id === null) {
+        //     console.log('send to service ', this.product);
+        //     this.productService.create(this.product).subscribe((res: HttpResponse<Product>) => {
+        //         this.dialogRef.close('refresh');
+        //     });
+        // } else {
+        //     console.log('send to service ', this.product);
+        //     this.productService.update(this.product.id, this.product).subscribe((res: HttpResponse<Product>) => {
+        //         this.dialogRef.close('refresh');
+        //     });
+        // }
     }
 }
 
@@ -88,13 +115,3 @@ export class ProductDialogComponent implements OnInit {
 // searchByMemberId : 10
 // sellPrice : 8000
 // status : "ACTIVE"
-
-export interface BillerType {
-    id: Number;
-    name: string;
-}
-
-const BILLER_TYPE: BillerType[] = [
-    {id: 1, name: 'Tipe 1'},
-    {id: 2, name: 'Tipe 2'}
-];
