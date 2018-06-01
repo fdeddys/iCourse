@@ -16,7 +16,6 @@ export class BillerTypeDialogComponent implements OnInit {
 
     billerType: BillerType;
     name: string;
-    ispostpaid: any = 0;
 
     constructor(
         public billerTypeService: BillerTypeService,
@@ -29,7 +28,6 @@ export class BillerTypeDialogComponent implements OnInit {
             // search
             this.billerType = this.data.BillerType;
             this.name = this.billerType.name;
-            this.ispostpaid = this.billerType.ispostpaid ;
         }
     }
 
@@ -38,9 +36,9 @@ export class BillerTypeDialogComponent implements OnInit {
     }
 
     save(): void {
+        // this.billerType.ispostpaid = this.checked  ;
         console.log('isi biller = ', this.billerType);
         // this.BillerType.name = this.name;
-        this.billerType.ispostpaid = this.ispostpaid  ;
         console.log('isi biller company ', this.billerType);
         if (this.billerType.id === undefined) {
             console.log('send to service ', this.billerType);
@@ -53,6 +51,10 @@ export class BillerTypeDialogComponent implements OnInit {
                 this.dialogRef.close('refresh');
             });
         }
+    }
+
+    onChange(events): void {
+        console.log('event ', event);
     }
 
 }
