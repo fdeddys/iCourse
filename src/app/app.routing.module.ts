@@ -8,6 +8,8 @@ import { BillerComponent } from './entities/biller/biller.component';
 import { ProductComponent } from './entities/product/product.component';
 import { BillerCompanyComponent } from './entities/biller-company/biller-company.component';
 import { BillerTypeComponent } from './entities/biller-type';
+import { MemberTypeComponent } from './entities/member-type';
+import { GlobalSettingComponent } from './entities/global-setting';
 
 const routes: Routes = [
     { path : '', component : LoginComponent },
@@ -21,6 +23,8 @@ const routes: Routes = [
             {path: 'product', component: ProductComponent},
             {path: 'biller-company', component: BillerCompanyComponent},
             {path: 'biller-type', component: BillerTypeComponent},
+            {path: 'member-type', component: MemberTypeComponent},
+            {path: 'global-setting', component: GlobalSettingComponent},
         ]
     },
     // {path: 'member', component: MemberComponent}

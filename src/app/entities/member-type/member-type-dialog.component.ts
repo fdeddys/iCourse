@@ -15,8 +15,6 @@ import { HttpResponse, HttpErrorResponse } from '@angular/common/http';
 export class MemberTypeDialogComponent implements OnInit {
 
     memberType: MemberType;
-    name: string;
-    ispostpaid: any = 0;
 
     constructor(
         public memberTypeService: MemberTypeService,
@@ -27,9 +25,8 @@ export class MemberTypeDialogComponent implements OnInit {
         this.memberType = {};
         if ( this.data.action === 'EDIT' ) {
             // search
+            console.log('member type id sending ', this.data.memberType);
             this.memberType = this.data.memberType;
-            this.name = this.memberType.name;
-            this.ispostpaid = this.memberType.ispostpaid ;
         }
     }
 
@@ -38,10 +35,8 @@ export class MemberTypeDialogComponent implements OnInit {
     }
 
     save(): void {
-        console.log('isi member = ', this.memberType);
-        // this.memberType.name = this.name;
-        this.memberType.ispostpaid = this.ispostpaid  ;
-        console.log('isi member company ', this.memberType);
+
+        console.log('isi member  ', this.memberType);
         if (this.memberType.id === undefined) {
             console.log('send to service ', this.memberType);
             this.memberTypeService.create(this.memberType).subscribe((res: HttpResponse<MemberType>) => {

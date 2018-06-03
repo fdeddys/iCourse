@@ -1,0 +1,30 @@
+<h2 mat-dialog-title>{{data.action}} - {{data.entity}}</h2>
+<mat-dialog-content>
+    <form class="container-form">
+        <mat-form-field class="container-full-width">
+            <input matInput placeholder="Id" value="{{globalSetting.id}}" [disabled]="true" >
+        </mat-form-field>
+        <mat-form-field class="container-full-width">
+            <!-- <input matInput placeholder="Global Type " [(ngModel)]="globalSetting.globalType" name ="type" > -->
+            <mat-select placeholder="Global Tpe" [(ngModel)]="globalSetting.globalType" name="globTyp">
+                <mat-option *ngFor="let option of globalTypeOption" [value]="option.value">
+                  {{option.viewValue}}
+                </mat-option>
+            </mat-select>
+        </mat-form-field>
+        <mat-form-field class="container-full-width">
+            <input matInput placeholder="Name " [(ngModel)]="globalSetting.name" cdkFocusInitial name ="nm" >
+        </mat-form-field>
+        <mat-form-field class="container-full-width">
+            <input matInput placeholder="Description " [(ngModel)]="globalSetting.description"  name ="descr" >
+        </mat-form-field>
+      <br><br>
+
+    </form>
+    
+</mat-dialog-content>
+<mat-dialog-actions>
+  <button mat-button mat-dialog-close>Cancel</button>
+  <button mat-button mat-raised-button color="primary" (click)="save()" >Save</button>
+</mat-dialog-actions>
+
