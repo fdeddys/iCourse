@@ -16,6 +16,8 @@ export class MemberTypeComponent implements OnInit {
   private gridApi;
   private gridColumnApi;
 
+  theme: String = 'ag-theme-material';
+
   memberTipes: MemberType[];
   MemberType: MemberType;
 
