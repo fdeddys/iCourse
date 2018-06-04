@@ -1,3 +1,10 @@
-<p>
-  member works!
-</p>
+<button mat-raised-button color="primary" (click)="openNewDialog()" style="margin-bottom: 10px;">Create New</button>
+<ag-grid-angular 
+#agGrid
+    style="height: 400px;" 
+    class="{{theme}}"
+    [gridOptions]="gridOptions" 
+    (gridReady)="onGridReady($event)"
+    (rowClicked)="onRowClicked($event)"
+    >
+</ag-grid-angular>

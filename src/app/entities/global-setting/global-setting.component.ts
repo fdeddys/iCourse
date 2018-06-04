@@ -5,6 +5,7 @@ import { GlobalSettingService } from './global-setting.service';
 import { HttpResponse, HttpErrorResponse } from '@angular/common/http';
 import { GlobalSettingDialogComponent } from './global-setting-dialog.component';
 import { GlobalSettingConfirmComponent } from './global-setting-confirm.component';
+import { GRID_THEME } from '../../shared/constant/base-constant';
 
 @Component({
   selector: 'app-global-setting',
@@ -15,6 +16,8 @@ export class GlobalSettingComponent implements OnInit {
 
   private gridApi;
   private gridColumnApi;
+
+  theme: String = GRID_THEME;
 
   memberTipes: GlobalSetting[];
   GlobalSetting: GlobalSetting;

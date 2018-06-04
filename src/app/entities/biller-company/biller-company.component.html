@@ -2,7 +2,7 @@
 <ag-grid-angular 
 #agGrid
     style="height: 400px;" 
-    class="ag-theme-balham"
+    class="{{theme}}"
     [gridOptions]="gridOptions" 
     (gridReady)="onGridReady($event)"
     (rowClicked)="onRowClicked($event)"

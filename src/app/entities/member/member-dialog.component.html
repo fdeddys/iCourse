@@ -1,0 +1,30 @@
+<h2 mat-dialog-title>{{data.action}} - {{data.entity}}</h2>
+<mat-dialog-content>
+    <form class="container-form">
+        <mat-form-field class="container-full-width">
+            <input matInput placeholder="Id" value="{{member.id}}" [disabled]="true" >
+        </mat-form-field>
+        <mat-form-field class="container-full-width">
+            <input matInput placeholder="Name " [(ngModel)]="member.name" cdkFocusInitial name ="namee">
+        </mat-form-field>
+        <mat-form-field class="container-full-width">
+            <input matInput placeholder="Protocol Type " [(ngModel)]="member.protocolType" name ="protocolType">
+        </mat-form-field>
+        <mat-form-field class="container-full-width">
+            <input matInput placeholder="Description" [(ngModel)]="member.description" name ="description">
+        </mat-form-field>
+        <mat-form-field class="container-full-width">
+            <mat-select placeholder="Active" [(ngModel)]="member.isActive" name="stts">
+                <mat-option *ngFor="let status of statuses" [value]="status.value">
+                  {{status.viewValue}}
+                </mat-option>
+            </mat-select>
+        </mat-form-field>
+    </form>
+    
+</mat-dialog-content>
+<mat-dialog-actions>
+  <button mat-button mat-dialog-close>Cancel</button>
+  <button mat-button mat-raised-button color="primary" (click)="save()" >Save</button>
+</mat-dialog-actions>
+

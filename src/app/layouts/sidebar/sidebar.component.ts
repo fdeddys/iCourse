@@ -13,7 +13,7 @@ export class SidebarComponent {
       name: 'Member', link: 'member',
       subLinks: [
         {name: 'Member', link: 'member'},
-        {name: 'Member Type', link: 'memberType'}
+        {name: 'Member Type', link: 'member-type'}
       ]
     },
     {
