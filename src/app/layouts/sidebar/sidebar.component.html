@@ -17,9 +17,33 @@
 	</mat-sidenav-content>
 </mat-sidenav-container> -->
 
-<mat-nav-list>
-	<!-- <a mat-list-item href="..." *ngFor="let link of links" [routerLink]="['./member']"> {{ link }} </a> -->
+<!-- <mat-nav-list>
 	<a mat-list-item href="..." [routerLink]="''">OTTOAG</a>
 	<mat-divider></mat-divider>
 	<a mat-list-item href="..." *ngFor="let link of links" (click)="setMenuName(link.Name)" [routerLink]="link.Link"> {{ link.Name }} </a>
+</mat-nav-list> -->
+
+<mat-nav-list>
+	<a mat-list-item href="..." [routerLink]="''">OTTOAG</a>
+	<mat-divider></mat-divider>
+    <div *ngFor="let link of links">
+    	<mat-expansion-panel>
+            <mat-expansion-panel-header [expandedHeight]="'48px'">
+                <mat-list-item>
+                    <a style="cursor: pointer;">
+                        <p mat-line>{{link.name}}</p>
+                    </a>
+                </mat-list-item>
+            </mat-expansion-panel-header>
+            <mat-list style="margin-left:13px;">
+                <div *ngFor="let subLink of link.subLinks">
+                    <mat-list-item>
+                        <a style="cursor: pointer;">
+                            <p mat-line> {{subLink.name}}</p>
+                        </a>
+                    </mat-list-item>
+                </div>
+            </mat-list>
+        </mat-expansion-panel>
+    </div>
 </mat-nav-list>

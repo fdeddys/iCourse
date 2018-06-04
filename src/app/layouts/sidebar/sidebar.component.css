@@ -1,0 +1,7 @@
+.mat-expansion-panel {
+    transition: none !important;
+    box-shadow: none !important;
+}
+.mat-expansion-panel-header {
+    padding: 0 24px 0 0;
+}

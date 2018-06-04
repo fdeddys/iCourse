@@ -9,11 +9,21 @@ export class SidebarComponent {
 
   @Output() menuNm = new EventEmitter<string>();
   links: object[] = [
-    {Name: 'Member', Link: 'member'},
-    {Name: 'Biller', Link: 'biller'},
-    {Name: 'Product', Link: 'product'},
-    {Name: 'Biller Company', Link: 'biller-company'},
-    {Name: 'Biller Type', Link: 'biller-type'},
+    {
+      name: 'Member', link: 'member',
+      subLinks: [
+        {name: 'Member', link: 'member'},
+        {name: 'Member Type', link: 'memberType'}
+      ]
+    },
+    {
+      name: 'Biller', link: 'biller',
+      subLinks: [
+        {name: 'Product', link: 'product'},
+        {name: 'Biller Company', link: 'biller-company'},
+        {name: 'Biller Type', link: 'biller-type'},
+      ]
+    },
   ];
 
   constructor() { }

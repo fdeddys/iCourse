@@ -8,6 +8,8 @@ import { map, startWith } from 'rxjs/operators';
 
 import { FormControl } from '@angular/forms';
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
+import { BillerType } from '../biller-type';
+import { BillerCompany } from '../biller-company';
 
 @Component({
     selector: 'app-product-dialog',
@@ -36,15 +38,21 @@ export class ProductDialogComponent implements OnInit {
         this.billTypeCtrl = new FormControl();
         this.filteredBillType = this.billTypeCtrl.valueChanges
         .pipe(
-            startWith(''),
-            map(billerType => billerType ? this.filterBillType(billerType) : this.billerTypeList.slice())
+            // startWith(''),
+            // map(billerType => billerType ? this.filterBillType(billerType) : this.billerTypeList.slice())
+            startWith<string | BillerType>(''),
+            map(value => typeof value === 'string' ? value : value.name),
+            map(name => name ? this.filterBillType(name) : this.billerTypeList.slice())
         );
 
         this.billCompanyCtrl = new FormControl();
         this.filteredBillCompany = this.billCompanyCtrl.valueChanges
         .pipe(
-            startWith(''),
-            map(billerCompany => billerCompany ? this.filterBillCompany(billerCompany) : this.billerCompanyList.slice())
+            // startWith(''),
+            // map(billerCompany => billerCompany ? this.filterBillCompany(billerCompany) : this.billerCompanyList.slice())
+            startWith<string | BillerCompany>(''),
+            map(value => typeof value === 'string' ? value : value.name),
+            map(name => name ? this.filterBillCompany(name) : this.billerCompanyList.slice())
         );
     }
 
@@ -58,13 +66,21 @@ export class ProductDialogComponent implements OnInit {
         billerCompany.name.toLowerCase().indexOf(name.toLowerCase()) === 0);
     }
 
+    displayFnBil(billerType?: BillerType): string | undefined {
+        return billerType ? billerType.name : undefined;
+    }
+
+    displayFnCom(billerCompany?: BillerCompany): string | undefined {
+        return billerCompany ? billerCompany.name : undefined;
+    }
+
     ngOnInit() {
         this.product = {};
         this.modeTitle = this.data.modeTitle;
         if (this.data.mode !== 'create') {
             // console.log('edit mode..');
-            this.billCompanyCtrl.setValue(this.data.rowData.billerCompany.name);
-            this.billTypeCtrl.setValue(this.data.rowData.billerType.name);
+            this.billCompanyCtrl.setValue(this.data.rowData.billerCompany);
+            this.billTypeCtrl.setValue(this.data.rowData.billerType);
         }
         this.product = this.data.rowData;
         this.billerCompanyList = this.data.billerCompanyData;
@@ -85,8 +101,8 @@ export class ProductDialogComponent implements OnInit {
             name: this.product.name,
             denom: this.product.denom,
             sellPrice: this.product.sellPrice,
-            billerCompanyId: this.billCompanyCtrl.value,
-            billerTypeId: this.billTypeCtrl.value,
+            billerCompanyId: this.billCompanyCtrl.value.id,
+            billerTypeId: this.billTypeCtrl.value.id,
             searchBy: this.product.searchBy,
             searchByMemberId: this.product.searchByMemberId,
         };
