@@ -39,10 +39,6 @@ export class ProductComponent implements OnInit {
             { headerName: 'Action', suppressMenu: true,
                 suppressSorting: true,
                 template: `
-                <button mat-button color="primary" data-action-type="view">
-                    View
-                </button>
-
                 <button mat-button color="primary" data-action-type="edit">
                     Edit
                 </button>

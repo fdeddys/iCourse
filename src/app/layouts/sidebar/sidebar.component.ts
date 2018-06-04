@@ -20,11 +20,12 @@ export class SidebarComponent {
       name: 'Biller', link: 'biller',
       subLinks: [
         {name: 'Product', link: 'product'},
+        {name: 'Biller', link: 'biller'},
         {name: 'Biller Company', link: 'biller-company'},
         {name: 'Biller Type', link: 'biller-type'},
       ]
     },
-    {Name: 'Global Setting', Link: 'global-setting'},
+    {name: 'Global Setting', link: 'global-setting'},
   ];
 
   constructor() { }
