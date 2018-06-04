@@ -20,7 +20,6 @@ import { NavbarComponent } from './layouts/navbar/navbar.component';
 
 import { HttpClientModule } from '@angular/common/http';
 import { EntityModule } from './entities/entity.module';
-import { GlobalSettingComponent } from './global-setting/global-setting.component';
 
 @NgModule({
     declarations: [
@@ -29,7 +28,6 @@ import { GlobalSettingComponent } from './global-setting/global-setting.componen
         SidebarComponent,
         LoginComponent,
         NavbarComponent,
-        GlobalSettingComponent,
     ],
     imports: [
         BrowserModule,

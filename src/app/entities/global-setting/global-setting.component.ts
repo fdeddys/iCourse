@@ -1,29 +1,30 @@
 import { Component, OnInit } from '@angular/core';
-import { MemberType } from './member-type.model';
+import { GlobalSetting } from './global-setting.model';
 import { MatDialog } from '@angular/material';
-import { MemberTypeService } from './member-type.service';
-import { MemberTypeDialogComponent } from './member-type-dialog.component';
-import { MemberTypeConfirmComponent } from './member-type-confirm.component';
+import { GlobalSettingService } from './global-setting.service';
 import { HttpResponse, HttpErrorResponse } from '@angular/common/http';
+import { GlobalSettingDialogComponent } from './global-setting-dialog.component';
+import { GlobalSettingConfirmComponent } from './global-setting-confirm.component';
 
 @Component({
-  selector: 'app-member-type',
-  templateUrl: './member-type.component.html',
-  styleUrls: ['./member-type.component.css']
+  selector: 'app-global-setting',
+  templateUrl: './global-setting.component.html',
+  styleUrls: ['./global-setting.component.css']
 })
-export class MemberTypeComponent implements OnInit {
+export class GlobalSettingComponent implements OnInit {
 
   private gridApi;
   private gridColumnApi;
 
-  memberTipes: MemberType[];
-  MemberType: MemberType;
+  memberTipes: GlobalSetting[];
+  GlobalSetting: GlobalSetting;
 
   gridOptions = {
     columnDefs: [
       { headerName: 'id', field: 'id', width: 200, pinned: 'left', editable: false },
+      { headerName: 'Type', field: 'globalType', width: 200, editable: false },
       { headerName: 'Name', field: 'name', width: 200, editable: false },
-      { headerName: 'description', field: 'description', width: 200, editable: false },
+      { headerName: 'Description', field: 'description', width: 200, editable: false },
       { headerName: 'Created at', field: 'createdAt', width: 200, valueFormatter: this.currencyFormatter },
       { headerName: 'Update at', field: 'updatedAt', width: 200, valueFormatter: this.currencyFormatter },
       { headerName: 'Created By', field: 'createdBy', width: 200 },
@@ -54,7 +55,7 @@ export class MemberTypeComponent implements OnInit {
   }
 
   constructor(  private dialog: MatDialog,
-                private memberTypeService: MemberTypeService) { }
+                private globalSettingService: GlobalSettingService) { }
 
   public onRowClicked(e) {
     if (e.event.target !== undefined) {
@@ -72,9 +73,9 @@ export class MemberTypeComponent implements OnInit {
 
   public onActionEditClick(data: any) {
       console.log('View action clicked', data);
-      const dialogRef = this.dialog.open(MemberTypeDialogComponent, {
+      const dialogRef = this.dialog.open(GlobalSettingDialogComponent, {
         width: '1000px',
-        data: { action: 'EDIT', entity: 'Member Type', memberType: data }
+        data: { action: 'EDIT', entity: 'Member Type', globalSetting: data }
       });
 
       dialogRef.afterClosed().subscribe(result => {
@@ -85,10 +86,10 @@ export class MemberTypeComponent implements OnInit {
       });
   }
 
-  public onActionRemoveClick(data: MemberType) {
+  public onActionRemoveClick(data: GlobalSetting) {
       console.log('Remove action clicked', data);
       const member: string = data.name;
-      const dialogConfirm = this.dialog.open(MemberTypeConfirmComponent, {
+      const dialogConfirm = this.dialog.open(GlobalSettingConfirmComponent, {
         width: '50%',
         data: { warningMessage: 'Apakah anda yakin untuk menonaktifkan [  ' + `${member}` + '  ]  ?',  idCompanyMember: data.id }
       });
@@ -101,12 +102,12 @@ export class MemberTypeComponent implements OnInit {
 
   loadAll() {
         console.log('Start call function all header');
-        this.memberTypeService.query({
+        this.globalSettingService.query({
             page: 1,
             count: 10000,
         })
         .subscribe(
-                (res: HttpResponse<MemberType[]>) => this.onSuccess(res.body, res.headers),
+                (res: HttpResponse<GlobalSetting[]>) => this.onSuccess(res.body, res.headers),
                 (res: HttpErrorResponse) => this.onError(res.message),
                 () => { console.log('finally'); }
         );
@@ -127,7 +128,7 @@ export class MemberTypeComponent implements OnInit {
   }
 
   openNewDialog(): void {
-    const dialogRef = this.dialog.open(MemberTypeDialogComponent, {
+    const dialogRef = this.dialog.open(GlobalSettingDialogComponent, {
       width: '1000px',
       data: { action: 'Add', entity: 'Member Type' }
     });
