@@ -5,6 +5,7 @@ import { MemberTypeService } from './member-type.service';
 import { MemberTypeDialogComponent } from './member-type-dialog.component';
 import { MemberTypeConfirmComponent } from './member-type-confirm.component';
 import { HttpResponse, HttpErrorResponse } from '@angular/common/http';
+import { GRID_THEME } from '../../shared/constant/base-constant';
 
 @Component({
   selector: 'app-member-type',
@@ -16,7 +17,7 @@ export class MemberTypeComponent implements OnInit {
   private gridApi;
   private gridColumnApi;
 
-  theme: String = 'ag-theme-material';
+  theme: String = GRID_THEME;
 
   memberTipes: MemberType[];
   MemberType: MemberType;

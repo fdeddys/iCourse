@@ -5,6 +5,7 @@ import { MemberDialogComponent } from './member-dialog.component';
 import { MemberConfirmComponent } from './member-confirm.component';
 import { Member } from './member.model';
 import { MemberService } from './member.service';
+import { GRID_THEME } from '../../shared/constant/base-constant';
 
 @Component({
   selector: 'app-member',
@@ -15,6 +16,8 @@ export class MemberComponent implements OnInit {
 
   private gridApi;
   private gridColumnApi;
+
+  theme: String = GRID_THEME;
 
   members: Member[];
   member; Member;

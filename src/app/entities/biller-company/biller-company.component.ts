@@ -5,6 +5,7 @@ import { HttpResponse, HttpErrorResponse } from '@angular/common/http';
 import { BillerCompanyService } from './biller-company.service';
 import { BillerCompanyDialogComponent } from './biller-company-dialog.component';
 import { BillerCompanyConfirmComponent } from './biller-company-confirm.component';
+import { GRID_THEME } from '../../shared/constant/base-constant';
 
 @Component({
   selector: 'app-biller-company',
@@ -15,6 +16,8 @@ export class BillerCompanyComponent implements OnInit {
 
   private gridApi;
   private gridColumnApi;
+
+  theme: String = GRID_THEME;
 
   billerCompanies: BillerCompany[];
   billerCompany; BillerCompany;
