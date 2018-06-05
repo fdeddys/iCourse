@@ -1,8 +1,8 @@
 <button mat-raised-button color="primary" (click)="openNewDialog()" style="margin-bottom: 10px;">Create New</button>
 <ag-grid-angular 
 #agGrid
-    style="height: 400px;" 
-    class="ag-theme-balham"
+    style="height: 600px;" 
+    class="{{theme}}"
     [gridOptions]="gridOptions" 
     (gridReady)="onGridReady($event)"
     (rowClicked)="onRowClicked($event)"

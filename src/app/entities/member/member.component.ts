@@ -17,25 +17,27 @@ export class MemberComponent implements OnInit {
   private gridApi;
   private gridColumnApi;
 
+
   theme: String = GRID_THEME;
 
   members: Member[];
-  member; Member;
+  member: Member;
 
   gridOptions = {
     columnDefs: [
-      { headerName: 'id', field: 'id', width: 250, pinned: 'left', editable: false },
-      { headerName: 'Name', field: 'name', width: 250, editable: false },
-      { headerName: 'Description', field: 'description', width: 250, editable: false },
-      { headerName: 'Active', field: 'active', width: 250, editable: false },
-      { headerName: 'Created at', field: 'createdAt', width: 250, valueFormatter: this.currencyFormatter },
-      { headerName: 'Update at', field: 'updatedAt', width: 250, valueFormatter: this.currencyFormatter },
-      { headerName: 'Created By', field: 'createdBy', width: 250 },
-      { headerName: 'Updated By', field: 'updatedBy', width: 250 },
+      { headerName: 'id', field: 'id', width: 50, pinned: 'left', editable: false },
+      { headerName: 'Name', field: 'name', width: 150, editable: false },
+      { headerName: 'Description', field: 'description', width: 200, editable: false },
+      { headerName: 'Active', field: 'active', width: 100, editable: false, valueFormatter: this.boolFormatter },
+      { headerName: 'Created at', field: 'createdAt', width: 150, valueFormatter: this.currencyFormatter },
+      { headerName: 'Update at', field: 'updatedAt', width: 150, valueFormatter: this.currencyFormatter },
+      { headerName: 'Created By', field: 'createdBy', width: 150 },
+      { headerName: 'Updated By', field: 'updatedBy', width: 150 },
       { headerName: 'action', suppressMenu: true,
         suppressSorting: true,
         template:
-          `<button mat-raised-button type="button" data-action-type="edit" >
+          `<button mat-raised-button type="button" data-action-type="edit" style='width:125px; height:40px;
+            background-color:white; color:navy ; border-radius: 5px;' >
             Edit
           </button>` }
     ],
@@ -57,6 +59,9 @@ export class MemberComponent implements OnInit {
     return dt.toLocaleString(['id']);
   }
 
+  boolFormatter(params): string {
+    return params.value === true ? 'Ya' : 'Tidak';
+  }
   constructor(  private dialog: MatDialog,
                 private memberService: MemberService) { }
 

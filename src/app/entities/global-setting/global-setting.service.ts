@@ -19,6 +19,13 @@ export class GlobalSettingService {
             .pipe(map((res: EntityResponseType) => this.convertResponse(res)));
     }
 
+    findByGlobalType(id: String): Observable<HttpResponse<GlobalSetting[]>> {
+        return this.http.get<GlobalSetting[]>(`${this.resourceUrl}/globaltype/${id}`, { observe: 'response'})
+            .pipe(
+                tap(globalSettings => { })
+            );
+    }
+
     create(globalSetting: GlobalSetting): Observable<EntityResponseType> {
         const copy = this.convert(globalSetting);
         return this.http.post<GlobalSetting>(`${this.resourceUrl}`, copy, { observe: 'response'})

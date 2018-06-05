@@ -24,7 +24,12 @@ export class SidebarComponent {
         {name: 'Biller Type', link: 'biller-type'},
       ]
     },
-    {Name: 'Global Setting', Link: 'global-setting'},
+    {
+      Name: 'Setting', Link: 'settings',
+      subLinks: [
+        {name: 'Global Setting', link: 'global-setting'},
+      ]
+    },
   ];
 
   constructor() { }

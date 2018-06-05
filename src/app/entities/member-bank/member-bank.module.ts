@@ -3,14 +3,9 @@ import { NgModule, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { AgGridModule } from 'ag-grid-angular';
 import { CustomMaterialModule } from './../../material.module';
+import { MemberBankComponent } from './member-bank.component';
+import { MemberBankService } from './member-bank.service';
 
-import {
-    MemberService,
-    MemberComponent,
-    MemberDialogComponent,
-    MemberConfirmComponent,
-    MemberBankDialogComponent,
-} from './';
 
 @NgModule({
     imports: [
@@ -19,20 +14,14 @@ import {
         CustomMaterialModule
     ],
     declarations: [
-        MemberComponent,
-        MemberDialogComponent,
-        MemberConfirmComponent,
-        MemberBankDialogComponent,
+        MemberBankComponent,
     ],
     entryComponents: [
-        MemberComponent,
-        MemberDialogComponent,
-        MemberConfirmComponent,
-        MemberBankDialogComponent,
+        MemberBankComponent,
     ],
     providers: [
-        MemberService,
+        MemberBankService,
     ],
     schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })
-export class MemberModule {}
+export class MemberBankModule {}

@@ -5,7 +5,7 @@ export class Member implements BaseEntity {
         public id?: number,
         public name?: string,
         public protocolType?: any,
-        public isActive?: boolean,
+        public active?: boolean,
     ) {
     }
 }

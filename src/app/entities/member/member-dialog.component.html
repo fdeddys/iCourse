@@ -7,24 +7,38 @@
         <mat-form-field class="container-full-width">
             <input matInput placeholder="Name " [(ngModel)]="member.name" cdkFocusInitial name ="namee">
         </mat-form-field>
-        <mat-form-field class="container-full-width">
+        <!-- <mat-form-field class="container-full-width">
             <input matInput placeholder="Protocol Type " [(ngModel)]="member.protocolType" name ="protocolType">
-        </mat-form-field>
+        </mat-form-field> -->
         <mat-form-field class="container-full-width">
             <input matInput placeholder="Description" [(ngModel)]="member.description" name ="description">
         </mat-form-field>
         <mat-form-field class="container-full-width">
-            <mat-select placeholder="Active" [(ngModel)]="member.isActive" name="stts">
+            <mat-select placeholder="Status" [(ngModel)]="member.active" name="stts">
                 <mat-option *ngFor="let status of statuses" [value]="status.value">
                   {{status.viewValue}}
                 </mat-option>
             </mat-select>
         </mat-form-field>
     </form>
+
+    <br>
     
+    <mat-card>
+        <button mat-raised-button color="warn" (click)="openNewDialog()" style="margin-bottom: 10px;">Create New</button>
+        <ag-grid-angular 
+            #agGrid
+            style="height: 300px;" 
+            class="{{theme}}"
+            [gridOptions]="gridOptions" 
+            (gridReady)="onGridReady($event)"
+            (rowClicked)="onRowClicked($event)"
+            >
+        </ag-grid-angular>
+    </mat-card>
 </mat-dialog-content>
 <mat-dialog-actions>
-  <button mat-button mat-dialog-close>Cancel</button>
+  <button mat-button mat-dialog-close (click)="onNoClick()">Close</button>
   <button mat-button mat-raised-button color="primary" (click)="save()" >Save</button>
 </mat-dialog-actions>
 

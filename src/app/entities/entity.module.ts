@@ -7,6 +7,7 @@ import { BillerCompanyModule } from './biller-company/biller-company.module';
 import { BillerTypeModule } from './biller-type/biller-type.module';
 import { MemberTypeModule } from './member-type/member-type.module';
 import { GlobalSettingModule } from './global-setting/global-setting.module';
+import { MemberBankModule } from './member-bank/member-bank.module';
 
 /* jhipster-needle-add-entity-module-import - JHipster will add entity modules imports here */
 
@@ -19,9 +20,11 @@ import { GlobalSettingModule } from './global-setting/global-setting.module';
         BillerTypeModule,
         MemberTypeModule,
         GlobalSettingModule,
+        MemberBankModule,
     ],
     entryComponents: [],
     providers: [],
-    schemas: [CUSTOM_ELEMENTS_SCHEMA]
+    schemas: [CUSTOM_ELEMENTS_SCHEMA],
+
 })
 export class EntityModule {}
