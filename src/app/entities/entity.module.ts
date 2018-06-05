@@ -7,9 +7,10 @@ import { BillerCompanyModule } from './biller-company/biller-company.module';
 import { BillerTypeModule } from './biller-type/biller-type.module';
 import { MemberTypeModule } from './member-type/member-type.module';
 import { GlobalSettingModule } from './global-setting/global-setting.module';
+import { BillerDetailModule } from './biller-detail/biller-detail.module';
+import { BillerPriceDetailModule } from './biller-price-detail/biller-price-detail.module';
 import { MemberBankModule } from './member-bank/member-bank.module';
 
-/* jhipster-needle-add-entity-module-import - JHipster will add entity modules imports here */
 
 @NgModule({
     imports: [
@@ -21,6 +22,8 @@ import { MemberBankModule } from './member-bank/member-bank.module';
         MemberTypeModule,
         GlobalSettingModule,
         MemberBankModule,
+        BillerDetailModule,
+        BillerPriceDetailModule
     ],
     entryComponents: [],
     providers: [],

@@ -1,0 +1,41 @@
+<h1 mat-dialog-title>{{ modeTitle }} Biller Registration</h1>
+<div mat-dialog-content>
+    <form class="form-container">
+		<mat-form-field class="form-full-width">
+			<input matInput placeholder="Description" name="description" [(ngModel)]="biller.description">
+		</mat-form-field>
+		<mat-form-field class="form-full-width">
+			<input matInput placeholder="Member Type" aria-label="Member Type" [matAutocomplete]="auto" [formControl]="membTypeCtrl">
+			<mat-autocomplete #auto="matAutocomplete" [displayWith]="displayFnMem">
+				<mat-option *ngFor="let memberType of filteredMembType | async" [value]="memberType">
+					<span>{{ memberType.name }}</span>
+				</mat-option>
+			</mat-autocomplete>
+        </mat-form-field>
+        <mat-form-field class="form-full-width">
+            <input matInput [min]="minDate" [max]="maxDate" [matDatepicker]="picker" placeholder="Date Start">
+            <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+            <mat-datepicker #picker></mat-datepicker>
+        </mat-form-field>
+        <mat-form-field class="form-full-width">
+            <input matInput [min]="minDate" [max]="maxDate" [matDatepicker]="pickerT" placeholder="Date Thru">
+            <mat-datepicker-toggle matSuffix [for]="pickerT"></mat-datepicker-toggle>
+            <mat-datepicker #pickerT></mat-datepicker>
+        </mat-form-field>
+
+        <mat-divider></mat-divider>
+        <br>
+        <button mat-raised-button color="primary" (click)="openBDDialog()" style="margin-bottom: 10px;">Add Biller Detail</button>
+        <ag-grid-angular 
+            style="height: 250px;" 
+            class="ag-theme-material"
+            [gridOptions]="gridOptions"
+            (gridReady)="onGridReady($event)"
+            >
+        </ag-grid-angular>
+	</form>
+</div>
+<div mat-dialog-actions>
+    <button mat-raised-button (click)="onNoClick()">Cancel</button>
+    <button mat-raised-button color="primary" cdkFocusInitial (click)="save()">Save</button>
+</div>

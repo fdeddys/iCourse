@@ -5,14 +5,8 @@ import { AgGridModule } from 'ag-grid-angular';
 import { CustomMaterialModule } from './../../material.module';
 
 import {
-    BillerService,
-    BillerComponent,
-    BillerDialogComponent
+    BillerDetailComponent,
 } from './';
-
-import { BillerDetailComponent } from '../biller-detail/biller-detail.component';
-
-import { LocalStorageService, SessionStorageService } from 'ngx-webstorage';
 
 @NgModule({
     imports: [
@@ -22,18 +16,13 @@ import { LocalStorageService, SessionStorageService } from 'ngx-webstorage';
         CustomMaterialModule
     ],
     declarations: [
-        BillerComponent,
-        BillerDialogComponent
+        BillerDetailComponent
     ],
     entryComponents: [
-        BillerComponent,
-        BillerDialogComponent
+        BillerDetailComponent
     ],
     providers: [
-        BillerService,
-        LocalStorageService,
-        SessionStorageService
     ],
     schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })
-export class BillerModule {}
+export class BillerDetailModule {}
