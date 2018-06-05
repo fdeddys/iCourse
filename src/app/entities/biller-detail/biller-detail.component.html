@@ -1,3 +1,43 @@
-<p>
-  biller-detail works!
-</p>
+<h1 mat-dialog-title>{{ modeTitle }} Biller Detail</h1>
+<div mat-dialog-content>
+    <form class="form-container">		
+        <mat-form-field class="form-full-width">
+            <input matInput placeholder="Biller Type" aria-label="Biller Type" [matAutocomplete]="auto" [formControl]="billTypeCtrl">
+            <mat-autocomplete #auto="matAutocomplete" [displayWith]="displayFnBil" (optionSelected)='getBillType($event.option.value)'>
+                <mat-option *ngFor="let billerType of filteredBillType | async" [value]="billerType">
+                    <span>{{ billerType.name }}</span>
+                </mat-option>
+            </mat-autocomplete>
+        </mat-form-field>
+        <mat-form-field class="form-full-width">
+            <input matInput placeholder="Biller Company" aria-label="Biller Company" [matAutocomplete]="autoComp" [formControl]="billCompanyCtrl">
+            <mat-autocomplete #autoComp="matAutocomplete" [displayWith]="displayFnCom" (optionSelected)='getBillComp($event.option.value)'>
+                <mat-option *ngFor="let billerCompany of filteredBillCompany | async" [value]="billerCompany">
+                    <span>{{ billerCompany.name }}</span>
+                </mat-option>
+            </mat-autocomplete>
+        </mat-form-field>
+        <mat-form-field style="width: 85%;">
+            <input matInput placeholder="Product Name" name="product" [value]="product">
+        </mat-form-field>
+        <mat-form-field class="form-full-width">
+            <input matInput placeholder="External Code" name="externalCode" [(ngModel)]="billerDetail.externalCode">
+        </mat-form-field>
+        <mat-form-field class="form-full-width">
+            <input type="number" matInput placeholder="Buy Price" name="buyPrice" [(ngModel)]="billerDetail.buyPrice">
+        </mat-form-field>
+        <mat-form-field class="form-full-width">
+            <input type="number" matInput placeholder="Fee" name="fee" [(ngModel)]="billerDetail.fee">
+        </mat-form-field>
+        <mat-form-field class="form-full-width">
+            <input type="number" matInput placeholder="Profit" name="profit" [(ngModel)]="billerDetail.profit">
+        </mat-form-field>
+        <mat-form-field class="form-full-width">
+            <input type="number" matInput placeholder="Sell Price" name="sellPrice" [(ngModel)]="billerDetail.sellPrice">
+        </mat-form-field>
+    </form>
+</div>
+<div mat-dialog-actions>
+    <button mat-raised-button (click)="onNoClick()">Cancel</button>
+    <button mat-raised-button color="primary" cdkFocusInitial (click)="save()">Save</button>
+</div>

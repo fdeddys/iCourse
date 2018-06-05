@@ -25,12 +25,12 @@
 
         <mat-divider></mat-divider>
         <br>
-        <button mat-raised-button color="primary" (click)="openProdDialog()" style="margin-bottom: 10px;">Choose Product</button>
+        <button mat-raised-button color="primary" (click)="openBDDialog()" style="margin-bottom: 10px;">Add Biller Detail</button>
         <ag-grid-angular 
-            style="height: 400px;" 
+            style="height: 250px;" 
             class="ag-theme-material"
-            [rowData]="rowData" 
-            [columnDefs]="columnDefs"
+            [gridOptions]="gridOptions"
+            (gridReady)="onGridReady($event)"
             >
         </ag-grid-angular>
 	</form>

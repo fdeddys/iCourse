@@ -8,9 +8,10 @@ import { map, startWith } from 'rxjs/operators';
 
 import { FormControl } from '@angular/forms';
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
+import { Member } from '../member';
 import { MemberType } from '../member-type';
 
-import { BillerDetailComponent } from '../biller-detail/biller-detail.component';
+import { BillerDetail, BillerDetailComponent } from '../biller-detail';
 
 @Component({
     selector: 'app-biller-dialog',
@@ -19,29 +20,44 @@ import { BillerDetailComponent } from '../biller-detail/biller-detail.component'
 })
 export class BillerDialogComponent implements OnInit {
 
+    private gridApi;
+    private gridColumnApi;
+
     membTypeCtrl: FormControl;
     filteredMembType: Observable<any[]>;
 
     biller: Biller;
     billerSave: Biller;
+
+    billerDetail: BillerDetail;
+    billerDetails: BillerDetail[];
+    memberList = [];
     memberTypeList = [];
+    billerTypeList = [];
+    billerCompanyList = [];
 
     modeTitle = '';
 
     minDate = new Date(2000, 0, 1);
     maxDate = new Date(2020, 0, 1);
 
-    columnDefs = [
-        {headerName: 'Make', field: 'make' },
-        {headerName: 'Model', field: 'model' },
-        {headerName: 'Price', field: 'price'}
-    ];
-
-    rowData = [
-        { make: 'Toyota', model: 'Celica', price: 35000 },
-        { make: 'Ford', model: 'Mondeo', price: 32000 },
-        { make: 'Porsche', model: 'Boxter', price: 72000 }
-    ];
+    gridOptions = {
+        columnDefs: [
+            // { headerName: 'Name', field: 'name', checkboxSelection: true, width: 250, pinned: 'left', editable: true },
+            { headerName: 'External Code', field: 'externalCode', width: 250, pinned: 'left', editable: false },
+            { headerName: 'Buy Price', field: 'buyPrice', width: 250 },
+            { headerName: 'Fee', field: 'fee', width: 250 },
+            { headerName: 'Profit', field: 'profit', width: 250 },
+            { headerName: 'Sell Price', field: 'sellPrice', width: 250 },
+            { headerName: 'Post Paid', field: 'postPaid', width: 250 },
+        ],
+        rowData: this.billerDetails,
+        enableSorting: true,
+        enableFilter: true,
+        // rowSelection: "multiple"
+        pagination: true,
+        paginationPageSize: 10
+    };
 
     constructor(
         private dialog: MatDialog,
@@ -75,7 +91,10 @@ export class BillerDialogComponent implements OnInit {
             this.membTypeCtrl.setValue(this.data.rowData.memberType);
         }
         this.biller = this.data.rowData;
+        this.memberList = this.data.memberData;
         this.memberTypeList = this.data.memberTypeData;
+        this.billerCompanyList = this.data.billerCompanyData;
+        this.billerTypeList = this.data.billerTypeData;
     }
 
     private onError(error) {
@@ -86,11 +105,35 @@ export class BillerDialogComponent implements OnInit {
         this.dialogRef.close();
     }
 
-    openProdDialog(): void {
+    onGridReady(params) {
+        this.gridApi = params.api;
+        this.gridColumnApi = params.columnApi;
+    }
+
+    openBDDialog(mode, data): void {
         console.log('open dialog');
+        const datasend = {
+            mode : 'create',
+            modeTitle : 'Create',
+            billerCompanyData : this.billerCompanyList,
+            billerTypeData : this.billerTypeList,
+            // rowData : {
+            //     externalCode : null,
+            //     buyPrice : null,
+            //     fee : null,
+            //     profit : null,
+            //     sellPrice : null,
+            //     postPaid : null,
+            // },
+        };
+        // if (mode !== 'create') {
+        //     datasend.mode = mode;
+        //     datasend.modeTitle = (mode === 'view' ? 'View' : 'Edit');
+        //     datasend.rowData = data;
+        // }
         const dialogRef = this.dialog.open(BillerDetailComponent, {
             width: '1000px',
-            // data: datasend
+            data: datasend
         });
 
         dialogRef.afterClosed().subscribe(result => {

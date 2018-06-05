@@ -3,7 +3,10 @@ import { HttpResponse, HttpErrorResponse } from '@angular/common/http';
 import { Biller } from './biller.model';
 import { BillerService } from './biller.service';
 
+import { Member, MemberService } from '../member';
 import { MemberType, MemberTypeService } from '../member-type';
+import { BillerCompany, BillerCompanyService } from '../biller-company';
+import { BillerType, BillerTypeService } from '../biller-type';
 
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
 
@@ -23,7 +26,11 @@ export class BillerComponent implements OnInit {
     private gridColumnApi;
     billers: Biller[];
     biller: Biller;
+
+    memberList = [];
     memberTypeList = [];
+    billerTypeList = [];
+    billerCompanyList = [];
 
     gridOptions = {
         columnDefs: [
@@ -50,6 +57,9 @@ export class BillerComponent implements OnInit {
 
     constructor(
         private dialog: MatDialog,
+        private billerCompanyService: BillerCompanyService,
+        private billerTypeService: BillerTypeService,
+        private memberService: MemberService,
         private memberTypeService: MemberTypeService,
         private billerService: BillerService
     ) { }
@@ -77,12 +87,45 @@ export class BillerComponent implements OnInit {
     }
 
     ngOnInit() {
+        this.memberService.query({
+            page: 1,
+            count: 10000,
+        })
+        .subscribe(
+                (res: HttpResponse<MemberType[]>) => this.onSuccessMemb(res.body, res.headers),
+                (res: HttpErrorResponse) => this.onError(res.message),
+                () => { console.log('finally'); }
+        );
+
         this.memberTypeService.query({
             page: 1,
             count: 10000,
         })
         .subscribe(
                 (res: HttpResponse<MemberType[]>) => this.onSuccessMembType(res.body, res.headers),
+                (res: HttpErrorResponse) => this.onError(res.message),
+                () => { console.log('finally'); }
+        );
+
+        this.billerCompanyService.query({})
+        .subscribe(
+                // (res: HttpResponse<BillerCompany[]>) => this.onSuccess(res.body, res.headers),
+                (res: HttpResponse<BillerCompany[]>) => {
+                    this.billerCompanyList = res.body;
+                },
+                (res: HttpErrorResponse) => this.onError(res.message),
+                () => { console.log('finally'); }
+        );
+        this.billerTypeService.query({
+            page: 1,
+            count: 10000,
+        })
+        .subscribe(
+                (res: HttpResponse<BillerType[]>) => this.onSuccessBillType(res.body, res.headers),
+                // (res: HttpResponse<BillerType[]>) => {
+                //     console.log(res.body);
+                //     this.billerTypeList = res.body;
+                // },
                 (res: HttpErrorResponse) => this.onError(res.message),
                 () => { console.log('finally'); }
         );
@@ -118,6 +161,9 @@ export class BillerComponent implements OnInit {
         const datasend = {
             mode : 'create',
             modeTitle : 'Create',
+            billerCompanyData : this.billerCompanyList,
+            billerTypeData : this.billerTypeList,
+            memberData: this.memberList,
             memberTypeData : this.memberTypeList,
             rowData : {
                 description : null,
@@ -144,8 +190,16 @@ export class BillerComponent implements OnInit {
         });
     }
 
+    private onSuccessMemb(data, headers) {
+        this.memberList = data.content;
+    }
+
     private onSuccessMembType(data, headers) {
         this.memberTypeList = data.content;
+    }
+
+    private onSuccessBillType(data, headers) {
+        this.billerTypeList = data.content;
     }
 
     private onSuccess(data, headers) {
