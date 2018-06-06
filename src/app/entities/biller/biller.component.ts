@@ -71,7 +71,7 @@ export class BillerComponent implements OnInit {
         console.log('Start call function all header');
         this.billerService.query({
             page: 1,
-            count: 20,
+            count: 200,
             // size: this.itemsPerPage,
             // sort: this.sort()
         })
@@ -204,6 +204,9 @@ export class BillerComponent implements OnInit {
 
         dialogRef.afterClosed().subscribe(result => {
             console.log('The dialog was closed');
+            if (result === 'refresh') {
+                this.loadAll();
+            }
             // this.animal = result;
         });
     }

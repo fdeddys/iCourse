@@ -8,6 +8,8 @@ export class Biller implements BaseEntity {
         public dateThru?: string,
         public memberTypeId?: number,
         public memberId?: number,
+        public generateMemberCode?: boolean,
+        public manualCode?: string
     ) {
     }
 }

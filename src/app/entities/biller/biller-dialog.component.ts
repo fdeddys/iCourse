@@ -2,6 +2,7 @@ import { Component, OnInit, Inject } from '@angular/core';
 import { HttpResponse, HttpErrorResponse } from '@angular/common/http';
 import { Biller } from './biller.model';
 import { BillerService } from './biller.service';
+import { MatDatepickerInputEvent } from '@angular/material/datepicker';
 
 import { Observable } from 'rxjs';
 import { map, startWith } from 'rxjs/operators';
@@ -26,6 +27,8 @@ export class BillerDialogComponent implements OnInit {
 
     membTypeCtrl: FormControl;
     filteredMembType: Observable<any[]>;
+    membCtrl: FormControl;
+    filteredMemb: Observable<any[]>;
 
     biller: Biller;
     billerSave: Biller;
@@ -43,7 +46,7 @@ export class BillerDialogComponent implements OnInit {
     minDate = new Date(2000, 0, 1);
     maxDate = new Date(2020, 0, 1);
 
-    checked = false;
+    // checked = false;
     btnDisabled = true;
     btnLabel = 'Add Biller Detail';
 
@@ -88,11 +91,24 @@ export class BillerDialogComponent implements OnInit {
             map(value => typeof value === 'string' ? value : value.name),
             map(name => name ? this.filterMembType(name) : this.memberTypeList.slice())
         );
+
+        this.membCtrl = new FormControl();
+        this.filteredMemb = this.membCtrl.valueChanges
+        .pipe(
+            startWith<string | MemberType>(''),
+            map(value => typeof value === 'string' ? value : value.name),
+            map(name => name ? this.filterMemb(name) : this.memberList.slice())
+        );
     }
 
     filterMembType(name: string) {
         return this.memberTypeList.filter(memberType =>
         memberType.name.toLowerCase().indexOf(name.toLowerCase()) === 0);
+    }
+
+    filterMemb(name: string) {
+        return this.memberList.filter(member =>
+        member.name.toLowerCase().indexOf(name.toLowerCase()) === 0);
     }
 
     displayFnMem(memberType?: MemberType): string | undefined {
@@ -189,6 +205,23 @@ export class BillerDialogComponent implements OnInit {
         });
     }
 
+    addEvent(type: string, event: MatDatepickerInputEvent<Date>) {
+        if (type === 'start') {
+            this.biller.dateStart = this.dateFormatter(event);
+        } else if (type === 'thru') {
+            this.biller.dateThru = this.dateFormatter(event);
+        }
+    }
+
+    dateFormatter(params): string {
+        const dt  = new Date(params.value);
+        const year = dt.getFullYear();
+        const mth = dt.getMonth() + 1;
+        const day = dt.getDate();
+        // return dt.toLocaleString(['id']);
+        return year + '-' + (mth < 10 ? '0' + mth : mth) + '-' + (day < 10 ? '0' + day : day);
+    }
+
     save(): void {
         this.billerSave = {
             id: this.biller.id,
@@ -196,16 +229,19 @@ export class BillerDialogComponent implements OnInit {
             dateStart: this.biller.dateStart,
             dateThru: this.biller.dateThru,
             memberTypeId: this.membTypeCtrl.value.id,
+            memberId: this.membCtrl.value.id,
+            generateMemberCode: (this.biller.generateMemberCode === undefined ? false : this.biller.generateMemberCode),
+            manualCode: (this.biller.manualCode === undefined ? '' : this.biller.manualCode)
         };
         console.log(this.billerSave);
-        if (this.biller.id === undefined || this.biller.id === null) {
-            console.log('send to service ', this.biller);
-            this.billerService.create(this.biller).subscribe((res: HttpResponse<Biller>) => {
+        if (this.billerSave.id === undefined || this.billerSave.id === null) {
+            console.log('send to service ', this.billerSave);
+            this.billerService.create(this.billerSave).subscribe((res: HttpResponse<Biller>) => {
                 this.dialogRef.close('refresh');
             });
         } else {
-            console.log('send to service ', this.biller);
-            this.billerService.update(this.biller.id, this.biller).subscribe((res: HttpResponse<Biller>) => {
+            console.log('send to service ', this.billerSave);
+            this.billerService.update(this.billerSave.id, this.billerSave).subscribe((res: HttpResponse<Biller>) => {
                 this.dialogRef.close('refresh');
             });
         }

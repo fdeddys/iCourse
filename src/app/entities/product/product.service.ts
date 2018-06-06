@@ -13,6 +13,7 @@ export type EntityResponseType = HttpResponse<Product>;
 export class ProductService {
 
     private resourceUrl =  'http://localhost:8080/api/billerproduct';
+    private searchByUtilUrl = 'http://localhost:8080/api/util/searchbylist';
 
     constructor(private http: HttpClient) { }
 
@@ -58,6 +59,11 @@ export class ProductService {
     update(id: number, product: Product): Observable<EntityResponseType> {
         const copy = this.convert(product);
         return this.http.put<Product>(`${this.resourceUrl}/${id}`, copy, { observe: 'response'})
+            .pipe(map((res: EntityResponseType) => this.convertResponse(res)));
+    }
+
+    getSearchBy(req?: any): Observable<EntityResponseType> {
+        return this.http.get(`${this.searchByUtilUrl}`, { observe: 'response'})
             .pipe(map((res: EntityResponseType) => this.convertResponse(res)));
     }
 

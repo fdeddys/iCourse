@@ -26,6 +26,7 @@ export class ProductComponent implements OnInit {
     product: Product;
     billerTypeList = [];
     billerCompanyList = [];
+    searchByList = [];
 
     gridOptions = {
         columnDefs: [
@@ -64,7 +65,7 @@ export class ProductComponent implements OnInit {
         console.log('Start call function all header');
         this.productService.query({
             page: 1,
-            count: 20,
+            count: 200,
             // size: this.itemsPerPage,
             // sort: this.sort()
         })
@@ -108,6 +109,14 @@ export class ProductComponent implements OnInit {
                 (res: HttpErrorResponse) => this.onError(res.message),
                 () => { console.log('finally'); }
         );
+        // this.productService.getSearchBy()
+        // .subscribe(
+        //         (res) => {
+        //             this.searchByList = res.body;
+        //         },
+        //         (res: HttpErrorResponse) => this.onError(res.message),
+        //         () => { console.log('finally'); }
+        // )
     }
 
     onGridReady(params) {
