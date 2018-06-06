@@ -16,6 +16,7 @@ export class BillerTypeDialogComponent implements OnInit {
 
     billerType: BillerType;
     name: string;
+    checked = false;
 
     constructor(
         public billerTypeService: BillerTypeService,
@@ -28,6 +29,7 @@ export class BillerTypeDialogComponent implements OnInit {
             // search
             this.billerType = this.data.BillerType;
             this.name = this.billerType.name;
+            this.checked =  this.billerType.ispostpaid;
         }
     }
 
@@ -36,7 +38,7 @@ export class BillerTypeDialogComponent implements OnInit {
     }
 
     save(): void {
-        // this.billerType.ispostpaid = this.checked  ;
+        this.billerType.ispostpaid = this.checked  ;
         console.log('isi biller = ', this.billerType);
         // this.BillerType.name = this.name;
         console.log('isi biller company ', this.billerType);
