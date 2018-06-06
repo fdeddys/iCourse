@@ -1,4 +1,5 @@
 import { Component, OnInit, Inject } from '@angular/core';
+import { MatDatepickerInputEvent } from '@angular/material/datepicker';
 import * as _ from 'lodash';
 
 import { Observable } from 'rxjs';
@@ -28,6 +29,9 @@ export class BillerPriceDetailComponent implements OnInit {
     billerTypeList = [];
     billerCompanyList = [];
     productList = [];
+
+    minDate = new Date(2000, 0, 1);
+    maxDate = new Date(2020, 0, 1);
 
     constructor(
         private dialog: MatDialog,
@@ -89,6 +93,14 @@ export class BillerPriceDetailComponent implements OnInit {
         console.log(value);
     }
 
+    addEvent(type: string, event: MatDatepickerInputEvent<Date>) {
+        if (type === 'start') {
+            this.billerPriceDetail.dateStart = event.value.toDateString();
+        } else if (type === 'thru') {
+            this.billerPriceDetail.dateThru = event.value.toDateString();
+        }
+    }
+
     closed(): void {
         console.log('close panel ', this.billTypeCtrl.value);
         if (this.billTypeCtrl.value === null && this.billCompanyCtrl.value !== null) {
@@ -108,6 +120,11 @@ export class BillerPriceDetailComponent implements OnInit {
 
     onNoClick(): void {
         this.dialogRef.close();
+    }
+
+    save(): void {
+        console.log(this.billerPriceDetail);
+        this.dialogRef.close(this.billerPriceDetail);
     }
 
 }

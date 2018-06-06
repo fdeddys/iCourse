@@ -31,6 +31,16 @@
         <mat-form-field class="form-full-width">
             <input type="number" matInput placeholder="Profit" name="profit" [(ngModel)]="billerPriceDetail.profit">
         </mat-form-field>
+        <mat-form-field class="form-full-width">
+            <input matInput [min]="minDate" [max]="maxDate" [matDatepicker]="picker" placeholder="Date Start" (dateInput)="addEvent('start', $event)">
+            <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+            <mat-datepicker #picker></mat-datepicker>
+        </mat-form-field>
+        <mat-form-field class="form-full-width">
+            <input matInput [min]="minDate" [max]="maxDate" [matDatepicker]="pickerT" placeholder="Date Thru" (dateInput)="addEvent('thru', $event)">
+            <mat-datepicker-toggle matSuffix [for]="pickerT"></mat-datepicker-toggle>
+            <mat-datepicker #pickerT></mat-datepicker>
+        </mat-form-field>
     </form>
 </div>
 <div mat-dialog-actions>

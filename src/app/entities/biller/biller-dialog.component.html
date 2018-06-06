@@ -23,24 +23,24 @@
             <mat-datepicker #pickerT></mat-datepicker>
         </mat-form-field>
         <section class="example-section">
-            <mat-checkbox class="example-margin" [(ngModel)]="checked" [ngModelOptions]="{standalone: true}">Add Member Code</mat-checkbox>
+            <mat-checkbox class="example-margin" [color]="'primary'" [(ngModel)]="checked" [ngModelOptions]="{standalone: true}">Add Member Code</mat-checkbox>
         </section>
         <mat-form-field class="form-full-width">
 			<input matInput placeholder="Member Code" name="memberCode" [(ngModel)]="biller.memberCode" [disabled]="!checked">
         </mat-form-field>
         
-        <mat-divider></mat-divider>
+        <!-- <mat-divider></mat-divider> -->
         <br>
-        <br>
-        <br>
-        <button mat-raised-button color="primary" (click)="openBDDialog()" style="margin-bottom: 10px;" [disabled]="btnDisabled">{{ btnLabel }}</button>
-        <ag-grid-angular 
-            style="height: 250px;" 
-            class="ag-theme-material"
-            [gridOptions]="gridOptions"
-            (gridReady)="onGridReady($event)"
-            >
-        </ag-grid-angular>
+        <button mat-raised-button color="primary" (click)="openBDDialog()" style="margin-top: 30px; margin-bottom: 10px;" [disabled]="btnDisabled">{{ btnLabel }}</button>
+        <fieldset style="border: 1px #ddd solid">            
+            <ag-grid-angular 
+                style="height: 250px;" 
+                class="ag-theme-material"
+                [gridOptions]="gridOptions"
+                (gridReady)="onGridReady($event)"
+                >
+            </ag-grid-angular>
+        </fieldset>        
 	</form>
 </div>
 <div mat-dialog-actions>
