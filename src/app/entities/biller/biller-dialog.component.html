@@ -1,4 +1,4 @@
-<h1 mat-dialog-title>{{ modeTitle }} Biller Registration</h1>
+<h1 mat-dialog-title>Biller Registration</h1>
 <div mat-dialog-content>
     <form class="form-container">
 		<mat-form-field class="form-full-width">
@@ -6,7 +6,7 @@
 		</mat-form-field>
 		<mat-form-field class="form-full-width">
 			<input matInput placeholder="Member Type" aria-label="Member Type" [matAutocomplete]="auto" [formControl]="membTypeCtrl">
-			<mat-autocomplete #auto="matAutocomplete" [displayWith]="displayFnMem">
+			<mat-autocomplete #auto="matAutocomplete" [displayWith]="displayFnMem" (optionSelected)='getMembType($event.option.value)'>
 				<mat-option *ngFor="let memberType of filteredMembType | async" [value]="memberType">
 					<span>{{ memberType.name }}</span>
 				</mat-option>
@@ -22,10 +22,18 @@
             <mat-datepicker-toggle matSuffix [for]="pickerT"></mat-datepicker-toggle>
             <mat-datepicker #pickerT></mat-datepicker>
         </mat-form-field>
-
+        <section class="example-section">
+            <mat-checkbox class="example-margin" [(ngModel)]="checked" [ngModelOptions]="{standalone: true}">Add Member Code</mat-checkbox>
+        </section>
+        <mat-form-field class="form-full-width">
+			<input matInput placeholder="Member Code" name="memberCode" [(ngModel)]="biller.memberCode" [disabled]="!checked">
+        </mat-form-field>
+        
         <mat-divider></mat-divider>
         <br>
-        <button mat-raised-button color="primary" (click)="openBDDialog()" style="margin-bottom: 10px;">Add Biller Detail</button>
+        <br>
+        <br>
+        <button mat-raised-button color="primary" (click)="openBDDialog()" style="margin-bottom: 10px;" [disabled]="btnDisabled">{{ btnLabel }}</button>
         <ag-grid-angular 
             style="height: 250px;" 
             class="ag-theme-material"

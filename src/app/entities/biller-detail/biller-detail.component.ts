@@ -1,4 +1,5 @@
 import { Component, OnInit, Inject } from '@angular/core';
+import * as _ from 'lodash';
 
 import { Observable } from 'rxjs';
 import { map, startWith } from 'rxjs/operators';
@@ -8,6 +9,7 @@ import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
 import { BillerDetail } from './biller-detail.model';
 import { BillerType } from '../biller-type';
 import { BillerCompany } from '../biller-company';
+import { Product } from '../product';
 
 @Component({
     selector: 'app-biller-detail',
@@ -20,11 +22,13 @@ export class BillerDetailComponent implements OnInit {
     filteredBillType: Observable<any[]>;
     billCompanyCtrl: FormControl;
     filteredBillCompany: Observable<any[]>;
+    // filteredProduct: Observable<any[]>;
 
     billerDetail: BillerDetail;
 
     billerTypeList = [];
     billerCompanyList = [];
+    productList = [];
 
     constructor(
         private dialog: MatDialog,
@@ -56,6 +60,7 @@ export class BillerDetailComponent implements OnInit {
         this.billerDetail = {};
         this.billerCompanyList = this.data.billerCompanyData;
         this.billerTypeList = this.data.billerTypeData;
+        this.productList = this.data.productData;
     }
 
     filterBillType(name: string) {
@@ -76,18 +81,40 @@ export class BillerDetailComponent implements OnInit {
         return billerCompany ? billerCompany.name : undefined;
     }
 
-    getBillType(value) {
-        console.log(value);
-        // return this.billerCompanyList.filter(billerCompany =>
-        // billerCompany.billerType.toLowerCase().indexOf(name.toLowerCase()) === 0);
-    }
+    // getBillType(value) {
+    //     this.productList = _.filter(this.productList, function(o) { return o.billerType.id === value.id; });
+    //     console.log(this.productList);
+    // }
 
-    getBillComp(value) {
-        console.log(value);
+    // getBillComp(value) {
+    //     this.productList = _.filter(this.productList, function(o) { return o.billerType.id === value.id; });
+    //     console.log(this.productList);
+    // }
+
+    closed(): void {
+        console.log('close panel ', this.billTypeCtrl.value);
+        if (this.billTypeCtrl.value === null && this.billCompanyCtrl.value !== null) {
+            const idC = this.billCompanyCtrl.value.id;
+            this.productList = _.filter(this.data.productData, function(o) { return o.billerCompany.id === idC; });
+        } else if (this.billTypeCtrl.value !== null && this.billCompanyCtrl.value === null) {
+            const idT = this.billTypeCtrl.value.id;
+            this.productList = _.filter(this.data.productData, function(o) { return o.billerType.id === idT; });
+        } else if (this.billTypeCtrl.value !== null && this.billCompanyCtrl.value !== null) {
+            const idC = this.billCompanyCtrl.value.id;
+            const idT = this.billTypeCtrl.value.id;
+            this.productList = _.filter(this.data.productData, function(o) { return o.billerType.id === idT; });
+            this.productList = _.filter(this.productList, function(o) { return o.billerCompany.id === idC; });
+        }
+        console.log(this.productList);
     }
 
     onNoClick(): void {
         this.dialogRef.close();
+    }
+
+    save(): void {
+        console.log(this.billerDetail);
+        this.dialogRef.close(this.billerDetail);
     }
 
 }

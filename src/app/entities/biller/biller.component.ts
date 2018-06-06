@@ -7,6 +7,7 @@ import { Member, MemberService } from '../member';
 import { MemberType, MemberTypeService } from '../member-type';
 import { BillerCompany, BillerCompanyService } from '../biller-company';
 import { BillerType, BillerTypeService } from '../biller-type';
+import { Product, ProductService } from '../product';
 
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
 
@@ -31,6 +32,7 @@ export class BillerComponent implements OnInit {
     memberTypeList = [];
     billerTypeList = [];
     billerCompanyList = [];
+    productList = [];
 
     gridOptions = {
         columnDefs: [
@@ -59,6 +61,7 @@ export class BillerComponent implements OnInit {
         private dialog: MatDialog,
         private billerCompanyService: BillerCompanyService,
         private billerTypeService: BillerTypeService,
+        private productService: ProductService,
         private memberService: MemberService,
         private memberTypeService: MemberTypeService,
         private billerService: BillerService
@@ -116,6 +119,7 @@ export class BillerComponent implements OnInit {
                 (res: HttpErrorResponse) => this.onError(res.message),
                 () => { console.log('finally'); }
         );
+
         this.billerTypeService.query({
             page: 1,
             count: 10000,
@@ -126,6 +130,18 @@ export class BillerComponent implements OnInit {
                 //     console.log(res.body);
                 //     this.billerTypeList = res.body;
                 // },
+                (res: HttpErrorResponse) => this.onError(res.message),
+                () => { console.log('finally'); }
+        );
+
+        this.productService.query({
+            page: 1,
+            count: 10000,
+            // size: this.itemsPerPage,
+            // sort: this.sort()
+        })
+        .subscribe(
+                (res: HttpResponse<Product[]>) => this.onSuccessProduct(res.body, res.headers),
                 (res: HttpErrorResponse) => this.onError(res.message),
                 () => { console.log('finally'); }
         );
@@ -165,6 +181,7 @@ export class BillerComponent implements OnInit {
             billerTypeData : this.billerTypeList,
             memberData: this.memberList,
             memberTypeData : this.memberTypeList,
+            productData : this.productList,
             rowData : {
                 description : null,
                 dateStart : null,
@@ -181,6 +198,7 @@ export class BillerComponent implements OnInit {
         }
         const dialogRef = this.dialog.open(BillerDialogComponent, {
             width: '1000px',
+            height: '1100px',
             data: datasend
         });
 
@@ -200,6 +218,10 @@ export class BillerComponent implements OnInit {
 
     private onSuccessBillType(data, headers) {
         this.billerTypeList = data.content;
+    }
+
+    private onSuccessProduct(data, headers) {
+        this.productList = data.content;
     }
 
     private onSuccess(data, headers) {
