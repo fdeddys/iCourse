@@ -5,6 +5,7 @@ import { BillerTypeService } from './biller-type.service';
 import { BillerTypeDialogComponent } from './biller-type-dialog.component';
 import { HttpResponse, HttpErrorResponse } from '@angular/common/http';
 import { BillerTypeConfirmComponent } from './biller-type-confirm.component';
+import { GRID_THEME } from '../../shared/constant/base-constant';
 
 @Component({
   selector: 'app-biller-type',
@@ -15,7 +16,7 @@ export class BillerTypeComponent implements OnInit {
 
   private gridApi;
   private gridColumnApi;
-
+  theme: String = GRID_THEME;
   billerTipes: BillerType[];
   BillerType: BillerType;
 

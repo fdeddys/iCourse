@@ -9,6 +9,7 @@ import { MemberTypeModule } from './member-type/member-type.module';
 import { GlobalSettingModule } from './global-setting/global-setting.module';
 import { BillerDetailModule } from './biller-detail/biller-detail.module';
 import { BillerPriceDetailModule } from './biller-price-detail/biller-price-detail.module';
+import { MemberBankModule } from './member-bank/member-bank.module';
 
 
 @NgModule({
@@ -20,11 +21,13 @@ import { BillerPriceDetailModule } from './biller-price-detail/biller-price-deta
         BillerTypeModule,
         MemberTypeModule,
         GlobalSettingModule,
+        MemberBankModule,
         BillerDetailModule,
         BillerPriceDetailModule
     ],
     entryComponents: [],
     providers: [],
-    schemas: [CUSTOM_ELEMENTS_SCHEMA]
+    schemas: [CUSTOM_ELEMENTS_SCHEMA],
+
 })
 export class EntityModule {}
