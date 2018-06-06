@@ -26,7 +26,7 @@ export class SidebarComponent {
       ]
     },
     {
-      Name: 'Setting', Link: 'settings',
+      name: 'Settings', link: 'settings',
       subLinks: [
         {name: 'Global Setting', link: 'global-setting'},
       ]

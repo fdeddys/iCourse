@@ -12,6 +12,7 @@ import { Member } from '../member';
 import { MemberType } from '../member-type';
 
 import { BillerDetail, BillerDetailComponent } from '../biller-detail';
+import { BillerPriceDetail, BillerPriceDetailComponent } from '../biller-price-detail';
 
 @Component({
     selector: 'app-biller-dialog',
@@ -35,23 +36,38 @@ export class BillerDialogComponent implements OnInit {
     memberTypeList = [];
     billerTypeList = [];
     billerCompanyList = [];
+    productList = [];
 
     modeTitle = '';
 
     minDate = new Date(2000, 0, 1);
     maxDate = new Date(2020, 0, 1);
 
+    checked = false;
+    btnDisabled = true;
+    btnLabel = 'Add Biller Detail';
+
+    colDefs = [
+        // { headerName: 'Name', field: 'name', checkboxSelection: true, width: 250, pinned: 'left', editable: true },
+        { headerName: 'External Code', field: 'externalCode', width: 250, pinned: 'left', editable: false },
+        { headerName: 'Buy Price', field: 'buyPrice', width: 250 },
+        { headerName: 'Fee', field: 'fee', width: 250 },
+        { headerName: 'Profit', field: 'profit', width: 250 },
+        { headerName: 'Sell Price', field: 'sellPrice', width: 250 },
+        { headerName: 'Post Paid', field: 'postPaid', width: 250 },
+    ];
+
+    nonColDefs = [
+        // { headerName: 'Name', field: 'name', checkboxSelection: true, width: 250, pinned: 'left', editable: true },
+        { headerName: 'Sales Price', field: 'salesPrice', width: 250 },
+        { headerName: 'Profit', field: 'profit', width: 250 },
+        { headerName: 'Date Start', field: 'dateStart', width: 250 },
+        { headerName: 'Date Thru', field: 'dateThru', width: 250 }
+    ];
+
     gridOptions = {
-        columnDefs: [
-            // { headerName: 'Name', field: 'name', checkboxSelection: true, width: 250, pinned: 'left', editable: true },
-            { headerName: 'External Code', field: 'externalCode', width: 250, pinned: 'left', editable: false },
-            { headerName: 'Buy Price', field: 'buyPrice', width: 250 },
-            { headerName: 'Fee', field: 'fee', width: 250 },
-            { headerName: 'Profit', field: 'profit', width: 250 },
-            { headerName: 'Sell Price', field: 'sellPrice', width: 250 },
-            { headerName: 'Post Paid', field: 'postPaid', width: 250 },
-        ],
-        rowData: this.billerDetails,
+        columnDefs: this.colDefs,
+        rowData: [],
         enableSorting: true,
         enableFilter: true,
         // rowSelection: "multiple"
@@ -95,6 +111,7 @@ export class BillerDialogComponent implements OnInit {
         this.memberTypeList = this.data.memberTypeData;
         this.billerCompanyList = this.data.billerCompanyData;
         this.billerTypeList = this.data.billerTypeData;
+        this.productList = this.data.productData;
     }
 
     private onError(error) {
@@ -108,6 +125,27 @@ export class BillerDialogComponent implements OnInit {
     onGridReady(params) {
         this.gridApi = params.api;
         this.gridColumnApi = params.columnApi;
+
+        this.loadAll();
+    }
+
+    getMembType(value) {
+        console.log(value);
+        this.btnDisabled = false;
+        this.btnLabel = value.id === 1 ? 'Add Biller Detail' : 'Add Non Biller Detail';
+        if (value.id === 1) {
+            this.btnLabel = 'Add Biller Detail';
+            this.gridApi.setColumnDefs(this.colDefs);
+        } else {
+            this.btnLabel = 'Add Non Biller Detail';
+            this.gridApi.setColumnDefs(this.nonColDefs);
+        }
+        this.gridApi.setRowData([]);
+    }
+
+    loadAll() {
+        console.log('load data..');
+        this.gridApi.hideOverlay();
     }
 
     openBDDialog(mode, data): void {
@@ -117,6 +155,7 @@ export class BillerDialogComponent implements OnInit {
             modeTitle : 'Create',
             billerCompanyData : this.billerCompanyList,
             billerTypeData : this.billerTypeList,
+            productData : this.productList,
             // rowData : {
             //     externalCode : null,
             //     buyPrice : null,
@@ -131,14 +170,22 @@ export class BillerDialogComponent implements OnInit {
         //     datasend.modeTitle = (mode === 'view' ? 'View' : 'Edit');
         //     datasend.rowData = data;
         // }
-        const dialogRef = this.dialog.open(BillerDetailComponent, {
+        const dialogRef = this.membTypeCtrl.value.id === 1 ?
+        this.dialog.open(BillerDetailComponent, {
+            width: '1000px',
+            data: datasend
+        }) :
+        this.dialog.open(BillerPriceDetailComponent, {
             width: '1000px',
             data: datasend
         });
 
         dialogRef.afterClosed().subscribe(result => {
-            console.log('The dialog was closed');
-            // this.animal = result;
+            console.log('The dialog was closed : ', result);
+            // this.gridApi.rowData.push(result);
+            if (result !== undefined) {
+                this.gridApi.updateRowData({ add: [result] });
+            }
         });
     }
 

@@ -1,24 +1,29 @@
 <h1 mat-dialog-title>{{ modeTitle }} Biller Detail</h1>
 <div mat-dialog-content>
     <form class="form-container">		
-        <mat-form-field class="form-full-width">
+        <mat-form-field style="width: 25%; margin-right: 5%">
             <input matInput placeholder="Biller Type" aria-label="Biller Type" [matAutocomplete]="auto" [formControl]="billTypeCtrl">
-            <mat-autocomplete #auto="matAutocomplete" [displayWith]="displayFnBil" (optionSelected)='getBillType($event.option.value)'>
+            <mat-autocomplete #auto="matAutocomplete" [displayWith]="displayFnBil" (closed)='closed()'>
                 <mat-option *ngFor="let billerType of filteredBillType | async" [value]="billerType">
                     <span>{{ billerType.name }}</span>
                 </mat-option>
             </mat-autocomplete>
         </mat-form-field>
-        <mat-form-field class="form-full-width">
+        <mat-form-field style="width: 25%; margin-right: 5%">
             <input matInput placeholder="Biller Company" aria-label="Biller Company" [matAutocomplete]="autoComp" [formControl]="billCompanyCtrl">
-            <mat-autocomplete #autoComp="matAutocomplete" [displayWith]="displayFnCom" (optionSelected)='getBillComp($event.option.value)'>
+            <mat-autocomplete #autoComp="matAutocomplete" [displayWith]="displayFnCom" (closed)='closed()'>
                 <mat-option *ngFor="let billerCompany of filteredBillCompany | async" [value]="billerCompany">
                     <span>{{ billerCompany.name }}</span>
                 </mat-option>
             </mat-autocomplete>
         </mat-form-field>
-        <mat-form-field style="width: 85%;">
-            <input matInput placeholder="Product Name" name="product" [value]="product">
+        <mat-form-field style="width: 25%; margin-right: 5%">
+            <!-- <input matInput placeholder="Product Name" name="product" [value]="product"> -->
+            <mat-select placeholder="Denom" name="product">
+                <mat-option *ngFor="let product of productList" [value]="product.id">
+                    {{product.denom}}
+                </mat-option>
+            </mat-select>
         </mat-form-field>
         <mat-form-field class="form-full-width">
             <input matInput placeholder="External Code" name="externalCode" [(ngModel)]="billerDetail.externalCode">
@@ -39,5 +44,5 @@
 </div>
 <div mat-dialog-actions>
     <button mat-raised-button (click)="onNoClick()">Cancel</button>
-    <button mat-raised-button color="primary" cdkFocusInitial (click)="save()">Save</button>
+    <button mat-raised-button color="primary" cdkFocusInitial (click)="save()">Add Biller Detail</button>
 </div>

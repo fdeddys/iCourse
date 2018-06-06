@@ -1,3 +1,49 @@
-<p>
-  biller-price-detail works!
-</p>
+<h1 mat-dialog-title>{{ modeTitle }} Non Biller Detail</h1>
+<div mat-dialog-content>
+    <form class="form-container">		
+        <mat-form-field style="width: 25%; margin-right: 5%">
+            <input matInput placeholder="Biller Type" aria-label="Biller Type" [matAutocomplete]="auto" [formControl]="billTypeCtrl">
+            <mat-autocomplete #auto="matAutocomplete" [displayWith]="displayFnBil" (closed)='closed()'>
+                <mat-option *ngFor="let billerType of filteredBillType | async" [value]="billerType">
+                    <span>{{ billerType.name }}</span>
+                </mat-option>
+            </mat-autocomplete>
+        </mat-form-field>
+        <mat-form-field style="width: 25%; margin-right: 5%">
+            <input matInput placeholder="Biller Company" aria-label="Biller Company" [matAutocomplete]="autoComp" [formControl]="billCompanyCtrl">
+            <mat-autocomplete #autoComp="matAutocomplete" [displayWith]="displayFnCom" (closed)='closed()'>
+                <mat-option *ngFor="let billerCompany of filteredBillCompany | async" [value]="billerCompany">
+                    <span>{{ billerCompany.name }}</span>
+                </mat-option>
+            </mat-autocomplete>
+        </mat-form-field>
+        <mat-form-field style="width: 25%; margin-right: 5%">
+            <!-- <input matInput placeholder="Product Name" name="product" [value]="product"> -->
+            <mat-select placeholder="Denom" name="product">
+                <mat-option *ngFor="let product of productList" [value]="product.id">
+                    {{product.denom}}
+                </mat-option>
+            </mat-select>
+        </mat-form-field> 
+        <mat-form-field class="form-full-width">
+            <input type="number" matInput placeholder="Sales Price" name="salesPrice" [(ngModel)]="billerPriceDetail.salesPrice">
+        </mat-form-field>
+        <mat-form-field class="form-full-width">
+            <input type="number" matInput placeholder="Profit" name="profit" [(ngModel)]="billerPriceDetail.profit">
+        </mat-form-field>
+        <mat-form-field class="form-full-width">
+            <input matInput [min]="minDate" [max]="maxDate" [matDatepicker]="picker" placeholder="Date Start" (dateInput)="addEvent('start', $event)">
+            <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+            <mat-datepicker #picker></mat-datepicker>
+        </mat-form-field>
+        <mat-form-field class="form-full-width">
+            <input matInput [min]="minDate" [max]="maxDate" [matDatepicker]="pickerT" placeholder="Date Thru" (dateInput)="addEvent('thru', $event)">
+            <mat-datepicker-toggle matSuffix [for]="pickerT"></mat-datepicker-toggle>
+            <mat-datepicker #pickerT></mat-datepicker>
+        </mat-form-field>
+    </form>
+</div>
+<div mat-dialog-actions>
+    <button mat-raised-button (click)="onNoClick()">Cancel</button>
+    <button mat-raised-button color="primary" cdkFocusInitial (click)="save()">Add Non Biller Detail</button>
+</div>
