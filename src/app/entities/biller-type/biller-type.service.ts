@@ -4,13 +4,14 @@ import { Observable } from 'rxjs';
 import { map, tap } from 'rxjs/operators';
 import { createRequestOption } from '../../shared/model/request-util';
 import { BillerType } from './biller-type.model';
+import { SERVER_PATH } from '../../shared/constant/base-constant';
 
 export type EntityResponseType = HttpResponse<BillerType>;
 
 @Injectable()
 export class BillerTypeService {
 
-    private resourceUrl =  'http://localhost:8080/api/billertype';
+    private resourceUrl = SERVER_PATH + 'billertype';
 
     constructor(private http: HttpClient) { }
 

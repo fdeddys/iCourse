@@ -4,13 +4,14 @@ import { Observable } from 'rxjs';
 import { map, tap } from 'rxjs/operators';
 import { createRequestOption } from '../../shared/model/request-util';
 import { GlobalSetting } from './global-setting.model';
+import { SERVER_PATH } from '../../shared/constant/base-constant';
 
 export type EntityResponseType = HttpResponse<GlobalSetting>;
 
 @Injectable()
 export class GlobalSettingService {
 
-    private resourceUrl =  'http://localhost:8080/api/globalsetting';
+    private resourceUrl =  SERVER_PATH + 'globalsetting';
 
     constructor(private http: HttpClient) { }
 

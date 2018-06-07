@@ -5,7 +5,7 @@ import { MemberTypeService } from './member-type.service';
 import { MemberTypeDialogComponent } from './member-type-dialog.component';
 import { MemberTypeConfirmComponent } from './member-type-confirm.component';
 import { HttpResponse, HttpErrorResponse } from '@angular/common/http';
-import { GRID_THEME } from '../../shared/constant/base-constant';
+import { GRID_THEME, CSS_BUTTON } from '../../shared/constant/base-constant';
 
 @Component({
   selector: 'app-member-type',
@@ -18,6 +18,7 @@ export class MemberTypeComponent implements OnInit {
   private gridColumnApi;
 
   theme: String = GRID_THEME;
+  cssButton = CSS_BUTTON  ;
 
   memberTipes: MemberType[];
   MemberType: MemberType;
@@ -34,7 +35,7 @@ export class MemberTypeComponent implements OnInit {
       { headerName: 'action', suppressMenu: true,
         suppressSorting: true,
         template:
-          `<button mat-raised-button type="button" data-action-type="edit" >
+          `<button mat-raised-button type="button" data-action-type="edit"  ${this.cssButton} >
             Edit
           </button>
           ` }

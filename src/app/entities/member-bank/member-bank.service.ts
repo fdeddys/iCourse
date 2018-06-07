@@ -4,13 +4,14 @@ import { Observable } from 'rxjs';
 import { map, tap } from 'rxjs/operators';
 import { createRequestOption } from '../../shared/model/request-util';
 import { MemberBank } from './member-bank.model';
+import { SERVER_PATH } from '../../shared/constant/base-constant';
 
 export type EntityResponseType = HttpResponse<MemberBank>;
 
 @Injectable()
 export class MemberBankService {
 
-    private resourceUrl =  'http://localhost:8080/api/memberbank';
+    private resourceUrl = SERVER_PATH + 'memberbank';
 
     constructor(private http: HttpClient) { }
 

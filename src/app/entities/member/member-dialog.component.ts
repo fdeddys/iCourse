@@ -8,7 +8,7 @@ import { HttpResponse, HttpErrorResponse } from '@angular/common/http';
 import { MemberBankDialogComponent } from './member-bank-dialog.component';
 import { MemberBank } from '../member-bank/member-bank.model';
 import { MemberBankService } from '../member-bank';
-import { GRID_THEME } from '../../shared/constant/base-constant';
+import { GRID_THEME, CSS_BUTTON } from '../../shared/constant/base-constant';
 
 @Component({
     selector: 'app-member-dialog',
@@ -23,6 +23,7 @@ export class MemberDialogComponent implements OnInit {
     private gridColumnApi;
     private isUpdateData: Boolean = false;
     theme: String = GRID_THEME;
+    cssButton = CSS_BUTTON  ;
 
     member: Member;
     name: string;
@@ -40,7 +41,7 @@ export class MemberDialogComponent implements OnInit {
           { headerName: 'action', suppressMenu: true,
             suppressSorting: true,
             template:
-              `<button mat-raised-button type="button" data-action-type="edit" >
+              `<button mat-raised-button type="button" data-action-type="edit"  ${this.cssButton} >
                 Edit
               </button>` }
           ],

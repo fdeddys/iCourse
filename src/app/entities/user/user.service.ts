@@ -4,25 +4,25 @@ import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { tap } from 'rxjs/operators';
 
-import { Biller } from './biller.model';
+import { User } from './user.model';
 import { createRequestOption } from '../../shared/model/request-util';
 import { SERVER_PATH } from '../../shared/constant/base-constant';
 
-export type EntityResponseType = HttpResponse<Biller>;
+export type EntityResponseType = HttpResponse<User>;
 
 @Injectable()
-export class BillerService {
+export class UserService {
 
-private resourceUrl = SERVER_PATH + 'registration';
+private resourceUrl = SERVER_PATH + 'user';
 
     constructor(private http: HttpClient) { }
 
     find(id: number): Observable<EntityResponseType> {
-        return this.http.get<Biller>(`${this.resourceUrl}/${id}`, { observe: 'response'})
+        return this.http.get<User>(`${this.resourceUrl}/${id}`, { observe: 'response'})
             .pipe(map((res: EntityResponseType) => this.convertResponse(res)));
     }
 
-    query(req?: any): Observable<HttpResponse<Biller[]>> {
+    query(req?: any): Observable<HttpResponse<User[]>> {
         const options = createRequestOption(req);
         let pageNumber = null;
         let pageCount = null;
@@ -38,38 +38,38 @@ private resourceUrl = SERVER_PATH + 'registration';
 
         if (pageNumber !== null ) {
             newresourceUrl = this.resourceUrl + `/page/${pageNumber}/count/${pageCount}`;
-            return this.http.get<Biller[]>(newresourceUrl, { observe: 'response' })
+            return this.http.get<User[]>(newresourceUrl, { observe: 'response' })
             .pipe(
-                tap(biller => console.log('raw ', biller ))
+                tap(user => console.log('raw ', user ))
             );
         } else {
-            return this.http.get<Biller[]>(`${this.resourceUrl}`, {  observe: 'response' })
+            return this.http.get<User[]>(`${this.resourceUrl}`, {  observe: 'response' })
             .pipe(
-                tap(biller => console.log('raw ', biller ))
+                tap(user => console.log('raw ', user ))
             );
         }
     }
 
-    create(biller: Biller): Observable<EntityResponseType> {
-        const copy = this.convert(biller);
-        return this.http.post<Biller>(`${this.resourceUrl}`, copy, { observe: 'response'})
+    create(user: User): Observable<EntityResponseType> {
+        const copy = this.convert(user);
+        return this.http.post<User>(`${this.resourceUrl}`, copy, { observe: 'response'})
             .pipe(map((res: EntityResponseType) => this.convertResponse(res)));
     }
 
-    update(id: number, biller: Biller): Observable<EntityResponseType> {
-        const copy = this.convert(biller);
-        return this.http.put<Biller>(`${this.resourceUrl}/${id}`, copy, { observe: 'response'})
+    update(id: number, user: User): Observable<EntityResponseType> {
+        const copy = this.convert(user);
+        return this.http.put<User>(`${this.resourceUrl}/${id}`, copy, { observe: 'response'})
             .pipe(map((res: EntityResponseType) => this.convertResponse(res)));
     }
 
     private convertResponse(res: EntityResponseType): EntityResponseType {
-        const body: Biller = this.convertItemFromServer(res.body);
+        const body: User = this.convertItemFromServer(res.body);
         return res.clone({body});
     }
 
-    private convertArrayResponse(res: HttpResponse<Biller[]>): HttpResponse<Biller[]> {
-        const jsonResponse: Biller[] = res.body;
-        const body: Biller[] = [];
+    private convertArrayResponse(res: HttpResponse<User[]>): HttpResponse<User[]> {
+        const jsonResponse: User[] = res.body;
+        const body: User[] = [];
         for (let i = 0; i < jsonResponse.length; i++) {
             body.push(this.convertItemFromServer(jsonResponse[i]));
         }
@@ -77,18 +77,18 @@ private resourceUrl = SERVER_PATH + 'registration';
     }
 
     /**
-     * Convert a returned JSON object to Biller.
+     * Convert a returned JSON object to User.
      */
-    private convertItemFromServer(biller: Biller): Biller {
-        const copy: Biller = Object.assign({}, biller);
+    private convertItemFromServer(user: User): User {
+        const copy: User = Object.assign({}, user);
         return copy;
     }
 
     /**
-     * Convert a Biller to a JSON which can be sent to the server.
+     * Convert a User to a JSON which can be sent to the server.
      */
-    private convert(biller: Biller): Biller {
-        const copy: Biller = Object.assign({}, biller);
+    private convert(user: User): User {
+        const copy: User = Object.assign({}, user);
         return copy;
     }
 }

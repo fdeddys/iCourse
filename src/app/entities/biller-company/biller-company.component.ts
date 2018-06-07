@@ -5,7 +5,7 @@ import { HttpResponse, HttpErrorResponse } from '@angular/common/http';
 import { BillerCompanyService } from './biller-company.service';
 import { BillerCompanyDialogComponent } from './biller-company-dialog.component';
 import { BillerCompanyConfirmComponent } from './biller-company-confirm.component';
-import { GRID_THEME } from '../../shared/constant/base-constant';
+import { GRID_THEME, CSS_BUTTON } from '../../shared/constant/base-constant';
 
 @Component({
   selector: 'app-biller-company',
@@ -18,13 +18,14 @@ export class BillerCompanyComponent implements OnInit {
   private gridColumnApi;
 
   theme: String = GRID_THEME;
+  cssButton = CSS_BUTTON  ;
 
   billerCompanies: BillerCompany[];
   billerCompany; BillerCompany;
 
   gridOptions = {
     columnDefs: [
-      { headerName: 'id', field: 'id', width: 250, pinned: 'left', editable: false },
+      { headerName: 'id', field: 'id', width: 100, pinned: 'left', editable: false },
       { headerName: 'Name', field: 'name', width: 250, editable: false },
       { headerName: 'Created at', field: 'createdAt', width: 250, valueFormatter: this.currencyFormatter },
       { headerName: 'Update at', field: 'updatedAt', width: 250, valueFormatter: this.currencyFormatter },
@@ -33,7 +34,7 @@ export class BillerCompanyComponent implements OnInit {
       { headerName: 'action', suppressMenu: true,
         suppressSorting: true,
         template:
-          `<button mat-raised-button type="button" data-action-type="edit" >
+          `<button mat-raised-button type="button" data-action-type="edit"  ${this.cssButton} >
             Edit
           </button>` }
     ],
