@@ -1,5 +1,6 @@
 import { Component, OnInit, Inject } from '@angular/core';
 import * as _ from 'lodash';
+import { HttpResponse, HttpErrorResponse } from '@angular/common/http';
 
 import { Observable } from 'rxjs';
 import { map, startWith } from 'rxjs/operators';
@@ -7,6 +8,7 @@ import { map, startWith } from 'rxjs/operators';
 import { FormControl } from '@angular/forms';
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
 import { BillerDetail } from './biller-detail.model';
+import { BillerDetailService } from './biller-detail.service';
 import { BillerType } from '../biller-type';
 import { BillerCompany } from '../biller-company';
 import { Product } from '../product';
@@ -30,8 +32,12 @@ export class BillerDetailComponent implements OnInit {
     billerCompanyList = [];
     productList = [];
 
+    statusData = true;
+    mode = 'Add';
+
     constructor(
         private dialog: MatDialog,
+        public billerDetailService: BillerDetailService,
         public dialogRef: MatDialogRef<BillerDetailComponent>,
         @Inject(MAT_DIALOG_DATA) public data: any
     ) {
@@ -58,6 +64,27 @@ export class BillerDetailComponent implements OnInit {
 
     ngOnInit() {
         this.billerDetail = {};
+        this.billerDetail.billerHeaderId = this.data.rowData.billerHeaderId;
+        if (this.data.mode !== 'create') {
+            console.log(this.data.rowData);
+            this.mode = 'Edit';
+            this.billerDetail = {
+                id : this.data.rowData.id,
+                externalCode : this.data.rowData.externalCode,
+                buyPrice : this.data.rowData.buyPrice,
+                fee : this.data.rowData.fee,
+                profit : this.data.rowData.profit,
+                sellPrice : this.data.rowData.sellPrice,
+                billerHeaderId : this.data.rowData.billerHeader.id,
+                billerProductId : this.data.rowData.billerProduct.id,
+                postPaid : this.data.rowData.postPaid,
+                status : this.data.rowData.status
+            };
+            this.statusData = (this.data.rowData.status === 'ACTIVE' ? true : false);
+
+            this.billTypeCtrl.setValue(this.data.rowData.billerProduct.billerType);
+            this.billCompanyCtrl.setValue(this.data.rowData.billerProduct.billerCompany);
+        }
         this.billerCompanyList = this.data.billerCompanyData;
         this.billerTypeList = this.data.billerTypeData;
         this.productList = this.data.productData;
@@ -114,7 +141,42 @@ export class BillerDetailComponent implements OnInit {
 
     save(): void {
         console.log(this.billerDetail);
-        this.dialogRef.close(this.billerDetail);
+        this.billerDetail.status = (this.statusData ? 'ACTIVE' : 'INACTIVE');
+        const varBack = {
+            mode: this.data.mode,
+            rowData: {}
+        };
+
+        if (this.billerDetail.id === undefined || this.billerDetail.id === null) {
+            console.log('send to service ', this.billerDetail);
+            // direct save
+            this.billerDetailService.create(this.billerDetail).subscribe((res: HttpResponse<BillerDetail>) => {
+                this.dialogRef.close(varBack);
+            });
+
+            // indirect save
+            // const idPrd = this.billerDetail.billerProductId;
+            // varBack.rowData = {
+            //     // id : this.data.rowData.id,
+            //     // billerProduct : _.find(this.productList, function(o) { return o.id === idPrd; }),
+            //     // billerHeader : this.data.rowData.billerHeader,
+            //     externalCode : this.billerDetail.externalCode,
+            //     buyPrice : this.billerDetail.buyPrice,
+            //     fee : this.billerDetail.fee,
+            //     profit : this.billerDetail.profit,
+            //     sellPrice : this.billerDetail.sellPrice,
+            //     billerHeaderId : this.billerDetail.billerHeaderId,
+            //     billerProductId : this.billerDetail.billerProductId,
+            //     postPaid : this.billerDetail.postPaid,
+            //     status : this.billerDetail.status
+            // };
+            // this.dialogRef.close(varBack);
+        } else {
+            console.log('send to service ', this.billerDetail);
+            this.billerDetailService.update(this.billerDetail.id, this.billerDetail).subscribe((res: HttpResponse<BillerDetail>) => {
+                this.dialogRef.close(varBack);
+            });
+        }
     }
 
 }

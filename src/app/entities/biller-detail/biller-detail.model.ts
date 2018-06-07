@@ -10,7 +10,8 @@ export class BillerDetail implements BaseEntity {
         public sellPrice?: number,
         public billerHeaderId?: number,
         public billerProductId?: number,
-        public postPaid?: number
+        public postPaid?: number,
+        public status?: string
     ) {
     }
 }

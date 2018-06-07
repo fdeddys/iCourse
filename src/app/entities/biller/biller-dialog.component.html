@@ -26,7 +26,7 @@
             <mat-checkbox class="example-margin" [color]="'primary'" [(ngModel)]="biller.manualCode" [ngModelOptions]="{standalone: true}">Add Member Code</mat-checkbox>
         </section>
         <mat-form-field class="form-full-width">
-			<input matInput placeholder="Member Code" name="memberCode" [(ngModel)]="biller.memberCode" [disabled]="!biller.generateMemberCode">
+			<input matInput placeholder="Member Code" name="memberCode" [(ngModel)]="biller.memberCode" [disabled]="!biller.manualCode">
         </mat-form-field>
         <mat-form-field class="form-full-width">
 			<input matInput placeholder="Member" aria-label="Member" [matAutocomplete]="autoM" [formControl]="membCtrl">
@@ -39,19 +39,21 @@
         
         <!-- <mat-divider></mat-divider> -->
         <br>
-        <button mat-raised-button color="primary" (click)="openBDDialog()" style="margin-top: 30px; margin-bottom: 10px;" [disabled]="btnDisabled">{{ btnLabel }}</button>
+        <button mat-raised-button color="primary" (click)="openBDDialog('create')" style="margin-top: 30px; margin-bottom: 10px; margin-right: 10px;" [disabled]="btnDisabled">{{ btnLabel }}</button>
+        <button mat-raised-button color="primary" cdkFocusInitial (click)="save()">Save</button>
         <fieldset style="border: 1px #ddd solid">            
             <ag-grid-angular 
                 style="height: 250px;" 
                 class="ag-theme-material"
                 [gridOptions]="gridOptions"
                 (gridReady)="onGridReady($event)"
+                (rowClicked)="onRowClicked($event)"
                 >
             </ag-grid-angular>
         </fieldset>        
 	</form>
 </div>
-<div mat-dialog-actions>
+<!-- <div mat-dialog-actions>
     <button mat-raised-button (click)="onNoClick()">Cancel</button>
     <button mat-raised-button color="primary" cdkFocusInitial (click)="save()">Save</button>
-</div>
+</div> -->

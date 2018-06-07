@@ -1,4 +1,5 @@
 import { Component, OnInit, Inject } from '@angular/core';
+import * as _ from 'lodash';
 import { HttpResponse, HttpErrorResponse } from '@angular/common/http';
 import { Biller } from './biller.model';
 import { BillerService } from './biller.service';
@@ -14,6 +15,8 @@ import { MemberType } from '../member-type';
 
 import { BillerDetail, BillerDetailService, BillerDetailComponent } from '../biller-detail';
 import { BillerPriceDetail, BillerPriceDetailService, BillerPriceDetailComponent } from '../biller-price-detail';
+import { MatCheckboxComponent } from '../../shared/templates/mat-checkbox.component';
+import { MatActionButtonComponent } from '../../shared/templates/mat-action-button.component';
 
 @Component({
     selector: 'app-biller-dialog',
@@ -54,20 +57,41 @@ export class BillerDialogComponent implements OnInit {
 
     colDefs = [
         // { headerName: 'Name', field: 'name', checkboxSelection: true, width: 250, pinned: 'left', editable: true },
-        { headerName: 'External Code', field: 'externalCode', width: 250, pinned: 'left', editable: false },
-        { headerName: 'Buy Price', field: 'buyPrice', width: 250 },
-        { headerName: 'Fee', field: 'fee', width: 250 },
-        { headerName: 'Profit', field: 'profit', width: 250 },
-        { headerName: 'Sell Price', field: 'sellPrice', width: 250 },
-        { headerName: 'Post Paid', field: 'postPaid', width: 250 },
+        { headerName: 'External Code', field: 'externalCode', width: 150, pinned: 'left', editable: false },
+        { headerName: 'Buy Price', field: 'buyPrice', width: 125 },
+        { headerName: 'Fee', field: 'fee', width: 125 },
+        { headerName: 'Profit', field: 'profit', width: 125 },
+        { headerName: 'Sell Price', field: 'sellPrice', width: 125 },
+        { headerName: 'Post Paid', field: 'postPaid', width: 125 },
+        // { headerName: 'Status', field: 'status', width: 150, cellRenderer: 'checkboxRenderer'},
+        { headerName: 'Status', field: 'status', width: 125},
+        // { headerName: 'Action', width: 150, cellRenderer: 'actionRenderer'}
+        { headerName: 'Action', suppressMenu: true,
+            suppressSorting: true,
+            template: `
+            <button mat-button color="primary" data-action-type="edit">
+                Edit
+            </button>
+            `
+        }
     ];
 
     nonColDefs = [
         // { headerName: 'Name', field: 'name', checkboxSelection: true, width: 250, pinned: 'left', editable: true },
-        { headerName: 'Sales Price', field: 'salesPrice', width: 250 },
-        { headerName: 'Profit', field: 'profit', width: 250 },
-        { headerName: 'Date Start', field: 'dateStart', width: 250 },
-        { headerName: 'Date Thru', field: 'dateThru', width: 250 }
+        { headerName: 'Sales Price', field: 'salesPrice', width: 150 },
+        { headerName: 'Profit', field: 'profit', width: 150 },
+        { headerName: 'Date Start', field: 'dateStart', width: 150 },
+        { headerName: 'Date Thru', field: 'dateThru', width: 150 },
+        { headerName: 'Status', field: 'status', width: 150},
+        // { headerName: 'Action', width: 150, cellRenderer: 'actionRenderer'}
+        { headerName: 'Action', suppressMenu: true,
+            suppressSorting: true,
+            template: `
+            <button mat-button color="primary" data-action-type="edit">
+                Edit
+            </button>
+            `
+        }
     ];
 
     gridOptions = {
@@ -77,7 +101,12 @@ export class BillerDialogComponent implements OnInit {
         enableFilter: true,
         // rowSelection: "multiple"
         pagination: true,
-        paginationPageSize: 10
+        paginationPageSize: 10,
+        // rowHeight : 41,
+        // frameworkComponents: {
+        //     checkboxRenderer: MatCheckboxComponent,
+        //     actionRenderer: MatActionButtonComponent
+        // }
     };
 
     constructor(
@@ -132,6 +161,7 @@ export class BillerDialogComponent implements OnInit {
         this.modeTitle = this.data.modeTitle;
         if (this.data.mode !== 'create') {
             // console.log('edit mode..');
+            this.btnDisabled = false;
             this.membTypeCtrl.setValue(this.data.rowData.memberType);
             this.membCtrl.setValue(this.data.rowData.member);
             this.dateSCtrl.setValue(this.data.rowData.dateStart);
@@ -159,7 +189,8 @@ export class BillerDialogComponent implements OnInit {
     }
 
     onNoClick(): void {
-        this.dialogRef.close();
+        console.log('test refresh..');
+        this.dialogRef.close('refresh');
     }
 
     onGridReady(params) {
@@ -172,7 +203,7 @@ export class BillerDialogComponent implements OnInit {
 
     getMembType(value) {
         console.log(value);
-        this.btnDisabled = false;
+        // this.btnDisabled = false;
         this.btnLabel = value.id === 1 ? 'Add Biller Detail' : 'Add Non Biller Detail';
         if (value.id === 1) {
             this.btnLabel = 'Add Biller Detail';
@@ -185,59 +216,167 @@ export class BillerDialogComponent implements OnInit {
     }
 
     loadAll() {
-        if (this.data.rowData.memberType.id === 1) {
-            this.getMembType({id: 1});
-            this.billerDetailService.query({
-                page: 1,
-                count: 200,
-                idhdr: this.biller.id
-                // size: this.itemsPerPage,
-                // sort: this.sort()
-            })
-            .subscribe(
-                    (res: HttpResponse<Biller[]>) => this.onSuccess(res.body, res.headers),
-                    (res: HttpErrorResponse) => this.onError(res.message),
-                    () => { console.log('finally'); }
-            );
+        if (this.data.mode !== 'create') {
+            console.log('load data update..');
+            if (this.data.rowData.memberType.id === 1) {
+                this.getMembType({id: 1});
+                this.billerDetailService.query({
+                    page: 1,
+                    count: 200,
+                    idhdr: this.biller.id
+                    // size: this.itemsPerPage,
+                    // sort: this.sort()
+                })
+                .subscribe(
+                        (res: HttpResponse<Biller[]>) => this.onSuccess(res.body, res.headers),
+                        (res: HttpErrorResponse) => this.onError(res.message),
+                        () => { console.log('finally'); }
+                );
+            } else {
+                this.getMembType({id: 2});
+                this.billerPriceDetailService.query({
+                    page: 1,
+                    count: 200,
+                    idhdr: this.biller.id
+                    // size: this.itemsPerPage,
+                    // sort: this.sort()
+                })
+                .subscribe(
+                        (res: HttpResponse<Biller[]>) => this.onSuccess(res.body, res.headers),
+                        (res: HttpErrorResponse) => this.onError(res.message),
+                        () => { console.log('finally'); }
+                );
+            }
         } else {
-            this.getMembType({id: 2});
-            this.billerPriceDetailService.query({
-                page: 1,
-                count: 200,
-                idhdr: this.biller.id
-                // size: this.itemsPerPage,
-                // sort: this.sort()
-            })
-            .subscribe(
-                    (res: HttpResponse<Biller[]>) => this.onSuccess(res.body, res.headers),
-                    (res: HttpErrorResponse) => this.onError(res.message),
-                    () => { console.log('finally'); }
-            );
+            console.log('load data create..');
+            if (this.membTypeCtrl.value !== null) {
+                if (this.membTypeCtrl.value.id === 1) {
+                    // this.getMembType({id: 1});
+                    this.billerDetailService.query({
+                        page: 1,
+                        count: 200,
+                        idhdr: this.biller.id
+                        // size: this.itemsPerPage,
+                        // sort: this.sort()
+                    })
+                    .subscribe(
+                            (res: HttpResponse<Biller[]>) => this.onSuccess(res.body, res.headers),
+                            (res: HttpErrorResponse) => this.onError(res.message),
+                            () => { console.log('finally'); }
+                    );
+                } else if (this.membTypeCtrl.value.id > 1) {
+                    // this.getMembType({id: 2});
+                    this.billerPriceDetailService.query({
+                        page: 1,
+                        count: 200,
+                        idhdr: this.biller.id
+                        // size: this.itemsPerPage,
+                        // sort: this.sort()
+                    })
+                    .subscribe(
+                            (res: HttpResponse<Biller[]>) => this.onSuccess(res.body, res.headers),
+                            (res: HttpErrorResponse) => this.onError(res.message),
+                            () => { console.log('finally'); }
+                    );
+                }
+            }
+        }
+    }
+
+    onRowClicked(e) {
+        if (e.event.target !== undefined) {
+            const data = e.data;
+            const actionType = e.event.target.getAttribute('data-action-type');
+
+            switch (actionType) {
+                case 'view':
+                    // console.log('Data row : ', data);
+                    return this.openBDDialog('view', data);
+                case 'edit':
+                    console.log('edittttttttt', data);
+                    return this.openBDDialog('edit', data);
+            }
         }
     }
 
     openBDDialog(mode, data): void {
-        console.log('open dialog');
-        const datasend = {
+        console.log('open bd dialog', data);
+        const datasend = this.membTypeCtrl.value.id === 1 ?
+        {
             mode : 'create',
             modeTitle : 'Create',
             billerCompanyData : this.billerCompanyList,
             billerTypeData : this.billerTypeList,
             productData : this.productList,
-            // rowData : {
-            //     externalCode : null,
-            //     buyPrice : null,
-            //     fee : null,
-            //     profit : null,
-            //     sellPrice : null,
-            //     postPaid : null,
-            // },
+            rowData : {
+                id : null,
+                billerProduct : null,
+                billerHeader : null,
+                externalCode : null,
+                buyPrice : null,
+                fee : null,
+                profit : null,
+                sellPrice : null,
+                // billerHeaderId : null,
+                billerHeaderId : (this.biller.id === undefined || this.biller.id === null ? null : this.biller.id),
+                billerProductId : null,
+                postPaid : null,
+                status : 'ACTIVE'
+            },
+        } :
+        {
+            mode : 'create',
+            modeTitle : 'Create',
+            billerCompanyData : this.billerCompanyList,
+            billerTypeData : this.billerTypeList,
+            productData : this.productList,
+            rowData : {
+                id: null,
+                billerProduct : null,
+                billerHeader : null,
+                salesPrice : null,
+                profit : null,
+                dateStart : null,
+                dateThru : null,
+                // billerHeaderId : null,
+                billerHeaderId : (this.biller.id === undefined || this.biller.id === null ? null : this.biller.id),
+                billerProductId : null,
+            },
         };
-        // if (mode !== 'create') {
-        //     datasend.mode = mode;
-        //     datasend.modeTitle = (mode === 'view' ? 'View' : 'Edit');
-        //     datasend.rowData = data;
-        // }
+
+        if (mode !== 'create') {
+            datasend.mode = mode;
+            datasend.modeTitle = (mode === 'view' ? 'View' : 'Edit');
+            // datasend.rowData = data;
+            datasend.rowData = this.membTypeCtrl.value.id === 1 ?
+            {
+                id : data.id,
+                billerProduct : data.billerProduct,
+                billerHeader : data.billerHeader,
+                externalCode : data.externalCode,
+                buyPrice : data.buyPrice,
+                fee : data.fee,
+                profit : data.profit,
+                sellPrice : data.sellPrice,
+                billerHeaderId : data.billerHeader.id,
+                billerProductId : data.billerProduct.id,
+                postPaid : data.postPaid,
+                status : data.status
+            } :
+            {
+                id: data.id,
+                billerProduct : data.billerProduct,
+                billerHeader : data.billerHeader,
+                salesPrice : data.salesPrice,
+                profit : data.profit,
+                dateStart : data.dateStart,
+                dateThru : data.dateThru,
+                billerHeaderId : data.billerHeader.id,
+                billerProductId : data.billerProduct.id,
+            };
+        }
+        console.log('datasend : ', datasend);
+
         const dialogRef = this.membTypeCtrl.value.id === 1 ?
         this.dialog.open(BillerDetailComponent, {
             width: '1000px',
@@ -252,7 +391,14 @@ export class BillerDialogComponent implements OnInit {
             console.log('The dialog was closed : ', result);
             // this.gridApi.rowData.push(result);
             if (result !== undefined) {
-                this.gridApi.updateRowData({ add: [result] });
+                // indirect save
+                // if (result.mode === 'create') {
+                //     this.gridApi.updateRowData({ add: [result.rowData] });
+                // } else {
+                //     this.loadAll();
+                // }
+
+                this.loadAll();
             }
         });
     }
@@ -289,7 +435,21 @@ export class BillerDialogComponent implements OnInit {
         if (this.billerSave.id === undefined || this.billerSave.id === null) {
             console.log('send to service ', this.billerSave);
             this.billerService.create(this.billerSave).subscribe((res: HttpResponse<Biller>) => {
-                this.dialogRef.close('refresh');
+                // header id = res.body.id
+                console.log(res.body.id);
+                this.btnDisabled = false;
+                if (this.biller.id === undefined || this.biller.id === null) {
+                    this.biller.id = res.body.id;
+                }
+
+                // bulk save
+                // const rowData = [];
+                // this.gridApi.forEachNode(function(node) {
+                //     // rowData.push(node.data);
+                //     this.billerDetailService.create(node.data).subscribe((xres: HttpResponse<BillerDetail>) => {
+                //         this.dialogRef.close('refresh');
+                //     });
+                // });
             });
         } else {
             console.log('send to service ', this.billerSave);
