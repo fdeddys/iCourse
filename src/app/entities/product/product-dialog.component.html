@@ -25,7 +25,25 @@
 		</mat-form-field>
 		<mat-form-field class="form-full-width">
 			<input type="number" matInput placeholder="Sell Price" name="sellPrice" [(ngModel)]="product.sellPrice">
+		</mat-form-field>		
+		<mat-form-field class="form-full-width">
+			<mat-select placeholder="Search By" [(ngModel)]="product.searchBy" name="searchBy">
+				<mat-option *ngFor="let searchBy of searchByList" [value]="searchBy">
+				  	{{searchBy}}
+				</mat-option>
+			</mat-select>
 		</mat-form-field>
+		<mat-form-field class="form-full-width">
+			<input matInput placeholder="Member" aria-label="Member" [matAutocomplete]="autoM" [formControl]="membCtrl">
+			<mat-autocomplete #autoM="matAutocomplete" [displayWith]="displayFnMem">
+				<mat-option *ngFor="let member of filteredMemb | async" [value]="member">
+					<span>{{ member.name }}</span>
+				</mat-option>
+			</mat-autocomplete>
+		</mat-form-field>
+		<section class="form-full-width">
+			<mat-checkbox class="example-margin" [color]="'primary'" [(ngModel)]="product.status" [ngModelOptions]="{standalone: true}">Status</mat-checkbox>
+		</section>
 	</form>
 </div>
 <div mat-dialog-actions>

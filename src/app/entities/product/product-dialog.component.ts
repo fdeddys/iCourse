@@ -10,6 +10,7 @@ import { FormControl } from '@angular/forms';
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
 import { BillerType } from '../biller-type';
 import { BillerCompany } from '../biller-company';
+import { Member } from '../member';
 
 @Component({
     selector: 'app-product-dialog',
@@ -22,11 +23,15 @@ export class ProductDialogComponent implements OnInit {
     filteredBillType: Observable<any[]>;
     billCompanyCtrl: FormControl;
     filteredBillCompany: Observable<any[]>;
+    membCtrl: FormControl;
+    filteredMemb: Observable<any[]>;
 
     product: Product;
     productSave: Product;
     billerTypeList = [];
     billerCompanyList = [];
+    memberList = [];
+    searchByList = [];
 
     modeTitle = '';
 
@@ -54,6 +59,14 @@ export class ProductDialogComponent implements OnInit {
             map(value => typeof value === 'string' ? value : value.name),
             map(name => name ? this.filterBillCompany(name) : this.billerCompanyList.slice())
         );
+
+        this.membCtrl = new FormControl();
+        this.filteredMemb = this.membCtrl.valueChanges
+        .pipe(
+            startWith<string | Member>(''),
+            map(value => typeof value === 'string' ? value : value.name),
+            map(name => name ? this.filterMemb(name) : this.memberList.slice())
+        );
     }
 
     filterBillType(name: string) {
@@ -66,12 +79,21 @@ export class ProductDialogComponent implements OnInit {
         billerCompany.name.toLowerCase().indexOf(name.toLowerCase()) === 0);
     }
 
+    filterMemb(name: string) {
+        return this.memberList.filter(member =>
+        member.name.toLowerCase().indexOf(name.toLowerCase()) === 0);
+    }
+
     displayFnBil(billerType?: BillerType): string | undefined {
         return billerType ? billerType.name : undefined;
     }
 
     displayFnCom(billerCompany?: BillerCompany): string | undefined {
         return billerCompany ? billerCompany.name : undefined;
+    }
+
+    displayFnMem(member?: Member): string | undefined {
+        return member ? member.name : undefined;
     }
 
     ngOnInit() {
@@ -85,6 +107,8 @@ export class ProductDialogComponent implements OnInit {
         this.product = this.data.rowData;
         this.billerCompanyList = this.data.billerCompanyData;
         this.billerTypeList = this.data.billerTypeData;
+        this.searchByList = this.data.searchByData;
+        this.memberList = this.data.memberData;
     }
 
     private onError(error) {
@@ -101,10 +125,10 @@ export class ProductDialogComponent implements OnInit {
             name: this.product.name,
             denom: this.product.denom,
             sellPrice: this.product.sellPrice,
-            billerCompanyId: this.billCompanyCtrl.value.id,
-            billerTypeId: this.billTypeCtrl.value.id,
+            billerCompanyId: (this.billCompanyCtrl.value === null ? null : this.billCompanyCtrl.value.id),
+            billerTypeId: (this.billTypeCtrl.value === null ? null : this.billTypeCtrl.value.id),
             searchBy: this.product.searchBy,
-            searchByMemberId: this.product.searchByMemberId,
+            searchByMemberId: (this.membCtrl.value === null ? null : this.membCtrl.value.id),
         };
         console.log(this.productSave);
         if (this.productSave.id === undefined || this.productSave.id === null) {

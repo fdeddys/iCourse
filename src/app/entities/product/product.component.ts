@@ -5,6 +5,7 @@ import { ProductService } from './product.service';
 
 import { BillerCompany, BillerCompanyService } from '../biller-company';
 import { BillerType, BillerTypeService } from '../biller-type';
+import { Member, MemberService } from '../member';
 
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
 
@@ -26,6 +27,7 @@ export class ProductComponent implements OnInit {
     product: Product;
     billerTypeList = [];
     billerCompanyList = [];
+    memberList = [];
     searchByList = [];
 
     gridOptions = {
@@ -58,6 +60,7 @@ export class ProductComponent implements OnInit {
         private dialog: MatDialog,
         private billerCompanyService: BillerCompanyService,
         private billerTypeService: BillerTypeService,
+        private memberService: MemberService,
         private productService: ProductService
     ) { }
 
@@ -109,14 +112,25 @@ export class ProductComponent implements OnInit {
                 (res: HttpErrorResponse) => this.onError(res.message),
                 () => { console.log('finally'); }
         );
-        // this.productService.getSearchBy()
-        // .subscribe(
-        //         (res) => {
-        //             this.searchByList = res.body;
-        //         },
-        //         (res: HttpErrorResponse) => this.onError(res.message),
-        //         () => { console.log('finally'); }
-        // )
+
+        this.memberService.query({
+            page: 1,
+            count: 10000,
+        })
+        .subscribe(
+                (res: HttpResponse<Member[]>) => this.onSuccessMemb(res.body, res.headers),
+                (res: HttpErrorResponse) => this.onError(res.message),
+                () => { console.log('finally'); }
+        );
+
+        this.productService.getSearchBy()
+        .subscribe(
+                (res) => {
+                    this.searchByList = res.body;
+                },
+                (res: HttpErrorResponse) => this.onError(res.message),
+                () => { console.log('finally'); }
+        );
     }
 
     onGridReady(params) {
@@ -151,6 +165,8 @@ export class ProductComponent implements OnInit {
             modeTitle : 'Create',
             billerCompanyData : this.billerCompanyList,
             billerTypeData : this.billerTypeList,
+            searchByData : this.searchByList,
+            memberData : this.memberList,
             rowData : {
                 billerCompany : {id: null, name: null},
                 billerType : {id: null, ispostpaid: null, name: null},
@@ -170,6 +186,7 @@ export class ProductComponent implements OnInit {
         }
         const dialogRef = this.dialog.open(ProductDialogComponent, {
             width: '1000px',
+            height: '450px',
             data: datasend
         });
 
@@ -181,6 +198,10 @@ export class ProductComponent implements OnInit {
 
     private onSuccessBillType(data, headers) {
         this.billerTypeList = data.content;
+    }
+
+    private onSuccessMemb(data, headers) {
+        this.memberList = data.content;
     }
 
     private onSuccess(data, headers) {

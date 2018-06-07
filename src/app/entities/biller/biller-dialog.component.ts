@@ -12,8 +12,8 @@ import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
 import { Member } from '../member';
 import { MemberType } from '../member-type';
 
-import { BillerDetail, BillerDetailComponent } from '../biller-detail';
-import { BillerPriceDetail, BillerPriceDetailComponent } from '../biller-price-detail';
+import { BillerDetail, BillerDetailService, BillerDetailComponent } from '../biller-detail';
+import { BillerPriceDetail, BillerPriceDetailService, BillerPriceDetailComponent } from '../biller-price-detail';
 
 @Component({
     selector: 'app-biller-dialog',
@@ -29,6 +29,8 @@ export class BillerDialogComponent implements OnInit {
     filteredMembType: Observable<any[]>;
     membCtrl: FormControl;
     filteredMemb: Observable<any[]>;
+    dateSCtrl: FormControl;
+    dateTCtrl: FormControl;
 
     biller: Biller;
     billerSave: Biller;
@@ -81,6 +83,8 @@ export class BillerDialogComponent implements OnInit {
     constructor(
         private dialog: MatDialog,
         public billerService: BillerService,
+        public billerDetailService: BillerDetailService,
+        public billerPriceDetailService: BillerPriceDetailService,
         public dialogRef: MatDialogRef<BillerDialogComponent>,
         @Inject(MAT_DIALOG_DATA) public data: any
     ) {
@@ -95,10 +99,13 @@ export class BillerDialogComponent implements OnInit {
         this.membCtrl = new FormControl();
         this.filteredMemb = this.membCtrl.valueChanges
         .pipe(
-            startWith<string | MemberType>(''),
+            startWith<string | Member>(''),
             map(value => typeof value === 'string' ? value : value.name),
             map(name => name ? this.filterMemb(name) : this.memberList.slice())
         );
+
+        this.dateSCtrl = new FormControl();
+        this.dateTCtrl = new FormControl();
     }
 
     filterMembType(name: string) {
@@ -111,16 +118,28 @@ export class BillerDialogComponent implements OnInit {
         member.name.toLowerCase().indexOf(name.toLowerCase()) === 0);
     }
 
-    displayFnMem(memberType?: MemberType): string | undefined {
+    displayFnMem(member?: Member): string | undefined {
+        return member ? member.name : undefined;
+    }
+
+    displayFnMemType(memberType?: MemberType): string | undefined {
         return memberType ? memberType.name : undefined;
     }
 
     ngOnInit() {
+        console.log('ngOnInit..');
         this.biller = {};
         this.modeTitle = this.data.modeTitle;
         if (this.data.mode !== 'create') {
             // console.log('edit mode..');
             this.membTypeCtrl.setValue(this.data.rowData.memberType);
+            this.membCtrl.setValue(this.data.rowData.member);
+            this.dateSCtrl.setValue(this.data.rowData.dateStart);
+            this.dateTCtrl.setValue(this.data.rowData.dateThru);
+
+            // this.addEvent('start', this.data.rowData.dateStart);
+            // this.addEvent('thru', this.data.rowData.dateThru);
+            // const dataDate = new Date(this.data.rowData.dateStart);
         }
         this.biller = this.data.rowData;
         this.memberList = this.data.memberData;
@@ -128,6 +147,11 @@ export class BillerDialogComponent implements OnInit {
         this.billerCompanyList = this.data.billerCompanyData;
         this.billerTypeList = this.data.billerTypeData;
         this.productList = this.data.productData;
+    }
+
+    private onSuccess(data, headers) {
+        console.log('data detail : ', data.content);
+        this.gridApi.setRowData(data.content);
     }
 
     private onError(error) {
@@ -139,6 +163,7 @@ export class BillerDialogComponent implements OnInit {
     }
 
     onGridReady(params) {
+        console.log('onGridReady..');
         this.gridApi = params.api;
         this.gridColumnApi = params.columnApi;
 
@@ -160,8 +185,35 @@ export class BillerDialogComponent implements OnInit {
     }
 
     loadAll() {
-        console.log('load data..');
-        this.gridApi.hideOverlay();
+        if (this.data.rowData.memberType.id === 1) {
+            this.getMembType({id: 1});
+            this.billerDetailService.query({
+                page: 1,
+                count: 200,
+                idhdr: this.biller.id
+                // size: this.itemsPerPage,
+                // sort: this.sort()
+            })
+            .subscribe(
+                    (res: HttpResponse<Biller[]>) => this.onSuccess(res.body, res.headers),
+                    (res: HttpErrorResponse) => this.onError(res.message),
+                    () => { console.log('finally'); }
+            );
+        } else {
+            this.getMembType({id: 2});
+            this.billerPriceDetailService.query({
+                page: 1,
+                count: 200,
+                idhdr: this.biller.id
+                // size: this.itemsPerPage,
+                // sort: this.sort()
+            })
+            .subscribe(
+                    (res: HttpResponse<Biller[]>) => this.onSuccess(res.body, res.headers),
+                    (res: HttpErrorResponse) => this.onError(res.message),
+                    () => { console.log('finally'); }
+            );
+        }
     }
 
     openBDDialog(mode, data): void {
@@ -230,8 +282,8 @@ export class BillerDialogComponent implements OnInit {
             dateThru: this.biller.dateThru,
             memberTypeId: this.membTypeCtrl.value.id,
             memberId: this.membCtrl.value.id,
-            generateMemberCode: (this.biller.generateMemberCode === undefined ? false : this.biller.generateMemberCode),
-            manualCode: (this.biller.manualCode === undefined ? '' : this.biller.manualCode)
+            manualCode: (this.biller.manualCode === undefined ? false : this.biller.manualCode),
+            memberCode: (this.biller.memberCode === undefined ? '' : this.biller.memberCode)
         };
         console.log(this.billerSave);
         if (this.billerSave.id === undefined || this.billerSave.id === null) {

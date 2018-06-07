@@ -4,6 +4,11 @@
 	width: 100%;
 }
 
+.mat-dialog-content {
+	min-height: 300px;
+    max-height: inherit !important;
+}
+
 .form-full-width {
 	width: 40%;
 	margin-right: 5%;

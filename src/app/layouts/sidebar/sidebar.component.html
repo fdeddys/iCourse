@@ -37,9 +37,9 @@
             </mat-expansion-panel-header>
             <mat-list style="margin-left:13px;">
                 <div *ngFor="let subLink of link.subLinks">
-                    <mat-list-item>
+                    <mat-list-item [routerLink]="subLink.link">
                         <a style="cursor: pointer;">
-                            <p mat-line [routerLink]="subLink.link"> {{subLink.name}}</p>
+                            <p mat-line> {{subLink.name}}</p>
                         </a>
                     </mat-list-item>
                 </div>

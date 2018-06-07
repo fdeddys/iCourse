@@ -5,6 +5,7 @@ import { AgGridModule } from 'ag-grid-angular';
 import { CustomMaterialModule } from './../../material.module';
 
 import {
+    BillerDetailService,
     BillerDetailComponent,
 } from './';
 
@@ -22,6 +23,7 @@ import {
         BillerDetailComponent
     ],
     providers: [
+        BillerDetailService
     ],
     schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })

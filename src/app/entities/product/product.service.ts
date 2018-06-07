@@ -62,9 +62,11 @@ export class ProductService {
             .pipe(map((res: EntityResponseType) => this.convertResponse(res)));
     }
 
-    getSearchBy(req?: any): Observable<EntityResponseType> {
-        return this.http.get(`${this.searchByUtilUrl}`, { observe: 'response'})
-            .pipe(map((res: EntityResponseType) => this.convertResponse(res)));
+    getSearchBy(req?: any): Observable<HttpResponse<string[]>> {
+        return this.http.get<string[]>(`${this.searchByUtilUrl}`, { observe: 'response'})
+        .pipe(
+            tap(searchby => { })
+        );
     }
 
     private convertResponse(res: EntityResponseType): EntityResponseType {

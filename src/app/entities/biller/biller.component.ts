@@ -95,7 +95,7 @@ export class BillerComponent implements OnInit {
             count: 10000,
         })
         .subscribe(
-                (res: HttpResponse<MemberType[]>) => this.onSuccessMemb(res.body, res.headers),
+                (res: HttpResponse<Member[]>) => this.onSuccessMemb(res.body, res.headers),
                 (res: HttpErrorResponse) => this.onError(res.message),
                 () => { console.log('finally'); }
         );
