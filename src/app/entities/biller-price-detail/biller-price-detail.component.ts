@@ -1,6 +1,7 @@
 import { Component, OnInit, Inject } from '@angular/core';
 import { MatDatepickerInputEvent } from '@angular/material/datepicker';
 import * as _ from 'lodash';
+import { HttpResponse, HttpErrorResponse } from '@angular/common/http';
 
 import { Observable } from 'rxjs';
 import { map, startWith } from 'rxjs/operators';
@@ -8,6 +9,8 @@ import { map, startWith } from 'rxjs/operators';
 import { FormControl } from '@angular/forms';
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
 import { BillerPriceDetail } from './biller-price-detail.model';
+import { BillerPriceDetailService } from './biller-price-detail.service';
+
 import { BillerType } from '../biller-type';
 import { BillerCompany } from '../biller-company';
 import { Product } from '../product';
@@ -23,6 +26,8 @@ export class BillerPriceDetailComponent implements OnInit {
     filteredBillType: Observable<any[]>;
     billCompanyCtrl: FormControl;
     filteredBillCompany: Observable<any[]>;
+    dateSCtrl: FormControl;
+    dateTCtrl: FormControl;
 
     billerPriceDetail: BillerPriceDetail;
 
@@ -32,9 +37,11 @@ export class BillerPriceDetailComponent implements OnInit {
 
     minDate = new Date(2000, 0, 1);
     maxDate = new Date(2020, 0, 1);
+    mode = 'Add';
 
     constructor(
         private dialog: MatDialog,
+        public billerPriceDetailService: BillerPriceDetailService,
         public dialogRef: MatDialogRef<BillerPriceDetailComponent>,
         @Inject(MAT_DIALOG_DATA) public data: any
     ) {
@@ -57,12 +64,34 @@ export class BillerPriceDetailComponent implements OnInit {
             map(value => typeof value === 'string' ? value : value.name),
             map(name => name ? this.filterBillCompany(name) : this.billerCompanyList.slice())
         );
+
+        this.dateSCtrl = new FormControl();
+        this.dateTCtrl = new FormControl();
     }
 
     ngOnInit() {
         this.billerPriceDetail = {};
+        this.billerPriceDetail.billerHeaderId = this.data.rowData.billerHeaderId;
+        console.log(this.data.mode);
+        if (this.data.mode !== 'create') {
+            // console.log('edit mode..');
+            console.log(this.data.rowData);
+            this.mode = 'Edit';
+            this.billerPriceDetail = {
+                id: this.data.rowData.id,
+                salesPrice: this.data.rowData.salesPrice,
+                profit: this.data.rowData.profit,
+                billerHeaderId: this.data.rowData.billerHeader.id,
+                billerProductId: this.data.rowData.billerProduct.id
+            };
+            this.billTypeCtrl.setValue(this.data.rowData.billerProduct.billerType);
+            this.billCompanyCtrl.setValue(this.data.rowData.billerProduct.billerCompany);
+            this.dateSCtrl.setValue(this.data.rowData.dateStart);
+            this.dateTCtrl.setValue(this.data.rowData.dateThru);
+        }
         this.billerCompanyList = this.data.billerCompanyData;
         this.billerTypeList = this.data.billerTypeData;
+        this.productList = this.data.productData;
     }
 
     filterBillType(name: string) {
@@ -124,7 +153,26 @@ export class BillerPriceDetailComponent implements OnInit {
 
     save(): void {
         console.log(this.billerPriceDetail);
-        this.dialogRef.close(this.billerPriceDetail);
+        this.billerPriceDetail.dateStart = this.dateSCtrl.value;
+        this.billerPriceDetail.dateThru = this.dateTCtrl.value;
+        const varBack = {
+            mode: this.data.mode,
+            rowData: {}
+        };
+        // this.dialogRef.close(this.billerPriceDetail);
+
+        if (this.billerPriceDetail.id === undefined || this.billerPriceDetail.id === null) {
+            console.log('send to service ', this.billerPriceDetail);
+            this.billerPriceDetailService.create(this.billerPriceDetail).subscribe((res: HttpResponse<BillerPriceDetail>) => {
+                this.dialogRef.close(varBack);
+            });
+        } else {
+            console.log('send to service ', this.billerPriceDetail);
+            this.billerPriceDetailService.update(this.billerPriceDetail.id, this.billerPriceDetail)
+            .subscribe((res: HttpResponse<BillerPriceDetail>) => {
+                this.dialogRef.close(varBack);
+            });
+        }
     }
 
 }

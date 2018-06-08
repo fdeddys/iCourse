@@ -11,6 +11,8 @@ import {
 } from './';
 
 import { BillerDetailComponent } from '../biller-detail/biller-detail.component';
+import { MatCheckboxComponent } from '../../shared/templates/mat-checkbox.component';
+import { MatActionButtonComponent } from '../../shared/templates/mat-action-button.component';
 
 import { LocalStorageService, SessionStorageService } from 'ngx-webstorage';
 
@@ -18,7 +20,7 @@ import { LocalStorageService, SessionStorageService } from 'ngx-webstorage';
     imports: [
         FormsModule,
         ReactiveFormsModule,
-        AgGridModule.withComponents([]),
+        AgGridModule.withComponents([MatCheckboxComponent, MatActionButtonComponent]),
         CustomMaterialModule
     ],
     declarations: [

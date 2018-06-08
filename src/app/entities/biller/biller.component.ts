@@ -204,9 +204,9 @@ export class BillerComponent implements OnInit {
 
         dialogRef.afterClosed().subscribe(result => {
             console.log('The dialog was closed');
-            if (result === 'refresh') {
+            // if (result === 'refresh') {
                 this.loadAll();
-            }
+            // }
             // this.animal = result;
         });
     }

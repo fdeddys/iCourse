@@ -19,7 +19,7 @@
         </mat-form-field>
         <mat-form-field style="width: 25%; margin-right: 5%">
             <!-- <input matInput placeholder="Product Name" name="product" [value]="product"> -->
-            <mat-select placeholder="Denom" name="product">
+            <mat-select placeholder="Denom" name="product" [(value)]="billerPriceDetail.billerProductId">
                 <mat-option *ngFor="let product of productList" [value]="product.id">
                     {{product.denom}}
                 </mat-option>
@@ -32,12 +32,12 @@
             <input type="number" matInput placeholder="Profit" name="profit" [(ngModel)]="billerPriceDetail.profit">
         </mat-form-field>
         <mat-form-field class="form-full-width">
-            <input matInput [min]="minDate" [max]="maxDate" [matDatepicker]="picker" placeholder="Date Start" (dateInput)="addEvent('start', $event)">
+            <input matInput [min]="minDate" [max]="maxDate" [matDatepicker]="picker" placeholder="Date Start" (dateInput)="addEvent('start', $event)" [formControl]="dateSCtrl">
             <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
             <mat-datepicker #picker></mat-datepicker>
         </mat-form-field>
         <mat-form-field class="form-full-width">
-            <input matInput [min]="minDate" [max]="maxDate" [matDatepicker]="pickerT" placeholder="Date Thru" (dateInput)="addEvent('thru', $event)">
+            <input matInput [min]="minDate" [max]="maxDate" [matDatepicker]="pickerT" placeholder="Date Thru" (dateInput)="addEvent('thru', $event)" [formControl]="dateTCtrl">
             <mat-datepicker-toggle matSuffix [for]="pickerT"></mat-datepicker-toggle>
             <mat-datepicker #pickerT></mat-datepicker>
         </mat-form-field>
@@ -45,5 +45,5 @@
 </div>
 <div mat-dialog-actions>
     <button mat-raised-button (click)="onNoClick()">Cancel</button>
-    <button mat-raised-button color="primary" cdkFocusInitial (click)="save()">Add Non Biller Detail</button>
+    <button mat-raised-button color="primary" cdkFocusInitial (click)="save()">{{ mode }} Non Biller Detail</button>
 </div>
