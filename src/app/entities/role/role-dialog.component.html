@@ -1,0 +1,22 @@
+<h2 mat-dialog-title>{{data.action}} - {{data.entity}}</h2>
+<mat-dialog-content>
+    <form class="container-form">
+        <mat-form-field class="container-full-width">
+            <input matInput placeholder="Id" value="{{role.id}}" [disabled]="true" >
+        </mat-form-field>
+        <mat-form-field class="container-full-width">
+            <input matInput placeholder="Name " [(ngModel)]="role.name"  cdkFocusInitial name ="namee" >
+        </mat-form-field>
+        <mat-form-field class="container-full-width">
+            <input matInput placeholder="Description" [(ngModel)]="role.description" name="description">
+        </mat-form-field>
+      <br><br>
+
+    </form>
+    
+</mat-dialog-content>
+<mat-dialog-actions>
+  <button mat-button mat-dialog-close>Cancel</button>
+  <button mat-button mat-raised-button class="btnSave" (click)="save()" >Save</button>
+</mat-dialog-actions>
+

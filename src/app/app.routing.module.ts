@@ -11,6 +11,7 @@ import { BillerTypeComponent } from './entities/biller-type';
 import { MemberTypeComponent } from './entities/member-type';
 import { GlobalSettingComponent } from './entities/global-setting';
 import { UserComponent } from './entities/user';
+import { RoleComponent } from './entities/role/role.component';
 
 const routes: Routes = [
     { path : '', component : LoginComponent },
@@ -27,6 +28,7 @@ const routes: Routes = [
             {path: 'member-type', component: MemberTypeComponent},
             {path: 'global-setting', component: GlobalSettingComponent},
             {path: 'user', component: UserComponent},
+            {path: 'role', component: RoleComponent},
         ]
     },
     // {path: 'member', component: MemberComponent}
