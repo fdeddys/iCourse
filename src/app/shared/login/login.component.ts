@@ -3,32 +3,32 @@ import { Router } from '@angular/router';
 
 
 @Component({
-	selector: 'app-login',
-	templateUrl: './login.component.html',
-	styleUrls: ['./login.component.css']
+    selector: 'app-login',
+    templateUrl: './login.component.html',
+    styleUrls: ['./login.component.css']
 })
 export class LoginComponent implements OnInit {
 
-	password: string;
+    password: string;
     rememberMe: boolean;
     username: string;
 
     hide: boolean;
 
-	constructor(private router: Router) { }
+    constructor(private router: Router) { }
 
-	ngOnInit() {
-		this.hide = true;
-	}
+    ngOnInit() {
+        this.hide = true;
+    }
 
-	login() {
-		console.log('login');
-		if(this.username == 'admin' && this.password == 'admin'){
-			console.log('masuk admin..');
-			this.router.navigate(["main"]);
-		}else {
-			alert("Invalid credentials");
-		}
-	}
+    login() {
+        console.log('login');
+        if (this.username === 'admin' && this.password === 'admin') {
+            console.log('masuk admin..');
+            this.router.navigate(['main']);
+        } else {
+            alert('Invalid credentials');
+        }
+    }
 
 }
