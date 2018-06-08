@@ -44,3 +44,20 @@ body {
     -webkit-font-feature-settings: 'liga';
     -webkit-font-smoothing: antialiased;
 }
+
+
+
+/* Numpang nambahin style  */
+
+.btnAdd {
+    color: white; 
+    background-color: #5289c2
+}
+
+.btnSave {
+  color: white; 
+  background-color: #CC0000
+}
+
+
+/* ENDDD Numpang nambahin style  */

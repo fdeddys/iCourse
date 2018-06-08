@@ -5,7 +5,7 @@ import { GlobalSettingService } from './global-setting.service';
 import { HttpResponse, HttpErrorResponse } from '@angular/common/http';
 import { GlobalSettingDialogComponent } from './global-setting-dialog.component';
 import { GlobalSettingConfirmComponent } from './global-setting-confirm.component';
-import { GRID_THEME } from '../../shared/constant/base-constant';
+import { GRID_THEME, CSS_BUTTON } from '../../shared/constant/base-constant';
 
 @Component({
   selector: 'app-global-setting',
@@ -17,6 +17,7 @@ export class GlobalSettingComponent implements OnInit {
   private gridApi;
   private gridColumnApi;
 
+  cssButton = CSS_BUTTON  ;
   theme: String = GRID_THEME;
 
   memberTipes: GlobalSetting[];
@@ -24,7 +25,7 @@ export class GlobalSettingComponent implements OnInit {
 
   gridOptions = {
     columnDefs: [
-      { headerName: 'id', field: 'id', width: 200, pinned: 'left', editable: false },
+      { headerName: 'id', field: 'id', width: 50, pinned: 'left', editable: false },
       { headerName: 'Type', field: 'globalType', width: 200, editable: false },
       { headerName: 'Name', field: 'name', width: 200, editable: false },
       { headerName: 'Description', field: 'description', width: 200, editable: false },
@@ -35,7 +36,7 @@ export class GlobalSettingComponent implements OnInit {
       { headerName: 'action', suppressMenu: true,
         suppressSorting: true,
         template:
-          `<button mat-raised-button type="button" data-action-type="edit" >
+          `<button mat-raised-button type="button" data-action-type="edit" ${this.cssButton} >
             Edit
           </button>
           ` }

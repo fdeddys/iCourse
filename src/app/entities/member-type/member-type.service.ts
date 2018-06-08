@@ -4,13 +4,14 @@ import { Observable } from 'rxjs';
 import { map, tap } from 'rxjs/operators';
 import { createRequestOption } from '../../shared/model/request-util';
 import { MemberType } from './member-type.model';
+import { SERVER_PATH } from '../../shared/constant/base-constant';
 
 export type EntityResponseType = HttpResponse<MemberType>;
 
 @Injectable()
 export class MemberTypeService {
 
-    private resourceUrl =  'http://localhost:8080/api/membertype';
+    private resourceUrl =  SERVER_PATH + 'membertype';
 
     constructor(private http: HttpClient) { }
 

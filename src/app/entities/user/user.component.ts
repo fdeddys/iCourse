@@ -1,46 +1,43 @@
 import { Component, OnInit } from '@angular/core';
+import { User } from './user.model';
+import { MatDialog } from '@angular/material/dialog';
+import { UserService } from './user.service';
 import { HttpResponse, HttpErrorResponse } from '@angular/common/http';
-import { MatDialog } from '@angular/material';
-import { MemberDialogComponent } from './member-dialog.component';
-import { MemberConfirmComponent } from './member-confirm.component';
-import { Member } from './member.model';
-import { MemberService } from './member.service';
 import { GRID_THEME, CSS_BUTTON } from '../../shared/constant/base-constant';
+import { UserDialogComponent } from './user-dialog.component';
+import { UserConfirmDialogComponent } from './user-confirm-dialog.component';
 
 @Component({
-  selector: 'app-member',
-  templateUrl: './member.component.html',
-  styleUrls: ['./member.component.css']
+  selector: 'app-user',
+  templateUrl: './user.component.html',
+  styleUrls: ['./user.component.css']
 })
-export class MemberComponent implements OnInit {
+export class UserComponent implements OnInit {
 
   private gridApi;
   private gridColumnApi;
-
-  cssButton = CSS_BUTTON  ;
   theme: String = GRID_THEME;
-
-  members: Member[];
-  member: Member;
+  cssButton = CSS_BUTTON  ;
+  user: User[];
+  User: User;
 
   gridOptions = {
     columnDefs: [
-      { headerName: 'id', field: 'id', width: 50, pinned: 'left', editable: false },
-      { headerName: 'Name', field: 'name', width: 150, editable: false },
-      { headerName: 'Description', field: 'description', width: 200, editable: false },
-      { headerName: 'Active', field: 'active', width: 100, editable: false, valueFormatter: this.boolFormatter },
-      { headerName: 'Created at', field: 'createdAt', width: 150, valueFormatter: this.currencyFormatter },
-      { headerName: 'Update at', field: 'updatedAt', width: 150, valueFormatter: this.currencyFormatter },
-      { headerName: 'Created By', field: 'createdBy', width: 150 },
-      { headerName: 'Updated By', field: 'updatedBy', width: 150 },
+      { headerName: 'id', field: 'id', width: 200, pinned: 'left', editable: false },
+      { headerName: 'Name', field: 'name', width: 200, editable: false },
+      { headerName: 'Created at', field: 'createdAt', width: 200, valueFormatter: this.currencyFormatter },
+      { headerName: 'Update at', field: 'updatedAt', width: 200, valueFormatter: this.currencyFormatter },
+      { headerName: 'Created By', field: 'createdBy', width: 200 },
+      { headerName: 'Updated By', field: 'updatedBy', width: 200 },
       { headerName: 'action', suppressMenu: true,
         suppressSorting: true,
         template:
           `<button mat-raised-button type="button" data-action-type="edit"  ${this.cssButton} >
             Edit
-          </button>` }
+          </button>
+          ` }
     ],
-      rowData: this.members,
+      rowData: this.user,
       enableSorting: true,
       enableFilter: true,
       pagination: true,
@@ -49,20 +46,16 @@ export class MemberComponent implements OnInit {
       maxConcurrentDatasourceRequests : 2,
       infiniteInitialRowCount : 1,
       maxBlocksInCache : 2,
-      onPaginationChanged: this.onPaginationChanged()
   };
+
 
   currencyFormatter(params): string {
     const dt  = new Date(params.value);
-
     return dt.toLocaleString(['id']);
   }
 
-  boolFormatter(params): string {
-    return params.value === true ? 'Ya' : 'Tidak';
-  }
   constructor(  private dialog: MatDialog,
-                private memberService: MemberService) { }
+                private userService: UserService) { }
 
   public onRowClicked(e) {
     if (e.event.target !== undefined) {
@@ -80,9 +73,9 @@ export class MemberComponent implements OnInit {
 
   public onActionEditClick(data: any) {
       console.log('View action clicked', data);
-      const dialogRef = this.dialog.open(MemberDialogComponent, {
+      const dialogRef = this.dialog.open(UserDialogComponent, {
         width: '1000px',
-        data: { action: 'EDIT', entity: 'Biller Company', member: data }
+        data: { action: 'EDIT', entity: 'User', user: data }
       });
 
       dialogRef.afterClosed().subscribe(result => {
@@ -93,10 +86,10 @@ export class MemberComponent implements OnInit {
       });
   }
 
-  public onActionRemoveClick(data: Member) {
+  public onActionRemoveClick(data: User) {
       console.log('Remove action clicked', data);
       const biller: string = data.name;
-      const dialogConfirm = this.dialog.open(MemberConfirmComponent, {
+      const dialogConfirm = this.dialog.open(UserConfirmDialogComponent, {
         width: '50%',
         data: { warningMessage: 'Apakah anda yakin untuk menonaktifkan [  ' + `${biller}` + '  ]  ?',  idCompanyBiller: data.id }
       });
@@ -109,14 +102,12 @@ export class MemberComponent implements OnInit {
 
   loadAll() {
         console.log('Start call function all header');
-        this.memberService.query({
+        this.userService.query({
             page: 1,
             count: 10000,
-            // size: this.itemsPerPage,
-            // sort: this.sort()
         })
         .subscribe(
-                (res: HttpResponse<Member[]>) => this.onSuccess(res.body, res.headers),
+                (res: HttpResponse<User[]>) => this.onSuccess(res.body, res.headers),
                 (res: HttpErrorResponse) => this.onError(res.message),
                 () => { console.log('finally'); }
         );
@@ -136,18 +127,10 @@ export class MemberComponent implements OnInit {
     this.loadAll();
   }
 
-  onPaginationChanged() {
-    console.log('onPaginationPageLoaded');
-
-    // Workaround for bug in events order
-    if (this.gridApi) {
-    }
-}
-
   openNewDialog(): void {
-    const dialogRef = this.dialog.open(MemberDialogComponent, {
+    const dialogRef = this.dialog.open(UserDialogComponent, {
       width: '1000px',
-      data: { action: 'Add', entity: 'Biller Company' }
+      data: { action: 'Add', entity: 'User' }
     });
 
     dialogRef.afterClosed().subscribe(result => {
@@ -159,14 +142,12 @@ export class MemberComponent implements OnInit {
   }
 
   private onSuccess(data, headers) {
-
       if ( data.content.length <= 0 ) {
           return ;
       }
 
-      this.members = data.content;
-      this.gridApi.setRowData(this.members);
-
+      this.user = data.content;
+      this.gridApi.setRowData(this.user);
   }
 
   private onError(error) {

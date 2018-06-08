@@ -5,7 +5,7 @@ import { BillerTypeService } from './biller-type.service';
 import { BillerTypeDialogComponent } from './biller-type-dialog.component';
 import { HttpResponse, HttpErrorResponse } from '@angular/common/http';
 import { BillerTypeConfirmComponent } from './biller-type-confirm.component';
-import { GRID_THEME } from '../../shared/constant/base-constant';
+import { GRID_THEME, CSS_BUTTON } from '../../shared/constant/base-constant';
 
 @Component({
   selector: 'app-biller-type',
@@ -17,6 +17,7 @@ export class BillerTypeComponent implements OnInit {
   private gridApi;
   private gridColumnApi;
   theme: String = GRID_THEME;
+  cssButton = CSS_BUTTON  ;
   billerTipes: BillerType[];
   BillerType: BillerType;
 
@@ -32,7 +33,7 @@ export class BillerTypeComponent implements OnInit {
       { headerName: 'action', suppressMenu: true,
         suppressSorting: true,
         template:
-          `<button mat-raised-button type="button" data-action-type="edit" >
+          `<button mat-raised-button type="button" data-action-type="edit"  ${this.cssButton} >
             Edit
           </button>
           ` }
