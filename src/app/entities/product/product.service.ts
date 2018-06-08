@@ -14,7 +14,7 @@ export type EntityResponseType = HttpResponse<Product>;
 export class ProductService {
 
     private resourceUrl =  SERVER_PATH + 'billerproduct';
-    private searchByUtilUrl = SERVER_PATH + 'searchbylist';
+    private searchByUtilUrl = SERVER_PATH + 'util/searchbylist';
 
     constructor(private http: HttpClient) { }
 
