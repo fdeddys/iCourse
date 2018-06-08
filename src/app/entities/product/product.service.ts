@@ -6,14 +6,15 @@ import { tap } from 'rxjs/operators';
 
 import { Product } from './product.model';
 import { createRequestOption } from '../../shared/model/request-util';
+import { SERVER_PATH } from '../../shared/constant/base-constant';
 
 export type EntityResponseType = HttpResponse<Product>;
 
 @Injectable()
 export class ProductService {
 
-    private resourceUrl =  'http://localhost:8080/api/billerproduct';
-    private searchByUtilUrl = 'http://localhost:8080/api/util/searchbylist';
+    private resourceUrl =  SERVER_PATH + 'billerproduct';
+    private searchByUtilUrl = SERVER_PATH + 'searchbylist';
 
     constructor(private http: HttpClient) { }
 

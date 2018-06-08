@@ -6,13 +6,14 @@ import { tap } from 'rxjs/operators';
 
 import { BillerDetail } from './biller-detail.model';
 import { createRequestOption } from '../../shared/model/request-util';
+import { SERVER_PATH } from '../../shared/constant/base-constant';
 
 export type EntityResponseType = HttpResponse<BillerDetail>;
 
 @Injectable()
 export class BillerDetailService {
 
-    private resourceUrl =  'http://localhost:8080/api/detilbiller';
+    private resourceUrl =  SERVER_PATH + 'detilbiller';
 
     constructor(private http: HttpClient) { }
 
