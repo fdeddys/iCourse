@@ -5,6 +5,11 @@ import { FormsModule } from '@angular/forms';
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { Ng2Webstorage, LocalStorageService, SessionStorageService  } from 'ngx-webstorage';
 
+import { LoginService } from './shared/login/login.service';
+import { AccountService } from './shared/auth/account.service';
+import { AuthServerProvider } from './shared/auth/auth-jwt.service';
+import { Principal } from './shared/auth/principal.service';
+
 import { AuthInterceptor } from './blocks/interceptor/auth.interceptor';
 import { CdkTableModule } from '@angular/cdk/table';
 import { CustomMaterialModule } from './material.module';
@@ -44,6 +49,10 @@ import { EntityModule } from './entities/entity.module';
         EntityModule
     ],
     providers: [
+        LoginService,
+        AccountService,
+        AuthServerProvider,
+        Principal,
         // {
         //     provide: HTTP_INTERCEPTORS,
         //     useClass: AuthInterceptor,
