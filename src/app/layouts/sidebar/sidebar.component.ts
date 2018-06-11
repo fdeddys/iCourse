@@ -10,29 +10,36 @@ export class SidebarComponent {
   @Output() menuNm = new EventEmitter<string>();
   links: object[] = [
     {
+      name: 'Settings', link: 'settings',
+      subLinks: [
+        {name: 'Role', link: 'role'},
+        {name: 'User', link: 'user'},
+        {name: 'Global Setting', link: 'global-setting'},
+      ]
+    },
+    {
       name: 'Member', link: 'member',
       subLinks: [
-        {name: 'Member', link: 'member'},
-        {name: 'Member Type', link: 'member-type'}
+        {name: 'Member Type', link: 'member-type'},
+        {name: 'Member Reg', link: 'member'},
       ]
     },
     {
       name: 'Biller', link: 'biller',
       subLinks: [
-        {name: 'Product', link: 'product'},
-        {name: 'Biller', link: 'biller'},
-        {name: 'Biller Company', link: 'biller-company'},
         {name: 'Biller Type', link: 'biller-type'},
+        {name: 'Biller Company', link: 'biller-company'},
+        {name: 'Product', link: 'product'},
       ]
     },
     {
-      name: 'Settings', link: 'settings',
+      name: 'Registration', link: 'biller',
       subLinks: [
-        {name: 'Global Setting', link: 'global-setting'},
-        {name: 'User', link: 'user'},
-        {name: 'Role', link: 'role'},
+        {name: 'Biller Registration', link: 'biller'},
+        {name: 'Non Biller Registration', link: 'biller'},
       ]
     },
+
   ];
 
   constructor() { }

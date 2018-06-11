@@ -1,18 +1,30 @@
-<h2 mat-dialog-title>{{data.action}} - {{data.entity}}</h2>
+<h2 mat-dialog-title>
+    <!-- {{data.action}} - {{data.entity}} -->
+    <h4 style="color: rgb(226, 0, 0)" >{{data.action}} {{data.entity}}</h4>
+</h2>
 <mat-dialog-content>
     <form class="container-form">
-        <mat-form-field class="container-full-width">
+        <!-- <mat-form-field class="container-full-width">
             <input matInput placeholder="Id" value="{{user.id}}" [disabled]="true" >
-        </mat-form-field>
+        </mat-form-field> -->
         <mat-form-field class="container-full-width">
-            <input matInput placeholder="Name " [(ngModel)]="user.name"  cdkFocusInitial name ="namee" >
+            <input matInput placeholder="Name " [(ngModel)]="user.name"  cdkFocusInitial name ="namea" >
         </mat-form-field>
+        <div *ngIf="data.action === 'Add'" >
+            <mat-form-field class="container-full-width">
+                <input type="password" matInput placeholder="Password " [(ngModel)]="pass"  cdkFocusInitial name ="passw" >
+            </mat-form-field>
+            <mat-form-field class="container-full-width">
+                <input type="password" matInput placeholder="Confirm password " [(ngModel)]="confirmP"  cdkFocusInitial name ="confirm_p" >
+            </mat-form-field>
+        </div>
+
         <mat-form-field class="container-full-width">
-            <input matInput placeholder="Email" [(ngModel)]="user.email" name="email"
+            <input matInput placeholder="Email" [(ngModel)]="user.email" name="emaie"
             [formControl]="emailFormControl" >
         </mat-form-field>
         <mat-form-field class="container-full-width">
-            <mat-select placeholder="Status" [(ngModel)]="user.status" name="stts">
+            <mat-select placeholder="Status" [(ngModel)]="user.status" name="sttss">
                 <mat-option *ngFor="let status of statuses" [value]="status.value">
                   {{status.viewValue}}
                 </mat-option>
@@ -27,4 +39,4 @@
   <button mat-button mat-dialog-close>Cancel</button>
   <button mat-button mat-raised-button class="btnSave" (click)="save()" >Save</button>
 </mat-dialog-actions>
-
+<br><br>

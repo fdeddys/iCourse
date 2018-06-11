@@ -24,7 +24,7 @@ export class BillerCompanyDialogComponent implements OnInit {
 
     ngOnInit() {
         this.billerCompany = {};
-        if ( this.data.action === 'EDIT' ) {
+        if ( this.data.action === 'Edit' ) {
             // search
             this.billerCompany = this.data.billerCompany;
             this.name = this.billerCompany.name;

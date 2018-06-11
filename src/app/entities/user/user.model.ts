@@ -7,7 +7,7 @@ export class User implements BaseEntity {
         public email?: string,
         public password?: string,
         public status?: number,
-        public rememberToken?: string,
+        // public rememberToken?: string,
     ) {
     }
 }

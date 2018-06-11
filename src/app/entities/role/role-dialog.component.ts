@@ -28,7 +28,7 @@ export class RoleDialogComponent implements OnInit {
 
     ngOnInit() {
         this.role = {};
-        if ( this.data.action === 'EDIT' ) {
+        if ( this.data.action === 'Edit' ) {
             // search
             console.log('id sending ', this.data.role);
             this.role = this.data.role;

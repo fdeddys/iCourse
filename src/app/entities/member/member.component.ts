@@ -5,7 +5,7 @@ import { MemberDialogComponent } from './member-dialog.component';
 import { MemberConfirmComponent } from './member-confirm.component';
 import { Member } from './member.model';
 import { MemberService } from './member.service';
-import { GRID_THEME, CSS_BUTTON } from '../../shared/constant/base-constant';
+import { GRID_THEME, CSS_BUTTON, NO_DATA_GRID_MESSAGE } from '../../shared/constant/base-constant';
 
 @Component({
   selector: 'app-member',
@@ -22,6 +22,7 @@ export class MemberComponent implements OnInit {
 
   members: Member[];
   member: Member;
+  messageNoData: string = NO_DATA_GRID_MESSAGE;
 
   gridOptions = {
     columnDefs: [
@@ -29,11 +30,7 @@ export class MemberComponent implements OnInit {
       { headerName: 'Name', field: 'name', width: 150, editable: false },
       { headerName: 'Description', field: 'description', width: 200, editable: false },
       { headerName: 'Active', field: 'active', width: 100, editable: false, valueFormatter: this.boolFormatter },
-      { headerName: 'Created at', field: 'createdAt', width: 150, valueFormatter: this.currencyFormatter },
-      { headerName: 'Update at', field: 'updatedAt', width: 150, valueFormatter: this.currencyFormatter },
-      { headerName: 'Created By', field: 'createdBy', width: 150 },
-      { headerName: 'Updated By', field: 'updatedBy', width: 150 },
-      { headerName: 'action', suppressMenu: true,
+      { headerName: ' ', suppressMenu: true,
         suppressSorting: true,
         template:
           `<button mat-raised-button type="button" data-action-type="edit"  ${this.cssButton} >
@@ -49,7 +46,8 @@ export class MemberComponent implements OnInit {
       maxConcurrentDatasourceRequests : 2,
       infiniteInitialRowCount : 1,
       maxBlocksInCache : 2,
-      onPaginationChanged: this.onPaginationChanged()
+      onPaginationChanged: this.onPaginationChanged(),
+      localeText: {noRowsToShow: this.messageNoData},
   };
 
   currencyFormatter(params): string {
@@ -82,7 +80,7 @@ export class MemberComponent implements OnInit {
       console.log('View action clicked', data);
       const dialogRef = this.dialog.open(MemberDialogComponent, {
         width: '1000px',
-        data: { action: 'EDIT', entity: 'Biller Company', member: data }
+        data: { action: 'Edit', entity: 'Member Registration', member: data }
       });
 
       dialogRef.afterClosed().subscribe(result => {
@@ -134,6 +132,7 @@ export class MemberComponent implements OnInit {
     console.log(this.gridColumnApi);
 
     this.loadAll();
+    params.api.sizeColumnsToFit();
   }
 
   onPaginationChanged() {
@@ -147,7 +146,7 @@ export class MemberComponent implements OnInit {
   openNewDialog(): void {
     const dialogRef = this.dialog.open(MemberDialogComponent, {
       width: '1000px',
-      data: { action: 'Add', entity: 'Biller Company' }
+      data: { action: 'Add', entity: 'Member Registration' }
     });
 
     dialogRef.afterClosed().subscribe(result => {

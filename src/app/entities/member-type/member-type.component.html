@@ -1,10 +1,22 @@
-<button mat-raised-button class="btnAdd"  (click)="openNewDialog()" style="margin-bottom: 10px;">Create New</button>
-<ag-grid-angular 
-#agGrid
-    style="height: 400px;" 
-    class="{{theme}}"
-    [gridOptions]="gridOptions" 
-    (gridReady)="onGridReady($event)"
-    (rowClicked)="onRowClicked($event)"
-    >
-</ag-grid-angular>
+<mat-card>
+    <mat-card-header>
+        <mat-card-title style="align-items: center">
+            <h2 style="color: rgb(226, 0, 0)" >Member Type</h2>        
+                
+        </mat-card-title>
+    </mat-card-header>
+    <mat-card-content>
+        <div style="text-align: right">
+            <button mat-raised-button class="btnAdd"  (click)="openNewDialog()" style="margin-bottom: 10px;">Add New</button>
+        </div>
+        <ag-grid-angular 
+            #agGrid
+            style="height: 600px;" 
+            class="{{theme}}"
+            [gridOptions]="gridOptions" 
+            (gridReady)="onGridReady($event)"
+            (rowClicked)="onRowClicked($event)"
+            >
+        </ag-grid-angular>
+    </mat-card-content>
+</mat-card>

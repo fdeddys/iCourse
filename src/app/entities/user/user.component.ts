@@ -3,7 +3,7 @@ import { User } from './user.model';
 import { MatDialog } from '@angular/material/dialog';
 import { UserService } from './user.service';
 import { HttpResponse, HttpErrorResponse } from '@angular/common/http';
-import { GRID_THEME, CSS_BUTTON } from '../../shared/constant/base-constant';
+import { GRID_THEME, CSS_BUTTON, NO_DATA_GRID_MESSAGE } from '../../shared/constant/base-constant';
 import { UserDialogComponent } from './user-dialog.component';
 import { UserConfirmDialogComponent } from './user-confirm-dialog.component';
 
@@ -20,16 +20,13 @@ export class UserComponent implements OnInit {
   cssButton = CSS_BUTTON  ;
   user: User[];
   User: User;
+  messageNoData: string = NO_DATA_GRID_MESSAGE;
 
   gridOptions = {
     columnDefs: [
-      { headerName: 'id', field: 'id', width: 200, pinned: 'left', editable: false },
-      { headerName: 'Name', field: 'name', width: 200, editable: false },
-      { headerName: 'Created at', field: 'createdAt', width: 200, valueFormatter: this.currencyFormatter },
-      { headerName: 'Update at', field: 'updatedAt', width: 200, valueFormatter: this.currencyFormatter },
-      { headerName: 'Created By', field: 'createdBy', width: 200 },
-      { headerName: 'Updated By', field: 'updatedBy', width: 200 },
-      { headerName: 'action', suppressMenu: true,
+      { headerName: 'id', field: 'id', width: 50, pinned: 'left', editable: false },
+      { headerName: 'Name', field: 'name', width: 300, editable: false },
+      { headerName: ' ', suppressMenu: true,
         suppressSorting: true,
         template:
           `<button mat-raised-button type="button" data-action-type="edit"  ${this.cssButton} >
@@ -46,8 +43,8 @@ export class UserComponent implements OnInit {
       maxConcurrentDatasourceRequests : 2,
       infiniteInitialRowCount : 1,
       maxBlocksInCache : 2,
+      localeText: {noRowsToShow: this.messageNoData},
   };
-
 
   currencyFormatter(params): string {
     const dt  = new Date(params.value);
@@ -75,7 +72,7 @@ export class UserComponent implements OnInit {
       console.log('View action clicked', data);
       const dialogRef = this.dialog.open(UserDialogComponent, {
         width: '1000px',
-        data: { action: 'EDIT', entity: 'User', user: data }
+        data: { action: 'Edit', entity: 'User', user: data }
       });
 
       dialogRef.afterClosed().subscribe(result => {
@@ -120,7 +117,7 @@ export class UserComponent implements OnInit {
   onGridReady(params) {
     this.gridApi = params.api;
     this.gridColumnApi = params.columnApi;
-
+    params.api.sizeColumnsToFit();
     console.log(this.gridApi);
     console.log(this.gridColumnApi);
 

@@ -3,7 +3,7 @@ import { Role } from './role.model';
 import { MatDialog } from '@angular/material/dialog';
 import { RoleService } from './role.service';
 import { HttpResponse, HttpErrorResponse } from '@angular/common/http';
-import { GRID_THEME, CSS_BUTTON } from '../../shared/constant/base-constant';
+import { GRID_THEME, CSS_BUTTON, NO_DATA_GRID_MESSAGE } from '../../shared/constant/base-constant';
 import { RoleDialogComponent } from './role-dialog.component';
 import { RoleConfirmDialogComponent } from './role-confirm-dialog.component';
 
@@ -20,16 +20,13 @@ export class RoleComponent implements OnInit {
   cssButton = CSS_BUTTON  ;
   role: Role[];
   Role: Role;
+  messageNoData: string = NO_DATA_GRID_MESSAGE;
 
   gridOptions = {
     columnDefs: [
-      { headerName: 'id', field: 'id', width: 200, pinned: 'left', editable: false },
-      { headerName: 'Name', field: 'name', width: 200, editable: false },
-      { headerName: 'Created at', field: 'createdAt', width: 200, valueFormatter: this.currencyFormatter },
-      { headerName: 'Update at', field: 'updatedAt', width: 200, valueFormatter: this.currencyFormatter },
-      { headerName: 'Created By', field: 'createdBy', width: 200 },
-      { headerName: 'Updated By', field: 'updatedBy', width: 200 },
-      { headerName: 'action', suppressMenu: true,
+      { headerName: 'id', field: 'id', width: 50, pinned: 'left', editable: false },
+      { headerName: 'Name', field: 'name', width: 300, editable: false },
+      { headerName: ' ', suppressMenu: true,
         suppressSorting: true,
         template:
           `<button mat-raised-button type="button" data-action-type="edit"  ${this.cssButton} >
@@ -46,6 +43,7 @@ export class RoleComponent implements OnInit {
       maxConcurrentDatasourceRequests : 2,
       infiniteInitialRowCount : 1,
       maxBlocksInCache : 2,
+      localeText: {noRowsToShow: this.messageNoData},
   };
 
 
@@ -75,7 +73,7 @@ export class RoleComponent implements OnInit {
       console.log('View action clicked', data);
       const dialogRef = this.dialog.open(RoleDialogComponent, {
         width: '1000px',
-        data: { action: 'EDIT', entity: 'Role', role: data }
+        data: { action: 'Edit', entity: 'Role', role: data }
       });
 
       dialogRef.afterClosed().subscribe(result => {
@@ -120,7 +118,7 @@ export class RoleComponent implements OnInit {
   onGridReady(params) {
     this.gridApi = params.api;
     this.gridColumnApi = params.columnApi;
-
+    params.api.sizeColumnsToFit();
     console.log(this.gridApi);
     console.log(this.gridColumnApi);
 

@@ -36,7 +36,7 @@ export class MemberBankDialogComponent implements OnInit {
         const global = new GlobalSetting();
         global.id = 0;
         this.memberBank.globalSetting = global;
-        if ( this.data.action === 'EDIT' ) {
+        if ( this.data.action === 'Edit' ) {
             // search
             this.memberBank = this.data.memberBank;
             console.log('member bank ', this.memberBank);

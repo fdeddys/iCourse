@@ -5,7 +5,7 @@ import { GlobalSettingService } from './global-setting.service';
 import { HttpResponse, HttpErrorResponse } from '@angular/common/http';
 import { GlobalSettingDialogComponent } from './global-setting-dialog.component';
 import { GlobalSettingConfirmComponent } from './global-setting-confirm.component';
-import { GRID_THEME, CSS_BUTTON } from '../../shared/constant/base-constant';
+import { GRID_THEME, CSS_BUTTON, NO_DATA_GRID_MESSAGE } from '../../shared/constant/base-constant';
 
 @Component({
   selector: 'app-global-setting',
@@ -22,6 +22,7 @@ export class GlobalSettingComponent implements OnInit {
 
   memberTipes: GlobalSetting[];
   GlobalSetting: GlobalSetting;
+  messageNoData: string = NO_DATA_GRID_MESSAGE;
 
   gridOptions = {
     columnDefs: [
@@ -50,6 +51,7 @@ export class GlobalSettingComponent implements OnInit {
       maxConcurrentDatasourceRequests : 2,
       infiniteInitialRowCount : 1,
       maxBlocksInCache : 2,
+      localeText: {noRowsToShow: this.messageNoData},
   };
 
 
