@@ -14,6 +14,7 @@ export class SidebarComponent {
       subLinks: [
         {name: 'Role', link: 'role'},
         {name: 'User', link: 'user'},
+        {name: 'Menu', link: 'menu'},
         {name: 'Global Setting', link: 'global-setting'},
       ]
     },

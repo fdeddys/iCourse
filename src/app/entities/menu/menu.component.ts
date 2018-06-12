@@ -1,52 +1,59 @@
-import { Component, OnInit } from '@angular/core';
-import { Role } from './role.model';
+import { Component, OnInit, Input } from '@angular/core';
+import { Menu } from './menu.model';
 import { MatDialog } from '@angular/material/dialog';
-import { RoleService } from './role.service';
+import { MenuService } from './menu.service';
 import { HttpResponse, HttpErrorResponse } from '@angular/common/http';
 import { GRID_THEME, CSS_BUTTON, NO_DATA_GRID_MESSAGE } from '../../shared/constant/base-constant';
-import { RoleDialogComponent } from './role-dialog.component';
-import { RoleConfirmDialogComponent } from './role-confirm-dialog.component';
+import { MenuDialogComponent } from './menu-dialog.component';
+import { MenuConfirmDialogComponent } from './menu-confirm-dialog.component';
 
 @Component({
-  selector: 'app-role',
-  templateUrl: './role.component.html',
-  styleUrls: ['./role.component.css']
+  selector: 'app-menu',
+  templateUrl: './menu.component.html',
+  styleUrls: ['./menu.component.css']
 })
-export class RoleComponent implements OnInit {
+export class MenuComponent implements OnInit {
+
+  @Input('editingRole') editingRole;
 
   private gridApi;
   private gridColumnApi;
   theme: String = GRID_THEME;
   cssButton = CSS_BUTTON  ;
-  role: Role[];
-  Role: Role;
+  menu: Menu[];
+  Menu: Menu;
   messageNoData: string = NO_DATA_GRID_MESSAGE;
+  templateMenu;
 
   gridOptions = {
     columnDefs: [
       { headerName: 'id', field: 'id', width: 50, pinned: 'left', editable: false },
-      { headerName: 'Name', field: 'name', editable: false },
+      { headerName: 'Name', field: 'name', width: 100, editable: false },
+      { headerName: 'Description', field: 'description',  editable: false },
       { headerName: ' ', suppressMenu: true,
-        suppressSorting: true,
-        width: 100,
-        template:
-          `<button mat-raised-button type="button" data-action-type="edit"  ${this.cssButton} >
-            Edit
-          </button>
-          ` }
+      width: 100,
+      suppressSorting: true,
+      template:
+      `<button type="button" data-action-type="edit"  ${this.cssButton} >
+      Edit
+      </button>
+      ` }
     ],
-      rowData: this.role,
-      enableSorting: true,
-      enableFilter: true,
-      pagination: true,
+    rowData: this.menu,
+    enableSorting: true,
+    enableFilter: true,
+    pagination: true,
       paginationPageSize: 10,
       cacheOverflowSize : 2,
       maxConcurrentDatasourceRequests : 2,
       infiniteInitialRowCount : 1,
       maxBlocksInCache : 2,
       localeText: {noRowsToShow: this.messageNoData},
-  };
+    };
 
+  ngOnInit() {
+      // this.loadAll();
+  }
 
   currencyFormatter(params): string {
     const dt  = new Date(params.value);
@@ -54,7 +61,7 @@ export class RoleComponent implements OnInit {
   }
 
   constructor(  private dialog: MatDialog,
-                private roleService: RoleService) { }
+                private menuService: MenuService) { }
 
   public onRowClicked(e) {
     if (e.event.target !== undefined) {
@@ -72,9 +79,9 @@ export class RoleComponent implements OnInit {
 
   public onActionEditClick(data: any) {
       console.log('View action clicked', data);
-      const dialogRef = this.dialog.open(RoleDialogComponent, {
+      const dialogRef = this.dialog.open(MenuDialogComponent, {
         width: '1000px',
-        data: { action: 'Edit', entity: 'Role', role: data }
+        data: { action: 'Edit', entity: 'Menu', menu: data }
       });
 
       dialogRef.afterClosed().subscribe(result => {
@@ -85,10 +92,10 @@ export class RoleComponent implements OnInit {
       });
   }
 
-  public onActionRemoveClick(data: Role) {
+  public onActionRemoveClick(data: Menu) {
       console.log('Remove action clicked', data);
       const biller: string = data.name;
-      const dialogConfirm = this.dialog.open(RoleConfirmDialogComponent, {
+      const dialogConfirm = this.dialog.open(MenuConfirmDialogComponent, {
         width: '50%',
         data: { warningMessage: 'Apakah anda yakin untuk menonaktifkan [  ' + `${biller}` + '  ]  ?',  idCompanyBiller: data.id }
       });
@@ -101,20 +108,17 @@ export class RoleComponent implements OnInit {
 
   loadAll() {
         console.log('Start call function all header');
-        this.roleService.query({
+        this.menuService.query({
             page: 1,
             count: 10000,
         })
         .subscribe(
-                (res: HttpResponse<Role[]>) => this.onSuccess(res.body, res.headers),
+                (res: HttpResponse<Menu[]>) => this.onSuccess(res.body, res.headers),
                 (res: HttpErrorResponse) => this.onError(res.message),
                 () => { console.log('finally'); }
         );
     }
 
-  ngOnInit() {
-    // this.loadAll();
-  }
 
   onGridReady(params) {
     this.gridApi = params.api;
@@ -127,9 +131,9 @@ export class RoleComponent implements OnInit {
   }
 
   openNewDialog(): void {
-    const dialogRef = this.dialog.open(RoleDialogComponent, {
+    const dialogRef = this.dialog.open(MenuDialogComponent, {
       width: '1000px',
-      data: { action: 'Add', entity: 'Role' }
+      data: { action: 'Add', entity: 'Menu' }
     });
 
     dialogRef.afterClosed().subscribe(result => {
@@ -145,8 +149,8 @@ export class RoleComponent implements OnInit {
           return ;
       }
 
-      this.role = data.content;
-      this.gridApi.setRowData(this.role);
+      this.menu = data.content;
+      this.gridApi.setRowData(this.menu);
   }
 
   private onError(error) {

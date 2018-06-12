@@ -1,8 +1,8 @@
 <h2 mat-dialog-title>
     <h4 style="color: rgb(226, 0, 0)" >{{data.action}} {{data.entity}}</h4>
 </h2>
-<mat-dialog-content>
-    <form class="container-form">
+<mat-dialog-content style="width: 100%">
+    <!-- <form class="container-form" item-width="100%"> -->
         <!-- <mat-form-field class="container-full-width">
             <input matInput placeholder="Id" value="{{role.id}}" [disabled]="true" >
         </mat-form-field> -->
@@ -12,9 +12,30 @@
         <mat-form-field class="container-full-width">
             <input matInput placeholder="Description" [(ngModel)]="role.description" name="description">
         </mat-form-field>
-      <br><br>
 
-    </form>
+        <mat-card>
+            <!-- <mat-form-field class="container-full-width">
+                <mat-select placeholder="Menu" [(ngModel)]="menuSelected" name="selected_menu">
+                    <mat-option *ngFor="let menu of menus" [value]="menu.id">
+                        {{menu.description}}
+                    </mat-option>
+                </mat-select>
+               
+            </mat-form-field>
+            <div style="text-align: right">
+                <button mat-button mat-raised-button class="btnSave" (click)="addMenu()" >Add</button>
+            </div> -->
+            <ag-grid-angular 
+                #agGrid
+                style="height: 300px; width: 100%;" 
+                class="{{theme}}"
+                [gridOptions]="gridOptions" 
+                (gridReady)="onGridReady($event)"
+                (rowClicked)="onRowClicked($event)"
+                >
+            </ag-grid-angular>
+        </mat-card>
+    <!-- </form> -->
     
 </mat-dialog-content>
 <mat-dialog-actions>

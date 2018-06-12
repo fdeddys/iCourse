@@ -12,6 +12,7 @@ import { BillerPriceDetailModule } from './biller-price-detail/biller-price-deta
 import { MemberBankModule } from './member-bank/member-bank.module';
 import { UserModule } from './user/user.module';
 import { RoleModule } from './role/role.module';
+import { MenuModule } from './menu/menu.module';
 
 
 @NgModule({
@@ -27,7 +28,9 @@ import { RoleModule } from './role/role.module';
         BillerDetailModule,
         BillerPriceDetailModule,
         UserModule,
-        RoleModule
+        RoleModule,
+        MenuModule,
+        RoleModule,
     ],
     entryComponents: [],
     providers: [],

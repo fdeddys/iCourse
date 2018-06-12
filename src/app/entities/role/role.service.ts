@@ -4,7 +4,7 @@ import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { tap } from 'rxjs/operators';
 
-import { Role } from './role.model';
+import { Role, RoleMenuView } from './role.model';
 import { createRequestOption } from '../../shared/model/request-util';
 import { SERVER_PATH } from '../../shared/constant/base-constant';
 
@@ -61,6 +61,19 @@ private resourceUrl = SERVER_PATH + 'role';
         return this.http.put<Role>(`${this.resourceUrl}/${id}`, copy, { observe: 'response'})
             .pipe(map((res: EntityResponseType) => this.convertResponse(res)));
     }
+
+    changeActivation(roleid: number, menuid: number): Observable<EntityResponseType> {
+        return this.http.put<null>(`${this.resourceUrl}/${roleid}/menu/${menuid}`, null , { observe: 'response'})
+            .pipe(map((res: EntityResponseType) => this.convertResponse(res)));
+    }
+
+    // changeActivation2(roleid: number, menuid: number): Promise<EntityResponseType> {
+    //     return this.http.get<null>(`${this.resourceUrl}/role/${roleid}/menu/${menuid}`, null )
+    //         .toPromise()
+    //         .then(
+    //             res => {}
+    //         );
+    // }
 
     private convertResponse(res: EntityResponseType): EntityResponseType {
         const body: Role = this.convertItemFromServer(res.body);

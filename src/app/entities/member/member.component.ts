@@ -27,10 +27,11 @@ export class MemberComponent implements OnInit {
   gridOptions = {
     columnDefs: [
       { headerName: 'id', field: 'id', width: 50, pinned: 'left', editable: false },
-      { headerName: 'Name', field: 'name', width: 150, editable: false },
+      { headerName: 'Name', field: 'name', width: 100, editable: false },
       { headerName: 'Description', field: 'description', width: 200, editable: false },
-      { headerName: 'Active', field: 'active', width: 100, editable: false, valueFormatter: this.boolFormatter },
+      { headerName: 'Active', field: 'active',  editable: false, valueFormatter: this.boolFormatter },
       { headerName: ' ', suppressMenu: true,
+        width: 100,
         suppressSorting: true,
         template:
           `<button mat-raised-button type="button" data-action-type="edit"  ${this.cssButton} >

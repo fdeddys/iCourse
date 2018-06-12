@@ -119,10 +119,10 @@ export class BillerTypeComponent implements OnInit {
   onGridReady(params) {
     this.gridApi = params.api;
     this.gridColumnApi = params.columnApi;
+    params.api.sizeColumnsToFit();
 
     console.log(this.gridApi);
     console.log(this.gridColumnApi);
-    params.api.sizeColumnsToFit();
     this.loadAll();
   }
 

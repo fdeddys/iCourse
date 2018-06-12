@@ -25,8 +25,9 @@ export class UserComponent implements OnInit {
   gridOptions = {
     columnDefs: [
       { headerName: 'id', field: 'id', width: 50, pinned: 'left', editable: false },
-      { headerName: 'Name', field: 'name', width: 300, editable: false },
+      { headerName: 'Name', field: 'name', editable: false },
       { headerName: ' ', suppressMenu: true,
+        width: 100,
         suppressSorting: true,
         template:
           `<button mat-raised-button type="button" data-action-type="edit"  ${this.cssButton} >
