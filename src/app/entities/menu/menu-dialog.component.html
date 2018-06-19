@@ -1,24 +1,19 @@
-<h2 mat-dialog-title>   
+<h2 mat-dialog-title>
     <h4 style="color: rgb(226, 0, 0)" >{{data.action}} {{data.entity}}</h4>
 </h2>
 <mat-dialog-content>
     <form class="container-form">
         <!-- <mat-form-field class="container-full-width">
-            <input matInput placeholder="Id" value="{{billerType.id}}" [disabled]="true" >
+            <input matInput placeholder="Id" value="{{menu.id}}" [disabled]="true" >
         </mat-form-field> -->
         <mat-form-field class="container-full-width">
-            <input matInput placeholder="Name " [(ngModel)]="billerType.name" cdkFocusInitial name ="namee" >
+            <input matInput placeholder="Name " [(ngModel)]="menu.name"  cdkFocusInitial name ="namee" >
         </mat-form-field>
-        <mat-checkbox
-          class="example-margin"
-          [(ngModel)]="billerType.ispostpaid"
-          name="is_postpaid_"
-            >postpaid
-        </mat-checkbox>
+        <mat-form-field class="container-full-width">
+            <input matInput placeholder="Description" [(ngModel)]="menu.description" name="description">
+        </mat-form-field>
       <br><br>
-      <mat-divider></mat-divider>
-      <mat-divider></mat-divider>
-      <br><br>
+
     </form>
     
 </mat-dialog-content>
@@ -26,4 +21,4 @@
   <button mat-button mat-dialog-close>Cancel</button>
   <button mat-button mat-raised-button class="btnSave" (click)="save()" >Save</button>
 </mat-dialog-actions>
-
+<br>

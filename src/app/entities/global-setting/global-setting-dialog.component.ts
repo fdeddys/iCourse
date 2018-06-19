@@ -29,7 +29,7 @@ export class GlobalSettingDialogComponent implements OnInit {
 
     ngOnInit() {
         this.globalSetting = {};
-        if ( this.data.action === 'EDIT' ) {
+        if ( this.data.action === 'Edit' ) {
             // search
             console.log('member type id sending ', this.data.globalSetting);
             this.globalSetting = this.data.globalSetting;

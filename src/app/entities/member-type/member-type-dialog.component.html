@@ -1,9 +1,11 @@
-<h2 mat-dialog-title>{{data.action}} - {{data.entity}}</h2>
+<h2 mat-dialog-title>
+    <h4 style="color: rgb(226, 0, 0)" >{{data.action}} {{data.entity}}</h4>
+</h2>
 <mat-dialog-content>
     <form class="container-form">
-        <mat-form-field class="container-full-width">
+        <!-- <mat-form-field class="container-full-width">
             <input matInput placeholder="Id" value="{{memberType.id}}" [disabled]="true" >
-        </mat-form-field>
+        </mat-form-field> -->
         <mat-form-field class="container-full-width">
             <input matInput placeholder="Name " [(ngModel)]="memberType.name" cdkFocusInitial name ="namee" >
         </mat-form-field>

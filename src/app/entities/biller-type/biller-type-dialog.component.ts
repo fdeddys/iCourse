@@ -25,7 +25,7 @@ export class BillerTypeDialogComponent implements OnInit {
 
     ngOnInit() {
         this.billerType = {};
-        if ( this.data.action === 'EDIT' ) {
+        if ( this.data.action === 'Edit' ) {
             // search
             this.billerType = this.data.BillerType;
             this.name = this.billerType.name;
@@ -38,7 +38,7 @@ export class BillerTypeDialogComponent implements OnInit {
     }
 
     save(): void {
-        this.billerType.ispostpaid = this.checked  ;
+        // this.billerType.ispostpaid = this.checked  ;
         console.log('isi biller = ', this.billerType);
         // this.BillerType.name = this.name;
         console.log('isi biller company ', this.billerType);

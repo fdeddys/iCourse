@@ -1,7 +1,7 @@
 import { Component, OnInit, Inject } from '@angular/core';
 
 import { FormsModule, FormControl, Validators } from '@angular/forms';
-import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
+import { MatDialog, MatDialogRef, MAT_DIALOG_DATA, MatSnackBar } from '@angular/material';
 import { User } from './user.model';
 import { UserService } from './user.service';
 import { HttpResponse, HttpErrorResponse } from '@angular/common/http';
@@ -13,6 +13,9 @@ import { HttpResponse, HttpErrorResponse } from '@angular/common/http';
 })
 
 export class UserDialogComponent implements OnInit {
+
+    confirmP = '';
+    pass = '';
 
     emailFormControl = new FormControl('', [
         Validators.required,
@@ -28,12 +31,13 @@ export class UserDialogComponent implements OnInit {
 
     constructor(
         public userService: UserService,
+        public snackBar: MatSnackBar,
         public dialogRef: MatDialogRef<UserDialogComponent>,
         @Inject(MAT_DIALOG_DATA) public data: any) { }
 
     ngOnInit() {
         this.user = {};
-        if ( this.data.action === 'EDIT' ) {
+        if ( this.data.action === 'Edit' ) {
             // search
             console.log('id sending ', this.data.user);
             this.user = this.data.user;
@@ -45,6 +49,25 @@ export class UserDialogComponent implements OnInit {
     }
 
     save(): void {
+        // if ( this.data.action === 'Add' ) {
+
+        //     if ( this.pass === '' ) {
+        //         this.snackBar.open('Password belum di isi !', 'ok', {
+        //             duration: 2000,
+        //         });
+        //         return ;
+        //     }
+
+        //     if ( this.pass !== this.confirmP ) {
+        //         this.snackBar.open('Password dan confirmasi tidak sama !', 'ok', {
+        //             duration: 2000,
+        //         });
+        //         return ;
+        //     }
+        //     this.user.password = atob(this.pass);
+        // }
+
+        this.user.password = this.pass;
 
         console.log('isi object  ', this.user);
         if (this.user.id === undefined) {

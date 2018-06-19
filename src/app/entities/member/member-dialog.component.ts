@@ -8,7 +8,7 @@ import { HttpResponse, HttpErrorResponse } from '@angular/common/http';
 import { MemberBankDialogComponent } from './member-bank-dialog.component';
 import { MemberBank } from '../member-bank/member-bank.model';
 import { MemberBankService } from '../member-bank';
-import { GRID_THEME, CSS_BUTTON } from '../../shared/constant/base-constant';
+import { GRID_THEME, CSS_BUTTON, NO_DATA_GRID_MESSAGE, SNACKBAR_DURATION_IN_MILLISECOND } from '../../shared/constant/base-constant';
 
 @Component({
     selector: 'app-member-dialog',
@@ -24,10 +24,12 @@ export class MemberDialogComponent implements OnInit {
     private isUpdateData: Boolean = false;
     theme: String = GRID_THEME;
     cssButton = CSS_BUTTON  ;
+    duration = SNACKBAR_DURATION_IN_MILLISECOND;
 
     member: Member;
     name: string;
     memberBanks: MemberBank[];
+    messageNoData: string = NO_DATA_GRID_MESSAGE;
 
     gridOptions = {
         columnDefs: [
@@ -38,7 +40,7 @@ export class MemberDialogComponent implements OnInit {
         //   { headerName: 'Update at', field: 'updatedAt', width: 250, valueFormatter: this.currencyFormatter },
         //   { headerName: 'Created By', field: 'createdBy', width: 250 },
         //   { headerName: 'Updated By', field: 'updatedBy', width: 250 },
-          { headerName: 'action', suppressMenu: true,
+          { headerName: ' ', suppressMenu: true,
             suppressSorting: true,
             template:
               `<button mat-raised-button type="button" data-action-type="edit"  ${this.cssButton} >
@@ -54,6 +56,7 @@ export class MemberDialogComponent implements OnInit {
           maxConcurrentDatasourceRequests : 2,
           infiniteInitialRowCount : 1,
           maxBlocksInCache : 2,
+          localeText: {noRowsToShow: this.messageNoData},
       };
 
     statuses = [
@@ -71,7 +74,8 @@ export class MemberDialogComponent implements OnInit {
 
     ngOnInit() {
         this.member = {};
-        if ( this.data.action === 'EDIT' ) {
+        this.member.active = true;
+        if ( this.data.action === 'Edit' ) {
             // search
             this.member = this.data.member;
             this.name = this.member.name;
@@ -105,7 +109,7 @@ export class MemberDialogComponent implements OnInit {
         // console.log('View action clicked', data);
         const dialogRef = this.dialog.open(MemberBankDialogComponent, {
           width: '1000px',
-          data: { action: 'EDIT', entity: 'Bank', member: this.member, memberBank: data }
+          data: { action: 'Edit', entity: 'Bank', member: this.member, memberBank: data }
         });
 
         dialogRef.afterClosed().subscribe(result => {
@@ -187,7 +191,7 @@ export class MemberDialogComponent implements OnInit {
 
     openSnackBar(message: string, action: string) {
         this.snackBar.open(message, action, {
-          duration: 2000,
+          duration: this.duration,
         });
      }
 

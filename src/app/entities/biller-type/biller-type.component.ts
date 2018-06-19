@@ -5,7 +5,7 @@ import { BillerTypeService } from './biller-type.service';
 import { BillerTypeDialogComponent } from './biller-type-dialog.component';
 import { HttpResponse, HttpErrorResponse } from '@angular/common/http';
 import { BillerTypeConfirmComponent } from './biller-type-confirm.component';
-import { GRID_THEME, CSS_BUTTON } from '../../shared/constant/base-constant';
+import { GRID_THEME, CSS_BUTTON, NO_DATA_GRID_MESSAGE } from '../../shared/constant/base-constant';
 
 @Component({
   selector: 'app-biller-type',
@@ -20,17 +20,14 @@ export class BillerTypeComponent implements OnInit {
   cssButton = CSS_BUTTON  ;
   billerTipes: BillerType[];
   BillerType: BillerType;
+  messageNoData: string = NO_DATA_GRID_MESSAGE;
 
   gridOptions = {
     columnDefs: [
-      { headerName: 'id', field: 'id', width: 200, pinned: 'left', editable: false },
+      { headerName: 'id', field: 'id', width: 50, pinned: 'left', editable: false },
       { headerName: 'Name', field: 'name', width: 200, editable: false },
-      { headerName: 'pospaid', field: 'isPostPaid', width: 200, editable: false },
-      { headerName: 'Created at', field: 'createdAt', width: 200, valueFormatter: this.currencyFormatter },
-      { headerName: 'Update at', field: 'updatedAt', width: 200, valueFormatter: this.currencyFormatter },
-      { headerName: 'Created By', field: 'createdBy', width: 200 },
-      { headerName: 'Updated By', field: 'updatedBy', width: 200 },
-      { headerName: 'action', suppressMenu: true,
+      { headerName: 'Post paid', field: 'ispostpaid', width: 200, editable: false },
+      { headerName: ' ', suppressMenu: true,
         suppressSorting: true,
         template:
           `<button mat-raised-button type="button" data-action-type="edit"  ${this.cssButton} >
@@ -47,6 +44,7 @@ export class BillerTypeComponent implements OnInit {
       maxConcurrentDatasourceRequests : 2,
       infiniteInitialRowCount : 1,
       maxBlocksInCache : 2,
+      localeText: {noRowsToShow: this.messageNoData},
   };
 
 
@@ -76,7 +74,7 @@ export class BillerTypeComponent implements OnInit {
       console.log('View action clicked', data);
       const dialogRef = this.dialog.open(BillerTypeDialogComponent, {
         width: '1000px',
-        data: { action: 'EDIT', entity: 'Biller Type', BillerType: data }
+        data: { action: 'Edit', entity: 'Biller Type', BillerType: data }
       });
 
       dialogRef.afterClosed().subscribe(result => {
@@ -121,10 +119,10 @@ export class BillerTypeComponent implements OnInit {
   onGridReady(params) {
     this.gridApi = params.api;
     this.gridColumnApi = params.columnApi;
+    params.api.sizeColumnsToFit();
 
     console.log(this.gridApi);
     console.log(this.gridColumnApi);
-
     this.loadAll();
   }
 

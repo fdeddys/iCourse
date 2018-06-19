@@ -5,7 +5,7 @@ import { MemberTypeService } from './member-type.service';
 import { MemberTypeDialogComponent } from './member-type-dialog.component';
 import { MemberTypeConfirmComponent } from './member-type-confirm.component';
 import { HttpResponse, HttpErrorResponse } from '@angular/common/http';
-import { GRID_THEME, CSS_BUTTON } from '../../shared/constant/base-constant';
+import { GRID_THEME, CSS_BUTTON, NO_DATA_GRID_MESSAGE } from '../../shared/constant/base-constant';
 
 @Component({
   selector: 'app-member-type',
@@ -16,23 +16,20 @@ export class MemberTypeComponent implements OnInit {
 
   private gridApi;
   private gridColumnApi;
-
   theme: String = GRID_THEME;
   cssButton = CSS_BUTTON  ;
 
   memberTipes: MemberType[];
   MemberType: MemberType;
+  messageNoData: string = NO_DATA_GRID_MESSAGE;
 
   gridOptions = {
     columnDefs: [
-      { headerName: 'id', field: 'id', width: 200, pinned: 'left', editable: false },
-      { headerName: 'Name', field: 'name', width: 200, editable: false },
-      { headerName: 'description', field: 'description', width: 200, editable: false },
-      { headerName: 'Created at', field: 'createdAt', width: 200, valueFormatter: this.currencyFormatter },
-      { headerName: 'Update at', field: 'updatedAt', width: 200, valueFormatter: this.currencyFormatter },
-      { headerName: 'Created By', field: 'createdBy', width: 200 },
-      { headerName: 'Updated By', field: 'updatedBy', width: 200 },
-      { headerName: 'action', suppressMenu: true,
+      { headerName: 'id', field: 'id', width: 50, editable: false ,  pinned: 'left'},
+      { headerName: 'Name', field: 'name', width: 100, editable: false},
+      { headerName: 'description', field: 'description',  editable: false },
+      { headerName: ' ', suppressMenu: true,
+        width: 100 ,
         suppressSorting: true,
         template:
           `<button mat-raised-button type="button" data-action-type="edit"  ${this.cssButton} >
@@ -49,13 +46,9 @@ export class MemberTypeComponent implements OnInit {
       maxConcurrentDatasourceRequests : 2,
       infiniteInitialRowCount : 1,
       maxBlocksInCache : 2,
+      localeText: {noRowsToShow: this.messageNoData},
+      suppressHorizontalScroll: false,
   };
-
-
-  currencyFormatter(params): string {
-    const dt  = new Date(params.value);
-    return dt.toLocaleString(['id']);
-  }
 
   constructor(  private dialog: MatDialog,
                 private memberTypeService: MemberTypeService) { }
@@ -126,7 +119,7 @@ export class MemberTypeComponent implements OnInit {
 
     console.log(this.gridApi);
     console.log(this.gridColumnApi);
-
+    params.api.sizeColumnsToFit();
     this.loadAll();
   }
 

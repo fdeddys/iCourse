@@ -5,7 +5,7 @@ import { HttpResponse, HttpErrorResponse } from '@angular/common/http';
 import { BillerCompanyService } from './biller-company.service';
 import { BillerCompanyDialogComponent } from './biller-company-dialog.component';
 import { BillerCompanyConfirmComponent } from './biller-company-confirm.component';
-import { GRID_THEME, CSS_BUTTON } from '../../shared/constant/base-constant';
+import { GRID_THEME, CSS_BUTTON, NO_DATA_GRID_MESSAGE } from '../../shared/constant/base-constant';
 
 @Component({
   selector: 'app-biller-company',
@@ -22,16 +22,13 @@ export class BillerCompanyComponent implements OnInit {
 
   billerCompanies: BillerCompany[];
   billerCompany; BillerCompany;
+  messageNoData: string = NO_DATA_GRID_MESSAGE;
 
   gridOptions = {
     columnDefs: [
-      { headerName: 'id', field: 'id', width: 100, pinned: 'left', editable: false },
+      { headerName: 'id', field: 'id', width: 50, pinned: 'left', editable: false },
       { headerName: 'Name', field: 'name', width: 250, editable: false },
-      { headerName: 'Created at', field: 'createdAt', width: 250, valueFormatter: this.currencyFormatter },
-      { headerName: 'Update at', field: 'updatedAt', width: 250, valueFormatter: this.currencyFormatter },
-      { headerName: 'Created By', field: 'createdBy', width: 250 },
-      { headerName: 'Updated By', field: 'updatedBy', width: 250 },
-      { headerName: 'action', suppressMenu: true,
+      { headerName: ' ', suppressMenu: true,
         suppressSorting: true,
         template:
           `<button mat-raised-button type="button" data-action-type="edit"  ${this.cssButton} >
@@ -47,7 +44,8 @@ export class BillerCompanyComponent implements OnInit {
       maxConcurrentDatasourceRequests : 2,
       infiniteInitialRowCount : 1,
       maxBlocksInCache : 2,
-      onPaginationChanged: this.onPaginationChanged()
+      onPaginationChanged: this.onPaginationChanged(),
+      localeText: {noRowsToShow: this.messageNoData}
   };
 
   // <button type="button" data-action-type="inactive" class="btn btn-default">
@@ -83,7 +81,7 @@ export class BillerCompanyComponent implements OnInit {
       console.log('View action clicked', data);
       const dialogRef = this.dialog.open(BillerCompanyDialogComponent, {
         width: '1000px',
-        data: { action: 'EDIT', entity: 'Biller Company', billerCompany: data }
+        data: { action: 'Edit', entity: 'Biller Company', billerCompany: data }
       });
 
       dialogRef.afterClosed().subscribe(result => {
@@ -145,7 +143,7 @@ export class BillerCompanyComponent implements OnInit {
 
     console.log(this.gridApi);
     console.log(this.gridColumnApi);
-
+    params.api.sizeColumnsToFit();
     this.loadAll();
   }
 

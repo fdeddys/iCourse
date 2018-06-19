@@ -1,9 +1,11 @@
-<h2 mat-dialog-title>{{data.action}} - {{data.entity}}</h2>
+<h4 mat-dialog-title>
+    <h4 style="color: rgb(226, 0, 0)" >{{data.action}} {{data.entity}}</h4>
+</h4>
 <mat-dialog-content>
     <form class="container-form">
-        <mat-form-field class="container-full-width">
-            <input matInput placeholder="Id" value="{{member.id}}" [disabled]="true" >
-        </mat-form-field>
+        <!-- <mat-form-field ng-show="false" class="container-full-width">
+            <input matInput placeholder="Id" value="{{member.id}}" [disabled]="true"  >
+        </mat-form-field> -->
         <mat-form-field class="container-full-width">
             <input matInput placeholder="Name " [(ngModel)]="member.name" cdkFocusInitial name ="namee">
         </mat-form-field>
@@ -25,7 +27,7 @@
     <br>
     
     <mat-card>
-        <button mat-raised-button class='btnAdd' (click)="openNewDialog()" style="margin-bottom: 10px;">Create New</button>
+        <button mat-raised-button class='btnAdd' (click)="openNewDialog()" style="margin-bottom: 10px;">Add New Bank Account</button>
         <ag-grid-angular 
             #agGrid
             style="height: 300px; widows: 100%;" 

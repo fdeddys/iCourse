@@ -1,7 +1,7 @@
 import { Component, OnInit, Inject } from '@angular/core';
 
 import { FormsModule } from '@angular/forms';
-import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
+import { MatDialog, MatDialogRef, MAT_DIALOG_DATA, MatSnackBar } from '@angular/material';
 import { MemberType } from './member-type.model';
 import { MemberTypeService } from './member-type.service';
 import { HttpResponse, HttpErrorResponse } from '@angular/common/http';
@@ -18,6 +18,7 @@ export class MemberTypeDialogComponent implements OnInit {
 
     constructor(
         public memberTypeService: MemberTypeService,
+        public snackBar: MatSnackBar,
         public dialogRef: MatDialogRef<MemberTypeDialogComponent>,
         @Inject(MAT_DIALOG_DATA) public data: any) { }
 
@@ -40,14 +41,22 @@ export class MemberTypeDialogComponent implements OnInit {
         if (this.memberType.id === undefined) {
             console.log('send to service ', this.memberType);
             this.memberTypeService.create(this.memberType).subscribe((res: HttpResponse<MemberType>) => {
+
+                this.openSnackbar();
                 this.dialogRef.close('refresh');
             });
         } else {
             console.log('send to service ', this.memberType);
             this.memberTypeService.update(this.memberType.id, this.memberType).subscribe((res: HttpResponse<MemberType>) => {
+                this.openSnackbar();
                 this.dialogRef.close('refresh');
             });
         }
     }
 
+    openSnackbar(): void {
+        this.snackBar.open('Save success', 'ok', {
+            duration: 2000,
+        });
+    }
 }

@@ -8,3 +8,12 @@ export class Role implements BaseEntity {
     ) {
     }
 }
+
+export class RoleMenuView {
+    constructor(
+        public menuId?: number,
+        public status?: string,
+        public menuDescription?: string,
+    ) {
+    }
+}

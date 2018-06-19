@@ -12,6 +12,7 @@ import { Product, ProductService } from '../product';
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
 
 import { BillerDialogComponent } from './biller-dialog.component';
+import { NO_DATA_GRID_MESSAGE } from '../../shared/constant/base-constant';
 
 @Component({
     selector: 'app-biller',
@@ -33,6 +34,7 @@ export class BillerComponent implements OnInit {
     billerTypeList = [];
     billerCompanyList = [];
     productList = [];
+    messageNoData: string = NO_DATA_GRID_MESSAGE;
 
     gridOptions = {
         columnDefs: [
@@ -47,14 +49,15 @@ export class BillerComponent implements OnInit {
                     Edit
                 </button>
                 `
-            }
+            },
         ],
         rowData: this.billers,
         enableSorting: true,
         enableFilter: true,
         // rowSelection: "multiple"
         pagination: true,
-        paginationPageSize: 10
+        paginationPageSize: 10,
+        localeText: {noRowsToShow: this.messageNoData}
     };
 
     constructor(
