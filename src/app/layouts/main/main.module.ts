@@ -1,7 +1,6 @@
 /* import modules so that AppModule can access them */
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
-import { NavbarModule } from '../navbar/navbar.module';
 import { SidebarModule } from '../sidebar/sidebar.module';
 import { MainComponent } from './main.component';
 
@@ -11,7 +10,6 @@ import { MainComponent } from './main.component';
  ],
 imports: [ /* add modules here so Angular knows to use them */
   BrowserModule,
-  NavbarModule,
   SidebarModule
  ],
  providers: []

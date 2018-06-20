@@ -5,3 +5,17 @@ mat-sidenav {
 .main-container {
 	max-width: 100%;
 }
+
+/* navbar */
+.mat-toolbar-row, .mat-toolbar-single-row {
+	height: 58px;
+}
+
+.spacer {
+	flex: 1 1 auto;
+}
+
+.icon {
+	padding: 0 14px;
+}
+/*  */
