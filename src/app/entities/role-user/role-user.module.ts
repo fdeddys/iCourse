@@ -5,7 +5,7 @@ import { AgGridModule } from 'ag-grid-angular';
 import { CustomMaterialModule } from './../../material.module';
 
 import {
-    RoleMenuService,
+    RoleUserService,
 } from './';
 
 import { LocalStorageService, SessionStorageService } from 'ngx-webstorage';
@@ -23,10 +23,10 @@ import { LocalStorageService, SessionStorageService } from 'ngx-webstorage';
     entryComponents: [
     ],
     providers: [
-        RoleMenuService,
+        RoleUserService,
         LocalStorageService,
         SessionStorageService
     ],
     schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })
-export class RoleMenuModule {}
+export class RoleUserModule {}

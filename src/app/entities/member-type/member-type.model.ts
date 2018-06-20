@@ -5,6 +5,7 @@ export class MemberType implements BaseEntity {
         public id?: number,
         public name?: string,
         public description?: boolean,
+        public nourut?: any,
     ) {
     }
 }

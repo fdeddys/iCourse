@@ -6,6 +6,7 @@ export class Member implements BaseEntity {
         public name?: string,
         public protocolType?: any,
         public active?: boolean,
+        public nourut?: any,
     ) {
     }
 }

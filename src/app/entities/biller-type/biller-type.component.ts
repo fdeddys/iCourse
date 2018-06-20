@@ -24,9 +24,9 @@ export class BillerTypeComponent implements OnInit {
 
   gridOptions = {
     columnDefs: [
-      { headerName: 'id', field: 'id', width: 50, pinned: 'left', editable: false },
+      { headerName: 'No', field: 'nourut', width: 50, pinned: 'left', editable: false },
       { headerName: 'Name', field: 'name', width: 200, editable: false },
-      { headerName: 'Post paid', field: 'ispostpaid', width: 200, editable: false },
+      { headerName: 'Postpaid', field: 'ispostpaid', width: 200, editable: false },
       { headerName: ' ', suppressMenu: true,
         suppressSorting: true,
         template:
@@ -146,6 +146,10 @@ export class BillerTypeComponent implements OnInit {
       }
 
       this.billerTipes = data.content;
+      let urut = 1;
+      for (const billerType of this.billerTipes) {
+        billerType.nourut = urut++;
+      }
       this.gridApi.setRowData(this.billerTipes);
   }
 

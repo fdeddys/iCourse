@@ -5,6 +5,7 @@ export class Role implements BaseEntity {
         public id?: number,
         public name?: string,
         public description?: string,
+        public nourut?: number,
     ) {
     }
 }
@@ -14,6 +15,7 @@ export class RoleMenuView {
         public menuId?: number,
         public status?: string,
         public menuDescription?: string,
+        public nourut?: number,
     ) {
     }
 }

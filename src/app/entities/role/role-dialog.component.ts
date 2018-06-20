@@ -40,7 +40,7 @@ export class RoleDialogComponent implements OnInit {
 
     gridOptions = {
         columnDefs: [
-            // { headerName: 'id', field: 'id', width: 50, pinned: 'left', editable: false },
+            { headerName: 'No', field: 'nourut', width: 50, pinned: 'left', editable: false },
             { headerName: 'Name', field: 'menuDescription', editable: false },
             { headerName: 'Status', field: 'status', editable: false },
             { headerName: ' ', suppressMenu: true,
@@ -182,8 +182,12 @@ export class RoleDialogComponent implements OnInit {
         // if ( data.content === undefined ) {
         //     return ;
         // }
+        let urut = 1;
         console.log('on success ' , data);
         this.menuRegistered = data;
+        for (const menu of this.menuRegistered) {
+            menu.nourut = urut++;
+          }
         this.gridApi.setRowData(this.menuRegistered);
     }
 

@@ -24,7 +24,7 @@ export class UserComponent implements OnInit {
 
   gridOptions = {
     columnDefs: [
-      { headerName: 'id', field: 'id', width: 50, pinned: 'left', editable: false },
+      { headerName: 'No', field: 'nourut', width: 50, pinned: 'left', editable: false },
       { headerName: 'Name', field: 'name', editable: false },
       { headerName: ' ', suppressMenu: true,
         width: 100,
@@ -143,8 +143,11 @@ export class UserComponent implements OnInit {
       if ( data.content.length <= 0 ) {
           return ;
       }
-
       this.user = data.content;
+      let urut = 1;
+      for (const usr of this.user) {
+        usr.nourut = urut++;
+      }
       this.gridApi.setRowData(this.user);
   }
 
