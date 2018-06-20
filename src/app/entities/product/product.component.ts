@@ -9,6 +9,7 @@ import { Member, MemberService } from '../member';
 
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
 import { GRID_THEME, CSS_BUTTON, NO_DATA_GRID_MESSAGE } from '../../shared/constant/base-constant';
+import { MatActionButtonComponent } from '../../shared/templates/mat-action-button.component';
 
 import { ProductDialogComponent } from './product-dialog.component';
 
@@ -42,21 +43,26 @@ export class ProductComponent implements OnInit {
             { headerName: 'Status', field: 'status', width: 250 },
             { headerName: 'Search By', field: 'searchBy', width: 250 },
             { headerName: 'Search By Biller', field: 'searchByMemberId', width: 250 },
-            { headerName: ' ', suppressMenu: true,
-                suppressSorting: true,
-                template: `
-                <button mat-button color="primary" data-action-type="edit"  ${this.cssButton} >
-                    Edit
-                </button>
-                `
-            }
+            { headerName: ' ', width: 150, cellRenderer: 'actionRenderer'}
+            // { headerName: ' ', suppressMenu: true,
+            //     suppressSorting: true,
+            //     template: `
+            //     <button mat-button color="primary" data-action-type="edit"  ${this.cssButton} >
+            //         Edit
+            //     </button>
+            //     `
+            // }
         ],
         rowData: this.products,
         enableSorting: true,
         enableFilter: true,
         // rowSelection: "multiple"
         pagination: true,
-        paginationPageSize: 10
+        paginationPageSize: 10,
+        frameworkComponents: {
+            // checkboxRenderer: MatCheckboxComponent,
+            actionRenderer: MatActionButtonComponent
+        }
     };
 
     constructor(

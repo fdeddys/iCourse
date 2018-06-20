@@ -57,23 +57,26 @@ export class BillerDialogComponent implements OnInit {
 
     colDefs = [
         // { headerName: 'Name', field: 'name', checkboxSelection: true, width: 250, pinned: 'left', editable: true },
-        { headerName: 'External Code', field: 'externalCode', width: 150, pinned: 'left', editable: false },
+        // { headerName: 'External Code', field: 'externalCode', width: 150, pinned: 'left', editable: false },
+        { headerName: 'Product Type', field: 'billerProduct.billerType.name', width: 150 },
+        { headerName: 'Product Company', field: 'billerProduct.billerCompany.name', width: 175 },
+        { headerName: 'Denom', field: 'billerProduct.denom', width: 150 },
         { headerName: 'Buy Price', field: 'buyPrice', width: 125 },
-        { headerName: 'Fee', field: 'fee', width: 125 },
-        { headerName: 'Profit', field: 'profit', width: 125 },
-        { headerName: 'Sell Price', field: 'sellPrice', width: 125 },
-        { headerName: 'Post Paid', field: 'postPaid', width: 125 },
+        // { headerName: 'Fee', field: 'fee', width: 125 },
+        // { headerName: 'Profit', field: 'profit', width: 125 },
+        // { headerName: 'Sell Price', field: 'sellPrice', width: 125 },
+        // { headerName: 'Post Paid', field: 'postPaid', width: 125 },
         // { headerName: 'Status', field: 'status', width: 150, cellRenderer: 'checkboxRenderer'},
         { headerName: 'Status', field: 'status', width: 125},
-        // { headerName: 'Action', width: 150, cellRenderer: 'actionRenderer'}
-        { headerName: 'Action', suppressMenu: true,
-            suppressSorting: true,
-            template: `
-            <button mat-button color="primary" data-action-type="edit">
-                Edit
-            </button>
-            `
-        }
+        { headerName: 'Action', width: 150, cellRenderer: 'actionRenderer'}
+        // { headerName: 'Action', suppressMenu: true,
+        //     suppressSorting: true,
+        //     template: `
+        //     <button mat-button color="primary" data-action-type="edit">
+        //         Edit
+        //     </button>
+        //     `
+        // }
     ];
 
     nonColDefs = [
@@ -83,15 +86,15 @@ export class BillerDialogComponent implements OnInit {
         { headerName: 'Date Start', field: 'dateStart', width: 150 },
         { headerName: 'Date Thru', field: 'dateThru', width: 150 },
         { headerName: 'Status', field: 'status', width: 150},
-        // { headerName: 'Action', width: 150, cellRenderer: 'actionRenderer'}
-        { headerName: ' ', suppressMenu: true,
-            suppressSorting: true,
-            template: `
-            <button mat-button color="primary" data-action-type="edit">
-                Edit
-            </button>
-            `
-        }
+        { headerName: 'Action', width: 150, cellRenderer: 'actionRenderer'}
+        // { headerName: ' ', suppressMenu: true,
+        //     suppressSorting: true,
+        //     template: `
+        //     <button mat-button color="primary" data-action-type="edit">
+        //         Edit
+        //     </button>
+        //     `
+        // }
     ];
 
     gridOptions = {
@@ -103,10 +106,10 @@ export class BillerDialogComponent implements OnInit {
         pagination: true,
         paginationPageSize: 10,
         // rowHeight : 41,
-        // frameworkComponents: {
-        //     checkboxRenderer: MatCheckboxComponent,
-        //     actionRenderer: MatActionButtonComponent
-        // }
+        frameworkComponents: {
+            // checkboxRenderer: MatCheckboxComponent,
+            actionRenderer: MatActionButtonComponent
+        }
     };
 
     constructor(

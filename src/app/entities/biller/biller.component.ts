@@ -16,6 +16,7 @@ import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
 
 import { BillerDialogComponent } from './biller-dialog.component';
 import { NO_DATA_GRID_MESSAGE } from '../../shared/constant/base-constant';
+import { MatActionButtonComponent } from '../../shared/templates/mat-action-button.component';
 
 @Component({
     selector: 'app-biller',
@@ -47,14 +48,15 @@ export class BillerComponent implements OnInit {
             { headerName: 'Description', field: 'description', width: 350, pinned: 'left', editable: false },
             { headerName: 'Date Start', field: 'dateStart', width: 350 },
             { headerName: 'Date Thru', field: 'dateThru', width: 350 },
-            { headerName: ' ', suppressMenu: true,
-                suppressSorting: true,
-                template: `
-                <button mat-button color="primary" data-action-type="edit">
-                    Edit
-                </button>
-                `
-            },
+            { headerName: ' ', width: 150, cellRenderer: 'actionRenderer'}
+            // { headerName: ' ', suppressMenu: true,
+            //     suppressSorting: true,
+            //     template: `
+            //     <button mat-button color="primary" data-action-type="edit">
+            //         Edit
+            //     </button>
+            //     `
+            // },
         ],
         rowData: this.billers,
         enableSorting: true,
@@ -62,7 +64,10 @@ export class BillerComponent implements OnInit {
         // rowSelection: "multiple"
         pagination: true,
         paginationPageSize: 10,
-        localeText: {noRowsToShow: this.messageNoData}
+        localeText: {noRowsToShow: this.messageNoData},
+        frameworkComponents: {
+            actionRenderer: MatActionButtonComponent
+        }
     };
 
     constructor(
