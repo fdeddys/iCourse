@@ -4,6 +4,7 @@ export class BillerCompany implements BaseEntity {
     constructor(
         public id?: number,
         public name?: string,
+        public nourut?: any,
     ) {
     }
 }

@@ -25,9 +25,9 @@ export class MemberTypeComponent implements OnInit {
 
   gridOptions = {
     columnDefs: [
-      { headerName: 'id', field: 'id', width: 50, editable: false ,  pinned: 'left'},
+      { headerName: 'No', field: 'nourut', width: 50, editable: false ,  pinned: 'left'},
       { headerName: 'Name', field: 'name', width: 100, editable: false},
-      { headerName: 'description', field: 'description',  editable: false },
+      { headerName: 'Description', field: 'description',  editable: false },
       { headerName: ' ', suppressMenu: true,
         width: 100 ,
         suppressSorting: true,
@@ -143,6 +143,10 @@ export class MemberTypeComponent implements OnInit {
       }
 
       this.memberTipes = data.content;
+      let urut = 1;
+      for (const memberType of this.memberTipes) {
+          memberType.nourut = urut++;
+      }
       this.gridApi.setRowData(this.memberTipes);
   }
 

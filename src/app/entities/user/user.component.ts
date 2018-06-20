@@ -24,8 +24,10 @@ export class UserComponent implements OnInit {
 
   gridOptions = {
     columnDefs: [
-      { headerName: 'id', field: 'id', width: 50, pinned: 'left', editable: false },
-      { headerName: 'Name', field: 'name', editable: false },
+      { headerName: 'No', field: 'nourut', width: 30, pinned: 'left', editable: false },
+      { headerName: 'Name', field: 'name', width: 80, editable: false },
+      { headerName: 'Email', field: 'email', editable: false },
+      { headerName: 'Status', field: 'status',  width: 80, editable: false, valueFormatter: this.boolFormatter },
       { headerName: ' ', suppressMenu: true,
         width: 100,
         suppressSorting: true,
@@ -46,6 +48,10 @@ export class UserComponent implements OnInit {
       maxBlocksInCache : 2,
       localeText: {noRowsToShow: this.messageNoData},
   };
+
+  boolFormatter(params): string {
+    return params.value === 1 ? 'ACTIVE' : 'INACTIVE';
+  }
 
   currencyFormatter(params): string {
     const dt  = new Date(params.value);
@@ -143,8 +149,11 @@ export class UserComponent implements OnInit {
       if ( data.content.length <= 0 ) {
           return ;
       }
-
       this.user = data.content;
+      let urut = 1;
+      for (const usr of this.user) {
+        usr.nourut = urut++;
+      }
       this.gridApi.setRowData(this.user);
   }
 

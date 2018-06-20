@@ -26,7 +26,7 @@ export class GlobalSettingComponent implements OnInit {
 
   gridOptions = {
     columnDefs: [
-      { headerName: 'id', field: 'id', width: 10, pinned: 'left', editable: false },
+      { headerName: 'No', field: 'nourut', width: 10, pinned: 'left', editable: false },
       { headerName: 'Type', field: 'globalType', width: 20, editable: false },
       { headerName: 'Name', field: 'name', width: 20, editable: false },
       { headerName: 'Description', field: 'description', width: 30, editable: false },
@@ -155,6 +155,10 @@ export class GlobalSettingComponent implements OnInit {
         // return ;
       } else {
         this.memberTipes = data.content;
+        let urut = 1;
+        for (const memberType of this.memberTipes) {
+            memberType.nourut = urut++;
+        }
         this.gridApi.setRowData(this.memberTipes);
       }
   }
@@ -162,5 +166,6 @@ export class GlobalSettingComponent implements OnInit {
   private onError(error) {
     console.log('error..');
   }
+
 
 }

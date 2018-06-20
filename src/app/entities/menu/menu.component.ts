@@ -27,7 +27,7 @@ export class MenuComponent implements OnInit {
 
   gridOptions = {
     columnDefs: [
-      { headerName: 'id', field: 'id', width: 50, pinned: 'left', editable: false },
+      { headerName: 'No', field: 'nourut', width: 50, pinned: 'left', editable: false },
       { headerName: 'Name', field: 'name', width: 100, editable: false },
       { headerName: 'Description', field: 'description',  editable: false },
       { headerName: ' ', suppressMenu: true,
@@ -150,6 +150,10 @@ export class MenuComponent implements OnInit {
       }
 
       this.menu = data.content;
+      let urut = 1;
+      for (const mnu of this.menu) {
+        mnu.nourut = urut++;
+      }
       this.gridApi.setRowData(this.menu);
   }
 

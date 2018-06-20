@@ -5,4 +5,5 @@ export interface BaseEntity {
     lastModifiedDate?: any;
     createdDate?: any;
     lastModifiedBy?: any;
+
 }

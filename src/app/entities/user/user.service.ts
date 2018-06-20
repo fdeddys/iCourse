@@ -62,6 +62,18 @@ private resourceUrl = SERVER_PATH + 'user';
             .pipe(map((res: EntityResponseType) => this.convertResponse(res)));
     }
 
+    addRole(userId: number, roleId: number): Observable<EntityResponseType> {
+        return this.http.post<User>(`${this.resourceUrl}/${userId}/role/${roleId}`, null, { observe: 'response'})
+            .pipe(map((res: EntityResponseType) => this.convertResponse(res)));
+    }
+
+    changeStatusRole(userId: number, roleId: any): Observable<EntityResponseType> {
+        return this.http.put(`${this.resourceUrl}/${userId}/role/${roleId}/changeStatus`, null, { observe : 'response'})
+            .pipe(
+                map((res: EntityResponseType) => this.convertResponse(res))
+            );
+    }
+
     private convertResponse(res: EntityResponseType): EntityResponseType {
         const body: User = this.convertItemFromServer(res.body);
         return res.clone({body});

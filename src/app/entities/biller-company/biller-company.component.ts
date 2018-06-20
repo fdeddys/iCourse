@@ -26,8 +26,8 @@ export class BillerCompanyComponent implements OnInit {
 
   gridOptions = {
     columnDefs: [
-      { headerName: 'id', field: 'id', width: 50, pinned: 'left', editable: false },
-      { headerName: 'Name', field: 'name', width: 250, editable: false },
+      { headerName: 'No', field: 'nourut', width: 50, pinned: 'left', editable: false },
+      { headerName: 'Name', field: 'name', width: 150, editable: false },
       { headerName: ' ', suppressMenu: true,
         suppressSorting: true,
         template:
@@ -185,6 +185,10 @@ export class BillerCompanyComponent implements OnInit {
       }
 
       this.billerCompanies = data.content;
+      let urut = 1;
+      for (const billerCompany of this.billerCompanies) {
+        billerCompany.nourut = urut++;
+      }
       this.gridApi.setRowData(this.billerCompanies);
 
       // const dataSource = {

@@ -6,6 +6,7 @@ export class GlobalSetting implements BaseEntity {
         public name?: string,
         public description?: boolean,
         public globalType?: any,
+        public nourut?: any,
     ) {
     }
 }

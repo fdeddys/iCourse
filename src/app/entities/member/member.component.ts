@@ -16,7 +16,7 @@ export class MemberComponent implements OnInit {
 
   private gridApi;
   private gridColumnApi;
-
+  // no: any;
   cssButton = CSS_BUTTON  ;
   theme: String = GRID_THEME;
 
@@ -26,9 +26,9 @@ export class MemberComponent implements OnInit {
 
   gridOptions = {
     columnDefs: [
-      { headerName: 'id', field: 'id', width: 50, pinned: 'left', editable: false },
+      { headerName: 'No', field: 'nourut', width: 50, pinned: 'left', editable: false  },
       { headerName: 'Name', field: 'name', width: 100, editable: false },
-      { headerName: 'Description', field: 'description', width: 200, editable: false },
+      { headerName: 'Description', field: 'description', width: 100, editable: false },
       { headerName: 'Active', field: 'active',  editable: false, valueFormatter: this.boolFormatter },
       { headerName: ' ', suppressMenu: true,
         width: 100,
@@ -123,6 +123,7 @@ export class MemberComponent implements OnInit {
 
   ngOnInit() {
     // this.loadAll();
+    // this.no = 0;
   }
 
   onGridReady(params) {
@@ -159,13 +160,16 @@ export class MemberComponent implements OnInit {
   }
 
   private onSuccess(data, headers) {
-
-      if ( data.content.length <= 0 ) {
-          return ;
+    if ( data.content.length <= 0 ) {
+      return ;
+    }
+    this.members = data.content;
+    let urut = 1;
+    for (const member of this.members) {
+        member.nourut = urut++;
       }
 
-      this.members = data.content;
-      this.gridApi.setRowData(this.members);
+    this.gridApi.setRowData(this.members);
 
   }
 

@@ -13,6 +13,8 @@ import { MemberBankModule } from './member-bank/member-bank.module';
 import { UserModule } from './user/user.module';
 import { RoleModule } from './role/role.module';
 import { MenuModule } from './menu/menu.module';
+import { RoleMenuModule } from './role-menu/role-menu.module';
+import { RoleUserModule } from './role-user/role-user.module';
 
 
 @NgModule({
@@ -30,7 +32,8 @@ import { MenuModule } from './menu/menu.module';
         UserModule,
         RoleModule,
         MenuModule,
-        RoleModule,
+        RoleMenuModule,
+        RoleUserModule,
     ],
     entryComponents: [],
     providers: [],
