@@ -8,6 +8,7 @@ import { BillerType, BillerTypeService } from '../biller-type';
 import { Member, MemberService } from '../member';
 
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
+import { GRID_THEME, CSS_BUTTON, NO_DATA_GRID_MESSAGE } from '../../shared/constant/base-constant';
 
 import { ProductDialogComponent } from './product-dialog.component';
 
@@ -29,6 +30,8 @@ export class ProductComponent implements OnInit {
     billerCompanyList = [];
     memberList = [];
     searchByList = [];
+    theme: String = GRID_THEME;
+    cssButton = CSS_BUTTON  ;
 
     gridOptions = {
         columnDefs: [
@@ -39,10 +42,10 @@ export class ProductComponent implements OnInit {
             { headerName: 'Status', field: 'status', width: 250 },
             { headerName: 'Search By', field: 'searchBy', width: 250 },
             { headerName: 'Search By Biller', field: 'searchByMemberId', width: 250 },
-            { headerName: 'Action', suppressMenu: true,
+            { headerName: ' ', suppressMenu: true,
                 suppressSorting: true,
                 template: `
-                <button mat-button color="primary" data-action-type="edit">
+                <button mat-button color="primary" data-action-type="edit"  ${this.cssButton} >
                     Edit
                 </button>
                 `

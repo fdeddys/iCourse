@@ -142,6 +142,9 @@ export class BillerDetailComponent implements OnInit {
     save(): void {
         console.log(this.billerDetail);
         this.billerDetail.status = (this.statusData ? 'ACTIVE' : 'INACTIVE');
+        this.billerDetail.sellPrice = this.billerDetail.buyPrice + this.billerDetail.fee;
+        this.billerDetail.externalCode = '';
+        this.billerDetail.postPaid = 1;
         const varBack = {
             mode: this.data.mode,
             rowData: {}

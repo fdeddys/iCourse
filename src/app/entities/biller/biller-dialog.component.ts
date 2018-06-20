@@ -52,7 +52,7 @@ export class BillerDialogComponent implements OnInit {
     maxDate = new Date(2020, 0, 1);
 
     // checked = false;
-    btnDisabled = true;
+    btnDisabled = false; // set to false for debug
     btnLabel = 'Add Biller Detail';
 
     colDefs = [
@@ -84,7 +84,7 @@ export class BillerDialogComponent implements OnInit {
         { headerName: 'Date Thru', field: 'dateThru', width: 150 },
         { headerName: 'Status', field: 'status', width: 150},
         // { headerName: 'Action', width: 150, cellRenderer: 'actionRenderer'}
-        { headerName: 'Action', suppressMenu: true,
+        { headerName: ' ', suppressMenu: true,
             suppressSorting: true,
             template: `
             <button mat-button color="primary" data-action-type="edit">
@@ -159,10 +159,11 @@ export class BillerDialogComponent implements OnInit {
         console.log('ngOnInit..');
         this.biller = {};
         this.modeTitle = this.data.modeTitle;
+        this.membTypeCtrl.setValue(this.data.rowData.memberType);
         if (this.data.mode !== 'create') {
             // console.log('edit mode..');
             this.btnDisabled = false;
-            this.membTypeCtrl.setValue(this.data.rowData.memberType);
+            // this.membTypeCtrl.setValue(this.data.rowData.memberType);
             this.membCtrl.setValue(this.data.rowData.member);
             this.dateSCtrl.setValue(this.data.rowData.dateStart);
             this.dateTCtrl.setValue(this.data.rowData.dateThru);
@@ -204,12 +205,12 @@ export class BillerDialogComponent implements OnInit {
     getMembType(value) {
         console.log(value);
         // this.btnDisabled = false;
-        this.btnLabel = value.id === 1 ? 'Add Biller Detail' : 'Add Non Biller Detail';
+        // this.btnLabel = value.id === 1 ? 'Add Biller Detail' : 'Add Non Biller Detail';
         if (value.id === 1) {
-            this.btnLabel = 'Add Biller Detail';
+            this.btnLabel = 'Add Biller Product';
             this.gridApi.setColumnDefs(this.colDefs);
         } else {
-            this.btnLabel = 'Add Non Biller Detail';
+            this.btnLabel = 'Add Non Biller Product';
             this.gridApi.setColumnDefs(this.nonColDefs);
         }
         this.gridApi.setRowData([]);
@@ -249,36 +250,46 @@ export class BillerDialogComponent implements OnInit {
             }
         } else {
             console.log('load data create..');
+            // if (this.membTypeCtrl.value !== null) {
+            //     if (this.membTypeCtrl.value.id === 1) {
+            //         // this.getMembType({id: 1});
+            //         this.billerDetailService.query({
+            //             page: 1,
+            //             count: 200,
+            //             idhdr: this.biller.id
+            //             // size: this.itemsPerPage,
+            //             // sort: this.sort()
+            //         })
+            //         .subscribe(
+            //                 (res: HttpResponse<Biller[]>) => this.onSuccess(res.body, res.headers),
+            //                 (res: HttpErrorResponse) => this.onError(res.message),
+            //                 () => { console.log('finally'); }
+            //         );
+            //     } else if (this.membTypeCtrl.value.id > 1) {
+            //         // this.getMembType({id: 2});
+            //         this.billerPriceDetailService.query({
+            //             page: 1,
+            //             count: 200,
+            //             idhdr: this.biller.id
+            //             // size: this.itemsPerPage,
+            //             // sort: this.sort()
+            //         })
+            //         .subscribe(
+            //                 (res: HttpResponse<Biller[]>) => this.onSuccess(res.body, res.headers),
+            //                 (res: HttpErrorResponse) => this.onError(res.message),
+            //                 () => { console.log('finally'); }
+            //         );
+            //     }
+            // }
+
             if (this.membTypeCtrl.value !== null) {
                 if (this.membTypeCtrl.value.id === 1) {
-                    // this.getMembType({id: 1});
-                    this.billerDetailService.query({
-                        page: 1,
-                        count: 200,
-                        idhdr: this.biller.id
-                        // size: this.itemsPerPage,
-                        // sort: this.sort()
-                    })
-                    .subscribe(
-                            (res: HttpResponse<Biller[]>) => this.onSuccess(res.body, res.headers),
-                            (res: HttpErrorResponse) => this.onError(res.message),
-                            () => { console.log('finally'); }
-                    );
+                    this.getMembType({id: 1});
                 } else if (this.membTypeCtrl.value.id > 1) {
-                    // this.getMembType({id: 2});
-                    this.billerPriceDetailService.query({
-                        page: 1,
-                        count: 200,
-                        idhdr: this.biller.id
-                        // size: this.itemsPerPage,
-                        // sort: this.sort()
-                    })
-                    .subscribe(
-                            (res: HttpResponse<Biller[]>) => this.onSuccess(res.body, res.headers),
-                            (res: HttpErrorResponse) => this.onError(res.message),
-                            () => { console.log('finally'); }
-                    );
+                    this.getMembType({id: 2});
                 }
+            } else {
+                this.getMembType({id: 2});
             }
         }
     }

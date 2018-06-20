@@ -8,7 +8,12 @@
     max-height: inherit !important;
 }
 
-.form-full-width {
+.form-half-width {
 	width: 40%;
+	margin-right: 5%;
+}
+
+.form-full-width {
+	width: 85%;
 	margin-right: 5%;
 }

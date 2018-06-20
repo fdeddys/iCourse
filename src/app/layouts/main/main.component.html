@@ -1,26 +1,27 @@
+<mat-toolbar color="primary" class="app-toolbar">
+	<!-- <button mat-button (click)="sidenav.toggle()">nav</button> -->
+	<img src="assets/images/logo_ottocash_white.png" style="height: 60px; margin-left: 50px; margin-right: 75px">
+	<button mat-icon-button (click)="sidenav.toggle()">
+		<mat-icon>menu</mat-icon>
+	</button>
+	<span class="spacer"></span>
+		<button mat-icon-button [mat-menu-trigger-for]="menu">
+			<mat-icon>more_vert</mat-icon>
+		</button>
+		<!-- The following menu items will be hidden on both SM and XS screen sizes -->
+		<!-- <a><button mat-button (click)="sidenav.toggle()">sidenav.toggle()</button></a> -->
+		<!-- <a href="#" mat-button>Log Out</a> -->
+		<mat-menu #menu="matMenu">
+			<button mat-menu-item>Log Out</button>
+		</mat-menu>
+</mat-toolbar>
 <mat-sidenav-container>	
 	<mat-sidenav #sidenav mode="side" [(opened)]="opened"  class="mat-elevation-z8">
 		<app-sidebar (menuNm)="onChangeMenu($event)"></app-sidebar>
 	</mat-sidenav>
 
 	<mat-sidenav-content>
-		<div style="height: 98vh;">
-			<mat-toolbar color="primary">
-				<!-- <button mat-button (click)="sidenav.toggle()">nav</button> -->
-				<button mat-icon-button (click)="sidenav.toggle()">
-					<mat-icon>menu</mat-icon>
-				</button>
-				<span class="spacer"></span>
-					<button mat-icon-button [mat-menu-trigger-for]="menu">
-						<mat-icon>more_vert</mat-icon>
-					</button>
-					<!-- The following menu items will be hidden on both SM and XS screen sizes -->
-					<!-- <a><button mat-button (click)="sidenav.toggle()">sidenav.toggle()</button></a> -->
-					<!-- <a href="#" mat-button>Log Out</a> -->
-					<mat-menu #menu="matMenu">
-						<button mat-menu-item>Log Out</button>
-					</mat-menu>
-			</mat-toolbar>
+		<div style="height: 87vh;">			
 			<div style="margin: 10px">
 				<router-outlet></router-outlet>
 			</div>

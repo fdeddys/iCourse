@@ -23,6 +23,7 @@ const routes: Routes = [
         children: [
             {path: 'member', component: MemberComponent},
             {path: 'biller', component: BillerComponent},
+            {path: 'non-biller', component: BillerComponent},
             {path: 'product', component: ProductComponent},
             {path: 'biller-company', component: BillerCompanyComponent},
             {path: 'biller-type', component: BillerTypeComponent},

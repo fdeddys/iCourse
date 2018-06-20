@@ -37,7 +37,7 @@ export class SidebarComponent {
       name: 'Registration', link: 'biller',
       subLinks: [
         {name: 'Biller Registration', link: 'biller'},
-        {name: 'Non Biller Registration', link: 'biller'},
+        {name: 'Non Biller Registration', link: 'non-biller'},
       ]
     },
 
@@ -46,7 +46,7 @@ export class SidebarComponent {
   constructor() { }
 
   setMenuName(name: string) {
-    // console.log('Name : ',name);
+    // console.log('Name : ', name);
     this.menuNm.emit(name);
   }
 

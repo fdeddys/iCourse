@@ -24,15 +24,26 @@
 	<tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
 </table> -->
 
-<button mat-raised-button color="primary" (click)="openDialog('create')" style="margin-bottom: 10px;">Create Product</button>
-<ag-grid-angular 
-    style="height: 400px;" 
-    class="ag-theme-material"
-    [gridOptions]="gridOptions"
-    (gridReady)="onGridReady($event)"
-    (rowClicked)="onRowClicked($event)"
-    >
-</ag-grid-angular>
+<mat-card>
+    <mat-card-header>
+        <mat-card-title style="align-items: center">
+            <h2 style="color: rgb(158, 158, 158)" >Product</h2>                
+        </mat-card-title>
+    </mat-card-header>
+    <mat-card-content>
+        <div style="text-align: right">
+            <button mat-raised-button color="primary" (click)="openDialog('create')" style="margin-bottom: 10px;">Add Product</button>
+        </div>
+        <ag-grid-angular 
+			style="height: 400px;" 
+			class="ag-theme-material"
+			[gridOptions]="gridOptions"
+			(gridReady)="onGridReady($event)"
+			(rowClicked)="onRowClicked($event)"
+			>
+		</ag-grid-angular>
+    </mat-card-content>
+</mat-card>
 <!-- <div>
 	<product-dialog></product-dialog>
 </div> -->

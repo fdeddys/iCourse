@@ -1,5 +1,5 @@
 mat-sidenav {
-    width: 200px;
+    width: 250px;
 }
 
 .main-container {
@@ -8,7 +8,14 @@ mat-sidenav {
 
 /* navbar */
 .mat-toolbar-row, .mat-toolbar-single-row {
-	height: 58px;
+	height: 80px;
+}
+
+.app-toolbar {
+    position: sticky;
+    position: -webkit-sticky; /* For macOS/iOS Safari */
+    top: 0; /* Sets the sticky toolbar to be on top */
+    z-index: 1000; /* Ensure that your app's content doesn't overlap the toolbar */
 }
 
 .spacer {

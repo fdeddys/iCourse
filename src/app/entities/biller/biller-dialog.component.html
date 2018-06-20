@@ -1,47 +1,51 @@
-<h1 mat-dialog-title>Biller Registration</h1>
+<h1 mat-dialog-title>Add Biller</h1>
 <div mat-dialog-content>
-    <form class="form-container">
-		<mat-form-field class="form-full-width">
-			<input matInput placeholder="Description" name="description" [(ngModel)]="biller.description" #desc>
-		</mat-form-field>
-		<mat-form-field class="form-full-width">
+    <form class="form-container">	
+        <mat-form-field class="form-half-width">
+            <input matInput placeholder="Biller" aria-label="Member" [matAutocomplete]="autoM" [formControl]="membCtrl">
+            <mat-autocomplete #autoM="matAutocomplete" [displayWith]="displayFnMem">
+                <mat-option *ngFor="let member of filteredMemb | async" [value]="member">
+                    <span>{{ member.name }}</span>
+                </mat-option>
+            </mat-autocomplete>
+        </mat-form-field>	
+		<mat-form-field class="form-half-width">
 			<input matInput placeholder="Member Type" aria-label="Member Type" [matAutocomplete]="autoMType" [formControl]="membTypeCtrl">
-			<mat-autocomplete #autoMType="matAutocomplete" [displayWith]="displayFnMemType" (optionSelected)='getMembType($event.option.value)'>
+			<!-- <mat-autocomplete #autoMType="matAutocomplete" [displayWith]="displayFnMemType" (optionSelected)='getMembType($event.option.value)'> -->
+            <mat-autocomplete #autoMType="matAutocomplete" [displayWith]="displayFnMemType">
 				<mat-option *ngFor="let memberType of filteredMembType | async" [value]="memberType">
 					<span>{{ memberType.name }}</span>
 				</mat-option>
 			</mat-autocomplete>
         </mat-form-field>
-        <mat-form-field class="form-full-width">
+        <mat-form-field class="form-half-width">
             <input matInput [min]="minDate" [max]="maxDate" [matDatepicker]="picker" placeholder="Date Start" (dateInput)="addEvent('start', $event)" [formControl]="dateSCtrl">
             <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
             <mat-datepicker #picker></mat-datepicker>
         </mat-form-field>
-        <mat-form-field class="form-full-width">
+        <mat-form-field class="form-half-width">
             <input matInput [min]="minDate" [max]="maxDate" [matDatepicker]="pickerT" placeholder="Date Thru" (dateInput)="addEvent('thru', $event)" [formControl]="dateTCtrl">
             <mat-datepicker-toggle matSuffix [for]="pickerT"></mat-datepicker-toggle>
             <mat-datepicker #pickerT></mat-datepicker>
+        </mat-form-field>
+        <mat-form-field class="form-full-width">
+            <textarea matInput placeholder="Description" name="description" [(ngModel)]="biller.description" #desc></textarea>
         </mat-form-field>        
         <section class="example-section">
-            <mat-checkbox class="example-margin" [color]="'primary'" [(ngModel)]="biller.manualCode" [ngModelOptions]="{standalone: true}">Add Member Code</mat-checkbox>
+            <mat-checkbox class="example-margin" [color]="'primary'" [(ngModel)]="biller.manualCode" [ngModelOptions]="{standalone: true}">Set Member Code</mat-checkbox>
         </section>
-        <mat-form-field class="form-full-width">
+        <mat-form-field class="form-half-width">
 			<input matInput placeholder="Member Code" name="memberCode" [(ngModel)]="biller.memberCode" [disabled]="!biller.manualCode">
         </mat-form-field>
-        <mat-form-field class="form-full-width">
-			<input matInput placeholder="Member" aria-label="Member" [matAutocomplete]="autoM" [formControl]="membCtrl">
-			<mat-autocomplete #autoM="matAutocomplete" [displayWith]="displayFnMem">
-				<mat-option *ngFor="let member of filteredMemb | async" [value]="member">
-					<span>{{ member.name }}</span>
-				</mat-option>
-			</mat-autocomplete>
-        </mat-form-field>
         
-        <!-- <mat-divider></mat-divider> -->
+        <!-- <button mat-raised-button color="primary" (click)="openBDDialog('create')" style="margin-top: 30px; margin-bottom: 10px; margin-right: 10px;" [disabled]="btnDisabled">{{ btnLabel }}</button> -->
+        <button mat-raised-button color="primary" style="margin-top: 10px; margin-bottom: 10px; margin-right: 10px; margin-left: 75%" cdkFocusInitial (click)="save()">Save</button>
+        
+        <mat-divider></mat-divider>
         <br>
-        <button mat-raised-button color="primary" (click)="openBDDialog('create')" style="margin-top: 30px; margin-bottom: 10px; margin-right: 10px;" [disabled]="btnDisabled">{{ btnLabel }}</button>
-        <button mat-raised-button color="primary" cdkFocusInitial (click)="save()">Save</button>
-        <fieldset style="border: 1px #ddd solid">            
+        <br>
+        <h4 mat-dialog-title>Biller Product</h4>
+        <fieldset style="border: 1px #ddd solid">       
             <ag-grid-angular 
                 style="height: 250px;" 
                 class="ag-theme-material"
@@ -53,7 +57,8 @@
         </fieldset>        
 	</form>
 </div>
-<!-- <div mat-dialog-actions>
-    <button mat-raised-button (click)="onNoClick()">Cancel</button>
-    <button mat-raised-button color="primary" cdkFocusInitial (click)="save()">Save</button>
-</div> -->
+<div mat-dialog-actions>
+    <button mat-raised-button color="primary" (click)="openBDDialog('create')" style="margin-top: 30px; margin-bottom: 10px; margin-right: 10px;" [disabled]="btnDisabled">{{ btnLabel }}</button>
+    <button mat-raised-button style="margin-top: 30px; margin-bottom: 10px; margin-right: 10px;" (click)="onNoClick()">Close</button>
+    <!-- <button mat-raised-button color="primary" cdkFocusInitial (click)="save()">Save</button> -->
+</div>

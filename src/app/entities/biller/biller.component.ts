@@ -1,4 +1,7 @@
-import { Component, OnInit, Inject } from '@angular/core';
+import { Component, OnInit, Inject, Input } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
+import * as _ from 'lodash';
+
 import { HttpResponse, HttpErrorResponse } from '@angular/common/http';
 import { Biller } from './biller.model';
 import { BillerService } from './biller.service';
@@ -36,13 +39,15 @@ export class BillerComponent implements OnInit {
     productList = [];
     messageNoData: string = NO_DATA_GRID_MESSAGE;
 
+    menuName = '';
+
     gridOptions = {
         columnDefs: [
             // { headerName: 'Name', field: 'name', checkboxSelection: true, width: 250, pinned: 'left', editable: true },
-            { headerName: 'Description', field: 'description', width: 250, pinned: 'left', editable: false },
-            { headerName: 'Date Start', field: 'dateStart', width: 250 },
-            { headerName: 'Date Thru', field: 'dateThru', width: 250 },
-            { headerName: 'Action', suppressMenu: true,
+            { headerName: 'Description', field: 'description', width: 350, pinned: 'left', editable: false },
+            { headerName: 'Date Start', field: 'dateStart', width: 350 },
+            { headerName: 'Date Thru', field: 'dateThru', width: 350 },
+            { headerName: ' ', suppressMenu: true,
                 suppressSorting: true,
                 template: `
                 <button mat-button color="primary" data-action-type="edit">
@@ -67,7 +72,8 @@ export class BillerComponent implements OnInit {
         private productService: ProductService,
         private memberService: MemberService,
         private memberTypeService: MemberTypeService,
-        private billerService: BillerService
+        private billerService: BillerService,
+        private route: ActivatedRoute
     ) { }
 
     loadAll() {
@@ -93,6 +99,13 @@ export class BillerComponent implements OnInit {
     }
 
     ngOnInit() {
+        console.log('this.route : ', this.route);
+        if (this.route.snapshot.routeConfig.path === 'non-biller') {
+            this.menuName = 'Non-Biller';
+        } else if (this.route.snapshot.routeConfig.path === 'biller') {
+            this.menuName = 'Biller';
+        }
+
         this.memberService.query({
             page: 1,
             count: 10000,
@@ -190,8 +203,10 @@ export class BillerComponent implements OnInit {
                 dateStart : null,
                 dateThru : null,
                 searchBy : null,
-                memberId : null,
-                memberTypeId : null,
+                // memberId : null,
+                // memberTypeId : (this.memberTypeList.length === 1 && this.memberTypeList[0].id === 1 ? 1 : null),
+                member : null,
+                memberType : (this.memberTypeList.length === 1 && this.memberTypeList[0].id === 1 ? this.memberTypeList[0] : null),
             },
         };
         if (mode !== 'create') {
@@ -219,7 +234,13 @@ export class BillerComponent implements OnInit {
     }
 
     private onSuccessMembType(data, headers) {
-        this.memberTypeList = data.content;
+        console.log('data.content member type : ', data.content);
+        // this.memberTypeList = data.content;
+        if (this.route.snapshot.routeConfig.path === 'non-biller') {
+            this.memberTypeList = _.filter(data.content, function(o) { return o.id !== 1; });
+        } else if (this.route.snapshot.routeConfig.path === 'biller') {
+            this.memberTypeList = _.filter(data.content, function(o) { return o.id === 1; });
+        }
     }
 
     private onSuccessBillType(data, headers) {
