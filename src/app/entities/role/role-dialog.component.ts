@@ -40,7 +40,7 @@ export class RoleDialogComponent implements OnInit {
 
     gridOptions = {
         columnDefs: [
-            { headerName: 'No', field: 'nourut', width: 50, pinned: 'left', editable: false },
+            // { headerName: 'No', field: 'nourut', width: 50, pinned: 'left', editable: false },
             { headerName: 'Name', field: 'menuDescription', editable: false },
             { headerName: 'Status', field: 'status', editable: false },
             { headerName: ' ', suppressMenu: true,
