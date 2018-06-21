@@ -6,6 +6,7 @@ import { MemberTypeDialogComponent } from './member-type-dialog.component';
 import { MemberTypeConfirmComponent } from './member-type-confirm.component';
 import { HttpResponse, HttpErrorResponse } from '@angular/common/http';
 import { GRID_THEME, CSS_BUTTON, NO_DATA_GRID_MESSAGE } from '../../shared/constant/base-constant';
+import { MatActionButtonComponent } from '../../shared/templates/mat-action-button.component';
 
 @Component({
   selector: 'app-member-type',
@@ -28,14 +29,15 @@ export class MemberTypeComponent implements OnInit {
       { headerName: 'No', field: 'nourut', width: 50, editable: false ,  pinned: 'left'},
       { headerName: 'Name', field: 'name', width: 100, editable: false},
       { headerName: 'Description', field: 'description',  editable: false },
-      { headerName: ' ', suppressMenu: true,
-        width: 100 ,
-        suppressSorting: true,
-        template:
-          `<button mat-raised-button type="button" data-action-type="edit"  ${this.cssButton} >
-            Edit
-          </button>
-          ` }
+      { headerName: ' ', width: 150, cellRenderer: 'actionRenderer'}
+      // { headerName: ' ', suppressMenu: true,
+      //   width: 100 ,
+      //   suppressSorting: true,
+      //   template:
+      //     `<button mat-raised-button type="button" data-action-type="edit"  ${this.cssButton} >
+      //       Edit
+      //     </button>
+      //     ` }
     ],
       rowData: this.memberTipes,
       enableSorting: true,
@@ -48,6 +50,9 @@ export class MemberTypeComponent implements OnInit {
       maxBlocksInCache : 2,
       localeText: {noRowsToShow: this.messageNoData},
       suppressHorizontalScroll: false,
+      frameworkComponents: {
+          actionRenderer: MatActionButtonComponent
+      }
   };
 
   constructor(  private dialog: MatDialog,

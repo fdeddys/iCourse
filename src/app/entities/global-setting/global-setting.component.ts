@@ -6,6 +6,7 @@ import { HttpResponse, HttpErrorResponse } from '@angular/common/http';
 import { GlobalSettingDialogComponent } from './global-setting-dialog.component';
 import { GlobalSettingConfirmComponent } from './global-setting-confirm.component';
 import { GRID_THEME, CSS_BUTTON, NO_DATA_GRID_MESSAGE } from '../../shared/constant/base-constant';
+import { MatActionButtonComponent } from '../../shared/templates/mat-action-button.component';
 
 @Component({
   selector: 'app-global-setting',
@@ -34,14 +35,15 @@ export class GlobalSettingComponent implements OnInit {
       // { headerName: 'Update at', field: 'updatedAt', width: 200, valueFormatter: this.currencyFormatter },
       // { headerName: 'Created By', field: 'createdBy', width: 200 },
       // { headerName: 'Updated By', field: 'updatedBy', width: 200 },
-      { headerName: ' ', suppressMenu: true,
-        width: 20,
-        suppressSorting: true,
-        template:
-          `<button mat-raised-button type="button" data-action-type="edit" ${this.cssButton} >
-            Edit
-          </button>
-          ` }
+      { headerName: ' ', width: 150, cellRenderer: 'actionRenderer'}
+      // { headerName: ' ', suppressMenu: true,
+      //   width: 20,
+      //   suppressSorting: true,
+      //   template:
+      //     `<button mat-raised-button type="button" data-action-type="edit" ${this.cssButton} >
+      //       Edit
+      //     </button>
+      //     ` }
     ],
       rowData: this.memberTipes,
       enableSorting: true,
@@ -53,6 +55,9 @@ export class GlobalSettingComponent implements OnInit {
       // infiniteInitialRowCount : 1,
       // maxBlocksInCache : 2,
       localeText: {noRowsToShow: this.messageNoData},
+      frameworkComponents: {
+          actionRenderer: MatActionButtonComponent
+      }
   };
 
 

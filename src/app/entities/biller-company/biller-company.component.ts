@@ -6,6 +6,7 @@ import { BillerCompanyService } from './biller-company.service';
 import { BillerCompanyDialogComponent } from './biller-company-dialog.component';
 import { BillerCompanyConfirmComponent } from './biller-company-confirm.component';
 import { GRID_THEME, CSS_BUTTON, NO_DATA_GRID_MESSAGE } from '../../shared/constant/base-constant';
+import { MatActionButtonComponent } from '../../shared/templates/mat-action-button.component';
 
 @Component({
   selector: 'app-biller-company',
@@ -28,12 +29,13 @@ export class BillerCompanyComponent implements OnInit {
     columnDefs: [
       { headerName: 'No', field: 'nourut', width: 50, pinned: 'left', editable: false },
       { headerName: 'Name', field: 'name', width: 150, editable: false },
-      { headerName: ' ', suppressMenu: true,
-        suppressSorting: true,
-        template:
-          `<button mat-raised-button type="button" data-action-type="edit"  ${this.cssButton} >
-            Edit
-          </button>` }
+      { headerName: ' ', width: 150, cellRenderer: 'actionRenderer'}
+      // { headerName: ' ', suppressMenu: true,
+      //   suppressSorting: true,
+      //   template:
+      //     `<button mat-raised-button type="button" data-action-type="edit"  ${this.cssButton} >
+      //       Edit
+      //     </button>` }
     ],
       rowData: this.billerCompanies,
       enableSorting: true,
@@ -45,7 +47,10 @@ export class BillerCompanyComponent implements OnInit {
       infiniteInitialRowCount : 1,
       maxBlocksInCache : 2,
       onPaginationChanged: this.onPaginationChanged(),
-      localeText: {noRowsToShow: this.messageNoData}
+      localeText: {noRowsToShow: this.messageNoData},
+      frameworkComponents: {
+          actionRenderer: MatActionButtonComponent
+      }
   };
 
   // <button type="button" data-action-type="inactive" class="btn btn-default">

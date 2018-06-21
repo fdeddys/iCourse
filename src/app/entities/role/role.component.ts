@@ -4,6 +4,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { RoleService } from './role.service';
 import { HttpResponse, HttpErrorResponse } from '@angular/common/http';
 import { GRID_THEME, CSS_BUTTON, NO_DATA_GRID_MESSAGE } from '../../shared/constant/base-constant';
+import { MatActionButtonComponent } from '../../shared/templates/mat-action-button.component';
 import { RoleDialogComponent } from './role-dialog.component';
 import { RoleConfirmDialogComponent } from './role-confirm-dialog.component';
 
@@ -26,14 +27,15 @@ export class RoleComponent implements OnInit {
     columnDefs: [
       { headerName: 'No',  field: 'nourut', width: 50, pinned: 'left', editable: false },
       { headerName: 'Name', field: 'name', editable: false },
-      { headerName: ' ', suppressMenu: true,
-        suppressSorting: true,
-        width: 100,
-        template:
-          `<button mat-raised-button type="button" data-action-type="edit"  ${this.cssButton} >
-            Edit
-          </button>
-          ` }
+      { headerName: ' ', width: 150, cellRenderer: 'actionRenderer'}
+      // { headerName: ' ', suppressMenu: true,
+      //   suppressSorting: true,
+      //   width: 100,
+      //   template:
+      //     `<button mat-raised-button type="button" data-action-type="edit"  ${this.cssButton} >
+      //       Edit
+      //     </button>
+      //     ` }
     ],
       rowData: this.role,
       enableSorting: true,
@@ -45,6 +47,9 @@ export class RoleComponent implements OnInit {
       infiniteInitialRowCount : 1,
       maxBlocksInCache : 2,
       localeText: {noRowsToShow: this.messageNoData},
+      frameworkComponents: {
+          actionRenderer: MatActionButtonComponent
+      }
   };
 
 

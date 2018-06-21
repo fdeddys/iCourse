@@ -4,6 +4,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { UserService } from './user.service';
 import { HttpResponse, HttpErrorResponse } from '@angular/common/http';
 import { GRID_THEME, CSS_BUTTON, NO_DATA_GRID_MESSAGE } from '../../shared/constant/base-constant';
+import { MatActionButtonComponent } from '../../shared/templates/mat-action-button.component';
 import { UserDialogComponent } from './user-dialog.component';
 import { UserConfirmDialogComponent } from './user-confirm-dialog.component';
 
@@ -28,14 +29,15 @@ export class UserComponent implements OnInit {
       { headerName: 'Name', field: 'name', width: 80, editable: false },
       { headerName: 'Email', field: 'email', editable: false },
       { headerName: 'Status', field: 'status',  width: 80, editable: false, valueFormatter: this.boolFormatter },
-      { headerName: ' ', suppressMenu: true,
-        width: 100,
-        suppressSorting: true,
-        template:
-          `<button mat-raised-button type="button" data-action-type="edit"  ${this.cssButton} >
-            Edit
-          </button>
-          ` }
+      { headerName: ' ', width: 150, cellRenderer: 'actionRenderer'}
+      // { headerName: ' ', suppressMenu: true,
+      //   width: 100,
+      //   suppressSorting: true,
+      //   template:
+      //     `<button mat-raised-button type="button" data-action-type="edit"  ${this.cssButton} >
+      //       Edit
+      //     </button>
+      //     ` }
     ],
       rowData: this.user,
       enableSorting: true,
@@ -47,6 +49,9 @@ export class UserComponent implements OnInit {
       infiniteInitialRowCount : 1,
       maxBlocksInCache : 2,
       localeText: {noRowsToShow: this.messageNoData},
+      frameworkComponents: {
+          actionRenderer: MatActionButtonComponent
+      }
   };
 
   boolFormatter(params): string {

@@ -6,6 +6,7 @@ import { MemberConfirmComponent } from './member-confirm.component';
 import { Member } from './member.model';
 import { MemberService } from './member.service';
 import { GRID_THEME, CSS_BUTTON, NO_DATA_GRID_MESSAGE } from '../../shared/constant/base-constant';
+import { MatActionButtonComponent } from '../../shared/templates/mat-action-button.component';
 
 @Component({
   selector: 'app-member',
@@ -30,13 +31,14 @@ export class MemberComponent implements OnInit {
       { headerName: 'Name', field: 'name', width: 100, editable: false },
       { headerName: 'Description', field: 'description', width: 100, editable: false },
       { headerName: 'Active', field: 'active',  editable: false, valueFormatter: this.boolFormatter },
-      { headerName: ' ', suppressMenu: true,
-        width: 100,
-        suppressSorting: true,
-        template:
-          `<button mat-raised-button type="button" data-action-type="edit"  ${this.cssButton} >
-            Edit
-          </button>` }
+      { headerName: ' ', width: 150, cellRenderer: 'actionRenderer'}
+      // { headerName: ' ', suppressMenu: true,
+      //   width: 100,
+      //   suppressSorting: true,
+      //   template:
+      //     `<button mat-raised-button type="button" data-action-type="edit"  ${this.cssButton} >
+      //       Edit
+      //     </button>` }
     ],
       rowData: this.members,
       enableSorting: true,
@@ -49,6 +51,9 @@ export class MemberComponent implements OnInit {
       maxBlocksInCache : 2,
       onPaginationChanged: this.onPaginationChanged(),
       localeText: {noRowsToShow: this.messageNoData},
+      frameworkComponents: {
+          actionRenderer: MatActionButtonComponent
+      }
   };
 
   currencyFormatter(params): string {

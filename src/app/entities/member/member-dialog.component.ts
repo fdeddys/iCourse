@@ -9,6 +9,7 @@ import { MemberBankDialogComponent } from './member-bank-dialog.component';
 import { MemberBank } from '../member-bank/member-bank.model';
 import { MemberBankService } from '../member-bank';
 import { GRID_THEME, CSS_BUTTON, NO_DATA_GRID_MESSAGE, SNACKBAR_DURATION_IN_MILLISECOND } from '../../shared/constant/base-constant';
+import { MatActionButtonComponent } from '../../shared/templates/mat-action-button.component';
 
 @Component({
     selector: 'app-member-dialog',
@@ -40,12 +41,13 @@ export class MemberDialogComponent implements OnInit {
         //   { headerName: 'Update at', field: 'updatedAt', width: 250, valueFormatter: this.currencyFormatter },
         //   { headerName: 'Created By', field: 'createdBy', width: 250 },
         //   { headerName: 'Updated By', field: 'updatedBy', width: 250 },
-          { headerName: ' ', suppressMenu: true,
-            suppressSorting: true,
-            template:
-              `<button mat-raised-button type="button" data-action-type="edit"  ${this.cssButton} >
-                Edit
-              </button>` }
+          { headerName: ' ', width: 150, cellRenderer: 'actionRenderer'}
+        //   { headerName: ' ', suppressMenu: true,
+        //     suppressSorting: true,
+        //     template:
+        //       `<button mat-raised-button type="button" data-action-type="edit"  ${this.cssButton} >
+        //         Edit
+        //       </button>` }
           ],
           rowData: this.memberBanks,
           enableSorting: true,
@@ -57,6 +59,9 @@ export class MemberDialogComponent implements OnInit {
           infiniteInitialRowCount : 1,
           maxBlocksInCache : 2,
           localeText: {noRowsToShow: this.messageNoData},
+          frameworkComponents: {
+              actionRenderer: MatActionButtonComponent
+          }
       };
 
     statuses = [

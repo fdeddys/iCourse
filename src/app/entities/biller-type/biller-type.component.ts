@@ -6,6 +6,7 @@ import { BillerTypeDialogComponent } from './biller-type-dialog.component';
 import { HttpResponse, HttpErrorResponse } from '@angular/common/http';
 import { BillerTypeConfirmComponent } from './biller-type-confirm.component';
 import { GRID_THEME, CSS_BUTTON, NO_DATA_GRID_MESSAGE } from '../../shared/constant/base-constant';
+import { MatActionButtonComponent } from '../../shared/templates/mat-action-button.component';
 
 @Component({
   selector: 'app-biller-type',
@@ -27,13 +28,14 @@ export class BillerTypeComponent implements OnInit {
       { headerName: 'No', field: 'nourut', width: 50, pinned: 'left', editable: false },
       { headerName: 'Name', field: 'name', width: 200, editable: false },
       { headerName: 'Postpaid', field: 'ispostpaid', width: 200, editable: false },
-      { headerName: ' ', suppressMenu: true,
-        suppressSorting: true,
-        template:
-          `<button mat-raised-button type="button" data-action-type="edit"  ${this.cssButton} >
-            Edit
-          </button>
-          ` }
+      { headerName: ' ', width: 150, cellRenderer: 'actionRenderer'}
+      // { headerName: ' ', suppressMenu: true,
+      //   suppressSorting: true,
+      //   template:
+      //     `<button mat-raised-button type="button" data-action-type="edit"  ${this.cssButton} >
+      //       Edit
+      //     </button>
+      //     ` }
     ],
       rowData: this.billerTipes,
       enableSorting: true,
@@ -45,6 +47,9 @@ export class BillerTypeComponent implements OnInit {
       infiniteInitialRowCount : 1,
       maxBlocksInCache : 2,
       localeText: {noRowsToShow: this.messageNoData},
+      frameworkComponents: {
+          actionRenderer: MatActionButtonComponent
+      }
   };
 
 

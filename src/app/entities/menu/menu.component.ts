@@ -4,6 +4,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { MenuService } from './menu.service';
 import { HttpResponse, HttpErrorResponse } from '@angular/common/http';
 import { GRID_THEME, CSS_BUTTON, NO_DATA_GRID_MESSAGE } from '../../shared/constant/base-constant';
+import { MatActionButtonComponent } from '../../shared/templates/mat-action-button.component';
 import { MenuDialogComponent } from './menu-dialog.component';
 import { MenuConfirmDialogComponent } from './menu-confirm-dialog.component';
 
@@ -30,14 +31,15 @@ export class MenuComponent implements OnInit {
       { headerName: 'No', field: 'nourut', width: 50, pinned: 'left', editable: false },
       { headerName: 'Name', field: 'name', width: 100, editable: false },
       { headerName: 'Description', field: 'description',  editable: false },
-      { headerName: ' ', suppressMenu: true,
-      width: 100,
-      suppressSorting: true,
-      template:
-      `<button type="button" data-action-type="edit"  ${this.cssButton} >
-      Edit
-      </button>
-      ` }
+      { headerName: ' ', width: 150, cellRenderer: 'actionRenderer'}
+      // { headerName: ' ', suppressMenu: true,
+      // width: 100,
+      // suppressSorting: true,
+      // template:
+      // `<button type="button" data-action-type="edit"  ${this.cssButton} >
+      // Edit
+      // </button>
+      // ` }
     ],
     rowData: this.menu,
     enableSorting: true,
@@ -49,6 +51,9 @@ export class MenuComponent implements OnInit {
       infiniteInitialRowCount : 1,
       maxBlocksInCache : 2,
       localeText: {noRowsToShow: this.messageNoData},
+      frameworkComponents: {
+          actionRenderer: MatActionButtonComponent
+      }
     };
 
   ngOnInit() {
