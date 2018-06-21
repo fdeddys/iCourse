@@ -10,7 +10,7 @@ export class SidebarComponent {
   @Output() menuNm = new EventEmitter<string>();
   links: object[] = [
     {
-      name: 'Settings', link: 'settings',
+      name: 'Settings', link: 'settings', icon: 'settings',
       subLinks: [
         {name: 'Role', link: 'role'},
         {name: 'User', link: 'user'},
@@ -19,14 +19,14 @@ export class SidebarComponent {
       ]
     },
     {
-      name: 'Member', link: 'member',
+      name: 'Member', link: 'member', icon: 'person',
       subLinks: [
         {name: 'Member Type', link: 'member-type'},
         {name: 'Member Reg', link: 'member'},
       ]
     },
     {
-      name: 'Biller', link: 'biller',
+      name: 'Biller', link: 'biller', icon: 'supervisor_account',
       subLinks: [
         {name: 'Biller Type', link: 'biller-type'},
         {name: 'Biller Company', link: 'biller-company'},
@@ -34,7 +34,7 @@ export class SidebarComponent {
       ]
     },
     {
-      name: 'Registration', link: 'biller',
+      name: 'Registration', link: 'biller', icon: 'library_books',
       subLinks: [
         {name: 'Biller Registration', link: 'biller'},
         {name: 'Non Biller Registration', link: 'non-biller'},

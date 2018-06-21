@@ -15,6 +15,7 @@ export class ProductService {
 
     private resourceUrl =  SERVER_PATH + 'billerproduct';
     private searchByUtilUrl = SERVER_PATH + 'util/searchbylist';
+    private statusUtilUrl = SERVER_PATH + 'util/statuses';
 
     constructor(private http: HttpClient) { }
 
@@ -67,6 +68,13 @@ export class ProductService {
         return this.http.get<string[]>(`${this.searchByUtilUrl}`, { observe: 'response'})
         .pipe(
             tap(searchby => { })
+        );
+    }
+
+    getStatus(req?: any): Observable<HttpResponse<string[]>> {
+        return this.http.get<string[]>(`${this.statusUtilUrl}`, { observe: 'response'})
+        .pipe(
+            tap(status => { })
         );
     }
 

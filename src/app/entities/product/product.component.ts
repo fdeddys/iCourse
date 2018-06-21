@@ -31,6 +31,7 @@ export class ProductComponent implements OnInit {
     billerCompanyList = [];
     memberList = [];
     searchByList = [];
+    statusList = [];
     theme: String = GRID_THEME;
     cssButton = CSS_BUTTON  ;
 
@@ -38,11 +39,12 @@ export class ProductComponent implements OnInit {
         columnDefs: [
             // { headerName: 'Name', field: 'name', checkboxSelection: true, width: 250, pinned: 'left', editable: true },
             { headerName: 'Name', field: 'name', width: 250, pinned: 'left', editable: false },
-            { headerName: 'Denom', field: 'denom', width: 250, editable: false },
-            { headerName: 'Sell Price', field: 'sellPrice', width: 250 },
-            { headerName: 'Status', field: 'status', width: 250 },
-            { headerName: 'Search By', field: 'searchBy', width: 250 },
-            { headerName: 'Search By Biller', field: 'searchByMemberId', width: 250 },
+            { headerName: 'Product Code', field: 'productCode', width: 200, editable: false },
+            { headerName: 'Denom', field: 'denom', width: 200, editable: false },
+            { headerName: 'Sell Price', field: 'sellPrice', width: 200 },
+            { headerName: 'Status', field: 'status', width: 200 },
+            // { headerName: 'Search By', field: 'searchBy', width: 250 },
+            // { headerName: 'Search By Biller', field: 'searchByMemberId', width: 250 },
             { headerName: ' ', width: 150, cellRenderer: 'actionRenderer'}
             // { headerName: ' ', suppressMenu: true,
             //     suppressSorting: true,
@@ -140,6 +142,15 @@ export class ProductComponent implements OnInit {
                 (res: HttpErrorResponse) => this.onError(res.message),
                 () => { console.log('finally'); }
         );
+
+        this.productService.getStatus()
+        .subscribe(
+                (res) => {
+                    this.statusList = res.body;
+                },
+                (res: HttpErrorResponse) => this.onError(res.message),
+                () => { console.log('finally'); }
+        );
     }
 
     onGridReady(params) {
@@ -171,10 +182,11 @@ export class ProductComponent implements OnInit {
     openDialog(mode, data): void {
         const datasend = {
             mode : 'create',
-            modeTitle : 'Create',
+            modeTitle : 'Add',
             billerCompanyData : this.billerCompanyList,
             billerTypeData : this.billerTypeList,
             searchByData : this.searchByList,
+            statusData : this.statusList,
             memberData : this.memberList,
             rowData : {
                 billerCompany : {id: null, name: null},
@@ -185,7 +197,7 @@ export class ProductComponent implements OnInit {
                 searchBy : null,
                 searchByMemberId : null,
                 sellPrice : null,
-                status : null
+                status : 'ACTIVE'
             },
         };
         if (mode !== 'create') {
@@ -195,7 +207,7 @@ export class ProductComponent implements OnInit {
         }
         const dialogRef = this.dialog.open(ProductDialogComponent, {
             width: '1000px',
-            height: '450px',
+            height: '500px',
             data: datasend
         });
 
