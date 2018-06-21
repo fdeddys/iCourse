@@ -84,6 +84,7 @@ export class BillerComponent implements OnInit {
     loadAll() {
         console.log('Start call function all header');
         this.billerService.query({
+            allData: (this.route.snapshot.routeConfig.path === 'non-biller' ? 0 : 1),
             page: 1,
             count: 200,
             // size: this.itemsPerPage,
@@ -198,6 +199,7 @@ export class BillerComponent implements OnInit {
         const datasend = {
             mode : 'create',
             modeTitle : 'Create',
+            billType : this.route.snapshot.routeConfig.path,
             billerCompanyData : this.billerCompanyList,
             billerTypeData : this.billerTypeList,
             memberData: this.memberList,

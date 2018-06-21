@@ -8,6 +8,24 @@
     max-height: inherit !important;
 }
 
+.style-success {
+    color: #fff;
+    background-color: rgb(91, 243, 91);
+}
+
+.style-success .mat-simple-snackbar-action  {
+    color: #fff;
+}
+
+.style-error {
+    color: #fff;
+    background-color: red;
+}
+
+.style-error .mat-simple-snackbar-action {
+    color: #fff;
+}
+
 .form-half-width {
 	width: 40%;
 	margin-right: 5%;

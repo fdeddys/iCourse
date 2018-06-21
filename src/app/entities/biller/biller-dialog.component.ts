@@ -9,7 +9,7 @@ import { Observable } from 'rxjs';
 import { map, startWith } from 'rxjs/operators';
 
 import { FormControl } from '@angular/forms';
-import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
+import { MatDialog, MatDialogRef, MAT_DIALOG_DATA, MatSnackBar } from '@angular/material';
 import { Member } from '../member';
 import { MemberType } from '../member-type';
 
@@ -47,12 +47,14 @@ export class BillerDialogComponent implements OnInit {
     productList = [];
 
     modeTitle = '';
+    configSuccess = {};
+    configError = {};
 
     minDate = new Date(2000, 0, 1);
     maxDate = new Date(2020, 0, 1);
 
     // checked = false;
-    btnDisabled = false; // set to false for debug
+    btnDisabled = true; // set to false for debug
     btnLabel = 'Add Biller Detail';
 
     colDefs = [
@@ -114,6 +116,7 @@ export class BillerDialogComponent implements OnInit {
 
     constructor(
         private dialog: MatDialog,
+        private snackBar: MatSnackBar,
         public billerService: BillerService,
         public billerDetailService: BillerDetailService,
         public billerPriceDetailService: BillerPriceDetailService,
@@ -138,6 +141,14 @@ export class BillerDialogComponent implements OnInit {
 
         this.dateSCtrl = new FormControl();
         this.dateTCtrl = new FormControl();
+
+        this.configSuccess = {
+            duration: 2500,
+            panelClass: ['style-success'],
+        },
+        this.configError = {
+            panelClass: ['style-error'],
+        };
     }
 
     filterMembType(name: string) {
@@ -253,47 +264,51 @@ export class BillerDialogComponent implements OnInit {
             }
         } else {
             console.log('load data create..');
-            // if (this.membTypeCtrl.value !== null) {
-            //     if (this.membTypeCtrl.value.id === 1) {
-            //         // this.getMembType({id: 1});
-            //         this.billerDetailService.query({
-            //             page: 1,
-            //             count: 200,
-            //             idhdr: this.biller.id
-            //             // size: this.itemsPerPage,
-            //             // sort: this.sort()
-            //         })
-            //         .subscribe(
-            //                 (res: HttpResponse<Biller[]>) => this.onSuccess(res.body, res.headers),
-            //                 (res: HttpErrorResponse) => this.onError(res.message),
-            //                 () => { console.log('finally'); }
-            //         );
-            //     } else if (this.membTypeCtrl.value.id > 1) {
-            //         // this.getMembType({id: 2});
-            //         this.billerPriceDetailService.query({
-            //             page: 1,
-            //             count: 200,
-            //             idhdr: this.biller.id
-            //             // size: this.itemsPerPage,
-            //             // sort: this.sort()
-            //         })
-            //         .subscribe(
-            //                 (res: HttpResponse<Biller[]>) => this.onSuccess(res.body, res.headers),
-            //                 (res: HttpErrorResponse) => this.onError(res.message),
-            //                 () => { console.log('finally'); }
-            //         );
-            //     }
-            // }
-
-            if (this.membTypeCtrl.value !== null) {
+            if (this.membTypeCtrl.value !== null && this.biller.id !== undefined) {
                 if (this.membTypeCtrl.value.id === 1) {
                     this.getMembType({id: 1});
+                    this.billerDetailService.query({
+                        page: 1,
+                        count: 200,
+                        idhdr: this.biller.id
+                        // size: this.itemsPerPage,
+                        // sort: this.sort()
+                    })
+                    .subscribe(
+                            (res: HttpResponse<Biller[]>) => this.onSuccess(res.body, res.headers),
+                            (res: HttpErrorResponse) => this.onError(res.message),
+                            () => { console.log('finally'); }
+                    );
                 } else if (this.membTypeCtrl.value.id > 1) {
                     this.getMembType({id: 2});
+                    this.billerPriceDetailService.query({
+                        page: 1,
+                        count: 200,
+                        idhdr: this.biller.id
+                        // size: this.itemsPerPage,
+                        // sort: this.sort()
+                    })
+                    .subscribe(
+                            (res: HttpResponse<Biller[]>) => this.onSuccess(res.body, res.headers),
+                            (res: HttpErrorResponse) => this.onError(res.message),
+                            () => { console.log('finally'); }
+                    );
                 }
             } else {
-                this.getMembType({id: 2});
+                if (this.data.billType === 'non-biller') {
+                    this.getMembType({id: 2});
+                } else {
+                    this.getMembType({id: 1});
+                }
             }
+
+            // if (this.membTypeCtrl.value !== null) {
+            //     if (this.membTypeCtrl.value.id === 1) {
+            //         this.getMembType({id: 1});
+            //     } else if (this.membTypeCtrl.value.id > 1) {
+            //         this.getMembType({id: 2});
+            //     }
+            // }
         }
     }
 
@@ -311,6 +326,14 @@ export class BillerDialogComponent implements OnInit {
                     return this.openBDDialog('edit', data);
             }
         }
+    }
+
+    public snackbarSuccess(message) {
+        this.snackBar.open(message, 'close', this.configSuccess);
+    }
+
+    public snackbarError(message) {
+        this.snackBar.open(message, 'close', this.configError);
     }
 
     openBDDialog(mode, data): void {
@@ -446,25 +469,33 @@ export class BillerDialogComponent implements OnInit {
             memberCode: (this.biller.memberCode === undefined ? '' : this.biller.memberCode)
         };
         console.log(this.billerSave);
+
         if (this.billerSave.id === undefined || this.billerSave.id === null) {
             console.log('send to service ', this.billerSave);
             this.billerService.create(this.billerSave).subscribe((res: HttpResponse<Biller>) => {
-                // header id = res.body.id
-                console.log(res.body.id);
-                this.btnDisabled = false;
-                if (this.biller.id === undefined || this.biller.id === null) {
-                    this.biller.id = res.body.id;
-                }
+                    // header id = res.body.id
+                    console.log(res.body.id);
+                    this.btnDisabled = false;
+                    if (this.biller.id === undefined || this.biller.id === null) {
+                        this.biller.id = res.body.id;
+                    }
+                    this.snackbarSuccess('Save Success');
 
-                // bulk save
-                // const rowData = [];
-                // this.gridApi.forEachNode(function(node) {
-                //     // rowData.push(node.data);
-                //     this.billerDetailService.create(node.data).subscribe((xres: HttpResponse<BillerDetail>) => {
-                //         this.dialogRef.close('refresh');
-                //     });
-                // });
-            });
+                    // bulk save
+                    // const rowData = [];
+                    // this.gridApi.forEachNode(function(node) {
+                    //     // rowData.push(node.data);
+                    //     this.billerDetailService.create(node.data).subscribe((xres: HttpResponse<BillerDetail>) => {
+                    //         this.dialogRef.close('refresh');
+                    //     });
+                    // });
+                },
+                (res: HttpErrorResponse) => {
+                    console.log('error nya snackbar..');
+                    this.snackbarError('Save Error');
+                },
+                () => { console.log('finally'); }
+            );
         } else {
             console.log('send to service ', this.billerSave);
             this.billerService.update(this.billerSave.id, this.billerSave).subscribe((res: HttpResponse<Biller>) => {

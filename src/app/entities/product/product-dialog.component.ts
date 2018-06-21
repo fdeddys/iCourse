@@ -146,17 +146,17 @@ export class ProductDialogComponent implements OnInit {
             searchByMemberId: (this.membCtrl.value === null ? null : this.membCtrl.value.id),
         };
         console.log(this.productSave);
-        // if (this.productSave.id === undefined || this.productSave.id === null) {
-        //     console.log('send to service ', this.productSave);
-        //     this.productService.create(this.productSave).subscribe((res: HttpResponse<Product>) => {
-        //         this.dialogRef.close('refresh');
-        //     });
-        // } else {
-        //     console.log('send to service ', this.productSave);
-        //     this.productService.update(this.productSave.id, this.productSave).subscribe((res: HttpResponse<Product>) => {
-        //         this.dialogRef.close('refresh');
-        //     });
-        // }
+        if (this.productSave.id === undefined || this.productSave.id === null) {
+            console.log('send to service ', this.productSave);
+            this.productService.create(this.productSave).subscribe((res: HttpResponse<Product>) => {
+                this.dialogRef.close('refresh');
+            });
+        } else {
+            console.log('send to service ', this.productSave);
+            this.productService.update(this.productSave.id, this.productSave).subscribe((res: HttpResponse<Product>) => {
+                this.dialogRef.close('refresh');
+            });
+        }
     }
 }
 

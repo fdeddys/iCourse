@@ -24,10 +24,14 @@ private resourceUrl = SERVER_PATH + 'registration';
 
     query(req?: any): Observable<HttpResponse<Biller[]>> {
         const options = createRequestOption(req);
+        let allData = null;
         let pageNumber = null;
         let pageCount = null;
         let newresourceUrl = null;
         Object.keys(req).forEach((key) => {
+            if (key === 'allData') {
+                allData = req[key];
+            }
             if (key === 'page') {
                 pageNumber = req[key];
             }
@@ -37,7 +41,7 @@ private resourceUrl = SERVER_PATH + 'registration';
         });
 
         if (pageNumber !== null ) {
-            newresourceUrl = this.resourceUrl + `/page/${pageNumber}/count/${pageCount}`;
+            newresourceUrl = this.resourceUrl + `/id/1/isAllData/${allData}/page/${pageNumber}/count/${pageCount}`;
             return this.http.get<Biller[]>(newresourceUrl, { observe: 'response' })
             .pipe(
                 tap(biller => console.log('raw ', biller ))
