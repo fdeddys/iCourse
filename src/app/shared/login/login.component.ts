@@ -27,8 +27,8 @@ export class LoginComponent implements OnInit {
         this.credentials = {
             username: null,
             password: null,
-            // rememberMe: true
-            langKey: ''
+            rememberMe: true,
+            langKey: 'EN'
         };
     }
 
@@ -38,42 +38,45 @@ export class LoginComponent implements OnInit {
 
     login() {
         console.log('login');
-        if (this.username === 'admin' && this.password === 'admin') {
-            console.log('masuk admin..');
+        // if (this.username === 'admin' && this.password === 'admin') {
+        //     console.log('masuk admin..');
+        //     this.router.navigate(['main']);
+        // } else {
+        //     alert('Invalid credentials');
+        // }
+
+        this.loginService.login({
+            username: this.username,
+            password: this.password,
+            langKey: this.langKey
+        }).then(() => {
+            this.authenticationError = false;
+            console.log('hasil login sucess');
+            // if (this.router.url === '/register' || (/^\/activate\//.test(this.router.url)) ||
+            //     (/^\/reset\//.test(this.router.url))) {
+                // this.router.navigate(['']);
+            // }
+
+            // this.eventManager.broadcast({
+            //     name: 'authenticationSuccess',
+            //     content: 'Sending Authentication Success'
+            // });
+
+            // // previousState was set in the authExpiredInterceptor before being redirected to login modal.
+            // // since login is succesful, go to stored previousState and clear previousState
+            // const redirect = this.stateStorageService.getUrl();
+            // if (redirect) {
+            //     // this.stateStorageService.storeUrl(null);
+            //     this.router.navigate([redirect]);
+            // }
+
             this.router.navigate(['main']);
-        } else {
-            alert('Invalid credentials');
-        }
 
-        // this.loginService.login({
-        //     username: this.username,
-        //     password: this.password,
-        //     langKey: this.langKey
-        // }).then(() => {
-        //     this.authenticationError = false;
-        //     // if (this.router.url === '/register' || (/^\/activate\//.test(this.router.url)) ||
-        //     //     (/^\/reset\//.test(this.router.url))) {
-        //     //     this.router.navigate(['']);
-        //     // }
-
-        //     // this.eventManager.broadcast({
-        //     //     name: 'authenticationSuccess',
-        //     //     content: 'Sending Authentication Success'
-        //     // });
-
-        //     // // previousState was set in the authExpiredInterceptor before being redirected to login modal.
-        //     // // since login is succesful, go to stored previousState and clear previousState
-        //     // const redirect = this.stateStorageService.getUrl();
-        //     // if (redirect) {
-        //     //     // this.stateStorageService.storeUrl(null);
-        //     //     this.router.navigate([redirect]);
-        //     // }
-
-        //     // this.router.navigate(['main']);
-
-        // }).catch(() => {
-        //     this.authenticationError = true;
-        // });
+        }).catch((err) => {
+            console.log('hasil login gagal ', err);
+            this.authenticationError = true;
+        });
+        console.log('selesai');
     }
 
 }
