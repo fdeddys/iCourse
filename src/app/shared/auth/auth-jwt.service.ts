@@ -35,6 +35,7 @@ export class AuthServerProvider {
             } else {
                 const jwt = resp.body.id_token;
                 this.localStorage.store('token_id', jwt);
+                // this.sessionStorage.store('token_id', jwt);
                 // SessionStorage.
                 // this.storeAuthenticationToken(jwt, true);
                 return jwt;

@@ -18,7 +18,7 @@ export class AuthInterceptor implements HttpInterceptor {
         !('http://localhost:8080/' && request.url.startsWith('http://localhost:8080/')))) {
             return next.handle(request);
         }
-        const token = this.localStorage.retrieve('token_id');
+        const token = this.localStorage.retrieve('token_id') || this.sessionStorage.retrieve('token_id');
         // const token = this.localStorage.retrieve('authenticationToken') || this.sessionStorage.retrieve('authenticationToken');
         console.log('get token ' , token , '---');
         if (!!token) {
