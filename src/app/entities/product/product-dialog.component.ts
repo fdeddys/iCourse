@@ -32,6 +32,7 @@ export class ProductDialogComponent implements OnInit {
     billerCompanyList = [];
     memberList = [];
     searchByList = [];
+    statusList = [];
 
     modeTitle = '';
 
@@ -96,6 +97,17 @@ export class ProductDialogComponent implements OnInit {
         return member ? member.name : undefined;
     }
 
+    searchByChg() {
+        console.log(this.product.searchBy);
+        // ---- change search by if manual set member selection disabled
+        // if (this.product.searchBy === 'BY_BILLER') {
+        //     this.membCtrl.setValue('');
+        //     this.membCtrl.disable();
+        // } else {
+        //     this.membCtrl.enable();
+        // }
+    }
+
     ngOnInit() {
         this.product = {};
         this.modeTitle = this.data.modeTitle;
@@ -108,6 +120,7 @@ export class ProductDialogComponent implements OnInit {
         this.billerCompanyList = this.data.billerCompanyData;
         this.billerTypeList = this.data.billerTypeData;
         this.searchByList = this.data.searchByData;
+        this.statusList = this.data.statusData;
         this.memberList = this.data.memberData;
     }
 
@@ -123,25 +136,27 @@ export class ProductDialogComponent implements OnInit {
         this.productSave = {
             id: this.product.id,
             name: this.product.name,
+            productCode: this.product.productCode,
             denom: this.product.denom,
             sellPrice: this.product.sellPrice,
+            status: this.product.status,
             billerCompanyId: (this.billCompanyCtrl.value === null ? null : this.billCompanyCtrl.value.id),
             billerTypeId: (this.billTypeCtrl.value === null ? null : this.billTypeCtrl.value.id),
             searchBy: this.product.searchBy,
             searchByMemberId: (this.membCtrl.value === null ? null : this.membCtrl.value.id),
         };
         console.log(this.productSave);
-        if (this.productSave.id === undefined || this.productSave.id === null) {
-            console.log('send to service ', this.productSave);
-            this.productService.create(this.productSave).subscribe((res: HttpResponse<Product>) => {
-                this.dialogRef.close('refresh');
-            });
-        } else {
-            console.log('send to service ', this.productSave);
-            this.productService.update(this.productSave.id, this.productSave).subscribe((res: HttpResponse<Product>) => {
-                this.dialogRef.close('refresh');
-            });
-        }
+        // if (this.productSave.id === undefined || this.productSave.id === null) {
+        //     console.log('send to service ', this.productSave);
+        //     this.productService.create(this.productSave).subscribe((res: HttpResponse<Product>) => {
+        //         this.dialogRef.close('refresh');
+        //     });
+        // } else {
+        //     console.log('send to service ', this.productSave);
+        //     this.productService.update(this.productSave.id, this.productSave).subscribe((res: HttpResponse<Product>) => {
+        //         this.dialogRef.close('refresh');
+        //     });
+        // }
     }
 }
 
