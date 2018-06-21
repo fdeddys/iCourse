@@ -22,13 +22,14 @@ export class AuthInterceptor implements HttpInterceptor {
         // const token = this.localStorage.retrieve('authenticationToken') || this.sessionStorage.retrieve('authenticationToken');
         console.log('get token ' , token , '---');
         if (!!token) {
-            console.log('inject token');
+            console.log('inject token ', request.headers);
             request = request.clone({
                 setHeaders: {
-                    Authorization: 'Bearer ' + token
+                    Authorization: `Bearer ${token}`
                 }
             });
         }
+        console.log('isi request after inject', request.headers);
         return next.handle(request);
     }
 
