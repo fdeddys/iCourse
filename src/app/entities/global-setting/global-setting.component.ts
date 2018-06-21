@@ -28,9 +28,9 @@ export class GlobalSettingComponent implements OnInit {
   gridOptions = {
     columnDefs: [
       { headerName: 'No', field: 'nourut', width: 10, pinned: 'left', editable: false },
-      { headerName: 'Type', field: 'globalType', width: 20, editable: false },
-      { headerName: 'Name', field: 'name', width: 20, editable: false },
-      { headerName: 'Description', field: 'description', width: 30, editable: false },
+      { headerName: 'Type', field: 'globalType', width: 30, editable: false },
+      { headerName: 'Name', field: 'name', width: 50, editable: false },
+      { headerName: 'Description', field: 'description', width: 50, editable: false },
       // { headerName: 'Created at', field: 'createdAt', width: 200, valueFormatter: this.currencyFormatter },
       // { headerName: 'Update at', field: 'updatedAt', width: 200, valueFormatter: this.currencyFormatter },
       // { headerName: 'Created By', field: 'createdBy', width: 200 },
