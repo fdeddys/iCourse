@@ -373,6 +373,8 @@ export class BillerDialogComponent implements OnInit {
                 billerHeader : null,
                 salesPrice : null,
                 profit : null,
+                profitDistributorPks: null,
+                profitMemberPks: null,
                 dateStart : null,
                 dateThru : null,
                 // billerHeaderId : null,
@@ -406,6 +408,8 @@ export class BillerDialogComponent implements OnInit {
                 billerHeader : data.billerHeader,
                 salesPrice : data.salesPrice,
                 profit : data.profit,
+                profitDistributorPks : data.profitDistributorPks,
+                profitMemberPks : data.profitMemberPks,
                 dateStart : data.dateStart,
                 dateThru : data.dateThru,
                 billerHeaderId : data.billerHeader.id,
@@ -478,6 +482,10 @@ export class BillerDialogComponent implements OnInit {
                     this.btnDisabled = false;
                     if (this.biller.id === undefined || this.biller.id === null) {
                         this.biller.id = res.body.id;
+                    }
+
+                    if (this.data.billType === 'non-biller') {
+                        this.loadAll();
                     }
                     this.snackbarSuccess('Save Success');
 

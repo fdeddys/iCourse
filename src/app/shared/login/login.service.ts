@@ -29,9 +29,9 @@ export class LoginService {
                 // });
                 console.log('hasil login isi resolve data ', data);
 
-                this.router.navigate(['main']);
-
-                // return cb();
+                // this.router.navigate(['main']);
+                resolve(data);
+                return cb();
             }, (err) => {
                 console.log('hasil login gagal ', err);
                 this.logout();
@@ -48,7 +48,7 @@ export class LoginService {
 
     logout() {
         console.log('logout..');
-        // this.authServerProvider.logout().subscribe();
+        this.authServerProvider.logout().subscribe();
         // this.principal.authenticate(null);
     }
 }

@@ -42,4 +42,11 @@ export class AuthServerProvider {
             }
         }
     }
+
+    logout(): Observable<any> {
+        return new Observable((observer) => {
+            this.localStorage.clear('token_id');
+            observer.complete();
+        });
+    }
 }

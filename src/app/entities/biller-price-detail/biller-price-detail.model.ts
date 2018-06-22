@@ -5,6 +5,8 @@ export class BillerPriceDetail implements BaseEntity {
         public id?: number,
         public salesPrice?: number,
         public profit?: number,
+        public profitDistributorPks?: number,
+        public profitMemberPks?: number,
         public dateStart?: string,
         public dateThru?: string,
         public billerHeaderId?: number,

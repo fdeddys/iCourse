@@ -29,7 +29,13 @@
             <input type="number" matInput placeholder="Sell Price" name="salesPrice" [(ngModel)]="billerPriceDetail.salesPrice">
         </mat-form-field>
         <mat-form-field class="form-full-width">
-            <input type="number" matInput placeholder="Profit" name="profit" [(ngModel)]="billerPriceDetail.profit">
+            <input type="number" matInput placeholder="Profit Merchant" name="profitMerchant" [(ngModel)]="billerPriceDetail.profit">
+        </mat-form-field>
+        <mat-form-field class="form-full-width">
+            <input type="number" matInput placeholder="Profit Distributor" name="profitDistributor" [(ngModel)]="billerPriceDetail.profitDistributorPks">
+        </mat-form-field>
+        <mat-form-field class="form-full-width">
+            <input type="number" matInput placeholder="Profit Member" name="profitMember" [(ngModel)]="billerPriceDetail.profitMemberPks">
         </mat-form-field>
         <mat-form-field class="form-full-width">
             <input matInput [min]="minDate" [max]="maxDate" [matDatepicker]="picker" placeholder="Date Start" (dateInput)="addEvent('start', $event)" [formControl]="dateSCtrl">
@@ -45,5 +51,5 @@
 </div>
 <div mat-dialog-actions>
     <button mat-raised-button (click)="onNoClick()">Cancel</button>
-    <button mat-raised-button color="primary" cdkFocusInitial (click)="save()">{{ mode }} Non Biller Detail</button>
+    <button mat-raised-button color="primary" cdkFocusInitial (click)="save()">{{ mode }} Non Biller Product</button>
 </div>

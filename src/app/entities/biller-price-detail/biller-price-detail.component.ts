@@ -81,6 +81,8 @@ export class BillerPriceDetailComponent implements OnInit {
                 id: this.data.rowData.id,
                 salesPrice: this.data.rowData.salesPrice,
                 profit: this.data.rowData.profit,
+                profitDistributorPks: this.data.rowData.profitDistributorPks,
+                profitMemberPks: this.data.rowData.profitMemberPks,
                 billerHeaderId: this.data.rowData.billerHeader.id,
                 billerProductId: this.data.rowData.billerProduct.id
             };
