@@ -28,4 +28,8 @@ export class MainComponent {
         this.router.navigate(['']);
     }
 
+    changePass(): void {
+        this.router.navigate(['change-pass']);
+    }
+
 }

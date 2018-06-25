@@ -7,7 +7,8 @@ import { CustomMaterialModule } from './../../material.module';
 import {
     UserService,
     UserComponent,
-    UserDialogComponent
+    UserDialogComponent,
+    UserUpdatePasswordComponent
 } from './';
 
 import { LocalStorageService, SessionStorageService } from 'ngx-webstorage';
@@ -21,11 +22,13 @@ import { LocalStorageService, SessionStorageService } from 'ngx-webstorage';
     ],
     declarations: [
         UserComponent,
-        UserDialogComponent
+        UserDialogComponent,
+        UserUpdatePasswordComponent,
     ],
     entryComponents: [
         UserComponent,
-        UserDialogComponent
+        UserDialogComponent,
+        UserUpdatePasswordComponent,
     ],
     providers: [
         UserService,

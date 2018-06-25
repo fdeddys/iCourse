@@ -177,7 +177,7 @@ export class UserDialogComponent implements OnInit {
         //     this.user.password = atob(this.pass);
         // }
 
-        this.user.password = this.pass;
+        this.user.password = '';
 
         // console.log('isi object  ', this.user);
         if (this.user.id === undefined) {

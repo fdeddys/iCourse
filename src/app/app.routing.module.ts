@@ -10,7 +10,7 @@ import { BillerCompanyComponent } from './entities/biller-company/biller-company
 import { BillerTypeComponent } from './entities/biller-type';
 import { MemberTypeComponent } from './entities/member-type';
 import { GlobalSettingComponent } from './entities/global-setting';
-import { UserComponent } from './entities/user';
+import { UserComponent, UserUpdatePasswordComponent } from './entities/user';
 import { RoleComponent } from './entities/role/role.component';
 import { MenuComponent } from './entities/menu';
 
@@ -32,6 +32,7 @@ const routes: Routes = [
             {path: 'user', component: UserComponent},
             {path: 'role', component: RoleComponent},
             {path: 'menu', component: MenuComponent},
+            { path: 'change-pass', component: UserUpdatePasswordComponent},
         ]
     },
     // {path: 'member', component: MemberComponent}
