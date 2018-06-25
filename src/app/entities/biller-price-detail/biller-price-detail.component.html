@@ -19,7 +19,7 @@
         </mat-form-field>
         <mat-form-field style="width: 25%; margin-right: 5%">
             <!-- <input matInput placeholder="Product Name" name="product" [value]="product"> -->
-            <mat-select placeholder="Denom" name="product" [(value)]="billerPriceDetail.billerProductId">
+            <mat-select placeholder="Denom" name="product" [(value)]="billerPriceDetail.billerProductId" (selectionChange)="getListBiller($event.value)">
                 <mat-option *ngFor="let product of productList" [value]="product.id">
                     {{product.denom}}
                 </mat-option>
@@ -27,9 +27,11 @@
         </mat-form-field> 
         <mat-form-field class="form-full-width">
             <input type="number" matInput placeholder="Sell Price" name="salesPrice" [(ngModel)]="billerPriceDetail.salesPrice">
+            <mat-icon matSuffix (click)="showHelp()">help</mat-icon>
         </mat-form-field>
         <mat-form-field class="form-full-width">
             <input type="number" matInput placeholder="Profit Merchant" name="profitMerchant" [(ngModel)]="billerPriceDetail.profit">
+            <mat-icon matSuffix (click)="showHelp()">help</mat-icon>
         </mat-form-field>
         <mat-form-field class="form-full-width">
             <input type="number" matInput placeholder="Profit Distributor" name="profitDistributor" [(ngModel)]="billerPriceDetail.profitDistributorPks">

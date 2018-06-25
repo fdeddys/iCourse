@@ -7,6 +7,7 @@ import { CustomMaterialModule } from './../../material.module';
 import {
     BillerPriceDetailService,
     BillerPriceDetailComponent,
+    BillerPriceInfoBillerComponent
 } from './';
 
 @NgModule({
@@ -17,10 +18,12 @@ import {
         CustomMaterialModule
     ],
     declarations: [
-        BillerPriceDetailComponent
+        BillerPriceDetailComponent,
+        BillerPriceInfoBillerComponent
     ],
     entryComponents: [
-        BillerPriceDetailComponent
+        BillerPriceDetailComponent,
+        BillerPriceInfoBillerComponent
     ],
     providers: [
         BillerPriceDetailService

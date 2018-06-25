@@ -50,6 +50,12 @@ export class BillerPriceDetailService {
         }
     }
 
+    getListBiller(id: number): Observable<EntityResponseType> {
+        // /api/billerproduct/{idproduct}/listBiller
+        return this.http.get<BillerPriceDetail>(`${SERVER_PATH}billerproduct/${id}/listBiller`, { observe: 'response'})
+            .pipe(map((res: EntityResponseType) => this.convertResponse(res)));
+    }
+
     create(billerPriceDetail: BillerPriceDetail): Observable<EntityResponseType> {
         const copy = this.convert(billerPriceDetail);
         return this.http.post<BillerPriceDetail>(`${this.resourceUrl}`, copy, { observe: 'response'})

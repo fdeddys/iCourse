@@ -1,0 +1,10 @@
+<h4 mat-dialog-title>List Biller</h4>
+<fieldset style="border: 1px #ddd solid">       
+    <ag-grid-angular 
+        style="height: 350px;" 
+        class="ag-theme-material"
+        [gridOptions]="gridOptions"
+        (gridReady)="onGridReady($event)"
+        >
+    </ag-grid-angular>
+</fieldset>
