@@ -11,6 +11,7 @@ import { MatDialog, MatDialogRef, MAT_DIALOG_DATA, MatSnackBar } from '@angular/
 import { BillerPriceDetail } from './biller-price-detail.model';
 import { BillerPriceDetailService } from './biller-price-detail.service';
 
+import { BillerDetail } from '../biller-detail';
 import { BillerType } from '../biller-type';
 import { BillerCompany } from '../biller-company';
 import { Product } from '../product';
@@ -106,10 +107,25 @@ export class BillerPriceDetailComponent implements OnInit {
 
     getListBiller(idProduct: number) {
         this.billerPriceDetailService.getListBiller(idProduct)
-        .subscribe((res: HttpResponse<BillerPriceDetail>) => {
-            console.log('getListBiller : ', res);
-            // this.dataListBill = res;
-        });
+        .subscribe(
+            (res: HttpResponse<BillerDetail[]>) => this.onSuccess(res.body, res.headers),
+            (res: HttpErrorResponse) => this.onError(res.message),
+            () => { console.log('finally'); }
+        );
+    }
+
+    private onSuccess(data, headers) {
+        console.log('success..', data);
+        this.dataListBill = data;
+        if (this.dataListBill.length > 1) {
+            for (let index = 0; index < this.dataListBill.length; index++) {
+                this.dataListBill[index].no = index + 1;
+            }
+        }
+    }
+
+    private onError(error) {
+        console.log('error..');
     }
 
     filterBillType(name: string) {

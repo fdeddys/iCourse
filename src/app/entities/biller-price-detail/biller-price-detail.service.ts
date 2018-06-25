@@ -4,6 +4,7 @@ import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { tap } from 'rxjs/operators';
 
+import { BillerDetail } from '../biller-detail/biller-detail.model';
 import { BillerPriceDetail } from './biller-price-detail.model';
 import { createRequestOption } from '../../shared/model/request-util';
 import { SERVER_PATH } from '../../shared/constant/base-constant';
@@ -50,10 +51,12 @@ export class BillerPriceDetailService {
         }
     }
 
-    getListBiller(id: number): Observable<EntityResponseType> {
+    getListBiller(id: number): Observable<HttpResponse<BillerDetail[]>> {
         // /api/billerproduct/{idproduct}/listBiller
-        return this.http.get<BillerPriceDetail>(`${SERVER_PATH}billerproduct/${id}/listBiller`, { observe: 'response'})
-            .pipe(map((res: EntityResponseType) => this.convertResponse(res)));
+        return this.http.get<BillerDetail[]>(`${SERVER_PATH}billerproduct/${id}/listBiller`, { observe: 'response'})
+        .pipe(
+            tap(billerDetail => { })
+        );
     }
 
     create(billerPriceDetail: BillerPriceDetail): Observable<EntityResponseType> {

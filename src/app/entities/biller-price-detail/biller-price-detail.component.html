@@ -31,7 +31,7 @@
         </mat-form-field>
         <mat-form-field class="form-full-width">
             <input type="number" matInput placeholder="Profit Merchant" name="profitMerchant" [(ngModel)]="billerPriceDetail.profit">
-            <mat-icon matSuffix (click)="showHelp()">help</mat-icon>
+            <mat-icon matSuffix matTooltip="Profit Merchant akan&#13;ditambahkan ke sell price">help</mat-icon>
         </mat-form-field>
         <mat-form-field class="form-full-width">
             <input type="number" matInput placeholder="Profit Distributor" name="profitDistributor" [(ngModel)]="billerPriceDetail.profitDistributorPks">
@@ -40,12 +40,12 @@
             <input type="number" matInput placeholder="Profit Member" name="profitMember" [(ngModel)]="billerPriceDetail.profitMemberPks">
         </mat-form-field>
         <mat-form-field class="form-full-width">
-            <input matInput [min]="minDate" [max]="maxDate" [matDatepicker]="picker" placeholder="Date Start" (dateInput)="addEvent('start', $event)" [formControl]="dateSCtrl">
+            <input matInput [min]="minDate" [max]="maxDate" [matDatepicker]="picker" placeholder="Date Start" (dateInput)="addEvent('start', $event)" (click)="picker.open()" [formControl]="dateSCtrl" readonly>
             <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
             <mat-datepicker #picker></mat-datepicker>
         </mat-form-field>
         <mat-form-field class="form-full-width">
-            <input matInput [min]="minDate" [max]="maxDate" [matDatepicker]="pickerT" placeholder="Date Thru" (dateInput)="addEvent('thru', $event)" [formControl]="dateTCtrl">
+            <input matInput [min]="minDate" [max]="maxDate" [matDatepicker]="pickerT" placeholder="Date Thru" (dateInput)="addEvent('thru', $event)" (click)="pickerT.open()" [formControl]="dateTCtrl" readonly>
             <mat-datepicker-toggle matSuffix [for]="pickerT"></mat-datepicker-toggle>
             <mat-datepicker #pickerT></mat-datepicker>
         </mat-form-field>
