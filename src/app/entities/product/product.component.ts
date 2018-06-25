@@ -38,10 +38,11 @@ export class ProductComponent implements OnInit {
     gridOptions = {
         columnDefs: [
             // { headerName: 'Name', field: 'name', checkboxSelection: true, width: 250, pinned: 'left', editable: true },
+            { headerName: 'No', field: 'no', width: 100, pinned: 'left', editable: false },
             { headerName: 'Name', field: 'name', width: 250, pinned: 'left', editable: false },
             { headerName: 'Product Code', field: 'productCode', width: 200, editable: false },
-            { headerName: 'Denom', field: 'denom', width: 200, editable: false },
-            { headerName: 'Sell Price', field: 'sellPrice', width: 200 },
+            { headerName: 'Denom', field: 'denom', width: 150, editable: false },
+            { headerName: 'Sell Price', field: 'sellPrice', width: 150 },
             { headerName: 'Status', field: 'status', width: 200 },
             // { headerName: 'Search By', field: 'searchBy', width: 250 },
             // { headerName: 'Search By Biller', field: 'searchByMemberId', width: 250 },
@@ -229,6 +230,9 @@ export class ProductComponent implements OnInit {
     private onSuccess(data, headers) {
         console.log('success..', data);
         this.products = data.content;
+        for (let index = 0; index < this.products.length; index++) {
+            this.products[index].no = index + 1;
+        }
         this.gridApi.setRowData(this.products);
     }
 

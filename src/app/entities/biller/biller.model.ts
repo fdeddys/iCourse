@@ -9,7 +9,8 @@ export class Biller implements BaseEntity {
         public memberTypeId?: number,
         public memberId?: number,
         public manualCode?: boolean,
-        public memberCode?: string
+        public memberCode?: string,
+        public no?: number
     ) {
     }
 }

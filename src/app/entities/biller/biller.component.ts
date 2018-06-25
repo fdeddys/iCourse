@@ -45,8 +45,9 @@ export class BillerComponent implements OnInit {
     gridOptions = {
         columnDefs: [
             // { headerName: 'Name', field: 'name', checkboxSelection: true, width: 250, pinned: 'left', editable: true },
-            { headerName: 'Description', field: 'description', width: 350, pinned: 'left', editable: false },
-            { headerName: 'Date Start', field: 'dateStart', width: 350 },
+            { headerName: 'No', field: 'no', width: 100, pinned: 'left', editable: false },
+            { headerName: 'Name', field: 'description', width: 300, pinned: 'left', editable: false },
+            { headerName: 'Date Start', field: 'dateStart', width: 300 },
             { headerName: 'Date Thru', field: 'dateThru', width: 350 },
             { headerName: ' ', width: 150, cellRenderer: 'actionRenderer'}
             // { headerName: ' ', suppressMenu: true,
@@ -261,6 +262,9 @@ export class BillerComponent implements OnInit {
     private onSuccess(data, headers) {
         console.log('success..', data);
         this.billers = data.content;
+        for (let index = 0; index < this.billers.length; index++) {
+            this.billers[index].no = index + 1;
+        }
         this.gridApi.setRowData(this.billers);
     }
 

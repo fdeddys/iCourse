@@ -12,6 +12,7 @@ export class Product implements BaseEntity {
         public status?: number,
         public searchBy?: string,
         public searchByMemberId?: number,
+        public no?: number
     ) {
     }
 }

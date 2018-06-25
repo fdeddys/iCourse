@@ -60,6 +60,7 @@ export class BillerDialogComponent implements OnInit {
     colDefs = [
         // { headerName: 'Name', field: 'name', checkboxSelection: true, width: 250, pinned: 'left', editable: true },
         // { headerName: 'External Code', field: 'externalCode', width: 150, pinned: 'left', editable: false },
+        { headerName: 'No', field: 'no', width: 100, pinned: 'left', editable: false },
         { headerName: 'Product Type', field: 'billerProduct.billerType.name', width: 150 },
         { headerName: 'Product Company', field: 'billerProduct.billerCompany.name', width: 175 },
         { headerName: 'Denom', field: 'billerProduct.denom', width: 150 },
@@ -83,6 +84,7 @@ export class BillerDialogComponent implements OnInit {
 
     nonColDefs = [
         // { headerName: 'Name', field: 'name', checkboxSelection: true, width: 250, pinned: 'left', editable: true },
+        { headerName: 'No', field: 'no', width: 100, pinned: 'left', editable: false },
         { headerName: 'Sales Price', field: 'salesPrice', width: 150 },
         { headerName: 'Profit', field: 'profit', width: 150 },
         { headerName: 'Date Start', field: 'dateStart', width: 150 },
@@ -196,6 +198,9 @@ export class BillerDialogComponent implements OnInit {
 
     private onSuccess(data, headers) {
         console.log('data detail : ', data.content);
+        for (let index = 0; index < data.content.length; index++) {
+            data.content[index].no = index + 1;
+        }
         this.gridApi.setRowData(data.content);
     }
 

@@ -7,13 +7,15 @@ import { Observable } from 'rxjs';
 import { map, startWith } from 'rxjs/operators';
 
 import { FormControl } from '@angular/forms';
-import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
+import { MatDialog, MatDialogRef, MAT_DIALOG_DATA, MatSnackBar } from '@angular/material';
 import { BillerPriceDetail } from './biller-price-detail.model';
 import { BillerPriceDetailService } from './biller-price-detail.service';
 
 import { BillerType } from '../biller-type';
 import { BillerCompany } from '../biller-company';
 import { Product } from '../product';
+
+import { BillerPriceInfoBillerComponent } from './biller-price-info-biller.component';
 
 @Component({
     selector: 'app-biller-price-detail',
@@ -34,13 +36,17 @@ export class BillerPriceDetailComponent implements OnInit {
     billerTypeList = [];
     billerCompanyList = [];
     productList = [];
+    dataListBill = [];
 
     minDate = new Date(2000, 0, 1);
     maxDate = new Date(2020, 0, 1);
     mode = 'Add';
 
+    tooltipCust = 'Info about the action&#13;Trial of tooltip';
+
     constructor(
         private dialog: MatDialog,
+        private snackBar: MatSnackBar,
         public billerPriceDetailService: BillerPriceDetailService,
         public dialogRef: MatDialogRef<BillerPriceDetailComponent>,
         @Inject(MAT_DIALOG_DATA) public data: any
@@ -90,10 +96,20 @@ export class BillerPriceDetailComponent implements OnInit {
             this.billCompanyCtrl.setValue(this.data.rowData.billerProduct.billerCompany);
             this.dateSCtrl.setValue(this.data.rowData.dateStart);
             this.dateTCtrl.setValue(this.data.rowData.dateThru);
+
+            this.getListBiller(this.data.rowData.billerProduct.id);
         }
         this.billerCompanyList = this.data.billerCompanyData;
         this.billerTypeList = this.data.billerTypeData;
         this.productList = this.data.productData;
+    }
+
+    getListBiller(idProduct: number) {
+        this.billerPriceDetailService.getListBiller(idProduct)
+        .subscribe((res: HttpResponse<BillerPriceDetail>) => {
+            console.log('getListBiller : ', res);
+            // this.dataListBill = res;
+        });
     }
 
     filterBillType(name: string) {
@@ -147,6 +163,18 @@ export class BillerPriceDetailComponent implements OnInit {
             this.productList = _.filter(this.productList, function(o) { return o.billerCompany.id === idC; });
         }
         console.log(this.productList);
+    }
+
+    showHelp(): void {
+        console.log('help..');
+        // this.snackBar.open(message, 'close', this.configSuccess);
+        // this.snackBar.openFromComponent(BillerPriceInfoBillerComponent, {
+        //     duration: 15000,
+        // });
+        this.dialog.open(BillerPriceInfoBillerComponent, {
+            width: '1000px',
+            data: this.dataListBill
+        });
     }
 
     onNoClick(): void {
