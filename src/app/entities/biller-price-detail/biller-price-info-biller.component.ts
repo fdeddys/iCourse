@@ -18,9 +18,10 @@ export class BillerPriceInfoBillerComponent implements OnInit {
         columnDefs: [
             // { headerName: 'Name', field: 'name', checkboxSelection: true, width: 250, pinned: 'left', editable: true },
             { headerName: 'No', field: 'no', width: 100, pinned: 'left', editable: false },
-            { headerName: 'Name', field: 'description', width: 300, pinned: 'left', editable: false },
-            { headerName: 'Date Start', field: 'dateStart', width: 300 },
-            { headerName: 'Date Thru', field: 'dateThru', width: 350 }
+            { headerName: 'Name', field: 'billerHeader.description', width: 300, pinned: 'left', editable: false },
+            { headerName: 'Buy Price', field: 'buyPrice', width: 200 },
+            { headerName: 'Fee', field: 'fee', width: 200 },
+            { headerName: 'Sell Price', field: 'sellPrice', width: 200 },
         ],
         enableSorting: true,
         enableFilter: true,
@@ -42,6 +43,7 @@ export class BillerPriceInfoBillerComponent implements OnInit {
 
     onGridReady(params) {
         console.log('onGridReady..');
+        console.log(this.data);
         this.gridApi = params.api;
         this.gridColumnApi = params.columnApi;
 

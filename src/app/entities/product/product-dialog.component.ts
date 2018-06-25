@@ -100,12 +100,12 @@ export class ProductDialogComponent implements OnInit {
     searchByChg() {
         console.log(this.product.searchBy);
         // ---- change search by if manual set member selection disabled
-        // if (this.product.searchBy === 'BY_BILLER') {
-        //     this.membCtrl.setValue('');
-        //     this.membCtrl.disable();
-        // } else {
-        //     this.membCtrl.enable();
-        // }
+        if (this.product.searchBy === 'BY_BILLER') {
+            this.membCtrl.setValue('');
+            this.membCtrl.enable();
+        } else {
+            this.membCtrl.disable();
+        }
     }
 
     ngOnInit() {
