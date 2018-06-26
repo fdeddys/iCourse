@@ -1,10 +1,11 @@
 import { Component, OnInit, Inject } from '@angular/core';
 
 import { FormsModule, FormControl, Validators } from '@angular/forms';
-import { MatDialog, MatDialogRef, MAT_DIALOG_DATA, MatSnackBar } from '@angular/material';
+import { MatSnackBar } from '@angular/material';
 import { User } from './user.model';
 import { HttpResponse, HttpErrorResponse } from '@angular/common/http';
 import { NO_DATA_GRID_MESSAGE, GRID_THEME, CSS_BUTTON } from '../../shared/constant/base-constant';
+import { UserService } from './user.service';
 
 
 @Component({
@@ -15,34 +16,78 @@ import { NO_DATA_GRID_MESSAGE, GRID_THEME, CSS_BUTTON } from '../../shared/const
 
 export class UserUpdatePasswordComponent implements OnInit {
 
-    // confirmP = '';
-    // pass = '';
+    confirmP = '';
+    pass = '';
+    oldpass = '';
 
-    // user: User;
+    user: User;
 
-    // constructor(
-    //     public userService: UserService,
-    //     public snackBar: MatSnackBar,
-    //     public dialogRef: MatDialogRef<UserUpdatePasswordComponent>,
-    //     @Inject(MAT_DIALOG_DATA) public data: any) { }
+    constructor(
+        public userService: UserService,
+        public snackBar: MatSnackBar,
+        // public dialogRef: MatDialogRef<UserUpdatePasswordComponent>,
+        // @Inject(MAT_DIALOG_DATA) public data: any
+    ) { }
 
 
     ngOnInit() {
-
+        this.userService.getCurrentUser()
+            .subscribe(
+                (res: HttpResponse<User>) => {
+                    console.log('curr user ', res.body);
+                    if ( res.body.errMsg === '' || res.body.errMsg === null ) {
+                        this.user = res.body;
+                    } else {
+                        this.snackBar.open('User not found');
+                    }
+                },
+                (err ) => {
+                    console.log('Error', err);
+                }
+            );
     }
 
     // onNoClick(): void {
     //     this.dialogRef.close();
     // }
 
-    // save(): void {
+    save(): void {
 
-    //     this.user.password = '';
-    //     console.log('send to service ', this.user);
-    //     this.userService.update(this.user.id, this.user).subscribe((res: HttpResponse<User>) => {
-    //         this.dialogRef.close('refresh');
-    //     });
-    // }
+        if ( this.oldpass === '' ) {
+            this.snackBar.open('Old Password cannot blank');
+            return ;
+        }
+
+        if ( this.pass === '' ) {
+            this.snackBar.open('Password cannot blank');
+            return ;
+        }
+
+        if ( this.confirmP === '' ) {
+            this.snackBar.open('Password confirm cannot blank');
+            return ;
+        }
+
+        if ( this.pass !== this.confirmP ) {
+            this.snackBar.open('Password not match');
+            return ;
+        }
+        console.log('send to service ', this.user);
+        this.user.oldPass = btoa(this.oldpass) ;
+        this.user.password = btoa(this.pass);
+        this.userService.updatePassword(this.user).subscribe((res: HttpResponse<User>) => {
+            if ( res.body.errMsg === '' || res.body.errMsg === null) {
+                this.user = res.body;
+                this.snackBar.open('Password change');
+            } else {
+                this.snackBar.open(res.body.errMsg);
+            }
+        });
+    }
+
+    cancel(): void {
+
+    }
 
     // private onSuccess(data, headers) {
 

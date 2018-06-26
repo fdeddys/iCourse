@@ -50,9 +50,23 @@ private resourceUrl = SERVER_PATH + 'user';
         }
     }
 
+    getCurrentUser(): Observable<HttpResponse<User>> {
+
+            return this.http.get<User>( this.resourceUrl + `/current`, { observe: 'response' })
+            .pipe(
+                tap(user => console.log('raw ', user ))
+            );
+    }
+
     create(user: User): Observable<EntityResponseType> {
         const copy = this.convert(user);
         return this.http.post<User>(`${this.resourceUrl}`, copy, { observe: 'response'})
+            .pipe(map((res: EntityResponseType) => this.convertResponse(res)));
+    }
+
+    updatePassword(user: User): Observable<EntityResponseType> {
+        const copy = this.convert(user);
+        return this.http.put<User>(`${this.resourceUrl}/changeP`, copy, { observe: 'response'})
             .pipe(map((res: EntityResponseType) => this.convertResponse(res)));
     }
 
