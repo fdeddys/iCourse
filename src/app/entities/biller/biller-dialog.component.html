@@ -19,12 +19,12 @@
 			</mat-autocomplete>
         </mat-form-field>
         <mat-form-field class="form-half-width">
-            <input matInput [min]="minDate" [max]="maxDate" [matDatepicker]="picker" placeholder="Date Start" (dateInput)="addEvent('start', $event)" (click)="picker.open()" [formControl]="dateSCtrl" readonly>
+            <input matInput [matDatepicker]="picker" placeholder="Date Start" (dateInput)="addEvent('start', $event)" (click)="picker.open()" [formControl]="dateSCtrl" readonly>
             <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
             <mat-datepicker #picker></mat-datepicker>
         </mat-form-field>
         <mat-form-field class="form-half-width">
-            <input matInput [min]="minDate" [max]="maxDate" [matDatepicker]="pickerT" placeholder="Date Thru" (dateInput)="addEvent('thru', $event)" (click)="pickerT.open()" [formControl]="dateTCtrl" readonly>
+            <input matInput [matDatepicker]="pickerT" placeholder="Date Thru" (dateInput)="addEvent('thru', $event)" (click)="pickerT.open()" [formControl]="dateTCtrl" readonly>
             <mat-datepicker-toggle matSuffix [for]="pickerT"></mat-datepicker-toggle>
             <mat-datepicker #pickerT></mat-datepicker>
         </mat-form-field>

@@ -50,8 +50,8 @@ export class BillerDialogComponent implements OnInit {
     configSuccess = {};
     configError = {};
 
-    minDate = new Date(2000, 0, 1);
-    maxDate = new Date(2020, 0, 1);
+    // minDate = new Date(2000, 0, 1);
+    // maxDate = new Date(2020, 0, 1);
 
     // checked = false;
     btnDisabled = true; // set to false for debug

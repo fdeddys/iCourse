@@ -1,4 +1,5 @@
 import { Component, OnInit, Inject } from '@angular/core';
+import * as _ from 'lodash';
 import { HttpResponse, HttpErrorResponse } from '@angular/common/http';
 import { Product } from './product.model';
 import { ProductService } from './product.service';
@@ -100,8 +101,8 @@ export class ProductDialogComponent implements OnInit {
     searchByChg() {
         console.log(this.product.searchBy);
         // ---- change search by if manual set member selection disabled
+        this.membCtrl.setValue('');
         if (this.product.searchBy === 'BY_BILLER') {
-            this.membCtrl.setValue('');
             this.membCtrl.enable();
         } else {
             this.membCtrl.disable();
@@ -111,10 +112,19 @@ export class ProductDialogComponent implements OnInit {
     ngOnInit() {
         this.product = {};
         this.modeTitle = this.data.modeTitle;
+
+        this.membCtrl.disable();
         if (this.data.mode !== 'create') {
             // console.log('edit mode..');
             this.billCompanyCtrl.setValue(this.data.rowData.billerCompany);
             this.billTypeCtrl.setValue(this.data.rowData.billerType);
+
+            console.log('this.data.rowData : ', this.data.rowData);
+            if (this.data.rowData.searchBy === 'BY_BILLER') {
+                this.membCtrl.enable();
+                const idMbr = this.data.rowData.searchByMemberId;
+                this.membCtrl.setValue(_.find(this.data.memberData, function(o) { return o.id === idMbr; }));
+            }
         }
         this.product = this.data.rowData;
         this.billerCompanyList = this.data.billerCompanyData;

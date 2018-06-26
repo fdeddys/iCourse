@@ -39,8 +39,8 @@ export class BillerPriceDetailComponent implements OnInit {
     productList = [];
     dataListBill = [];
 
-    minDate = new Date(2000, 0, 1);
-    maxDate = new Date(2020, 0, 1);
+    // minDate = new Date(2000, 0, 1);
+    // maxDate = new Date(2020, 0, 1);
     mode = 'Add';
 
     tooltipCust = 'Info about the action&#13;Trial of tooltip';
