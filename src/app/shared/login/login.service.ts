@@ -50,5 +50,8 @@ export class LoginService {
         console.log('logout..');
         this.authServerProvider.logout().subscribe();
         // this.principal.authenticate(null);
+
+        // Temporary solution, still didn't know how to back to login page
+        this.router.navigate(['']);
     }
 }

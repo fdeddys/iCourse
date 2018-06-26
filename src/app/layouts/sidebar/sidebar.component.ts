@@ -30,7 +30,7 @@ export class SidebarComponent {
       subLinks: [
         {name: 'Biller Type', link: 'biller-type'},
         {name: 'Biller Company', link: 'biller-company'},
-        {name: 'Product', link: 'product'},
+        {name: 'Biller Product', link: 'product'},
       ]
     },
     {
