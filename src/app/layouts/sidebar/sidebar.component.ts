@@ -16,6 +16,7 @@ export class SidebarComponent {
         {name: 'User', link: 'user'},
         {name: 'Menu', link: 'menu'},
         {name: 'Global Setting', link: 'global-setting'},
+        {name: 'Change Password', link: 'change-pass'},
       ]
     },
     {
