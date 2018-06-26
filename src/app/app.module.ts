@@ -1,5 +1,5 @@
 import { BrowserModule } from '@angular/platform-browser';
-import { NgModule } from '@angular/core';
+import { NgModule, Injector } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 // import { AgGridModule } from 'ag-grid-angular';
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
@@ -11,6 +11,7 @@ import { AuthServerProvider } from './shared/auth/auth-jwt.service';
 import { Principal } from './shared/auth/principal.service';
 
 import { AuthInterceptor } from './blocks/interceptor/auth.interceptor';
+import { AuthExpiredInterceptor } from './blocks/interceptor/auth-expired.interceptor';
 import { CdkTableModule } from '@angular/cdk/table';
 import { CustomMaterialModule } from './material.module';
 import { AppRoutingModule } from './app.routing.module';
@@ -58,6 +59,14 @@ import { EntityModule } from './entities/entity.module';
             deps: [
                 LocalStorageService,
                 SessionStorageService
+            ]
+        },
+        {
+            provide: HTTP_INTERCEPTORS,
+            useClass: AuthExpiredInterceptor,
+            multi: true,
+            deps: [
+                Injector
             ]
         }
     ],

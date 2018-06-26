@@ -25,7 +25,7 @@ export class MainComponent {
 
     logout() {
         this.loginService.logout();
-        this.router.navigate(['']);
+        // this.router.navigate(['']);
     }
 
     changePass(): void {
