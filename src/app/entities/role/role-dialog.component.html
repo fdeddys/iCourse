@@ -7,12 +7,18 @@
             <input matInput placeholder="Id" value="{{role.id}}" [disabled]="true" >
         </mat-form-field> -->
         <mat-form-field class="container-full-width">
-            <input matInput placeholder="Name " [(ngModel)]="role.name"  cdkFocusInitial name ="namee" >
+            <input matInput placeholder="Name " [(ngModel)]="role.name"  cdkFocusInitial name ="namee" #namee="ngModel"  required maxlength="50">
+            <mat-error *ngIf="namee.hasError('required')">
+              Name is <strong>required</strong>
+            </mat-error>
         </mat-form-field>
+    
         <mat-form-field class="container-full-width">
-            <input matInput placeholder="Description" [(ngModel)]="role.description" name="description">
-        </mat-form-field>
-
+            <input matInput placeholder="Description" [(ngModel)]="role.description" cdkFocusInitial name="description" #description="ngModel" required maxlength="255"> 
+            <mat-error *ngIf="description.hasError('required')">
+                    Description is <strong>required</strong>
+                  </mat-error>
+        </mat-form-field>  
         <mat-card>
             <!-- <mat-form-field class="container-full-width">
                 <mat-select placeholder="Menu" [(ngModel)]="menuSelected" name="selected_menu">
