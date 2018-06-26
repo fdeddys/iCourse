@@ -4,7 +4,7 @@ import { FormsModule, FormControl, Validators } from '@angular/forms';
 import { MatSnackBar } from '@angular/material';
 import { User } from './user.model';
 import { HttpResponse, HttpErrorResponse } from '@angular/common/http';
-import { NO_DATA_GRID_MESSAGE, GRID_THEME, CSS_BUTTON } from '../../shared/constant/base-constant';
+import { NO_DATA_GRID_MESSAGE, GRID_THEME, CSS_BUTTON, SNACKBAR_DURATION_IN_MILLISECOND } from '../../shared/constant/base-constant';
 import { UserService } from './user.service';
 
 
@@ -21,6 +21,7 @@ export class UserUpdatePasswordComponent implements OnInit {
     oldpass = '';
 
     user: User;
+    timedelay = SNACKBAR_DURATION_IN_MILLISECOND;
 
     constructor(
         public userService: UserService,
@@ -54,33 +55,43 @@ export class UserUpdatePasswordComponent implements OnInit {
     save(): void {
 
         if ( this.oldpass === '' ) {
-            this.snackBar.open('Old Password cannot blank');
+            this.snackBar.open('Old Password cannot blank !', 'ok', { duration : this.timedelay });
             return ;
         }
 
         if ( this.pass === '' ) {
-            this.snackBar.open('Password cannot blank');
+            this.snackBar.open('Password cannot blank !', 'ok', { duration : this.timedelay });
             return ;
         }
 
         if ( this.confirmP === '' ) {
-            this.snackBar.open('Password confirm cannot blank');
+            this.snackBar.open('Password confirm cannot blank !', 'ok', { duration : this.timedelay });
             return ;
         }
 
         if ( this.pass !== this.confirmP ) {
-            this.snackBar.open('Password not match');
+            this.snackBar.open('Password not match !', 'ok', { duration : this.timedelay });
             return ;
         }
-        console.log('send to service ', this.user);
+
+        if ( this.oldpass === '' ) {
+            this.snackBar.open('Old Password cannot blank !', 'ok', { duration : this.timedelay });
+            return ;
+        }
+
+        if ( this.pass === this.oldpass ) {
+            this.snackBar.open('New Password cannot same as old !', 'ok', { duration : this.timedelay });
+            return ;
+        }
+
         this.user.oldPass = btoa(this.oldpass) ;
         this.user.password = btoa(this.pass);
         this.userService.updatePassword(this.user).subscribe((res: HttpResponse<User>) => {
             if ( res.body.errMsg === '' || res.body.errMsg === null) {
                 this.user = res.body;
-                this.snackBar.open('Password change');
+                this.snackBar.open('Password change', 'ok', { duration : this.timedelay });
             } else {
-                this.snackBar.open(res.body.errMsg);
+                this.snackBar.open(res.body.errMsg, 'ok', { duration : this.timedelay });
             }
         });
     }
