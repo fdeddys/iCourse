@@ -1,21 +1,21 @@
-<h4 mat-dialog-title>
-    <h4 style="color: rgb(226, 0, 0)" >{{data.action}} {{data.entity}}</h4>
-</h4>
+<h1 mat-dialog-title>
+    {{data.action}} {{data.entity}}
+</h1>
 <mat-dialog-content>
     <form class="container-form">
         <!-- <mat-form-field ng-show="false" class="container-full-width">
             <input matInput placeholder="Id" value="{{member.id}}" [disabled]="true"  >
         </mat-form-field> -->
-        <mat-form-field class="container-full-width">
+        <mat-form-field class="container-half-width" style="margin-right: 10%">
             <input matInput placeholder="Name " [(ngModel)]="member.name" cdkFocusInitial name ="namee">
         </mat-form-field>
         <!-- <mat-form-field class="container-full-width">
             <input matInput placeholder="Protocol Type " [(ngModel)]="member.protocolType" name ="protocolType">
         </mat-form-field> -->
-        <mat-form-field class="container-full-width">
+        <mat-form-field class="container-half-width">
             <input matInput placeholder="Description" [(ngModel)]="member.description" name ="description">
         </mat-form-field>
-        <mat-form-field class="container-full-width">
+        <mat-form-field class="container-half-width">
             <mat-select placeholder="Status" [(ngModel)]="member.active" name="stts">
                 <mat-option *ngFor="let status of statuses" [value]="status.value">
                   {{status.viewValue}}
@@ -26,8 +26,9 @@
 
     <br>
     
-    <mat-card>
-        <button mat-raised-button class='btnAdd' (click)="openNewDialog()" style="margin-bottom: 10px;">Add New Bank Account</button>
+    
+    <button mat-raised-button color='primary' (click)="openNewDialog()" style="margin-bottom: 10px;">Add New Bank Account</button>
+    <fieldset style="border: 1px #ddd solid">
         <ag-grid-angular 
             #agGrid
             style="height: 300px; widows: 100%;" 
@@ -37,10 +38,10 @@
             (rowClicked)="onRowClicked($event)"
             >
         </ag-grid-angular>
-    </mat-card>
+    </fieldset>
 </mat-dialog-content>
-<mat-dialog-actions>
-  <button mat-button mat-dialog-close (click)="onNoClick()">Close</button>
-  <button mat-button mat-raised-button class='btnSave' (click)="save()" >Save</button>
+<mat-dialog-actions align="end">
+  <button mat-button mat-raised-button color='primary' (click)="save()" >Save</button>
+  <button mat-button mat-raised-button mat-dialog-close (click)="onNoClick()">Close</button>
 </mat-dialog-actions>
 

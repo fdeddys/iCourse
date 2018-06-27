@@ -7,4 +7,7 @@
   .container-full-width {
     width: 100%;
   }
-  
+
+.container-half-width {
+    width: 45%;
+}

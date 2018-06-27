@@ -40,7 +40,7 @@
 			<!-- remark from this -->
 			<div *ngFor="let subLink of link.subLinks" style="margin-left:18px;">
 				<mat-expansion-panel *ngIf="subLink.subLinks">
-					<mat-expansion-panel-header [expandedHeight]="'48px'">
+					<mat-expansion-panel-header [expandedHeight]="'48px'" style="padding: 0;">
 						<mat-list-item>
 							<a style="cursor: pointer;">
 								<p mat-line>{{subLink.name}}</p>

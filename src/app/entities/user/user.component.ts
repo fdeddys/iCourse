@@ -25,11 +25,11 @@ export class UserComponent implements OnInit {
 
   gridOptions = {
     columnDefs: [
-      { headerName: 'No', field: 'nourut', width: 30, pinned: 'left', editable: false },
-      { headerName: 'Name', field: 'name', width: 80, editable: false },
-      { headerName: 'Email', field: 'email', editable: false },
-      { headerName: 'Status', field: 'status',  width: 80, editable: false, valueFormatter: this.boolFormatter },
-      { headerName: ' ', width: 150, cellRenderer: 'actionRenderer'}
+      { headerName: 'No', field: 'nourut', width: 100, minWidth: 100, maxWidth: 100, pinned: 'left', editable: false },
+      { headerName: 'Name', field: 'name', width: 250, editable: false },
+      { headerName: 'Email', field: 'email', width: 250, editable: false },
+      { headerName: 'Status', field: 'status', width: 150, editable: false, valueFormatter: this.boolFormatter},
+      { headerName: ' ', width: 150, minWidth: 150, maxWidth: 150, cellRenderer: 'actionRenderer'}
       // { headerName: ' ', suppressMenu: true,
       //   width: 100,
       //   suppressSorting: true,
@@ -130,8 +130,8 @@ export class UserComponent implements OnInit {
     this.gridApi = params.api;
     this.gridColumnApi = params.columnApi;
     params.api.sizeColumnsToFit();
-    console.log(this.gridApi);
-    console.log(this.gridColumnApi);
+    // console.log(this.gridApi);
+    // console.log(this.gridColumnApi);
 
     this.loadAll();
   }

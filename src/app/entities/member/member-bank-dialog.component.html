@@ -2,9 +2,9 @@
 <mat-dialog-content>
     <form class="container-form">
         <div *ngIf="member">
-            <mat-form-field class="container-full-width">
+            <!-- <mat-form-field class="container-full-width">
                 <input matInput placeholder="Id" value="{{member.id}}" [disabled]="true" >
-            </mat-form-field>
+            </mat-form-field> -->
             <mat-form-field class="container-full-width">
                 <input matInput placeholder="Name " [(ngModel)]="member.name" cdkFocusInitial name ="namee" [disabled]="true">
             </mat-form-field>
