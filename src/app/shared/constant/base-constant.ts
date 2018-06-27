@@ -1,6 +1,6 @@
 export const GRID_THEME = 'ag-theme-material';
-// export const SERVER = 'http://45.126.133.31:8080/';
-export const SERVER = 'http://localhost:8080/';
+export const SERVER = 'http://45.126.133.31:8080/';
+// export const SERVER = 'http://localhost:8080/';
 export const SERVER_PATH = SERVER + 'api/';
 export const AUTH_PATH = SERVER + 'token/';
 export const CSS_BUTTON  = `style="width:125px; height:40px; background-color:	limegreen; color:white ;
