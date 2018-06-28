@@ -3,6 +3,9 @@ import { Router } from '@angular/router';
 
 import { LoginService } from '../../shared/login/login.service';
 
+import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
+import { UserUpdatePasswordComponent } from '../../entities/user/user-update-password.component';
+
 @Component({
     selector: 'app-main',
     templateUrl: './main.component.html',
@@ -14,6 +17,7 @@ export class MainComponent {
     menuTitle: string;
 
     constructor(
+        private dialog: MatDialog,
         private loginService: LoginService,
         private router: Router
     ) { }
@@ -29,7 +33,15 @@ export class MainComponent {
     }
 
     changePass(): void {
-        this.router.navigate(['change-pass']);
+        // this.router.navigate(['change-pass']);
+
+        const dialogRef = this.dialog.open(UserUpdatePasswordComponent, {
+            width: '1000px',
+        });
+
+        dialogRef.afterClosed().subscribe(result => {
+            console.log('The dialog was closed');
+        });
     }
 
 }
