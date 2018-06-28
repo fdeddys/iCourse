@@ -8,6 +8,8 @@ import { MatActionButtonComponent } from '../../shared/templates/mat-action-butt
 import { UserDialogComponent } from './user-dialog.component';
 import { UserConfirmDialogComponent } from './user-confirm-dialog.component';
 
+import { ICellRendererAngularComp } from 'ag-grid-angular/main';
+
 @Component({
   selector: 'app-user',
   templateUrl: './user.component.html',
@@ -29,7 +31,8 @@ export class UserComponent implements OnInit {
       { headerName: 'Name', field: 'name', width: 250, editable: false },
       { headerName: 'Email', field: 'email', width: 250, editable: false },
       { headerName: 'Status', field: 'status', width: 150, editable: false, valueFormatter: this.boolFormatter},
-      { headerName: ' ', width: 150, minWidth: 150, maxWidth: 150, cellRenderer: 'actionRenderer'}
+      { headerName: ' ', width: 150, field: 'act1', minWidth: 150, maxWidth: 150, cellRenderer: 'actionRenderer'},
+      { headerName: ' ', width: 150, field: 'act2', minWidth: 150, maxWidth: 150, cellRenderer: 'removeCustRenderer'}
       // { headerName: ' ', suppressMenu: true,
       //   width: 100,
       //   suppressSorting: true,
@@ -51,6 +54,7 @@ export class UserComponent implements OnInit {
       localeText: {noRowsToShow: this.messageNoData},
       frameworkComponents: {
           actionRenderer: MatActionButtonComponent,
+          removeCustRenderer: MatRemoveButtonComponent
       },
       context: {
         componentParent: this
@@ -69,17 +73,34 @@ export class UserComponent implements OnInit {
   constructor(  private dialog: MatDialog,
                 private userService: UserService) { }
 
-  public onRowClicked(e) {
+  // public onRowClicked(e) {
+  //   console.log('row clicked isi nya ====> ', e);
+  //   if (e.event.target !== undefined) {
+  //       const data = e.data;
+  //       const actionType = e.event.target.getAttribute('data-action-type');
+
+  //       switch (actionType) {
+  //           case 'edit':
+  //               return this.onActionEditClick(data);
+  //           case 'inactive':
+  //               return this.onActionRemoveClick(data);
+  //       }
+  //   }
+  // }
+
+  public onCellClicked(e) {
     console.log('row clicked isi nya ====> ', e);
     if (e.event.target !== undefined) {
         const data = e.data;
-        const actionType = e.event.target.getAttribute('data-action-type');
+        const colField = e.colDef.field;
 
-        switch (actionType) {
-            case 'edit':
-                return this.onActionEditClick(data);
-            case 'inactive':
-                return this.onActionRemoveClick(data);
+        switch (colField) {
+            case 'act1':
+                return console.log('edit....');
+                // return this.onActionEditClick(data);
+            case 'act2':
+                return console.log('remove....');
+                // return this.onActionRemoveClick(data);
         }
     }
   }
@@ -168,4 +189,24 @@ export class UserComponent implements OnInit {
     console.log('error..');
   }
 
+}
+
+@Component({
+  selector: 'app-action-cell',
+  template: `
+      <mat-icon style="margin-top: 12px; font-size: 20px" data-action-type="remove">clear</mat-icon>
+  `,
+})
+export class MatRemoveButtonComponent implements ICellRendererAngularComp {
+  private params: any;
+
+  agInit(params: any): void {
+      this.params = params;
+      console.log('action button = ', this.params);
+      console.log('isi param action button ', this.params.value);
+  }
+
+  refresh(params: any): boolean {
+      return false;
+  }
 }

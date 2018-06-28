@@ -9,6 +9,7 @@ import { Role, RoleService } from '../role';
 import { NO_DATA_GRID_MESSAGE, GRID_THEME, CSS_BUTTON, SNACKBAR_DURATION_IN_MILLISECOND } from '../../shared/constant/base-constant';
 import { RoleUserService } from '../role-user/role-user.service';
 import { RoleUserView } from '../role-user/role-user.model';
+import { MatCheckboxComponent } from '../../shared/templates/mat-checkbox.component';
 
 @Component({
     selector: 'app-user-dialog',
@@ -56,15 +57,16 @@ export class UserDialogComponent implements OnInit {
             // { headerName: 'id', field: 'roleId', width: 50, pinned: 'left', editable: false },
             { headerName: 'Name', field: 'roleName', width: 200, editable: false },
             { headerName: 'Description', field: 'roleDescription', width: 200, editable: false },
-            { headerName: 'Status', field: 'status', width: 100, editable: false },
-            { headerName: ' ', suppressMenu: true,
-            suppressSorting: true,
-            width: 100,
-            template:
-                `<button mat-raised-button type="button" data-action-type="removeRole"  ${this.cssButton} >
-                Change
-                </button>
-                ` }
+            // { headerName: 'Status', field: 'status', width: 100, editable: false },
+            // { headerName: ' ', suppressMenu: true,
+            // suppressSorting: true,
+            // width: 100,
+            // template:
+            //     `<button mat-raised-button type="button" data-action-type="removeRole"  ${this.cssButton} >
+            //     Change
+            //     </button>
+            //     ` }
+            { headerName: 'Status', field: 'status', width: 150, cellRenderer: 'checkboxRenderer'}
         ],
             rowData: this.roleRegisterd,
             enableSorting: true,
@@ -76,18 +78,35 @@ export class UserDialogComponent implements OnInit {
             infiniteInitialRowCount : 1,
             maxBlocksInCache : 2,
             localeText: {noRowsToShow: this.messageNoData},
+            frameworkComponents: {
+                checkboxRenderer: MatCheckboxComponent
+            }
         };
 
-    public onRowClicked(e) {
-        console.log('clicked ', e);
+    // public onRowClicked(e) {
+    //     console.log('clicked ', e);
+    //     if (e.event.target !== undefined) {
+    //         const data = e.data;
+    //         const actionType = e.event.target.getAttribute('data-action-type');
+
+    //         switch (actionType) {
+    //             case 'removeRole':
+    //                 console.log('Send data ==> ', data);
+    //                 return this.onActionClick(data);
+    //         }
+    //     }
+    // }
+
+    public onCellClicked(e) {
+        console.log('clicked cell ', e);
         if (e.event.target !== undefined) {
             const data = e.data;
-            const actionType = e.event.target.getAttribute('data-action-type');
+            const colField = e.colDef.field;
 
-            switch (actionType) {
-                case 'removeRole':
+            switch (colField) {
+                case 'status':
                     console.log('Send data ==> ', data);
-                    return this.onActionClick(data);
+                    // return this.onActionClick(data);
             }
         }
     }

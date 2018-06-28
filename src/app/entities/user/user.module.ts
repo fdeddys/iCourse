@@ -8,7 +8,8 @@ import {
     UserService,
     UserComponent,
     UserDialogComponent,
-    UserUpdatePasswordComponent
+    UserUpdatePasswordComponent,
+    MatRemoveButtonComponent
 } from './';
 
 import { LocalStorageService, SessionStorageService } from 'ngx-webstorage';
@@ -22,11 +23,13 @@ import { LocalStorageService, SessionStorageService } from 'ngx-webstorage';
     ],
     declarations: [
         UserComponent,
+        MatRemoveButtonComponent,
         UserDialogComponent,
         UserUpdatePasswordComponent,
     ],
     entryComponents: [
         UserComponent,
+        MatRemoveButtonComponent,
         UserDialogComponent,
         UserUpdatePasswordComponent,
     ],
