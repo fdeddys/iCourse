@@ -31,9 +31,9 @@
         </mat-select>
     </mat-form-field>
     <br>
+        <button mat-button mat-raised-button color="primary" (click)="save()" >Save</button>
+        <button [disabled]="data.action !== 'Edit'" color="primary" mat-button  mat-raised-button class="btnAdd" (click)="resetPassword()">Reset password</button>
     <br>
-        <button mat-button mat-raised-button class="btnSave" (click)="save()" >Save</button>
-            <button [disabled]="data.action !== 'Edit'" mat-button  mat-raised-button class="btnAdd" (click)="resetPassword()">Reset password</button>
     <br>
     <fieldset style="border: 1px #ddd solid">
         <mat-form-field class="container-half-width">
@@ -43,8 +43,8 @@
                 </mat-option>
             </mat-select>
         </mat-form-field>
-        <br>
-        <button mat-button mat-raised-button color="primary" (click)="addRole()">Add Role</button>
+        
+        <button  mat-button mat-raised-button color="primary" (click)="addRole()" style="margin-left: 5%">Add Role</button>
         <ag-grid-angular 
             #agGrid
             style="height: 300px; width: 100%;" 

@@ -29,7 +29,7 @@ export class BillerTypeComponent implements OnInit {
       columnDefs: [
           { headerName: 'No', field: 'nourut', width: 50, pinned: 'left', editable: false },
           { headerName: 'Name', field: 'name', width: 200, editable: false },
-          { headerName: 'Postpaid', field: 'ispostpaid', width: 200, editable: false },
+          { headerName: 'Type', field: 'ispostpaid', valueFormatter: this.boolFormatter, width: 200, editable: false },
           { headerName: ' ', width: 150, cellRenderer: 'actionRenderer'}
           // { headerName: ' ', suppressMenu: true,
           //   suppressSorting: true,
@@ -54,6 +54,9 @@ export class BillerTypeComponent implements OnInit {
       }
   };
 
+  boolFormatter(params): string {
+    return params.value === true ? 'Postpaid' : 'Prepaid';
+  }
 
   currencyFormatter(params): string {
       const dt  = new Date(params.value);
@@ -164,10 +167,17 @@ export class BillerTypeComponent implements OnInit {
       console.log('error..');
   }
 
-  public preview(): void {
-      console.log('preiew');
+  public previewPdf(): void {
+      this.preview('PDF');
+  }
+
+  public previewXls(): void {
+      this.preview('XLS');
+  }
+
+  public preview(reportType): void {
       const path = this.resourceUrl  + 'billertype';
-      window.open(`${path}/PDF`);
+      window.open(`${path}/${reportType}`);
   }
 
 }

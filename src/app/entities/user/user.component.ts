@@ -114,17 +114,17 @@ export class UserComponent implements OnInit {
     }
 
   loadAll() {
-        console.log('Start call function all header');
-        this.userService.query({
-            page: 1,
-            count: 10000,
-        })
-        .subscribe(
-                (res: HttpResponse<User[]>) => this.onSuccess(res.body, res.headers),
-                (res: HttpErrorResponse) => this.onError(res.message),
-                () => { console.log('finally'); }
-        );
-    }
+      console.log('Start call function all header');
+      this.userService.query({
+          page: 1,
+          count: 10000,
+      })
+      .subscribe(
+          (res: HttpResponse<User[]>) => this.onSuccess(res.body, res.headers),
+              (res: HttpErrorResponse) => this.onError(res.message),
+              () => { console.log('finally'); }
+      );
+  }
 
   ngOnInit() {
     // this.loadAll();
@@ -133,7 +133,7 @@ export class UserComponent implements OnInit {
   onGridReady(params) {
     this.gridApi = params.api;
     this.gridColumnApi = params.columnApi;
-    params.api.sizeColumnsToFit();
+    // params.api.sizeColumnsToFit();
 
     this.loadAll();
   }

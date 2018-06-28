@@ -54,9 +54,9 @@ export class UserDialogComponent implements OnInit {
     gridOptions = {
         columnDefs: [
             // { headerName: 'id', field: 'roleId', width: 50, pinned: 'left', editable: false },
-            { headerName: 'Name', field: 'roleName', editable: false },
-            { headerName: 'Description', field: 'roleDescription', editable: false },
-            { headerName: 'Status', field: 'status', editable: false },
+            { headerName: 'Name', field: 'roleName', width: 200, editable: false },
+            { headerName: 'Description', field: 'roleDescription', width: 200, editable: false },
+            { headerName: 'Status', field: 'status', width: 100, editable: false },
             { headerName: ' ', suppressMenu: true,
             suppressSorting: true,
             width: 100,
