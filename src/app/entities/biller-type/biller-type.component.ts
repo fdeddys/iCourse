@@ -5,7 +5,7 @@ import { BillerTypeService } from './biller-type.service';
 import { BillerTypeDialogComponent } from './biller-type-dialog.component';
 import { HttpResponse, HttpErrorResponse } from '@angular/common/http';
 import { BillerTypeConfirmComponent } from './biller-type-confirm.component';
-import { GRID_THEME, CSS_BUTTON, NO_DATA_GRID_MESSAGE } from '../../shared/constant/base-constant';
+import { GRID_THEME, CSS_BUTTON, NO_DATA_GRID_MESSAGE, REPORT_PATH } from '../../shared/constant/base-constant';
 import { MatActionButtonComponent } from '../../shared/templates/mat-action-button.component';
 
 @Component({
@@ -17,26 +17,28 @@ export class BillerTypeComponent implements OnInit {
 
   private gridApi;
   private gridColumnApi;
+  private resourceUrl = REPORT_PATH;
   theme: String = GRID_THEME;
   cssButton = CSS_BUTTON  ;
   billerTipes: BillerType[];
   BillerType: BillerType;
   messageNoData: string = NO_DATA_GRID_MESSAGE;
+  nativeWindow: any;
 
   gridOptions = {
-    columnDefs: [
-      { headerName: 'No', field: 'nourut', width: 50, pinned: 'left', editable: false },
-      { headerName: 'Name', field: 'name', width: 200, editable: false },
-      { headerName: 'Postpaid', field: 'ispostpaid', width: 200, editable: false },
-      { headerName: ' ', width: 150, cellRenderer: 'actionRenderer'}
-      // { headerName: ' ', suppressMenu: true,
-      //   suppressSorting: true,
-      //   template:
-      //     `<button mat-raised-button type="button" data-action-type="edit"  ${this.cssButton} >
-      //       Edit
-      //     </button>
-      //     ` }
-    ],
+      columnDefs: [
+          { headerName: 'No', field: 'nourut', width: 50, pinned: 'left', editable: false },
+          { headerName: 'Name', field: 'name', width: 200, editable: false },
+          { headerName: 'Postpaid', field: 'ispostpaid', width: 200, editable: false },
+          { headerName: ' ', width: 150, cellRenderer: 'actionRenderer'}
+          // { headerName: ' ', suppressMenu: true,
+          //   suppressSorting: true,
+          //   template:
+          //     `<button mat-raised-button type="button" data-action-type="edit"  ${this.cssButton} >
+          //       Edit
+          //     </button>
+          //     ` }
+      ],
       rowData: this.billerTipes,
       enableSorting: true,
       enableFilter: true,
@@ -54,25 +56,25 @@ export class BillerTypeComponent implements OnInit {
 
 
   currencyFormatter(params): string {
-    const dt  = new Date(params.value);
-    return dt.toLocaleString(['id']);
+      const dt  = new Date(params.value);
+      return dt.toLocaleString(['id']);
   }
 
   constructor(  private dialog: MatDialog,
-                private billerTypeService: BillerTypeService) { }
+                private billerTypeService: BillerTypeService, ) { }
 
   public onRowClicked(e) {
-    if (e.event.target !== undefined) {
-        const data = e.data;
-        const actionType = e.event.target.getAttribute('data-action-type');
+      if (e.event.target !== undefined) {
+          const data = e.data;
+          const actionType = e.event.target.getAttribute('data-action-type');
 
-        switch (actionType) {
-            case 'edit':
-                return this.onActionEditClick(data);
-            case 'inactive':
-                return this.onActionRemoveClick(data);
-        }
-    }
+          switch (actionType) {
+              case 'edit':
+                  return this.onActionEditClick(data);
+              case 'inactive':
+                  return this.onActionRemoveClick(data);
+          }
+      }
   }
 
   public onActionEditClick(data: any) {
@@ -102,47 +104,47 @@ export class BillerTypeComponent implements OnInit {
         console.log('The dialog was closed');
       });
 
-    }
+  }
 
   loadAll() {
-        console.log('Start call function all header');
-        this.billerTypeService.query({
-            page: 1,
-            count: 10000,
-        })
-        .subscribe(
-                (res: HttpResponse<BillerType[]>) => this.onSuccess(res.body, res.headers),
-                (res: HttpErrorResponse) => this.onError(res.message),
-                () => { console.log('finally'); }
-        );
-    }
+      console.log('Start call function all header');
+      this.billerTypeService.query({
+          page: 1,
+          count: 10000,
+      })
+      .subscribe(
+              (res: HttpResponse<BillerType[]>) => this.onSuccess(res.body, res.headers),
+              (res: HttpErrorResponse) => this.onError(res.message),
+              () => { console.log('finally'); }
+      );
+  }
 
   ngOnInit() {
-    // this.loadAll();
+      // this.loadAll();
   }
 
   onGridReady(params) {
-    this.gridApi = params.api;
-    this.gridColumnApi = params.columnApi;
-    params.api.sizeColumnsToFit();
+      this.gridApi = params.api;
+      this.gridColumnApi = params.columnApi;
+      params.api.sizeColumnsToFit();
 
-    console.log(this.gridApi);
-    console.log(this.gridColumnApi);
-    this.loadAll();
+      console.log(this.gridApi);
+      console.log(this.gridColumnApi);
+      this.loadAll();
   }
 
   openNewDialog(): void {
-    const dialogRef = this.dialog.open(BillerTypeDialogComponent, {
-      width: '1000px',
-      data: { action: 'Add', entity: 'Biller Type' }
-    });
+      const dialogRef = this.dialog.open(BillerTypeDialogComponent, {
+          width: '1000px',
+          data: { action: 'Add', entity: 'Biller Type' }
+      });
 
-    dialogRef.afterClosed().subscribe(result => {
-      console.log('The dialog was closed = [', result, ']');
-      if (result === 'refresh') {
-        this.loadAll();
-      }
-    });
+      dialogRef.afterClosed().subscribe(result => {
+          console.log('The dialog was closed = [', result, ']');
+          if (result === 'refresh') {
+              this.loadAll();
+          }
+      });
   }
 
   private onSuccess(data, headers) {
@@ -153,13 +155,19 @@ export class BillerTypeComponent implements OnInit {
       this.billerTipes = data.content;
       let urut = 1;
       for (const billerType of this.billerTipes) {
-        billerType.nourut = urut++;
+          billerType.nourut = urut++;
       }
       this.gridApi.setRowData(this.billerTipes);
   }
 
   private onError(error) {
-    console.log('error..');
+      console.log('error..');
+  }
+
+  public preview(): void {
+      console.log('preiew');
+      const path = this.resourceUrl  + 'billertype';
+      window.open(`${path}/PDF`);
   }
 
 }
