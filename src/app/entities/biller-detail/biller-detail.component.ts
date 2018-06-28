@@ -31,8 +31,9 @@ export class BillerDetailComponent implements OnInit {
     billerTypeList = [];
     billerCompanyList = [];
     productList = [];
+    statusList = [];
 
-    statusData = true;
+    // statusData = true;
     mode = 'Add';
 
     constructor(
@@ -80,7 +81,7 @@ export class BillerDetailComponent implements OnInit {
                 postPaid : this.data.rowData.postPaid,
                 status : this.data.rowData.status
             };
-            this.statusData = (this.data.rowData.status === 'ACTIVE' ? true : false);
+            // this.statusData = (this.data.rowData.status === 'ACTIVE' ? true : false);
 
             this.billTypeCtrl.setValue(this.data.rowData.billerProduct.billerType);
             this.billCompanyCtrl.setValue(this.data.rowData.billerProduct.billerCompany);
@@ -88,6 +89,7 @@ export class BillerDetailComponent implements OnInit {
         this.billerCompanyList = this.data.billerCompanyData;
         this.billerTypeList = this.data.billerTypeData;
         this.productList = this.data.productData;
+        this.statusList = this.data.statusData;
     }
 
     filterBillType(name: string) {
@@ -141,7 +143,7 @@ export class BillerDetailComponent implements OnInit {
 
     save(): void {
         console.log(this.billerDetail);
-        this.billerDetail.status = (this.statusData ? 'ACTIVE' : 'INACTIVE');
+        // this.billerDetail.status = (this.statusData ? 'ACTIVE' : 'INACTIVE');
         this.billerDetail.sellPrice = this.billerDetail.buyPrice + this.billerDetail.fee;
         this.billerDetail.externalCode = '';
         this.billerDetail.postPaid = 1;
