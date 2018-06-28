@@ -6,7 +6,7 @@ import { User } from './user.model';
 import { UserService } from './user.service';
 import { HttpResponse, HttpErrorResponse } from '@angular/common/http';
 import { Role, RoleService } from '../role';
-import { NO_DATA_GRID_MESSAGE, GRID_THEME, CSS_BUTTON } from '../../shared/constant/base-constant';
+import { NO_DATA_GRID_MESSAGE, GRID_THEME, CSS_BUTTON, SNACKBAR_DURATION_IN_MILLISECOND } from '../../shared/constant/base-constant';
 import { RoleUserService } from '../role-user/role-user.service';
 import { RoleUserView } from '../role-user/role-user.model';
 
@@ -29,6 +29,7 @@ export class UserDialogComponent implements OnInit {
     messageNoData: string = NO_DATA_GRID_MESSAGE;
     theme: String = GRID_THEME;
     cssButton = CSS_BUTTON  ;
+    duration = SNACKBAR_DURATION_IN_MILLISECOND;
 
     emailFormControl = new FormControl('', [
         Validators.required,
@@ -99,17 +100,40 @@ export class UserDialogComponent implements OnInit {
                     this.roleSelected = null;
                     this.getRoleRegistered();
                     this.snackBar.open('Role success registerd !', 'ok', {
-                        duration: 2000,
+                        duration: this.duration,
                     });
                     // this.loadMenuRegistered(this.role.id);
                 },
                 (msg: HttpErrorResponse) => {
                     console.log(msg);
                     this.snackBar.open('Error :  ' +  msg.error.name + ' !', 'ok', {
-                                    duration: 2000,
-                                });
+                        duration: this.duration,
+                    });
                 }
             );
+    }
+
+    resetPassword(): void {
+        this.userService.resetPassword(this.user.id )
+        .subscribe(
+            (res: HttpResponse<User>) => {
+                if (res.body.errMsg === null || res.body.errMsg === '' ) {
+                    const decodePass = atob(res.body.password);
+                    this.snackBar.open('Password reset to [ ' + decodePass + ' ] WITHOUT BRACKET ! ', 'ok');
+                } else {
+                    this.snackBar.open('Error !' + res.body.errMsg , 'Close', {
+                        duration: this.duration,
+                    });
+                }
+                // this.loadMenuRegistered(this.role.id);
+            },
+            (msg: HttpErrorResponse) => {
+                console.log(msg);
+                this.snackBar.open('Error :  ' +  msg.error.name + ' !', 'ok', {
+                    duration: this.duration,
+                });
+            }
+        );
     }
 
     onActionClick(data): void {
@@ -123,8 +147,8 @@ export class UserDialogComponent implements OnInit {
                 (msg: HttpErrorResponse) => {
                     console.log(msg);
                     this.snackBar.open('Error :  ' +  msg.error.name + ' !', 'ok', {
-                                    duration: 2000,
-                                });
+                        duration: this.duration,
+                    });
                 }
             );
     }
@@ -151,6 +175,8 @@ export class UserDialogComponent implements OnInit {
             // search
             console.log('id sending ', this.data.user);
             this.user = this.data.user;
+        } else {
+            this.user.status = 1;
         }
     }
 
@@ -159,37 +185,55 @@ export class UserDialogComponent implements OnInit {
     }
 
     save(): void {
-        // if ( this.data.action === 'Add' ) {
-
-        //     if ( this.pass === '' ) {
-        //         this.snackBar.open('Password belum di isi !', 'ok', {
-        //             duration: 2000,
-        //         });
-        //         return ;
-        //     }
-
-        //     if ( this.pass !== this.confirmP ) {
-        //         this.snackBar.open('Password dan confirmasi tidak sama !', 'ok', {
-        //             duration: 2000,
-        //         });
-        //         return ;
-        //     }
-        //     this.user.password = atob(this.pass);
-        // }
 
         this.user.password = '';
 
         // console.log('isi object  ', this.user);
         if (this.user.id === undefined) {
             console.log('send to service ', this.user);
-            this.userService.create(this.user).subscribe((res: HttpResponse<User>) => {
-                this.dialogRef.close('refresh');
-            });
+            this.userService.create(this.user).subscribe(
+                (res: HttpResponse<User>) => {
+                    if (res.body.errMsg === null || res.body.errMsg === '' ) {
+                        const decodePass = atob(res.body.password);
+                        this.data.action = 'Edit';
+                        this.user.id = res.body.id;
+                        this.snackBar.open('Password  [ ' + decodePass + ' ] WITHOUT BRACKET ! ', 'ok');
+                    } else {
+                        this.snackBar.open('Error !' + res.body.errMsg , 'Close', {
+                            duration: this.duration,
+                        });
+                    }
+                // this.dialogRef.close('refresh');
+                },
+                (res: HttpErrorResponse) => {
+                    this.snackBar.open('Error !' + res.error.message , 'Close', {
+                        duration: this.duration,
+                    });
+                    console.log('error msh ', res.error.message);
+                }
+            );
         } else {
             console.log('send to service ', this.user);
-            this.userService.update(this.user.id, this.user).subscribe((res: HttpResponse<User>) => {
-                this.dialogRef.close('refresh');
-            });
+            this.userService.update(this.user.id, this.user).subscribe(
+                (res: HttpResponse<User>) => {
+                    // this.dialogRef.close('refresh');
+                    if (res.body.errMsg === null || res.body.errMsg === '' ) {
+                        this.snackBar.open('Data updated ', 'ok', {
+                            duration: this.duration,
+                        });
+                    } else {
+                        this.snackBar.open('Error !' + res.body.errMsg , 'Close', {
+                            duration: this.duration,
+                        });
+                    }
+                },
+                (res: HttpErrorResponse) => {
+                    this.snackBar.open('Error !' + res.error.message , 'Close', {
+                        duration: 10000,
+                    });
+                    console.log('error msh ', res.error.message);
+                }
+            );
         }
     }
 
@@ -238,6 +282,10 @@ export class UserDialogComponent implements OnInit {
 
     private onError(error) {
       console.log('error get all list role..');
+    }
+
+    closeForm(): void {
+        this.dialogRef.close('refresh');
     }
 
 }

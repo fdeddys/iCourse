@@ -32,6 +32,14 @@
     </mat-form-field>
     <br>
     <br>
+
+        <button mat-button mat-raised-button class="btnSave" (click)="save()" >Save</button>
+            <button [disabled]="data.action !== 'Edit'" mat-button  mat-raised-button class="btnAdd" (click)="resetPassword()">Reset password</button>
+        <!-- <div *ngIf="data.action === 'Edit'" > -->
+        <!-- </div> -->
+
+    <br>
+    <br>
     <fieldset style="border: 1px #ddd solid">
         <mat-form-field class="container-half-width">
             <mat-select placeholder="Status" [(ngModel)]="roleSelected" name="role">
@@ -59,6 +67,6 @@
 </mat-dialog-content>
 <mat-dialog-actions align="end">
     <button mat-button mat-raised-button color="primary" (click)="save()" >Save</button>
-    <button mat-raised-button mat-dialog-close>Cancel</button>
+    <button mat-button (click)="closeForm()" >Close</button>
 </mat-dialog-actions>
 <br><br>

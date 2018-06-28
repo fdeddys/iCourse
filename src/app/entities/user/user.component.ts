@@ -50,7 +50,10 @@ export class UserComponent implements OnInit {
       maxBlocksInCache : 2,
       localeText: {noRowsToShow: this.messageNoData},
       frameworkComponents: {
-          actionRenderer: MatActionButtonComponent
+          actionRenderer: MatActionButtonComponent,
+      },
+      context: {
+        componentParent: this
       }
   };
 
@@ -67,6 +70,7 @@ export class UserComponent implements OnInit {
                 private userService: UserService) { }
 
   public onRowClicked(e) {
+    console.log('row clicked isi nya ====> ', e);
     if (e.event.target !== undefined) {
         const data = e.data;
         const actionType = e.event.target.getAttribute('data-action-type');
@@ -130,8 +134,6 @@ export class UserComponent implements OnInit {
     this.gridApi = params.api;
     this.gridColumnApi = params.columnApi;
     params.api.sizeColumnsToFit();
-    // console.log(this.gridApi);
-    // console.log(this.gridColumnApi);
 
     this.loadAll();
   }
