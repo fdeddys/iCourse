@@ -1,7 +1,7 @@
 <h1 mat-dialog-title>{{ mode }} Biller Product</h1>
 <div mat-dialog-content>
     <form class="form-container">		
-        <mat-form-field style="width: 25%; margin-right: 5%">
+        <mat-form-field style="width: 30%; margin-right: 5%">
             <input matInput placeholder="Biller Type" aria-label="Biller Type" [matAutocomplete]="auto" [formControl]="billTypeCtrl">
             <mat-autocomplete #auto="matAutocomplete" [displayWith]="displayFnBil" (closed)='closed()'>
                 <mat-option *ngFor="let billerType of filteredBillType | async" [value]="billerType">
@@ -9,7 +9,7 @@
                 </mat-option>
             </mat-autocomplete>
         </mat-form-field>
-        <mat-form-field style="width: 25%; margin-right: 5%">
+        <mat-form-field style="width: 30%; margin-right: 5%">
             <input matInput placeholder="Biller Company" aria-label="Biller Company" [matAutocomplete]="autoComp" [formControl]="billCompanyCtrl">
             <mat-autocomplete #autoComp="matAutocomplete" [displayWith]="displayFnCom" (closed)='closed()'>
                 <mat-option *ngFor="let billerCompany of filteredBillCompany | async" [value]="billerCompany">
@@ -17,7 +17,7 @@
                 </mat-option>
             </mat-autocomplete>
         </mat-form-field>
-        <mat-form-field style="width: 25%; margin-right: 5%">
+        <mat-form-field style="width: 30%">
             <!-- <input matInput placeholder="Product Name" name="product" [value]="product"> -->
             <mat-select placeholder="Denom" name="product" [(ngModel)]="billerDetail.billerProductId">
                 <mat-option *ngFor="let product of productList" [value]="product.id">
@@ -28,21 +28,28 @@
         <!-- <mat-form-field class="form-full-width">
             <input matInput placeholder="External Code" name="externalCode" [(ngModel)]="billerDetail.externalCode">
         </mat-form-field> -->
-        <mat-form-field style="width: 25%; margin-right: 5%">
+        <mat-form-field style="width: 30%; margin-right: 5%">
             <input type="number" matInput placeholder="Buy Price" name="buyPrice" [(ngModel)]="billerDetail.buyPrice">
         </mat-form-field>
-        <mat-form-field style="width: 25%; margin-right: 5%">
+        <mat-form-field style="width: 30%; margin-right: 5%">
             <input type="number" matInput placeholder="Fee" name="fee" [(ngModel)]="billerDetail.fee">
         </mat-form-field>
-        <mat-form-field style="width: 25%; margin-right: 5%">
+        <mat-form-field style="width: 30%">
             <input matInput placeholder="Sell Price" name="sellPrice" value="{{ billerDetail.buyPrice + billerDetail.fee | currency:'Rp'}}" disabled>                
         </mat-form-field>        
-        <mat-form-field class="form-full-width">
+        <mat-form-field class="form-full-width" style="margin-right: 10%">
             <input type="number" matInput placeholder="Profit" name="profit" [(ngModel)]="billerDetail.profit">
         </mat-form-field>        
-        <section class="form-full-width">
+        <!-- <section class="form-full-width">
             <mat-checkbox class="example-margin" [color]="'primary'" [(ngModel)]="statusData" [ngModelOptions]="{standalone: true}">Active</mat-checkbox>
-        </section>
+        </section> -->
+        <mat-form-field class="form-full-width">
+			<mat-select placeholder="Status" [(ngModel)]="billerDetail.status" name="status">
+				<mat-option *ngFor="let status of statusList" [value]="status">
+					{{status === 'ACTIVE' ? 'AVAILABLE' : 'DISCONTINUED'}}
+				</mat-option>
+			</mat-select>
+		</mat-form-field>
     </form>
 </div>
 <div mat-dialog-actions align="end">

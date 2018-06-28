@@ -1,7 +1,7 @@
-<h1 mat-dialog-title>Add Biller</h1>
+<h1 mat-dialog-title>Add {{ btnLabel }}</h1>
 <div mat-dialog-content>
     <form class="form-container">	
-        <mat-form-field class="form-half-width">
+        <mat-form-field class="form-half-width" style="margin-right: 10%">
             <input matInput placeholder="Biller" aria-label="Member" [matAutocomplete]="autoM" [formControl]="membCtrl">
             <mat-autocomplete #autoM="matAutocomplete" [displayWith]="displayFnMem">
                 <mat-option *ngFor="let member of filteredMemb | async" [value]="member">
@@ -18,7 +18,7 @@
 				</mat-option>
 			</mat-autocomplete>
         </mat-form-field>
-        <mat-form-field class="form-half-width">
+        <mat-form-field class="form-half-width" style="margin-right: 10%">
             <input matInput [matDatepicker]="picker" placeholder="Date Start" (dateInput)="addEvent('start', $event)" (click)="picker.open()" [formControl]="dateSCtrl" readonly>
             <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
             <mat-datepicker #picker></mat-datepicker>
@@ -39,12 +39,15 @@
         </mat-form-field>
         
         <!-- <button mat-raised-button color="primary" (click)="openBDDialog('create')" style="margin-top: 30px; margin-bottom: 10px; margin-right: 10px;" [disabled]="btnDisabled">{{ btnLabel }}</button> -->
-        <button mat-raised-button color="primary" style="margin-top: 10px; margin-bottom: 10px; margin-right: 10px; margin-left: 75%" cdkFocusInitial (click)="save()">Save</button>
+        <!-- <button mat-raised-button color="primary" style="margin-top: 10px; margin-bottom: 10px; margin-right: 0px; margin-left: 75%" cdkFocusInitial (click)="save()">Save</button> -->
+        <div align="end" style="margin-top: 10px; margin-bottom: 10px">
+            <button mat-raised-button color="primary" (click)="save()">Save</button>
+        </div>        
         
         <mat-divider></mat-divider>
         <br>
         <br>
-        <h4 mat-dialog-title>Biller Product</h4>
+        <h4 mat-dialog-title>{{ btnLabel }} Product</h4>
         <fieldset style="border: 1px #ddd solid">       
             <ag-grid-angular 
                 style="height: 250px;" 
@@ -58,7 +61,7 @@
 	</form>
 </div>
 <div mat-dialog-actions align="end">
-    <button mat-raised-button color="primary" (click)="openBDDialog('create')" style="margin-top: 30px; margin-bottom: 10px; margin-right: 10px;" [disabled]="btnDisabled">{{ btnLabel }}</button>
-    <button mat-raised-button style="margin-top: 30px; margin-bottom: 10px; margin-right: 10px;" (click)="onNoClick()">Close</button>
+    <button mat-button mat-raised-button color="primary" (click)="openBDDialog('create')" style="margin-top: 30px; margin-bottom: 10px;" [disabled]="btnDisabled">Add {{ btnLabel }} Product</button>
+    <button mat-button mat-raised-button style="margin-top: 30px; margin-bottom: 10px;" (click)="onNoClick()">Close</button>
     <!-- <button mat-raised-button color="primary" cdkFocusInitial (click)="save()">Save</button> -->
 </div>

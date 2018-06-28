@@ -27,11 +27,11 @@
 }
 
 .form-half-width {
-	width: 40%;
-	margin-right: 5%;
+	width: 45%;
+	/* margin-right: 5%; */
 }
 
 .form-full-width {
-	width: 85%;
-	margin-right: 5%;
+	width: 100%;
+	/* margin-right: 5%; */
 }
