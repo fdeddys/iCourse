@@ -105,8 +105,8 @@ export class UserDialogComponent implements OnInit {
 
             switch (colField) {
                 case 'status':
-                    console.log('Send data ==> ', data);
-                    // return this.onActionClick(data);
+                    // console.log('Send data ==> ', data);
+                    return this.onActionClick(data);
             }
         }
     }

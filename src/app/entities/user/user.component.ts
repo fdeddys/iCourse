@@ -96,8 +96,8 @@ export class UserComponent implements OnInit {
 
         switch (colField) {
             case 'act1':
-                return console.log('edit....');
-                // return this.onActionEditClick(data);
+                // return console.log('edit....');
+                return this.onActionEditClick(data);
             case 'act2':
                 return console.log('remove....');
                 // return this.onActionRemoveClick(data);
