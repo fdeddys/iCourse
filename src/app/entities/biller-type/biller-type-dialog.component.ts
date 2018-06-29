@@ -1,10 +1,11 @@
 import { Component, OnInit, Inject } from '@angular/core';
 
-import { FormsModule } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
 import { BillerType } from './biller-type.model';
 import { BillerTypeService } from './biller-type.service';
 import { HttpResponse, HttpErrorResponse } from '@angular/common/http';
+import { CommonValidatorDirective } from '../../validators/common.validator';
 
 @Component({
     selector: 'app-biller-type-dialog',
@@ -17,14 +18,28 @@ export class BillerTypeDialogComponent implements OnInit {
     billerType: BillerType;
     name: string;
     checked = false;
+    billerTypeForm: FormGroup;
+    submitted = false;
+
+    typeList = [
+        {'value': false, 'desc': 'Prepaid'},
+        {'value': true, 'desc': 'Postpaid'}
+    ];
 
     constructor(
+        private formBuilder: FormBuilder,
         public billerTypeService: BillerTypeService,
         public dialogRef: MatDialogRef<BillerTypeDialogComponent>,
         @Inject(MAT_DIALOG_DATA) public data: any) { }
 
+    get form() { return this.billerTypeForm.controls; }
+
     ngOnInit() {
+        this.billerTypeForm = this.formBuilder.group({
+            name: ['', [CommonValidatorDirective.required]],
+        });
         this.billerType = {};
+        this.billerType.ispostpaid = false;
         if ( this.data.action === 'Edit' ) {
             // search
             this.billerType = this.data.BillerType;
@@ -37,7 +52,7 @@ export class BillerTypeDialogComponent implements OnInit {
         this.dialogRef.close();
     }
 
-    save(): void {
+    onSubmit() {
         // this.billerType.ispostpaid = this.checked  ;
         console.log('isi biller = ', this.billerType);
         // this.BillerType.name = this.name;
@@ -52,6 +67,14 @@ export class BillerTypeDialogComponent implements OnInit {
             this.billerTypeService.update(this.billerType.id, this.billerType).subscribe((res: HttpResponse<BillerType>) => {
                 this.dialogRef.close('refresh');
             });
+        }
+    }
+
+    validate(): void {
+        this.submitted = true;
+        // stop here if form is invalid
+        if (this.billerTypeForm.invalid) {
+            return;
         }
     }
 

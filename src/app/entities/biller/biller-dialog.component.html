@@ -24,7 +24,7 @@
             <mat-datepicker #picker></mat-datepicker>
         </mat-form-field>
         <mat-form-field class="form-half-width">
-            <input matInput [matDatepicker]="pickerT" placeholder="Date Thru" (dateInput)="addEvent('thru', $event)" (click)="pickerT.open()" [formControl]="dateTCtrl" readonly>
+            <input matInput [matDatepicker]="pickerT" placeholder="Date Through" (dateInput)="addEvent('thru', $event)" (click)="pickerT.open()" [formControl]="dateTCtrl" readonly>
             <mat-datepicker-toggle matSuffix [for]="pickerT"></mat-datepicker-toggle>
             <mat-datepicker #pickerT></mat-datepicker>
         </mat-form-field>
@@ -62,6 +62,6 @@
 </div>
 <div mat-dialog-actions align="end">
     <button mat-button mat-raised-button color="primary" (click)="openBDDialog('create')" style="margin-top: 30px; margin-bottom: 10px;" [disabled]="btnDisabled">Add {{ btnLabel }} Product</button>
-    <button mat-button mat-raised-button style="margin-top: 30px; margin-bottom: 10px;" (click)="onNoClick()">Close</button>
+    <!-- <button mat-button mat-raised-button style="margin-top: 30px; margin-bottom: 10px;" (click)="onNoClick()">Close</button> -->
     <!-- <button mat-raised-button color="primary" cdkFocusInitial (click)="save()">Save</button> -->
 </div>

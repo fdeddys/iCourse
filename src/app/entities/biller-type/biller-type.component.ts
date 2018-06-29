@@ -84,7 +84,7 @@ export class BillerTypeComponent implements OnInit {
       console.log('View action clicked', data);
       const dialogRef = this.dialog.open(BillerTypeDialogComponent, {
         width: '1000px',
-        data: { action: 'Edit', entity: 'Biller Type', BillerType: data }
+        data: { action: 'Edit', entity: 'Bill Type', BillerType: data }
       });
 
       dialogRef.afterClosed().subscribe(result => {
@@ -139,7 +139,7 @@ export class BillerTypeComponent implements OnInit {
   openNewDialog(): void {
       const dialogRef = this.dialog.open(BillerTypeDialogComponent, {
           width: '1000px',
-          data: { action: 'Add', entity: 'Biller Type' }
+          data: { action: 'Add', entity: 'Bill Type' }
       });
 
       dialogRef.afterClosed().subscribe(result => {

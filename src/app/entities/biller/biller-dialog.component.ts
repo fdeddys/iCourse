@@ -18,6 +18,8 @@ import { BillerPriceDetail, BillerPriceDetailService, BillerPriceDetailComponent
 import { MatCheckboxComponent } from '../../shared/templates/mat-checkbox.component';
 import { MatActionButtonComponent } from '../../shared/templates/mat-action-button.component';
 
+import { NO_DATA_GRID_MESSAGE } from '../../shared/constant/base-constant';
+
 @Component({
     selector: 'app-biller-dialog',
     templateUrl: './biller-dialog.component.html',
@@ -58,6 +60,8 @@ export class BillerDialogComponent implements OnInit {
     btnDisabled = true; // set to false for debug
     btnLabel = 'Biller';
 
+    messageNoData: string = NO_DATA_GRID_MESSAGE;
+
     colDefs = [
         // { headerName: 'Name', field: 'name', checkboxSelection: true, width: 250, pinned: 'left', editable: true },
         // { headerName: 'External Code', field: 'externalCode', width: 150, pinned: 'left', editable: false },
@@ -86,11 +90,11 @@ export class BillerDialogComponent implements OnInit {
     nonColDefs = [
         // { headerName: 'Name', field: 'name', checkboxSelection: true, width: 250, pinned: 'left', editable: true },
         { headerName: 'No', field: 'no', width: 100, pinned: 'left', editable: false },
-        { headerName: 'Name', field: 'billerProduct.name', width: 200 },
-        { headerName: 'Sales Price', field: 'salesPrice', width: 150 },
+        { headerName: 'Product Name', field: 'billerProduct.name', width: 200 },
+        { headerName: 'Sell Price', field: 'salesPrice', width: 150 },
         { headerName: 'Profit', field: 'profit', width: 150 },
         { headerName: 'Date Start', field: 'dateStart', width: 150 },
-        { headerName: 'Date Thru', field: 'dateThru', width: 150 },
+        { headerName: 'Date Through', field: 'dateThru', width: 150 },
         { headerName: 'Status', field: 'status', width: 150},
         { headerName: ' ', width: 150, cellRenderer: 'actionRenderer'}
         // { headerName: ' ', suppressMenu: true,
@@ -111,6 +115,7 @@ export class BillerDialogComponent implements OnInit {
         // rowSelection: "multiple"
         pagination: true,
         paginationPageSize: 10,
+        localeText: {noRowsToShow: this.messageNoData},
         // rowHeight : 41,
         frameworkComponents: {
             // checkboxRenderer: MatCheckboxComponent,
@@ -232,7 +237,7 @@ export class BillerDialogComponent implements OnInit {
             this.btnLabel = 'Biller';
             this.gridApi.setColumnDefs(this.colDefs);
         } else {
-            this.btnLabel = 'Non Biller';
+            this.btnLabel = 'Biller Subscriber';
             this.gridApi.setColumnDefs(this.nonColDefs);
         }
         this.gridApi.setRowData([]);

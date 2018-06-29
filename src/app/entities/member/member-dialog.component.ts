@@ -1,6 +1,6 @@
 import { Component, OnInit, Inject } from '@angular/core';
 
-import { FormsModule } from '@angular/forms';
+import { FormBuilder, FormGroup, FormsModule } from '@angular/forms';
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA, MatSnackBar } from '@angular/material';
 import { Member } from './member.model';
 import { MemberService } from './member.service';
@@ -10,6 +10,7 @@ import { MemberBank } from '../member-bank/member-bank.model';
 import { MemberBankService } from '../member-bank';
 import { GRID_THEME, CSS_BUTTON, NO_DATA_GRID_MESSAGE, SNACKBAR_DURATION_IN_MILLISECOND } from '../../shared/constant/base-constant';
 import { MatActionButtonComponent } from '../../shared/templates/mat-action-button.component';
+import { CommonValidatorDirective } from '../../validators/common.validator';
 
 @Component({
     selector: 'app-member-dialog',
@@ -31,6 +32,8 @@ export class MemberDialogComponent implements OnInit {
     name: string;
     memberBanks: MemberBank[];
     messageNoData: string = NO_DATA_GRID_MESSAGE;
+    memberForm: FormGroup;
+    submitted = false;
 
     gridOptions = {
         columnDefs: [
@@ -70,6 +73,7 @@ export class MemberDialogComponent implements OnInit {
     ];
 
     constructor(
+        private formBuilder: FormBuilder,
         private dialog: MatDialog,
         public memberService: MemberService,
         public memberBankService: MemberBankService,
@@ -77,7 +81,14 @@ export class MemberDialogComponent implements OnInit {
         public snackBar: MatSnackBar,
         @Inject(MAT_DIALOG_DATA) public data: any) { }
 
+    get form() { return this.memberForm.controls; }
+
     ngOnInit() {
+        this.memberForm = this.formBuilder.group({
+            name: ['', [CommonValidatorDirective.required]],
+            description: ['', CommonValidatorDirective.required]
+        });
+
         this.member = {};
         this.member.active = true;
         if ( this.data.action === 'Edit' ) {
@@ -134,7 +145,7 @@ export class MemberDialogComponent implements OnInit {
 
     }
 
-    save(): void {
+    onSubmit() {
         console.log('isi member = ', this.member);
         // this.member.name = this.name;
 
@@ -144,6 +155,7 @@ export class MemberDialogComponent implements OnInit {
                 this.member = res.body;
                 this.isUpdateData = true;
                 console.log('refresh data ');
+                this.openSnackBar('Save success', 'Done');
                 // this.dialogRef.close('refresh');
             });
         } else {
@@ -151,16 +163,25 @@ export class MemberDialogComponent implements OnInit {
             this.memberService.update(this.member.id, this.member).subscribe((res: HttpResponse<Member>) => {
                 this.isUpdateData = true;
                 console.log('refresh data ');
+                this.openSnackBar('Save success', 'Done');
                 // this.dialogRef.close('refresh');
             });
         }
     }
 
+    validate(): void {
+        this.submitted = true;
+        // stop here if form is invalid
+        if (this.memberForm.invalid) {
+            return;
+        }
+    }
 
     onGridReady(params) {
         this.gridApi = params.api;
         this.gridColumnApi = params.columnApi;
 
+        this.gridApi.setRowData([]);
         this.loadMemberBank();
     }
 

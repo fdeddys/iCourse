@@ -2,13 +2,18 @@
     <!-- {{data.action}} - {{data.entity}} -->
     {{data.action}} {{data.entity}}
 </h1>
+<form name="userForm" (ngSubmit)="f.form.valid && onSubmit()" #f="ngForm" novalidate>   
 <mat-dialog-content>
     <!-- <form class="container-form"> -->
         <!-- <mat-form-field class="container-full-width">
             <input matInput placeholder="Id" value="{{user.id}}" [disabled]="true" >
         </mat-form-field> -->
     <mat-form-field class="container-half-width" style="margin-right: 10%">
-        <input matInput placeholder="Name " [(ngModel)]="user.name"  cdkFocusInitial name ="namea" >
+            <!-- <input matInput placeholder="Name " [(ngModel)]="user.name"  cdkFocusInitial name ="namea" > -->
+            <input matInput placeholder="Name " [(ngModel)]="user.name" cdkFocusInitial name ="nm" #name="ngModel" [ngClass]="{ 'is-invalid': f.submitted && name.invalid }" required maxlength="50">
+            <mat-error *ngIf="submitted && form.name.errors" class="invalid-feedback">
+                    <div *ngIf="form.name.errors.required"> {{form.name.errors.message}}</div>
+            </mat-error> 
     </mat-form-field>
     <!-- <div *ngIf="data.action === 'Add'" >
         <mat-form-field class="container-full-width">
@@ -21,7 +26,7 @@
 
     <mat-form-field class="container-half-width">
         <input matInput placeholder="Email" [(ngModel)]="user.email" name="emaie"
-        [formControl]="emailFormControl" >
+            [formControl]="emailFormControl" required maxlength="50"> 
     </mat-form-field>
     <mat-form-field class="container-half-width">
         <mat-select placeholder="Status" [(ngModel)]="user.status" name="sttss">
@@ -31,9 +36,9 @@
         </mat-select>
     </mat-form-field>
     <br>
-    <mat-dialog-actions>
-        <button mat-button mat-raised-button color="primary" (click)="save()" >Save</button>
-        <button [disabled]="data.action !== 'Edit'" color="primary" mat-button  mat-raised-button class="btnAdd" (click)="resetPassword()">Reset password</button>
+    <mat-dialog-actions align="end">
+            <button mat-button mat-raised-button color="primary" (click)="validate()">Save</button>
+        <!-- <button [disabled]="data.action !== 'Edit'" color="primary" mat-button  mat-raised-button class="btnAdd" (click)="resetPassword()">Reset password</button> -->
     </mat-dialog-actions>        
     <br>
     <br>
@@ -62,8 +67,9 @@
     <!-- </form> -->
     
 </mat-dialog-content>
-<mat-dialog-actions align="end">
+<!-- <mat-dialog-actions align="end">
     <button mat-button mat-raised-button color="primary" (click)="save()" >Save</button>
     <button mat-button (click)="closeForm()" >Close</button>
-</mat-dialog-actions>
+</mat-dialog-actions> -->
 <br><br>
+</form>   

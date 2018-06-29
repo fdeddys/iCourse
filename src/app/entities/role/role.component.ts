@@ -165,6 +165,7 @@ export class RoleComponent implements OnInit {
 
   private onError(error) {
     console.log('error..');
+    this.gridApi.setRowData([]);
   }
 
 }

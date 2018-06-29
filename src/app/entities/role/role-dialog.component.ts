@@ -1,7 +1,8 @@
 import { Component, OnInit, Inject } from '@angular/core';
 
-import { FormsModule, FormControl, Validators } from '@angular/forms';
+import { FormBuilder, FormGroup, FormsModule, FormControl, Validators } from '@angular/forms';
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
+import { CommonValidatorDirective } from '../../validators/common.validator';
 import { Role, RoleMenuView } from './role.model';
 import { RoleService } from './role.service';
 import { HttpResponse, HttpErrorResponse } from '@angular/common/http';
@@ -31,8 +32,11 @@ export class RoleDialogComponent implements OnInit {
     theme: String = GRID_THEME;
     cssButton = CSS_BUTTON  ;
     messageNoData: string = NO_DATA_GRID_MESSAGE;
+    roleForm: FormGroup;
+    submitted = false;
 
     constructor(
+        private formBuilder: FormBuilder,
         public roleService: RoleService,
         private menuService: MenuService,
         public dialogRef: MatDialogRef<RoleDialogComponent>,
@@ -90,6 +94,11 @@ export class RoleDialogComponent implements OnInit {
 
 
     ngOnInit() {
+        this.roleForm = this.formBuilder.group({
+            name: ['', [CommonValidatorDirective.required]],
+            description: ['', CommonValidatorDirective.required]
+        });
+
         this.role = {};
         if ( this.data.action === 'Edit' ) {
             // search
@@ -102,6 +111,9 @@ export class RoleDialogComponent implements OnInit {
             // this.loadAllMenu();
         }
     }
+
+    get form() { return this.roleForm.controls; }
+
 
     // loadMenuList(roleid, registered): void {
     //     this.menuService.findByRole(roleid, registered)
@@ -144,8 +156,7 @@ export class RoleDialogComponent implements OnInit {
         this.dialogRef.close();
     }
 
-    save(): void {
-
+    onSubmit() {
         console.log('isi object  ', this.role);
         if (this.role.id === undefined) {
             console.log('send to service ', this.role);
@@ -160,7 +171,16 @@ export class RoleDialogComponent implements OnInit {
         }
     }
 
+    validate(): void {
+        this.submitted = true;
+        // stop here if form is invalid
+        if (this.roleForm.invalid) {
+            return;
+        }
+    }
+
     onGridReady(params) {
+        console.log('grid ready.......');
         this.gridApi = params.api;
         this.gridColumnApi = params.columnApi;
         params.api.sizeColumnsToFit();
@@ -170,6 +190,8 @@ export class RoleDialogComponent implements OnInit {
         console.log('Get all data');
         if ( this.role.id !== undefined ) {
             this.loadMenuRegistered(this.role.id);
+        } else {
+            this.gridApi.setRowData([]);
         }
         // this.loadMenuList(this.role.id, false);
     }
@@ -193,6 +215,7 @@ export class RoleDialogComponent implements OnInit {
 
     private onError(error) {
       console.log('error..');
+      this.gridApi.setRowData([]);
     }
 
 }
