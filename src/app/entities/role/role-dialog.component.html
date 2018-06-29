@@ -12,7 +12,7 @@
 
         </mat-form-field>
         <mat-form-field class="container-full-width"> 
-            <input matInput placeholder="Description " [(ngModel)]="role.description"  name ="descr" [(ngModel)]="role.description" #description="ngModel" [ngClass]="{ 'is-invalid': f.submitted && description.invalid }" required maxlength="100">
+            <input matInput placeholder="Description " [(ngModel)]="role.description"  name ="descr" [(ngModel)]="role.description" #description="ngModel" [ngClass]="{ 'is-invalid': f.submitted && description.invalid }" required maxlength="255">
             <mat-error *ngIf="submitted && form.description.errors" class="invalid-feedback">
                     <div *ngIf="form.description.errors.required"> {{form.description.errors.message}}</div> 
             </mat-error>  
