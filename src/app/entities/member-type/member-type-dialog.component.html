@@ -16,8 +16,8 @@
         <mat-form-field class="container-full-width"> 
             <input matInput placeholder="Description " [(ngModel)]="memberType.description"  name ="descr" [(ngModel)]="memberType.description" #description="ngModel" [ngClass]="{ 'is-invalid': f.submitted && description.invalid }" required maxlength="100">
             <mat-error *ngIf="submitted && form.description.errors" class="invalid-feedback">
-            </mat-error> 
                     <div *ngIf="form.description.errors.required"> {{form.description.errors.message}}</div> 
+            </mat-error>  
         </mat-form-field>
       <br><br> 
 </mat-dialog-content>

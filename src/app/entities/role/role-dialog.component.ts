@@ -90,8 +90,7 @@ export class RoleDialogComponent implements OnInit {
 
     ngOnInit() {
  
-        this.roleForm = this.formBuilder.group({
-           // name: ['', [Validators.required, Validators.minLength(5)]],
+        this.roleForm = this.formBuilder.group({ 
             name: ['', [CommonValidator.required]],
             description: ['', CommonValidator.required]
         });
@@ -161,12 +160,7 @@ export class RoleDialogComponent implements OnInit {
         this.dialogRef.close();
     }
 
-    save(): void {
- 
-        this.submitted = true;  
-        if (this.roleForm.invalid) {
-            return;
-        }  
+    onSubmit() { 
         console.log('isi object  ', this.role);
         if (this.role.id === undefined) {
             console.log('send to service ', this.role);
@@ -179,6 +173,14 @@ export class RoleDialogComponent implements OnInit {
                 this.dialogRef.close('refresh');
             });
         }
+    }
+
+    validate(): void { 
+        this.submitted = true; 
+        // stop here if form is invalid
+        if (this.roleForm.invalid) {
+            return;
+        }  
     }
 
     onGridReady(params) {

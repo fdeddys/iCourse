@@ -1,58 +1,50 @@
-<h1 mat-dialog-title>{{data.action}} {{data.entity}}</h1>
-
-<form [formGroup]="roleForm" (ngSubmit)="onSubmit()">
-<mat-dialog-content style="width: 100%">  
-            <mat-form-field class="container-full-width"> 
-                    <input matInput type="text" placeholder="Name" [(ngModel)]="role.name" formControlName="name" name ="name" class="form-control" [ngClass]="{ 'is-invalid': submitted && form.name.errors }" required maxlength="50"/> 
-                    <mat-error *ngIf="submitted && form.name.errors" class="invalid-feedback"  >
-                            <!-- {{form.name.errors.message}} -->
-                        <div *ngIf="form.name.errors.required"> {{form.name.errors.message}} </div> 
-                        <!-- <div *ngIf="form.name.errors.validUrl"> {{form.name.errors.validurlmessage}} </div>  --> 
-                       
-                    </mat-error> 
-                     
-            </mat-form-field>
-    
-        <mat-form-field class="container-full-width"> 
-           <input matInput type="text" placeholder="Description" [(ngModel)]="role.description" formControlName="description" name ="description" class="form-control" [ngClass]="{ 'is-invalid': submitted && form.description.errors }" required maxlength="255"/>
-           <mat-error *ngIf="submitted && form.description.errors" class="invalid-feedback">
-                <div *ngIf="form.description.errors.required"> {{form.description.errors.message}}</div>
+<h1 mat-dialog-title>
+    {{data.action}} {{data.entity}}
+</h1>
+<form name="roleForm" (ngSubmit)="f.form.valid && onSubmit()" #f="ngForm" novalidate>
+<mat-dialog-content style="width: 100%">
+        <!-- <mat-form-field class="container-full-width">
+            <input matInput placeholder="Id" value="{{memberType.id}}" [disabled]="true" >
+        </mat-form-field> -->
+        <mat-form-field class="container-full-width">  
+            <input matInput placeholder="Name " [(ngModel)]="role.name" cdkFocusInitial name ="nm" [(ngModel)]="role.name" #name="ngModel" [ngClass]="{ 'is-invalid': f.submitted && name.invalid }" required maxlength="50" [disabled]="data.action === 'Edit'">
+            <mat-error *ngIf="submitted && form.name.errors" class="invalid-feedback">
+                    <div *ngIf="form.name.errors.required"> {{form.name.errors.message}}</div>
             </mat-error> 
-        </mat-form-field>  
-        <mat-card>
-        <fieldset style="border: 1px #ddd solid">
-            <!-- <mat-form-field class="container-full-width">
-                <mat-select placeholder="Menu" [(ngModel)]="menuSelected" name="selected_menu">
-                    <mat-option *ngFor="let menu of menus" [value]="menu.id">
-                        {{menu.description}}
-                    </mat-option>
-                </mat-select>
-               
-            </mat-form-field>
-            <div style="text-align: right">
-                <button mat-button mat-raised-button class="btnSave" (click)="addMenu()" >Add</button>
-            </div> -->
-            <ag-grid-angular 
-                #agGrid
-                style="height: 300px; width: 100%;" 
-                class="{{theme}}"
-                [gridOptions]="gridOptions" 
-                (gridReady)="onGridReady($event)"
-                (rowClicked)="onRowClicked($event)"
-                >
-            </ag-grid-angular>
-        </fieldset>
-    <!-- </form> -->
+
+        </mat-form-field>
+        <mat-form-field class="container-full-width"> 
+            <input matInput placeholder="Description " [(ngModel)]="role.description"  name ="descr" [(ngModel)]="role.description" #description="ngModel" [ngClass]="{ 'is-invalid': f.submitted && description.invalid }" required maxlength="100">
+            <mat-error *ngIf="submitted && form.description.errors" class="invalid-feedback">
+                    <div *ngIf="form.description.errors.required"> {{form.description.errors.message}}</div> 
+            </mat-error>  
+        </mat-form-field>
+        <div align="end">
+                <button mat-raised-button color="primary" (click)="validate()">Save</button>
+            </div>
+            <br>
     
-</mat-dialog-content>
-<mat-dialog-actions align="end">
-    <button mat-raised-button mat-dialog-close>Cancel</button>
-    <button mat-raised-button color="primary" (click)="save()">Save</button>
-</mat-dialog-actions>
-
-
-
+            <fieldset style="border: 1px #ddd solid">
+                <!-- <mat-form-field class="container-full-width">
+                    <mat-select placeholder="Menu" [(ngModel)]="menuSelected" name="selected_menu">
+                        <mat-option *ngFor="let menu of menus" [value]="menu.id">
+                            {{menu.description}}
+                        </mat-option>
+                    </mat-select>
+                   
+                </mat-form-field>
+                <div style="text-align: right">
+                    <button mat-button mat-raised-button class="btnSave" (click)="addMenu()" >Add</button>
+                </div> -->
+                <ag-grid-angular 
+                    #agGrid
+                    style="height: 300px; width: 100%;" 
+                    class="{{theme}}"
+                    [gridOptions]="gridOptions" 
+                    (gridReady)="onGridReady($event)"
+                    (rowClicked)="onRowClicked($event)"
+                    >
+                </ag-grid-angular>
+            </fieldset>
+</mat-dialog-content> 
 </form>
-
-                <!-- <div style="align-content: right; align-self: right; align-items: right; text-align: right">
-    </div> -->
