@@ -10,12 +10,21 @@ import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
 
 export class UserConfirmDialogComponent {
 
-  constructor(
-    public dialogRef: MatDialogRef<UserConfirmDialogComponent>,
-    @Inject(MAT_DIALOG_DATA) public data: any) { }
+    constructor(
+        public dialogRef: MatDialogRef<UserConfirmDialogComponent>,
+        @Inject(MAT_DIALOG_DATA) public data: any) { }
 
-  onNoClick(): void {
-    this.dialogRef.close();
-  }
+    onNoClick(): void {
+        this.dialogRef.close('close');
+    }
+
+    onClick(): void {
+        const result = {
+          'msg' : 'ok',
+          'id': this.data.id
+        };
+
+        this.dialogRef.close(result);
+    }
 
 }

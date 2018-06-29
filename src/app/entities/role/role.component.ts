@@ -26,9 +26,9 @@ export class RoleComponent implements OnInit {
   gridOptions = {
     columnDefs: [
       { headerName: 'No',  field: 'nourut', width: 100, minWidth: 100, maxWidth: 100, pinned: 'left', editable: false },
-      { headerName: 'Name', field: 'name', editable: false },
-      { headerName: 'Description', field: 'description' },
-      { headerName: ' ', width: 150, minWidth: 150, maxWidth: 150, cellRenderer: 'actionRenderer'}
+      { headerName: 'Name', field: 'name', width: 200, editable: false },
+      { headerName: 'Description', field: 'description', width: 500, },
+      { headerName: ' ', width: 100, minWidth: 150, maxWidth: 150, cellRenderer: 'actionRenderer'}
       // { headerName: ' ', suppressMenu: true,
       //   suppressSorting: true,
       //   width: 100,
@@ -125,7 +125,7 @@ export class RoleComponent implements OnInit {
   onGridReady(params) {
     this.gridApi = params.api;
     this.gridColumnApi = params.columnApi;
-    params.api.sizeColumnsToFit();
+    // params.api.sizeColumnsToFit();
     // console.log(this.gridApi);
     // console.log(this.gridColumnApi);
     // window.onresize = () => {

@@ -3,12 +3,13 @@ import { User } from './user.model';
 import { MatDialog } from '@angular/material/dialog';
 import { UserService } from './user.service';
 import { HttpResponse, HttpErrorResponse } from '@angular/common/http';
-import { GRID_THEME, CSS_BUTTON, NO_DATA_GRID_MESSAGE } from '../../shared/constant/base-constant';
+import { GRID_THEME, CSS_BUTTON, NO_DATA_GRID_MESSAGE, SNACKBAR_DURATION_IN_MILLISECOND } from '../../shared/constant/base-constant';
 import { MatActionButtonComponent } from '../../shared/templates/mat-action-button.component';
 import { UserDialogComponent } from './user-dialog.component';
 import { UserConfirmDialogComponent } from './user-confirm-dialog.component';
 
 import { ICellRendererAngularComp } from 'ag-grid-angular/main';
+import { MatSnackBar } from '@angular/material';
 
 @Component({
   selector: 'app-user',
@@ -24,6 +25,7 @@ export class UserComponent implements OnInit {
   user: User[];
   User: User;
   messageNoData: string = NO_DATA_GRID_MESSAGE;
+  duration = SNACKBAR_DURATION_IN_MILLISECOND;
 
   gridOptions = {
     columnDefs: [
@@ -32,7 +34,7 @@ export class UserComponent implements OnInit {
       { headerName: 'Email', field: 'email', width: 250, editable: false },
       { headerName: 'Status', field: 'status', width: 150, editable: false, valueFormatter: this.boolFormatter},
       { headerName: ' ', width: 150, field: 'act1', minWidth: 150, maxWidth: 150, cellRenderer: 'actionRenderer'},
-      { headerName: ' ', width: 150, field: 'act2', minWidth: 150, maxWidth: 150, cellRenderer: 'removeCustRenderer'}
+      // { headerName: ' ', width: 150, field: 'act2', minWidth: 150, maxWidth: 150, cellRenderer: 'resetPassRenderer'}
       // { headerName: ' ', suppressMenu: true,
       //   width: 100,
       //   suppressSorting: true,
@@ -54,7 +56,7 @@ export class UserComponent implements OnInit {
       localeText: {noRowsToShow: this.messageNoData},
       frameworkComponents: {
           actionRenderer: MatActionButtonComponent,
-          removeCustRenderer: MatRemoveButtonComponent
+          resetPassRenderer: MatRemoveButtonComponent
       },
       context: {
         componentParent: this
@@ -71,6 +73,7 @@ export class UserComponent implements OnInit {
   }
 
   constructor(  private dialog: MatDialog,
+    public snackBar: MatSnackBar,
                 private userService: UserService) { }
 
   // public onRowClicked(e) {
@@ -99,8 +102,8 @@ export class UserComponent implements OnInit {
                 // return console.log('edit....');
                 return this.onActionEditClick(data);
             case 'act2':
-                return console.log('remove....');
-                // return this.onActionRemoveClick(data);
+                // return console.log('remove....');
+                return this.onActionResetPassClick(data);
         }
     }
   }
@@ -114,22 +117,47 @@ export class UserComponent implements OnInit {
 
       dialogRef.afterClosed().subscribe(result => {
         console.log('The dialog was closed = [', result, ']');
-        if (result === 'refresh') {
           this.loadAll();
-        }
       });
   }
 
-  public onActionRemoveClick(data: User) {
-      console.log('Remove action clicked', data);
-      const biller: string = data.name;
+  public onActionResetPassClick(data: User) {
+      console.log('reset action clicked', data);
+      const nama: string = data.name;
       const dialogConfirm = this.dialog.open(UserConfirmDialogComponent, {
-        width: '50%',
-        data: { warningMessage: 'Apakah anda yakin untuk menonaktifkan [  ' + `${biller}` + '  ]  ?',  idCompanyBiller: data.id }
+        width: '1000px',
+        data: { warningMessage: 'Apakah anda yakin untuk Reset default password untuk user [  ' + `${nama}` + '  ]  ?',  id: data.id }
       });
 
       dialogConfirm.afterClosed().subscribe(result => {
-        console.log('The dialog was closed');
+          console.log('result ==> ' + result);
+          if  (result === undefined || result === 'close' ) {
+              console.log('The dialog was closed ');
+          } else {
+              console.log('status  [' + result.msg + '] id [' + result.id + ']' );
+
+
+              this.userService.resetPassword(result.id )
+                  .subscribe(
+                      (res: HttpResponse<User>) => {
+                          if (res.body.errMsg === null || res.body.errMsg === '' ) {
+                              const decodePass = atob(res.body.password);
+                              this.snackBar.open('Password reset to [ ' + decodePass + ' ] WITHOUT BRACKET ! ', 'ok');
+                          } else {
+                              this.snackBar.open('Error !' + res.body.errMsg , 'Close', {
+                                  duration: this.duration,
+                              });
+                          }
+                  // this.loadMenuRegistered(this.role.id);
+                  },
+                  (msg: HttpErrorResponse) => {
+                      console.log(msg);
+                      this.snackBar.open('Error :  ' +  msg.error.name + ' !', 'ok', {
+                          duration: this.duration,
+                      });
+                  }
+          );
+        }
       });
 
     }
@@ -166,10 +194,8 @@ export class UserComponent implements OnInit {
     });
 
     dialogRef.afterClosed().subscribe(result => {
-      console.log('The dialog was closed = [', result, ']');
-      if (result === 'refresh') {
-        this.loadAll();
-      }
+      console.log('The dialog was closed = [', result, '] then load all');
+      this.loadAll();
     });
   }
 

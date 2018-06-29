@@ -167,15 +167,7 @@ export class BillerTypeComponent implements OnInit {
       console.log('error..');
   }
 
-  public previewPdf(): void {
-      this.preview('PDF');
-  }
-
-  public previewXls(): void {
-      this.preview('XLS');
-  }
-
-  public preview(reportType): void {
+  public exportCSV(reportType): void {
       const path = this.resourceUrl  + 'billertype';
       window.open(`${path}/${reportType}`);
   }

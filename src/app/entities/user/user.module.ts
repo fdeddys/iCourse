@@ -9,7 +9,8 @@ import {
     UserComponent,
     UserDialogComponent,
     UserUpdatePasswordComponent,
-    MatRemoveButtonComponent
+    MatRemoveButtonComponent,
+    UserConfirmDialogComponent
 } from './';
 
 import { LocalStorageService, SessionStorageService } from 'ngx-webstorage';
@@ -26,12 +27,14 @@ import { LocalStorageService, SessionStorageService } from 'ngx-webstorage';
         MatRemoveButtonComponent,
         UserDialogComponent,
         UserUpdatePasswordComponent,
+        UserConfirmDialogComponent,
     ],
     entryComponents: [
         UserComponent,
         MatRemoveButtonComponent,
         UserDialogComponent,
         UserUpdatePasswordComponent,
+        UserConfirmDialogComponent,
     ],
     providers: [
         UserService,
