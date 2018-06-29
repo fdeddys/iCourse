@@ -36,42 +36,12 @@
     <br>
     <fieldset style="border: 1px #ddd solid">
         <mat-form-field class="container-half-width">
-            <mat-select placeholder="Status" [(ngModel)]="user.status" name="sttss">
-                <mat-option *ngFor="let status of statuses" [value]="status.value">
-                    {{status.viewValue}}
+            <mat-select placeholder="Role" [(ngModel)]="roleSelected" name="role">
+                <mat-option *ngFor="let role of roleList" [value]="role">
+                    {{role.description}}
                 </mat-option>
             </mat-select>
         </mat-form-field>
-        <br>
-        <mat-dialog-actions align="end">
-            <button mat-button mat-raised-button color="primary" (click)="validate()" >Save</button>
-            <!-- <button [disabled]="data.action !== 'Edit'" color="primary" mat-button  mat-raised-button class="btnAdd" (click)="resetPassword()">Reset password</button> -->
-        </mat-dialog-actions>        
-        <br>
-        <br>
-        <fieldset style="border: 1px #ddd solid">
-            <mat-form-field class="container-half-width">
-                <mat-select placeholder="Status" [(ngModel)]="roleSelected" name="role">
-                    <mat-option *ngFor="let role of roleList" [value]="role">
-                        {{role.description}}
-                    </mat-option>
-                </mat-select>
-            </mat-form-field>
-            
-            <button  mat-button mat-raised-button color="primary" (click)="addRole()" style="margin-left: 5%">Add Role</button>
-            <ag-grid-angular 
-                #agGrid
-                style="height: 300px; width: 100%;" 
-                class="{{theme}}"
-                [gridOptions]="gridOptions" 
-                (gridReady)="onGridReady($event)"
-                (cellClicked)="onCellClicked($event)"
-                >
-            </ag-grid-angular>
-        </fieldset>
-        <br>
-    
-        <!-- </form> -->
         
         <button  mat-button mat-raised-button color="primary" (click)="addRole()" style="margin-left: 5%">Add Role</button>
         <ag-grid-angular 
