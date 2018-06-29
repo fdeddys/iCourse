@@ -1,11 +1,10 @@
 import { Component, OnInit, Inject } from '@angular/core';
- 
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA, MatSnackBar } from '@angular/material';
 import { MemberType } from './member-type.model';
 import { MemberTypeService } from './member-type.service';
 import { HttpResponse, HttpErrorResponse } from '@angular/common/http';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { CommonValidator } from '../../validators/common.validator';
+import { CommonValidatorDirective } from '../../validators/common.validator';
 
 @Component({
     selector: 'app-member-type-dialog',
@@ -16,7 +15,7 @@ import { CommonValidator } from '../../validators/common.validator';
 export class MemberTypeDialogComponent implements OnInit {
 
     memberType: MemberType;
-    memberTypeForm : FormGroup;
+    memberTypeForm: FormGroup;
     submitted = false;
 
     constructor(
@@ -27,9 +26,9 @@ export class MemberTypeDialogComponent implements OnInit {
         @Inject(MAT_DIALOG_DATA) public data: any) { }
 
     ngOnInit() {
-        this.memberTypeForm = this.formBuilder.group({ 
-            name: ['', [CommonValidator.required]],
-            description: ['', CommonValidator.required]
+        this.memberTypeForm = this.formBuilder.group({
+            name: ['', [CommonValidatorDirective.required]],
+            description: ['', CommonValidatorDirective.required]
         });
 
         this.memberType = {};
@@ -47,7 +46,6 @@ export class MemberTypeDialogComponent implements OnInit {
     }
 
     onSubmit() {
-     
         console.log('isi member  ', this.memberType);
         if (this.memberType.id === undefined) {
             console.log('send to service ', this.memberType);
@@ -65,12 +63,12 @@ export class MemberTypeDialogComponent implements OnInit {
         }
     }
 
-    validate(): void { 
-        this.submitted = true; 
+    validate(): void {
+        this.submitted = true;
         // stop here if form is invalid
         if (this.memberTypeForm.invalid) {
             return;
-        }  
+        }
     }
 
     openSnackbar(): void {
