@@ -6,10 +6,11 @@ import { User } from './user.model';
 import { UserService } from './user.service';
 import { HttpResponse, HttpErrorResponse } from '@angular/common/http';
 import { Role, RoleService } from '../role';
-import { NO_DATA_GRID_MESSAGE, GRID_THEME, CSS_BUTTON } from '../../shared/constant/base-constant';
+import { NO_DATA_GRID_MESSAGE, GRID_THEME, CSS_BUTTON, SNACKBAR_DURATION_IN_MILLISECOND } from '../../shared/constant/base-constant';
 import { RoleUserService } from '../role-user/role-user.service';
 import { RoleUserView } from '../role-user/role-user.model';
 import { CommonValidator } from '../../validators/common.validator';
+import { MatCheckboxComponent } from '../../shared/templates/mat-checkbox.component';
 
 @Component({
     selector: 'app-user-dialog',
@@ -30,6 +31,7 @@ export class UserDialogComponent implements OnInit {
     messageNoData: string = NO_DATA_GRID_MESSAGE;
     theme: String = GRID_THEME;
     cssButton = CSS_BUTTON  ;
+    duration = SNACKBAR_DURATION_IN_MILLISECOND;
     userForm : FormGroup;
     submitted = false;
 
@@ -57,17 +59,18 @@ export class UserDialogComponent implements OnInit {
     gridOptions = {
         columnDefs: [
             // { headerName: 'id', field: 'roleId', width: 50, pinned: 'left', editable: false },
-            { headerName: 'Name', field: 'roleName', editable: false },
-            { headerName: 'Description', field: 'roleDescription', editable: false },
-            { headerName: 'Status', field: 'status', editable: false },
-            { headerName: ' ', suppressMenu: true,
-            suppressSorting: true,
-            width: 100,
-            template:
-                `<button mat-raised-button type="button" data-action-type="removeRole"  ${this.cssButton} >
-                Change
-                </button>
-                ` }
+            { headerName: 'Name', field: 'roleName', width: 200, editable: false },
+            { headerName: 'Description', field: 'roleDescription', width: 200, editable: false },
+            // { headerName: 'Status', field: 'status', width: 100, editable: false },
+            // { headerName: ' ', suppressMenu: true,
+            // suppressSorting: true,
+            // width: 100,
+            // template:
+            //     `<button mat-raised-button type="button" data-action-type="removeRole"  ${this.cssButton} >
+            //     Change
+            //     </button>
+            //     ` }
+            { headerName: 'Status', field: 'status', width: 150, cellRenderer: 'checkboxRenderer'}
         ],
             rowData: this.roleRegisterd,
             enableSorting: true,
@@ -79,17 +82,34 @@ export class UserDialogComponent implements OnInit {
             infiniteInitialRowCount : 1,
             maxBlocksInCache : 2,
             localeText: {noRowsToShow: this.messageNoData},
+            frameworkComponents: {
+                checkboxRenderer: MatCheckboxComponent
+            }
         };
 
-    public onRowClicked(e) {
-        console.log('clicked ', e);
+    // public onRowClicked(e) {
+    //     console.log('clicked ', e);
+    //     if (e.event.target !== undefined) {
+    //         const data = e.data;
+    //         const actionType = e.event.target.getAttribute('data-action-type');
+
+    //         switch (actionType) {
+    //             case 'removeRole':
+    //                 console.log('Send data ==> ', data);
+    //                 return this.onActionClick(data);
+    //         }
+    //     }
+    // }
+
+    public onCellClicked(e) {
+        console.log('clicked cell ', e);
         if (e.event.target !== undefined) {
             const data = e.data;
-            const actionType = e.event.target.getAttribute('data-action-type');
+            const colField = e.colDef.field;
 
-            switch (actionType) {
-                case 'removeRole':
-                    console.log('Send data ==> ', data);
+            switch (colField) {
+                case 'status':
+                    // console.log('Send data ==> ', data);
                     return this.onActionClick(data);
             }
         }
@@ -103,17 +123,40 @@ export class UserDialogComponent implements OnInit {
                     this.roleSelected = null;
                     this.getRoleRegistered();
                     this.snackBar.open('Role success registerd !', 'ok', {
-                        duration: 2000,
+                        duration: this.duration,
                     });
                     // this.loadMenuRegistered(this.role.id);
                 },
                 (msg: HttpErrorResponse) => {
                     console.log(msg);
                     this.snackBar.open('Error :  ' +  msg.error.name + ' !', 'ok', {
-                                    duration: 2000,
-                                });
+                        duration: this.duration,
+                    });
                 }
             );
+    }
+
+    resetPassword(): void {
+        this.userService.resetPassword(this.user.id )
+        .subscribe(
+            (res: HttpResponse<User>) => {
+                if (res.body.errMsg === null || res.body.errMsg === '' ) {
+                    const decodePass = atob(res.body.password);
+                    this.snackBar.open('Password reset to [ ' + decodePass + ' ] WITHOUT BRACKET ! ', 'ok');
+                } else {
+                    this.snackBar.open('Error !' + res.body.errMsg , 'Close', {
+                        duration: this.duration,
+                    });
+                }
+                // this.loadMenuRegistered(this.role.id);
+            },
+            (msg: HttpErrorResponse) => {
+                console.log(msg);
+                this.snackBar.open('Error :  ' +  msg.error.name + ' !', 'ok', {
+                    duration: this.duration,
+                });
+            }
+        );
     }
 
     onActionClick(data): void {
@@ -127,8 +170,8 @@ export class UserDialogComponent implements OnInit {
                 (msg: HttpErrorResponse) => {
                     console.log(msg);
                     this.snackBar.open('Error :  ' +  msg.error.name + ' !', 'ok', {
-                                    duration: 2000,
-                                });
+                        duration: this.duration,
+                    });
                 }
             );
     }
@@ -162,6 +205,8 @@ export class UserDialogComponent implements OnInit {
             // search
             console.log('id sending ', this.data.user);
             this.user = this.data.user;
+        } else {
+            this.user.status = 1;
         }
     }
 
@@ -171,7 +216,7 @@ export class UserDialogComponent implements OnInit {
         this.dialogRef.close();
     }
 
-    onSubmit() {
+    save(): void {
         // if ( this.data.action === 'Add' ) {
 
         //     if ( this.pass === '' ) {
@@ -189,21 +234,55 @@ export class UserDialogComponent implements OnInit {
         //     }
         //     this.user.password = atob(this.pass);
         // }
- 
 
         this.user.password = '';
 
         // console.log('isi object  ', this.user);
         if (this.user.id === undefined) {
             console.log('send to service ', this.user);
-            this.userService.create(this.user).subscribe((res: HttpResponse<User>) => {
-                this.dialogRef.close('refresh');
-            });
+            this.userService.create(this.user).subscribe(
+                (res: HttpResponse<User>) => {
+                    if (res.body.errMsg === null || res.body.errMsg === '' ) {
+                        const decodePass = atob(res.body.password);
+                        this.data.action = 'Edit';
+                        this.user.id = res.body.id;
+                        this.snackBar.open('Password  [ ' + decodePass + ' ] WITHOUT BRACKET ! ', 'ok');
+                    } else {
+                        this.snackBar.open('Error !' + res.body.errMsg , 'Close', {
+                            duration: this.duration,
+                        });
+                    }
+                // this.dialogRef.close('refresh');
+                },
+                (res: HttpErrorResponse) => {
+                    this.snackBar.open('Error !' + res.error.message , 'Close', {
+                        duration: this.duration,
+                    });
+                    console.log('error msh ', res.error.message);
+                }
+            );
         } else {
             console.log('send to service ', this.user);
-            this.userService.update(this.user.id, this.user).subscribe((res: HttpResponse<User>) => {
-                this.dialogRef.close('refresh');
-            });
+            this.userService.update(this.user.id, this.user).subscribe(
+                (res: HttpResponse<User>) => {
+                    // this.dialogRef.close('refresh');
+                    if (res.body.errMsg === null || res.body.errMsg === '' ) {
+                        this.snackBar.open('Data updated ', 'ok', {
+                            duration: this.duration,
+                        });
+                    } else {
+                        this.snackBar.open('Error !' + res.body.errMsg , 'Close', {
+                            duration: this.duration,
+                        });
+                    }
+                },
+                (res: HttpErrorResponse) => {
+                    this.snackBar.open('Error !' + res.error.message , 'Close', {
+                        duration: 10000,
+                    });
+                    console.log('error msh ', res.error.message);
+                }
+            );
         }
     }
 
@@ -260,6 +339,10 @@ export class UserDialogComponent implements OnInit {
 
     private onError(error) {
       console.log('error get all list role..');
+    }
+
+    closeForm(): void {
+        this.dialogRef.close('refresh');
     }
 
 }

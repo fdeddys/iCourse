@@ -1,14 +1,15 @@
-<h2 mat-dialog-title>
+<h1 mat-dialog-title>
     <!-- {{data.action}} - {{data.entity}} -->
-    <h4 style="color: rgb(226, 0, 0)" >{{data.action}} {{data.entity}}</h4>
-</h2>
+    {{data.action}} {{data.entity}}
+</h1>
 <form name="userForm" (ngSubmit)="f.form.valid && onSubmit()" #f="ngForm" novalidate> 
     <mat-dialog-content>
-        <!-- <form class="container-form"> -->
-            <!-- <mat-form-field class="container-full-width">
-                <input matInput placeholder="Id" value="{{user.id}}" [disabled]="true" >
-            </mat-form-field> -->
-        <mat-form-field class="container-full-width">
+    <!-- <form class="container-form"> -->
+        <!-- <mat-form-field class="container-full-width">
+            <input matInput placeholder="Id" value="{{user.id}}" [disabled]="true" >
+        </mat-form-field> -->
+     
+        <mat-form-field class="container-full-width" style="margin-right: 10%">
             <input matInput placeholder="Name " [(ngModel)]="user.name"  cdkFocusInitial name ="name" formControlName="name" class="form-control" [ngClass]="{ 'is-invalid': submitted && form.name.errors }" required maxlength="50">
             <mat-error *ngIf="submitted && form.name.errors" class="invalid-feedback">
                 <div *ngIf="form.name.errors.required"> {{form.name.errors.message}}</div>
@@ -30,10 +31,29 @@
                 <div *ngIf="form.email.errors.required"> {{form.email.errors.message}}</div>
             </mat-error> 
         </mat-form-field>
-        <mat-form-field class="container-full-width">
-            <mat-select placeholder="Status" [(ngModel)]="user.status" name="sttss">
-                <mat-option *ngFor="let status of statuses" [value]="status.value">
-                    {{status.viewValue}}
+    <mat-form-field class="container-half-width">
+        <input matInput placeholder="Email" [(ngModel)]="user.email" name="emaie"
+        [formControl]="emailFormControl" >
+    </mat-form-field>
+    <mat-form-field class="container-half-width">
+        <mat-select placeholder="Status" [(ngModel)]="user.status" name="sttss">
+            <mat-option *ngFor="let status of statuses" [value]="status.value">
+                {{status.viewValue}}
+            </mat-option>
+        </mat-select>
+    </mat-form-field>
+    <mat-dialog-actions>
+    <br>
+        <button mat-button mat-raised-button color="primary" (click)="save()" >Save</button>
+    <br>
+    <br>
+    </mat-dialog-actions>        
+        <button [disabled]="data.action !== 'Edit'" color="primary" mat-button  mat-raised-button class="btnAdd" (click)="resetPassword()">Reset password</button>
+    <fieldset style="border: 1px #ddd solid">
+        <mat-form-field class="container-half-width">
+            <mat-select placeholder="Status" [(ngModel)]="roleSelected" name="role">
+                <mat-option *ngFor="let role of roleList" [value]="role">
+                    {{role.description}}
                 </mat-option>
             </mat-select>
  
@@ -42,35 +62,23 @@
             </mat-error>  -->
 
         </mat-form-field>
-        <br>
-        <br>
-        <mat-card>
-            <mat-form-field class="container-full-width">
-                <mat-select placeholder="Status" [(ngModel)]="roleSelected" name="role">
-                    <mat-option *ngFor="let role of roleList" [value]="role">
-                        {{role.description}}
-                    </mat-option>
-                </mat-select>
-            </mat-form-field>
-            <button mat-button  mat-raised-button class="btnAdd" (click)="addRole()">Add Role</button>
-            <ag-grid-angular 
-                #agGrid
-                style="height: 300px; width: 100%;" 
-                class="{{theme}}"
-                [gridOptions]="gridOptions" 
-                (gridReady)="onGridReady($event)"
-                (rowClicked)="onRowClicked($event)"
-                >
-            </ag-grid-angular>
-        </mat-card>
-        <br>
-
-        <!-- </form> -->
         
-    </mat-dialog-content>
-    <mat-dialog-actions>
-        <button mat-button mat-dialog-close>Cancel</button>
-        <button mat-button mat-raised-button class="btnSave" (click)="validate()" >Save</button>
-    </mat-dialog-actions>
-    <br><br>
-</form>
+        </ag-grid-angular>
+        <button  mat-button mat-raised-button color="primary" (click)="addRole()" style="margin-left: 5%">Add Role</button>
+        <ag-grid-angular 
+            style="height: 300px; width: 100%;" 
+            class="{{theme}}"
+            #agGrid
+            [gridOptions]="gridOptions" 
+            (gridReady)="onGridReady($event)"
+            (cellClicked)="onCellClicked($event)"
+            >
+    </fieldset>
+    <br>
+
+</mat-dialog-content>
+<mat-dialog-actions align="end"> 
+    <button mat-button (click)="closeForm()" >Close</button>
+    <button mat-button mat-raised-button color="primary" (click)="validate()" >Save</button>
+</mat-dialog-actions>
+<br><br>

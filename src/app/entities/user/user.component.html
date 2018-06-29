@@ -7,15 +7,15 @@
     </mat-card-header>
     <mat-card-content>
         <div style="text-align: right">
-            <button mat-raised-button class="btnAdd" (click)="openNewDialog()" style="margin-bottom: 10px;">Add New User</button>
+            <button mat-raised-button color="primary" (click)="openNewDialog()" style="margin-bottom: 10px;">Add New User</button>
         </div>
     <ag-grid-angular 
     #agGrid
-        style="height: 600px;" 
+        style="height: 500px" 
         class="{{theme}}"
         [gridOptions]="gridOptions" 
         (gridReady)="onGridReady($event)"
-        (rowClicked)="onRowClicked($event)"
+        (cellClicked)="onCellClicked($event)"
         >
     </ag-grid-angular>
     </mat-card-content>

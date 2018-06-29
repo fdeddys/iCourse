@@ -8,6 +8,8 @@ import { MatActionButtonComponent } from '../../shared/templates/mat-action-butt
 import { UserDialogComponent } from './user-dialog.component';
 import { UserConfirmDialogComponent } from './user-confirm-dialog.component';
 
+import { ICellRendererAngularComp } from 'ag-grid-angular/main';
+
 @Component({
   selector: 'app-user',
   templateUrl: './user.component.html',
@@ -25,11 +27,12 @@ export class UserComponent implements OnInit {
 
   gridOptions = {
     columnDefs: [
-      { headerName: 'No', field: 'nourut', width: 30, pinned: 'left', editable: false },
-      { headerName: 'Name', field: 'name', width: 80, editable: false },
-      { headerName: 'Email', field: 'email', editable: false },
-      { headerName: 'Status', field: 'status',  width: 80, editable: false, valueFormatter: this.boolFormatter },
-      { headerName: ' ', width: 150, cellRenderer: 'actionRenderer'}
+      { headerName: 'No', field: 'nourut', width: 100, minWidth: 100, maxWidth: 100, pinned: 'left', editable: false },
+      { headerName: 'Name', field: 'name', width: 250, editable: false },
+      { headerName: 'Email', field: 'email', width: 250, editable: false },
+      { headerName: 'Status', field: 'status', width: 150, editable: false, valueFormatter: this.boolFormatter},
+      { headerName: ' ', width: 150, field: 'act1', minWidth: 150, maxWidth: 150, cellRenderer: 'actionRenderer'},
+      { headerName: ' ', width: 150, field: 'act2', minWidth: 150, maxWidth: 150, cellRenderer: 'removeCustRenderer'}
       // { headerName: ' ', suppressMenu: true,
       //   width: 100,
       //   suppressSorting: true,
@@ -50,7 +53,11 @@ export class UserComponent implements OnInit {
       maxBlocksInCache : 2,
       localeText: {noRowsToShow: this.messageNoData},
       frameworkComponents: {
-          actionRenderer: MatActionButtonComponent
+          actionRenderer: MatActionButtonComponent,
+          removeCustRenderer: MatRemoveButtonComponent
+      },
+      context: {
+        componentParent: this
       }
   };
 
@@ -66,16 +73,34 @@ export class UserComponent implements OnInit {
   constructor(  private dialog: MatDialog,
                 private userService: UserService) { }
 
-  public onRowClicked(e) {
+  // public onRowClicked(e) {
+  //   console.log('row clicked isi nya ====> ', e);
+  //   if (e.event.target !== undefined) {
+  //       const data = e.data;
+  //       const actionType = e.event.target.getAttribute('data-action-type');
+
+  //       switch (actionType) {
+  //           case 'edit':
+  //               return this.onActionEditClick(data);
+  //           case 'inactive':
+  //               return this.onActionRemoveClick(data);
+  //       }
+  //   }
+  // }
+
+  public onCellClicked(e) {
+    console.log('row clicked isi nya ====> ', e);
     if (e.event.target !== undefined) {
         const data = e.data;
-        const actionType = e.event.target.getAttribute('data-action-type');
+        const colField = e.colDef.field;
 
-        switch (actionType) {
-            case 'edit':
+        switch (colField) {
+            case 'act1':
+                // return console.log('edit....');
                 return this.onActionEditClick(data);
-            case 'inactive':
-                return this.onActionRemoveClick(data);
+            case 'act2':
+                return console.log('remove....');
+                // return this.onActionRemoveClick(data);
         }
     }
   }
@@ -110,17 +135,17 @@ export class UserComponent implements OnInit {
     }
 
   loadAll() {
-        console.log('Start call function all header');
-        this.userService.query({
-            page: 1,
-            count: 10000,
-        })
-        .subscribe(
-                (res: HttpResponse<User[]>) => this.onSuccess(res.body, res.headers),
-                (res: HttpErrorResponse) => this.onError(res.message),
-                () => { console.log('finally'); }
-        );
-    }
+      console.log('Start call function all header');
+      this.userService.query({
+          page: 1,
+          count: 10000,
+      })
+      .subscribe(
+          (res: HttpResponse<User[]>) => this.onSuccess(res.body, res.headers),
+              (res: HttpErrorResponse) => this.onError(res.message),
+              () => { console.log('finally'); }
+      );
+  }
 
   ngOnInit() {
     // this.loadAll();
@@ -129,9 +154,7 @@ export class UserComponent implements OnInit {
   onGridReady(params) {
     this.gridApi = params.api;
     this.gridColumnApi = params.columnApi;
-    params.api.sizeColumnsToFit();
-    console.log(this.gridApi);
-    console.log(this.gridColumnApi);
+    // params.api.sizeColumnsToFit();
 
     this.loadAll();
   }
@@ -166,4 +189,24 @@ export class UserComponent implements OnInit {
     console.log('error..');
   }
 
+}
+
+@Component({
+  selector: 'app-action-cell',
+  template: `
+      <mat-icon style="margin-top: 12px; font-size: 20px" data-action-type="remove">clear</mat-icon>
+  `,
+})
+export class MatRemoveButtonComponent implements ICellRendererAngularComp {
+  private params: any;
+
+  agInit(params: any): void {
+      this.params = params;
+      console.log('action button = ', this.params);
+      console.log('isi param action button ', this.params.value);
+  }
+
+  refresh(params: any): boolean {
+      return false;
+  }
 }

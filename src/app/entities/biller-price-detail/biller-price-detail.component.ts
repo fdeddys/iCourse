@@ -38,10 +38,12 @@ export class BillerPriceDetailComponent implements OnInit {
     billerCompanyList = [];
     productList = [];
     dataListBill = [];
+    statusList = [];
 
-    minDate = new Date(2000, 0, 1);
-    maxDate = new Date(2020, 0, 1);
+    // minDate = new Date(2000, 0, 1);
+    // maxDate = new Date(2020, 0, 1);
     mode = 'Add';
+    disableDenom = false;
 
     tooltipCust = 'Info about the action&#13;Trial of tooltip';
 
@@ -79,11 +81,13 @@ export class BillerPriceDetailComponent implements OnInit {
     ngOnInit() {
         this.billerPriceDetail = {};
         this.billerPriceDetail.billerHeaderId = this.data.rowData.billerHeaderId;
+        this.disableDenom = false;
         console.log(this.data.mode);
         if (this.data.mode !== 'create') {
             // console.log('edit mode..');
             console.log(this.data.rowData);
             this.mode = 'Edit';
+            this.disableDenom = true;
             this.billerPriceDetail = {
                 id: this.data.rowData.id,
                 salesPrice: this.data.rowData.salesPrice,
@@ -91,18 +95,23 @@ export class BillerPriceDetailComponent implements OnInit {
                 profitDistributorPks: this.data.rowData.profitDistributorPks,
                 profitMemberPks: this.data.rowData.profitMemberPks,
                 billerHeaderId: this.data.rowData.billerHeader.id,
-                billerProductId: this.data.rowData.billerProduct.id
+                billerProductId: this.data.rowData.billerProduct.id,
+                status: this.data.rowData.status
             };
             this.billTypeCtrl.setValue(this.data.rowData.billerProduct.billerType);
             this.billCompanyCtrl.setValue(this.data.rowData.billerProduct.billerCompany);
             this.dateSCtrl.setValue(this.data.rowData.dateStart);
             this.dateTCtrl.setValue(this.data.rowData.dateThru);
 
+            this.billTypeCtrl.disable();
+            this.billCompanyCtrl.disable();
+
             this.getListBiller(this.data.rowData.billerProduct.id);
         }
         this.billerCompanyList = this.data.billerCompanyData;
         this.billerTypeList = this.data.billerTypeData;
         this.productList = this.data.productData;
+        this.statusList = this.data.statusData;
     }
 
     getListBiller(idProduct: number) {

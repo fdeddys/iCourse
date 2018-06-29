@@ -38,6 +38,7 @@ export class BillerComponent implements OnInit {
     billerTypeList = [];
     billerCompanyList = [];
     productList = [];
+    statusList = [];
     messageNoData: string = NO_DATA_GRID_MESSAGE;
 
     menuName = '';
@@ -168,6 +169,15 @@ export class BillerComponent implements OnInit {
                 (res: HttpErrorResponse) => this.onError(res.message),
                 () => { console.log('finally'); }
         );
+
+        this.productService.getStatus()
+        .subscribe(
+                (res) => {
+                    this.statusList = res.body;
+                },
+                (res: HttpErrorResponse) => this.onError(res.message),
+                () => { console.log('finally'); }
+        );
     }
 
     onGridReady(params) {
@@ -206,6 +216,7 @@ export class BillerComponent implements OnInit {
             memberData: this.memberList,
             memberTypeData : this.memberTypeList,
             productData : this.productList,
+            statusData : this.statusList,
             rowData : {
                 description : null,
                 dateStart : null,

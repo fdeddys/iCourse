@@ -45,17 +45,18 @@ export class BillerDialogComponent implements OnInit {
     billerTypeList = [];
     billerCompanyList = [];
     productList = [];
+    statusList = [];
 
     modeTitle = '';
     configSuccess = {};
     configError = {};
 
-    minDate = new Date(2000, 0, 1);
-    maxDate = new Date(2020, 0, 1);
+    // minDate = new Date(2000, 0, 1);
+    // maxDate = new Date(2020, 0, 1);
 
     // checked = false;
     btnDisabled = true; // set to false for debug
-    btnLabel = 'Add Biller Detail';
+    btnLabel = 'Biller';
 
     colDefs = [
         // { headerName: 'Name', field: 'name', checkboxSelection: true, width: 250, pinned: 'left', editable: true },
@@ -71,7 +72,7 @@ export class BillerDialogComponent implements OnInit {
         // { headerName: 'Post Paid', field: 'postPaid', width: 125 },
         // { headerName: 'Status', field: 'status', width: 150, cellRenderer: 'checkboxRenderer'},
         { headerName: 'Status', field: 'status', width: 125},
-        { headerName: 'Action', width: 150, cellRenderer: 'actionRenderer'}
+        { headerName: ' ', width: 150, cellRenderer: 'actionRenderer'}
         // { headerName: 'Action', suppressMenu: true,
         //     suppressSorting: true,
         //     template: `
@@ -85,12 +86,13 @@ export class BillerDialogComponent implements OnInit {
     nonColDefs = [
         // { headerName: 'Name', field: 'name', checkboxSelection: true, width: 250, pinned: 'left', editable: true },
         { headerName: 'No', field: 'no', width: 100, pinned: 'left', editable: false },
+        { headerName: 'Name', field: 'billerProduct.name', width: 200 },
         { headerName: 'Sales Price', field: 'salesPrice', width: 150 },
         { headerName: 'Profit', field: 'profit', width: 150 },
         { headerName: 'Date Start', field: 'dateStart', width: 150 },
         { headerName: 'Date Thru', field: 'dateThru', width: 150 },
         { headerName: 'Status', field: 'status', width: 150},
-        { headerName: 'Action', width: 150, cellRenderer: 'actionRenderer'}
+        { headerName: ' ', width: 150, cellRenderer: 'actionRenderer'}
         // { headerName: ' ', suppressMenu: true,
         //     suppressSorting: true,
         //     template: `
@@ -194,6 +196,7 @@ export class BillerDialogComponent implements OnInit {
         this.billerCompanyList = this.data.billerCompanyData;
         this.billerTypeList = this.data.billerTypeData;
         this.productList = this.data.productData;
+        this.statusList = this.data.statusData;
     }
 
     private onSuccess(data, headers) {
@@ -226,10 +229,10 @@ export class BillerDialogComponent implements OnInit {
         // this.btnDisabled = false;
         // this.btnLabel = value.id === 1 ? 'Add Biller Detail' : 'Add Non Biller Detail';
         if (value.id === 1) {
-            this.btnLabel = 'Add Biller Product';
+            this.btnLabel = 'Biller';
             this.gridApi.setColumnDefs(this.colDefs);
         } else {
-            this.btnLabel = 'Add Non Biller Product';
+            this.btnLabel = 'Non Biller';
             this.gridApi.setColumnDefs(this.nonColDefs);
         }
         this.gridApi.setRowData([]);
@@ -350,6 +353,7 @@ export class BillerDialogComponent implements OnInit {
             billerCompanyData : this.billerCompanyList,
             billerTypeData : this.billerTypeList,
             productData : this.productList,
+            statusData : this.statusList,
             rowData : {
                 id : null,
                 billerProduct : null,
@@ -372,6 +376,7 @@ export class BillerDialogComponent implements OnInit {
             billerCompanyData : this.billerCompanyList,
             billerTypeData : this.billerTypeList,
             productData : this.productList,
+            statusData : this.statusList,
             rowData : {
                 id: null,
                 billerProduct : null,
@@ -385,6 +390,7 @@ export class BillerDialogComponent implements OnInit {
                 // billerHeaderId : null,
                 billerHeaderId : (this.biller.id === undefined || this.biller.id === null ? null : this.biller.id),
                 billerProductId : null,
+                status : 'ACTIVE'
             },
         };
 
@@ -419,6 +425,7 @@ export class BillerDialogComponent implements OnInit {
                 dateThru : data.dateThru,
                 billerHeaderId : data.billerHeader.id,
                 billerProductId : data.billerProduct.id,
+                status : data.status
             };
         }
         console.log('datasend : ', datasend);

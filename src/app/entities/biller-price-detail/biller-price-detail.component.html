@@ -1,7 +1,7 @@
 <h1 mat-dialog-title>{{ modeTitle }} Non Biller Product</h1>
 <div mat-dialog-content>
     <form class="form-container">		
-        <mat-form-field style="width: 25%; margin-right: 5%">
+        <mat-form-field style="width: 30%; margin-right: 5%">
             <input matInput placeholder="Product Type" aria-label="Product Type" [matAutocomplete]="auto" [formControl]="billTypeCtrl">
             <mat-autocomplete #auto="matAutocomplete" [displayWith]="displayFnBil" (closed)='closed()'>
                 <mat-option *ngFor="let billerType of filteredBillType | async" [value]="billerType">
@@ -9,7 +9,7 @@
                 </mat-option>
             </mat-autocomplete>
         </mat-form-field>
-        <mat-form-field style="width: 25%; margin-right: 5%">
+        <mat-form-field style="width: 30%; margin-right: 5%">
             <input matInput placeholder="Product Company" aria-label="Product Company" [matAutocomplete]="autoComp" [formControl]="billCompanyCtrl">
             <mat-autocomplete #autoComp="matAutocomplete" [displayWith]="displayFnCom" (closed)='closed()'>
                 <mat-option *ngFor="let billerCompany of filteredBillCompany | async" [value]="billerCompany">
@@ -17,15 +17,15 @@
                 </mat-option>
             </mat-autocomplete>
         </mat-form-field>
-        <mat-form-field style="width: 25%; margin-right: 5%">
+        <mat-form-field style="width: 30%">
             <!-- <input matInput placeholder="Product Name" name="product" [value]="product"> -->
-            <mat-select placeholder="Denom" name="product" [(value)]="billerPriceDetail.billerProductId" (selectionChange)="getListBiller($event.value)">
+            <mat-select placeholder="Denom" name="product" [(value)]="billerPriceDetail.billerProductId" (selectionChange)="getListBiller($event.value)" [disabled]="disableDenom">
                 <mat-option *ngFor="let product of productList" [value]="product.id">
                     {{product.denom}}
                 </mat-option>
             </mat-select>
         </mat-form-field> 
-        <mat-form-field class="form-full-width">
+        <mat-form-field class="form-full-width" style="margin-right: 10%">
             <input type="number" matInput placeholder="Sell Price" name="salesPrice" [(ngModel)]="billerPriceDetail.salesPrice">
             <mat-icon matSuffix (click)="showHelp()">help</mat-icon>
         </mat-form-field>
@@ -33,22 +33,29 @@
             <input type="number" matInput placeholder="Profit Merchant" name="profitMerchant" [(ngModel)]="billerPriceDetail.profit">
             <mat-icon matSuffix matTooltip="Profit Merchant akan&#13;ditambahkan ke sell price">help</mat-icon>
         </mat-form-field>
-        <mat-form-field class="form-full-width">
+        <mat-form-field class="form-full-width" style="margin-right: 10%">
             <input type="number" matInput placeholder="Profit Distributor" name="profitDistributor" [(ngModel)]="billerPriceDetail.profitDistributorPks">
         </mat-form-field>
         <mat-form-field class="form-full-width">
             <input type="number" matInput placeholder="Profit Member" name="profitMember" [(ngModel)]="billerPriceDetail.profitMemberPks">
         </mat-form-field>
-        <mat-form-field class="form-full-width">
-            <input matInput [min]="minDate" [max]="maxDate" [matDatepicker]="picker" placeholder="Date Start" (dateInput)="addEvent('start', $event)" (click)="picker.open()" [formControl]="dateSCtrl" readonly>
+        <mat-form-field class="form-full-width" style="margin-right: 10%">
+            <input matInput [matDatepicker]="picker" placeholder="Date Start" (dateInput)="addEvent('start', $event)" (click)="picker.open()" [formControl]="dateSCtrl" readonly>
             <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
             <mat-datepicker #picker></mat-datepicker>
         </mat-form-field>
         <mat-form-field class="form-full-width">
-            <input matInput [min]="minDate" [max]="maxDate" [matDatepicker]="pickerT" placeholder="Date Thru" (dateInput)="addEvent('thru', $event)" (click)="pickerT.open()" [formControl]="dateTCtrl" readonly>
+            <input matInput [matDatepicker]="pickerT" placeholder="Date Thru" (dateInput)="addEvent('thru', $event)" (click)="pickerT.open()" [formControl]="dateTCtrl" readonly>
             <mat-datepicker-toggle matSuffix [for]="pickerT"></mat-datepicker-toggle>
             <mat-datepicker #pickerT></mat-datepicker>
         </mat-form-field>
+        <mat-form-field class="form-full-width">
+			<mat-select placeholder="Status" [(ngModel)]="billerPriceDetail.status" name="status">
+				<mat-option *ngFor="let status of statusList" [value]="status">
+					{{status === 'ACTIVE' ? 'AVAILABLE' : 'DISCONTINUED'}}
+				</mat-option>
+			</mat-select>
+		</mat-form-field>
     </form>
 </div>
 <div mat-dialog-actions align="end">

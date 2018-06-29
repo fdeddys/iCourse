@@ -7,11 +7,11 @@
     </mat-card-header>
     <mat-card-content>
         <div style="text-align: right">
-            <button mat-raised-button class="btnAdd" (click)="openNewDialog()" style="margin-bottom: 10px;">Add New Biller Company</button>
+            <button mat-raised-button color="primary" (click)="openNewDialog()" style="margin-bottom: 10px;">Add Biller Company</button>
         </div>
             <ag-grid-angular 
             #agGrid
-                style="height: 600px;" 
+                style="height: 500px;" 
                 class="{{theme}}"
                 [gridOptions]="gridOptions" 
                 (gridReady)="onGridReady($event)"

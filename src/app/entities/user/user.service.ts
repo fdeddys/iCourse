@@ -13,7 +13,8 @@ export type EntityResponseType = HttpResponse<User>;
 @Injectable()
 export class UserService {
 
-private resourceUrl = SERVER_PATH + 'user';
+
+    private resourceUrl = SERVER_PATH + 'user';
 
     constructor(private http: HttpClient) { }
 
@@ -78,6 +79,11 @@ private resourceUrl = SERVER_PATH + 'user';
 
     addRole(userId: number, roleId: number): Observable<EntityResponseType> {
         return this.http.post<User>(`${this.resourceUrl}/${userId}/role/${roleId}`, null, { observe: 'response'})
+            .pipe(map((res: EntityResponseType) => this.convertResponse(res)));
+    }
+
+    resetPassword(id: number): Observable<EntityResponseType> {
+        return this.http.put(`${this.resourceUrl}/${id}/resetpassword`, null, { observe: 'response'})
             .pipe(map((res: EntityResponseType) => this.convertResponse(res)));
     }
 

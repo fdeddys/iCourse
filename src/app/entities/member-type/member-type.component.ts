@@ -26,10 +26,10 @@ export class MemberTypeComponent implements OnInit {
 
   gridOptions = {
     columnDefs: [
-      { headerName: 'No', field: 'nourut', width: 50, editable: false ,  pinned: 'left'},
+      { headerName: 'No', field: 'nourut', width: 100, minWidth: 100, maxWidth: 100, editable: false,  pinned: 'left'},
       { headerName: 'Name', field: 'name', width: 100, editable: false},
       { headerName: 'Description', field: 'description',  editable: false },
-      { headerName: ' ', width: 150, cellRenderer: 'actionRenderer'}
+      { headerName: ' ', width: 150, minWidth: 150, maxWidth: 150, cellRenderer: 'actionRenderer'}
       // { headerName: ' ', suppressMenu: true,
       //   width: 100 ,
       //   suppressSorting: true,
@@ -122,8 +122,8 @@ export class MemberTypeComponent implements OnInit {
     this.gridApi = params.api;
     this.gridColumnApi = params.columnApi;
 
-    console.log(this.gridApi);
-    console.log(this.gridColumnApi);
+    // console.log(this.gridApi);
+    // console.log(this.gridColumnApi);
     params.api.sizeColumnsToFit();
     this.loadAll();
   }

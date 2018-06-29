@@ -1,6 +1,4 @@
-<h2 mat-dialog-title>
-    <h4 style="color: rgb(226, 0, 0)" >{{data.action}} {{data.entity}}</h4>
-</h2>
+<h1 mat-dialog-title>{{data.action}} {{data.entity}}</h1>
 
 <form [formGroup]="roleForm" (ngSubmit)="onSubmit()">
 <mat-dialog-content style="width: 100%">  
@@ -9,8 +7,8 @@
                     <mat-error *ngIf="submitted && form.name.errors" class="invalid-feedback"  >
                             <!-- {{form.name.errors.message}} -->
                         <div *ngIf="form.name.errors.required"> {{form.name.errors.message}} </div> 
-                       
                         <!-- <div *ngIf="form.name.errors.validUrl"> {{form.name.errors.validurlmessage}} </div>  --> 
+                       
                     </mat-error> 
                      
             </mat-form-field>
@@ -22,6 +20,7 @@
             </mat-error> 
         </mat-form-field>  
         <mat-card>
+        <fieldset style="border: 1px #ddd solid">
             <!-- <mat-form-field class="container-full-width">
                 <mat-select placeholder="Menu" [(ngModel)]="menuSelected" name="selected_menu">
                     <mat-option *ngFor="let menu of menus" [value]="menu.id">
@@ -42,13 +41,13 @@
                 (rowClicked)="onRowClicked($event)"
                 >
             </ag-grid-angular>
-        </mat-card>
- 
+        </fieldset>
+    <!-- </form> -->
+    
 </mat-dialog-content>
-  
-<mat-dialog-actions >
-    <button mat-button mat-dialog-close >Cancel</button>
-    <button mat-button mat-raised-button class="btnSave" (click)="save()"  >Save</button>  
+<mat-dialog-actions align="end">
+    <button mat-raised-button mat-dialog-close>Cancel</button>
+    <button mat-raised-button color="primary" (click)="save()">Save</button>
 </mat-dialog-actions>
 
 
