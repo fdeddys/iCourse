@@ -1,24 +1,32 @@
 <h2 mat-dialog-title>
     <h4 style="color: rgb(226, 0, 0)" >{{data.action}} {{data.entity}}</h4>
 </h2>
-<mat-dialog-content>
-    <form class="container-form">
+
+<form [formGroup]="menuForm" (ngSubmit)="onSubmit()"> 
+<mat-dialog-content> 
         <!-- <mat-form-field class="container-full-width">
             <input matInput placeholder="Id" value="{{menu.id}}" [disabled]="true" >
         </mat-form-field> -->
         <mat-form-field class="container-full-width">
-            <input matInput placeholder="Name " [(ngModel)]="menu.name"  cdkFocusInitial name ="namee" >
+           <!--  <input matInput placeholder="Name " [(ngModel)]="menu.name"  cdkFocusInitial name ="namee" formControlName="name"> -->
+            <input matInput type="text" placeholder="Name" [(ngModel)]="menu.name" formControlName="name" name ="name" class="form-control" [ngClass]="{ 'is-invalid': submitted && form.name.errors }" required maxlength="30"/> 
+            <mat-error *ngIf="submitted && form.name.errors" class="invalid-feedback">
+                    <div *ngIf="form.name.errors.required"> {{form.name.errors.message}}</div>
+            </mat-error> 
         </mat-form-field>
         <mat-form-field class="container-full-width">
-            <input matInput placeholder="Description" [(ngModel)]="menu.description" name="description">
+                <input matInput type="text" placeholder="Description" [(ngModel)]="menu.description" formControlName="description" name ="description" class="form-control" [ngClass]="{ 'is-invalid': submitted && form.description.errors }" required maxlength="100"/> 
+                <mat-error *ngIf="submitted && form.description.errors" class="invalid-feedback">
+                        <div *ngIf="form.description.errors.required"> {{form.description.errors.message}}</div>
+                </mat-error> 
         </mat-form-field>
       <br><br>
-
-    </form>
-    
+ 
 </mat-dialog-content>
 <mat-dialog-actions>
   <button mat-button mat-dialog-close>Cancel</button>
   <button mat-button mat-raised-button class="btnSave" (click)="save()" >Save</button>
 </mat-dialog-actions>
 <br>
+
+</form>

@@ -1,6 +1,6 @@
 import { Component, OnInit, Inject } from '@angular/core';
 
-import { FormsModule, FormControl, Validators } from '@angular/forms';
+import { FormBuilder, FormGroup, FormsModule, FormControl, Validators } from '@angular/forms';
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA, MatSnackBar } from '@angular/material';
 import { User } from './user.model';
 import { UserService } from './user.service';
@@ -9,6 +9,7 @@ import { Role, RoleService } from '../role';
 import { NO_DATA_GRID_MESSAGE, GRID_THEME, CSS_BUTTON } from '../../shared/constant/base-constant';
 import { RoleUserService } from '../role-user/role-user.service';
 import { RoleUserView } from '../role-user/role-user.model';
+import { CommonValidator } from '../../validators/common.validator';
 
 @Component({
     selector: 'app-user-dialog',
@@ -29,6 +30,8 @@ export class UserDialogComponent implements OnInit {
     messageNoData: string = NO_DATA_GRID_MESSAGE;
     theme: String = GRID_THEME;
     cssButton = CSS_BUTTON  ;
+    userForm : FormGroup;
+    submitted = false;
 
     emailFormControl = new FormControl('', [
         Validators.required,
@@ -43,6 +46,7 @@ export class UserDialogComponent implements OnInit {
     ];
 
     constructor(
+        private formBuilder: FormBuilder,
         public userService: UserService,
         public snackBar: MatSnackBar,
         public roleService: RoleService,
@@ -146,6 +150,13 @@ export class UserDialogComponent implements OnInit {
     }
 
     ngOnInit() {
+        
+        this.userForm = this.formBuilder.group({ 
+             name: ['', [CommonValidator.required ]],
+             email: ['', CommonValidator.required],
+             //status: ['', CommonValidator.required]
+         });
+
         this.user = {};
         if ( this.data.action === 'Edit' ) {
             // search
@@ -154,11 +165,13 @@ export class UserDialogComponent implements OnInit {
         }
     }
 
+    get form() { return this.userForm.controls; }
+
     onNoClick(): void {
         this.dialogRef.close();
     }
 
-    save(): void {
+    onSubmit() {
         // if ( this.data.action === 'Add' ) {
 
         //     if ( this.pass === '' ) {
@@ -176,6 +189,7 @@ export class UserDialogComponent implements OnInit {
         //     }
         //     this.user.password = atob(this.pass);
         // }
+ 
 
         this.user.password = '';
 
@@ -191,6 +205,14 @@ export class UserDialogComponent implements OnInit {
                 this.dialogRef.close('refresh');
             });
         }
+    }
+
+    validate(): void { 
+        this.submitted = true; 
+        // stop here if form is invalid
+        if (this.userForm.invalid) {
+            return;
+        }  
     }
 
     getRoleList(): void {

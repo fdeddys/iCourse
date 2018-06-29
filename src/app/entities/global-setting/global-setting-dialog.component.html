@@ -1,11 +1,11 @@
 <h2 mat-dialog-title>
     <h4 style="color: rgb(226, 0, 0)" >{{data.action}} {{data.entity}}</h4>
 </h2>
-<mat-dialog-content>
-    <form class="container-form">
+<form name="globalSettingForm" (ngSubmit)="f.form.valid && onSubmit()" #f="ngForm" novalidate>
+<mat-dialog-content> 
         <mat-form-field class="container-full-width">
             <input matInput placeholder="Id" value="{{globalSetting.id}}" [disabled]="true" >
-        </mat-form-field>
+        </mat-form-field> 
         <mat-form-field class="container-full-width">
             <!-- <input matInput placeholder="Global Type " [(ngModel)]="globalSetting.globalType" name ="type" > -->
             <mat-select placeholder="Global Tpe" [(ngModel)]="globalSetting.globalType" name="globTyp">
@@ -15,18 +15,22 @@
             </mat-select>
         </mat-form-field>
         <mat-form-field class="container-full-width">
-            <input matInput placeholder="Name " [(ngModel)]="globalSetting.name" cdkFocusInitial name ="nm" >
+            <input matInput placeholder="Name " [(ngModel)]="globalSetting.name" cdkFocusInitial name ="nm" [(ngModel)]="globalSetting.name" #name="ngModel" [ngClass]="{ 'is-invalid': f.submitted && description.invalid }" required maxlength="30">
+            <mat-error *ngIf="submitted && form.name.errors" class="invalid-feedback">
+                    <div *ngIf="form.name.errors.required"> {{form.name.errors.message}}</div>
+            </mat-error> 
         </mat-form-field>
         <mat-form-field class="container-full-width">
-            <input matInput placeholder="Description " [(ngModel)]="globalSetting.description"  name ="descr" >
+            <input matInput placeholder="Description " [(ngModel)]="globalSetting.description"  name ="descr" [(ngModel)]="globalSetting.description" #description="ngModel" [ngClass]="{ 'is-invalid': f.submitted && description.invalid }" required maxlength="100">
+            <mat-error *ngIf="submitted && form.description.errors" class="invalid-feedback">
+                    <div *ngIf="form.description.errors.required"> {{form.description.errors.message}}</div>
+            </mat-error> 
         </mat-form-field>
-      <br><br>
-
-    </form>
+      <br><br> 
     
 </mat-dialog-content>
 <mat-dialog-actions>
   <button mat-button mat-dialog-close>Cancel</button>
-  <button mat-button mat-raised-button class="btnSave" (click)="save()" >Save</button>
-</mat-dialog-actions>
-
+  <button mat-button mat-raised-button class="btnSave" (click)="validate()" >Save</button>
+</mat-dialog-actions> 
+</form>
