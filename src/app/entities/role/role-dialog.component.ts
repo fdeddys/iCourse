@@ -1,13 +1,13 @@
-import { Component, OnInit, Inject } from '@angular/core';
-
-import { FormBuilder, FormGroup, FormsModule, FormControl, Validators } from '@angular/forms';
-import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
-import { CommonValidatorDirective } from '../../validators/common.validator';
+import { HttpErrorResponse, HttpResponse } from '@angular/common/http';
+import { Component, Inject, OnInit } from '@angular/core';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
+import { CSS_BUTTON, GRID_THEME, NO_DATA_GRID_MESSAGE } from '../../shared/constant/base-constant';
+import { CommonValidator } from '../../validators/common.validator';
+import { Menu, MenuService } from '../menu';
 import { Role, RoleMenuView } from './role.model';
 import { RoleService } from './role.service';
-import { HttpResponse, HttpErrorResponse } from '@angular/common/http';
-import { GRID_THEME, CSS_BUTTON, NO_DATA_GRID_MESSAGE } from '../../shared/constant/base-constant';
-import { MenuService, Menu } from '../menu';
+
 
 @Component({
     selector: 'app-role-dialog',
@@ -19,14 +19,9 @@ export class RoleDialogComponent implements OnInit {
 
     private gridApi;
     private gridColumnApi;
-    menuSelected: any;
-    emailFormControl = new FormControl('', [
-        Validators.required,
-        Validators.email,
-      ]);
-
+    menuSelected: any; 
     role: Role;
-    menu: Menu;
+    menu: Menu; 
     // menus: Menu[];
     menuRegistered: RoleMenuView[];
     theme: String = GRID_THEME;

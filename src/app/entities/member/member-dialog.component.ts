@@ -148,7 +148,7 @@ export class MemberDialogComponent implements OnInit {
     onSubmit() {
         console.log('isi member = ', this.member);
         // this.member.name = this.name;
-
+    
         if (this.member.id === undefined) {
             console.log('send to service ', this.member);
             this.memberService.create(this.member).subscribe((res: HttpResponse<Member>) => {

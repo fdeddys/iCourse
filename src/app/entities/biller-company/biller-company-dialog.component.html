@@ -6,6 +6,9 @@
         <!-- <mat-form-field class="container-full-width">
             <input matInput placeholder="Id" value="{{billerCompany.id}}" [disabled]="true" >
         </mat-form-field> -->
+       <!--  <mat-form-field class="container-full-width">
+            <input matInput placeholder="Name " [(ngModel)]="billerCompany.name" cdkFocusInitial name ="namee">
+        </mat-form-field>  -->
         <mat-form-field class="container-full-width">
                 <input matInput placeholder="Name " [(ngModel)]="billerCompany.name" cdkFocusInitial name ="nm" [(ngModel)]="billerCompany.name" #name="ngModel" [ngClass]="{ 'is-invalid': f.submitted && name.invalid }" required maxlength="50">
                 <mat-error *ngIf="submitted && form.name.errors" class="invalid-feedback">

@@ -216,6 +216,23 @@ export class UserDialogComponent implements OnInit {
     }
 
     save(): void {
+        // if ( this.data.action === 'Add' ) {
+
+        //     if ( this.pass === '' ) {
+        //         this.snackBar.open('Password belum di isi !', 'ok', {
+        //             duration: 2000,
+        //         });
+        //         return ;
+        //     }
+
+        //     if ( this.pass !== this.confirmP ) {
+        //         this.snackBar.open('Password dan confirmasi tidak sama !', 'ok', {
+        //             duration: 2000,
+        //         });
+        //         return ;
+        //     }
+        //     this.user.password = atob(this.pass);
+        // }
 
         this.user.password = '';
 

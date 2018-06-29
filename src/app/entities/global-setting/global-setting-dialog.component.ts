@@ -49,19 +49,19 @@ export class GlobalSettingDialogComponent implements OnInit {
             this.globalSetting.globalType = 'BANK';
         }
     }
-
+ 
     onNoClick(): void {
         this.dialogRef.close();
     }
 
     onSubmit() {
         console.log('isi member  ', this.globalSetting);
-        if (this.globalSetting.id === undefined) {
+        if (this.globalSetting.id === undefined) {  
             console.log('send to service ', this.globalSetting);
             this.globalSettingService.create(this.globalSetting).subscribe((res: HttpResponse<GlobalSetting>) => {
                 this.dialogRef.close('refresh');
             });
-        } else {
+        } else {    
             console.log('send to service ', this.globalSetting);
             this.globalSettingService.update(this.globalSetting.id, this.globalSetting).subscribe((res: HttpResponse<GlobalSetting>) => {
                 this.dialogRef.close('refresh');
