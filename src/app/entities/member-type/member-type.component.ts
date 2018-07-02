@@ -5,7 +5,7 @@ import { MemberTypeService } from './member-type.service';
 import { MemberTypeDialogComponent } from './member-type-dialog.component';
 import { MemberTypeConfirmComponent } from './member-type-confirm.component';
 import { HttpResponse, HttpErrorResponse } from '@angular/common/http';
-import { GRID_THEME, CSS_BUTTON, NO_DATA_GRID_MESSAGE, TOTAL_RECORD_PER_PAGE } from '../../shared/constant/base-constant';
+import { GRID_THEME, CSS_BUTTON, NO_DATA_GRID_MESSAGE, TOTAL_RECORD_PER_PAGE, REPORT_PATH } from '../../shared/constant/base-constant';
 import { MatActionButtonComponent } from '../../shared/templates/mat-action-button.component';
 
 @Component({
@@ -25,11 +25,12 @@ export class MemberTypeComponent implements OnInit {
   memberTipes: MemberType[];
   MemberType: MemberType;
   messageNoData: string = NO_DATA_GRID_MESSAGE;
+  private resourceUrl = REPORT_PATH;
 
   gridOptions = {
     columnDefs: [
       { headerName: 'No', field: 'nourut', width: 100, minWidth: 100, maxWidth: 100, editable: false,  pinned: 'left'},
-      { headerName: 'Name', field: 'name', width: 200, editable: false},
+      { headerName: 'Name', field: 'name', width: 300, editable: false},
       { headerName: 'Description', field: 'description', width: 400,  editable: false },
       { headerName: ' ', width: 150, minWidth: 150, maxWidth: 150, cellRenderer: 'actionRenderer'}
       // { headerName: ' ', suppressMenu: true,
@@ -167,5 +168,10 @@ export class MemberTypeComponent implements OnInit {
       this.loadAll(this.curPage);
   }
 
+
+  public exportCSV(reportType): void {
+    const path = this.resourceUrl  + 'member';
+    window.open(`${path}/${reportType}`);
+  }
 
 }

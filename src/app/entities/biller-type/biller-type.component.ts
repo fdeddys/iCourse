@@ -5,7 +5,7 @@ import { BillerTypeService } from './biller-type.service';
 import { BillerTypeDialogComponent } from './biller-type-dialog.component';
 import { HttpResponse, HttpErrorResponse } from '@angular/common/http';
 import { BillerTypeConfirmComponent } from './biller-type-confirm.component';
-import { GRID_THEME, CSS_BUTTON, NO_DATA_GRID_MESSAGE, REPORT_PATH } from '../../shared/constant/base-constant';
+import { GRID_THEME, CSS_BUTTON, NO_DATA_GRID_MESSAGE, REPORT_PATH, TOTAL_RECORD_PER_PAGE } from '../../shared/constant/base-constant';
 import { MatActionButtonComponent } from '../../shared/templates/mat-action-button.component';
 
 @Component({
@@ -15,22 +15,26 @@ import { MatActionButtonComponent } from '../../shared/templates/mat-action-butt
 })
 export class BillerTypeComponent implements OnInit {
 
-  private gridApi;
-  private gridColumnApi;
-  private resourceUrl = REPORT_PATH;
-  theme: String = GRID_THEME;
-  cssButton = CSS_BUTTON  ;
-  billerTipes: BillerType[];
-  BillerType: BillerType;
-  messageNoData: string = NO_DATA_GRID_MESSAGE;
-  nativeWindow: any;
 
-  gridOptions = {
-      columnDefs: [
-          { headerName: 'No', field: 'nourut', width: 50, pinned: 'left', editable: false },
-          { headerName: 'Name', field: 'name', width: 200, editable: false },
-          { headerName: 'Type', field: 'ispostpaid', valueFormatter: this.boolFormatter, width: 200, editable: false },
-          { headerName: ' ', width: 150, cellRenderer: 'actionRenderer'}
+    private gridApi;
+    private gridColumnApi;
+    private resourceUrl = REPORT_PATH;
+    theme: String = GRID_THEME;
+    cssButton = CSS_BUTTON  ;
+    billerTipes: BillerType[];
+    BillerType: BillerType;
+    messageNoData: string = NO_DATA_GRID_MESSAGE;
+    nativeWindow: any;
+    curPage = 1;
+    totalData = 0;
+    totalRecord = TOTAL_RECORD_PER_PAGE;
+
+    gridOptions = {
+        columnDefs: [
+            { headerName: 'No', field: 'nourut', width: 100, pinned: 'left', editable: false },
+            { headerName: 'Name', field: 'name', width: 400, editable: false },
+            { headerName: 'Type', field: 'ispostpaid', valueFormatter: this.boolFormatter, width: 100, editable: false },
+            { headerName: ' ', width: 150, cellRenderer: 'actionRenderer'}
           // { headerName: ' ', suppressMenu: true,
           //   suppressSorting: true,
           //   template:
@@ -38,30 +42,31 @@ export class BillerTypeComponent implements OnInit {
           //       Edit
           //     </button>
           //     ` }
-      ],
-      rowData: this.billerTipes,
-      enableSorting: true,
-      enableFilter: true,
-      pagination: true,
-      paginationPageSize: 10,
-      cacheOverflowSize : 2,
-      maxConcurrentDatasourceRequests : 2,
-      infiniteInitialRowCount : 1,
-      maxBlocksInCache : 2,
-      localeText: {noRowsToShow: this.messageNoData},
-      frameworkComponents: {
-          actionRenderer: MatActionButtonComponent
-      }
-  };
+        ],
+        rowData: this.billerTipes,
+        enableSorting: true,
+        enableFilter: true,
+        pagination: true,
+        paginationPageSize: 10,
+        cacheOverflowSize : 2,
+        maxConcurrentDatasourceRequests : 2,
+        infiniteInitialRowCount : 1,
+        maxBlocksInCache : 2,
+        suppressPaginationPanel : true,
+        localeText: {noRowsToShow: this.messageNoData},
+        frameworkComponents: {
+            actionRenderer: MatActionButtonComponent
+        }
+    };
 
-  boolFormatter(params): string {
-    return params.value === true ? 'Postpaid' : 'Prepaid';
-  }
+    boolFormatter(params): string {
+        return params.value === true ? 'Postpaid' : 'Prepaid';
+    }
 
-  currencyFormatter(params): string {
-      const dt  = new Date(params.value);
-      return dt.toLocaleString(['id']);
-  }
+    currencyFormatter(params): string {
+        const dt  = new Date(params.value);
+        return dt.toLocaleString(['id']);
+    }
 
   constructor(  private dialog: MatDialog,
                 private billerTypeService: BillerTypeService, ) { }
@@ -71,105 +76,109 @@ export class BillerTypeComponent implements OnInit {
           const data = e.data;
           const actionType = e.event.target.getAttribute('data-action-type');
 
-          switch (actionType) {
-              case 'edit':
-                  return this.onActionEditClick(data);
-              case 'inactive':
-                  return this.onActionRemoveClick(data);
-          }
+        switch (actionType) {
+            case 'edit':
+                return this.onActionEditClick(data);
+            case 'inactive':
+                return this.onActionRemoveClick(data);
+        }
       }
   }
 
-  public onActionEditClick(data: any) {
-      console.log('View action clicked', data);
-      const dialogRef = this.dialog.open(BillerTypeDialogComponent, {
+    public onActionEditClick(data: any) {
+        console.log('View action clicked', data);
+        const dialogRef = this.dialog.open(BillerTypeDialogComponent, {
         width: '1000px',
         data: { action: 'Edit', entity: 'Bill Type', BillerType: data }
-      });
+        });
 
-      dialogRef.afterClosed().subscribe(result => {
+        dialogRef.afterClosed().subscribe(result => {
         console.log('The dialog was closed = [', result, ']');
-        if (result === 'refresh') {
-          this.loadAll();
-        }
-      });
-  }
+        this.loadAll(this.curPage);
+        });
+    }
 
-  public onActionRemoveClick(data: BillerType) {
-      console.log('Remove action clicked', data);
-      const biller: string = data.name;
-      const dialogConfirm = this.dialog.open(BillerTypeConfirmComponent, {
+    public onActionRemoveClick(data: BillerType) {
+        console.log('Remove action clicked', data);
+        const biller: string = data.name;
+        const dialogConfirm = this.dialog.open(BillerTypeConfirmComponent, {
         width: '50%',
         data: { warningMessage: 'Apakah anda yakin untuk menonaktifkan [  ' + `${biller}` + '  ]  ?',  idCompanyBiller: data.id }
-      });
+        });
 
-      dialogConfirm.afterClosed().subscribe(result => {
+        dialogConfirm.afterClosed().subscribe(result => {
         console.log('The dialog was closed');
-      });
+        });
 
-  }
+    }
 
-  loadAll() {
-      console.log('Start call function all header');
-      this.billerTypeService.query({
-          page: 1,
-          count: 10000,
-      })
-      .subscribe(
-              (res: HttpResponse<BillerType[]>) => this.onSuccess(res.body, res.headers),
-              (res: HttpErrorResponse) => this.onError(res.message),
-              () => { console.log('finally'); }
-      );
-  }
+    loadAll(page) {
+        console.log('Start call function all header');
+        this.billerTypeService.query({
+            page: page,
+            count: this.totalRecord,
+        })
+        .subscribe(
+                (res: HttpResponse<BillerType[]>) => this.onSuccess(res.body, res.headers),
+                (res: HttpErrorResponse) => this.onError(res.message),
+                () => { console.log('finally'); }
+        );
+    }
 
-  ngOnInit() {
-      // this.loadAll();
-  }
+    ngOnInit() {
 
-  onGridReady(params) {
-      this.gridApi = params.api;
-      this.gridColumnApi = params.columnApi;
-      params.api.sizeColumnsToFit();
+    }
 
-      console.log(this.gridApi);
-      console.log(this.gridColumnApi);
-      this.loadAll();
-  }
+    onGridReady(params) {
+        this.gridApi = params.api;
+        this.gridColumnApi = params.columnApi;
 
-  openNewDialog(): void {
-      const dialogRef = this.dialog.open(BillerTypeDialogComponent, {
-          width: '1000px',
-          data: { action: 'Add', entity: 'Bill Type' }
-      });
+        console.log(this.gridApi);
+        console.log(this.gridColumnApi);
+        this.loadAll(this.curPage);
+    }
 
-      dialogRef.afterClosed().subscribe(result => {
-          console.log('The dialog was closed = [', result, ']');
-          if (result === 'refresh') {
-              this.loadAll();
-          }
-      });
-  }
+    openNewDialog(): void {
+        const dialogRef = this.dialog.open(BillerTypeDialogComponent, {
+            width: '1000px',
+            data: { action: 'Add', entity: 'Bill Type' }
+        });
 
-  private onSuccess(data, headers) {
-      if ( data.content.length <= 0 ) {
-          return ;
-      }
+        dialogRef.afterClosed().subscribe(result => {
+            console.log('The dialog was closed = [', result, ']');
+            if (result === 'refresh') {
+                this.loadAll(this.curPage);
+            }
+        });
+    }
 
-      this.billerTipes = data.content;
-      let urut = 1;
-      for (const billerType of this.billerTipes) {
-          billerType.nourut = urut++;
-      }
-      this.gridApi.setRowData(this.billerTipes);
-  }
+    private onSuccess(data, headers) {
+        if ( data.content.length <= 0 ) {
+            return ;
+        }
 
-  private onError(error) {
-      console.log('error..');
-  }
+        this.billerTipes = data.content;
+        let urut = 1;
+        for (const billerType of this.billerTipes) {
+            billerType.nourut = urut++;
+        }
+        this.totalData = data.totalElements;
+        this.gridApi.setRowData(this.billerTipes);
+    }
 
-  public exportCSV(reportType): void {
-      const path = this.resourceUrl  + 'billertype';
-      window.open(`${path}/${reportType}`);
-  }
+    private onError(error) {
+        console.log('error..');
+    }
+
+    public exportCSV(reportType): void {
+        const path = this.resourceUrl  + 'billertype';
+        window.open(`${path}/${reportType}`);
+    }
+
+    public onPaginateChange($event): void {
+        // console.log('events ', $event);
+        this.curPage = $event.pageIndex + 1;
+        this.loadAll(this.curPage);
+    }
 
 }
