@@ -23,7 +23,7 @@
 		</mat-menu>
 </mat-toolbar>
 <mat-sidenav-container>	
-	<mat-sidenav #sidenav mode="side" [(opened)]="opened" (openedChange)="resizeColumn()" class="mat-elevation-z8">
+	<mat-sidenav #sidenav mode="side" [(opened)]="opened" (opened)="resizeColumn()" (closed)="resizeColumn()" class="mat-elevation-z8">
 		<app-sidebar (menuNm)="onChangeMenu($event)"></app-sidebar>
 	</mat-sidenav>
 

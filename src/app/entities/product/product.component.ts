@@ -13,6 +13,9 @@ import { MatActionButtonComponent } from '../../shared/templates/mat-action-butt
 
 import { ProductDialogComponent } from './product-dialog.component';
 
+import { MainChild, eventSubscriber } from '../../layouts/main/main-child.interface';
+import { MainService } from '../../layouts/main/main.service';
+
 @Component({
     selector: 'app-product',
     templateUrl: './product.component.html',
@@ -39,7 +42,7 @@ export class ProductComponent implements OnInit {
     gridOptions = {
         columnDefs: [
             // { headerName: 'Name', field: 'name', checkboxSelection: true, width: 250, pinned: 'left', editable: true },
-            { headerName: 'No', field: 'no', width: 100, pinned: 'left', editable: false },
+            { headerName: 'No', field: 'no', width: 100, minWidth: 100, maxWidth: 100, pinned: 'left', editable: false },
             { headerName: 'Name', field: 'name', width: 250, pinned: 'left', editable: false },
             { headerName: 'Product Code', field: 'productCode', width: 200, editable: false },
             { headerName: 'Denom', field: 'denom', width: 150, cellStyle: {textAlign: 'right'}, editable: false },
@@ -47,7 +50,7 @@ export class ProductComponent implements OnInit {
             { headerName: 'Status', field: 'status', width: 200 },
             // { headerName: 'Search By', field: 'searchBy', width: 250 },
             // { headerName: 'Search By Biller', field: 'searchByMemberId', width: 250 },
-            { headerName: ' ', width: 150, cellRenderer: 'actionRenderer'}
+            { headerName: ' ', width: 150, minWidth: 150, maxWidth: 150, cellRenderer: 'actionRenderer'}
             // { headerName: ' ', suppressMenu: true,
             //     suppressSorting: true,
             //     template: `
@@ -71,12 +74,16 @@ export class ProductComponent implements OnInit {
     };
 
     constructor(
+        private mainService: MainService,
         private dialog: MatDialog,
         private billerCompanyService: BillerCompanyService,
         private billerTypeService: BillerTypeService,
         private memberService: MemberService,
         private productService: ProductService
-    ) { }
+    ) {
+        this.resizeColumn = this.resizeColumn.bind(this);
+        eventSubscriber(mainService.subscription, this.resizeColumn);
+    }
 
     loadAll() {
         console.log('Start call function all header');
@@ -159,9 +166,17 @@ export class ProductComponent implements OnInit {
     onGridReady(params) {
         this.gridApi = params.api;
         this.gridColumnApi = params.columnApi;
+        this.gridApi.sizeColumnsToFit();
 
-        // console.log(this.gridApi);
-        // console.log(this.gridColumnApi);
+        window.onload = () => {
+            console.log('resize..');
+            this.gridApi.sizeColumnsToFit();
+        };
+
+        window.onresize = () => {
+            console.log('resize..');
+            this.gridApi.sizeColumnsToFit();
+        };
 
         this.loadAll();
     }
@@ -242,6 +257,11 @@ export class ProductComponent implements OnInit {
         console.log('error..');
     }
 
+    resizeColumn() {
+        setTimeout(() => {
+            this.gridApi.sizeColumnsToFit();
+        }, 400);
+    }
 }
 
 // billerCompany : {id: 1, name: "Telkomsel"}
