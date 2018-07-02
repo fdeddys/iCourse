@@ -15,6 +15,7 @@ import { MatActionButtonComponent } from '../../shared/templates/mat-action-butt
 })
 export class BillerCompanyComponent implements OnInit {
 
+  entityName: String = 'Bill Operator';
   private gridApi;
   private gridColumnApi;
 
@@ -27,8 +28,8 @@ export class BillerCompanyComponent implements OnInit {
 
   gridOptions = {
     columnDefs: [
-      { headerName: 'No', field: 'nourut', width: 50, pinned: 'left', editable: false },
-      { headerName: 'Name', field: 'name', width: 150, editable: false },
+      { headerName: 'No', field: 'nourut', width: 100, pinned: 'left', editable: false },
+      { headerName: 'Name', field: 'name', width: 250, editable: false },
       { headerName: ' ', width: 150, cellRenderer: 'actionRenderer'}
       // { headerName: ' ', suppressMenu: true,
       //   suppressSorting: true,
@@ -86,7 +87,7 @@ export class BillerCompanyComponent implements OnInit {
       console.log('View action clicked', data);
       const dialogRef = this.dialog.open(BillerCompanyDialogComponent, {
         width: '1000px',
-        data: { action: 'Edit', entity: 'Biller Company', billerCompany: data }
+        data: { action: 'Edit', entity: this.entityName, billerCompany: data }
       });
 
       dialogRef.afterClosed().subscribe(result => {
@@ -148,7 +149,7 @@ export class BillerCompanyComponent implements OnInit {
 
     console.log(this.gridApi);
     console.log(this.gridColumnApi);
-    params.api.sizeColumnsToFit();
+    // params.api.sizeColumnsToFit();
     this.loadAll();
   }
 

@@ -35,10 +35,10 @@ export class UserDialogComponent implements OnInit {
     userForm: FormGroup;
     submitted = false;
 
-    emailFormControl = new FormControl('', [
-        Validators.required,
-        Validators.email,
-      ]);
+    // emailFormControl = new FormControl('', [
+    //     Validators.required,
+    //     Validators.email,
+    //   ]);
 
     user: User;
 
@@ -138,7 +138,7 @@ export class UserDialogComponent implements OnInit {
 
     resetPassword(): void {
         this.userService.resetPassword(this.user.id )
-        .subscribe(
+            .subscribe(
             (res: HttpResponse<User>) => {
                 if (res.body.errMsg === null || res.body.errMsg === '' ) {
                     const decodePass = atob(res.body.password);

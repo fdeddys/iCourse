@@ -20,6 +20,14 @@
         <input matInput placeholder="Email" [(ngModel)]="user.email" name="emaie"
             [formControl]="emailFormControl" required maxlength="50"> 
     </mat-form-field>
+    
+    <mat-form-field class="container-half-width">
+        <input matInput placeholder="Email" [(ngModel)]="user.email" name="emaie"
+        [disabled]="data.action === 'Edit'"
+        >
+        <!-- [formControl]="emailFormControl"  -->
+    </mat-form-field>
+
     <mat-form-field class="container-half-width">
         <mat-select placeholder="Status" [(ngModel)]="user.status" name="sttss">
             <mat-option *ngFor="let status of statuses" [value]="status.value">
@@ -28,9 +36,10 @@
         </mat-select>
     </mat-form-field>
     <br>
-    <mat-dialog-actions align="end">
-            <button mat-button mat-raised-button color="primary" (click)="validate()">Save</button>
-        <!-- <button [disabled]="data.action !== 'Edit'" color="primary" mat-button  mat-raised-button class="btnAdd" (click)="resetPassword()">Reset password</button> -->
+    <!-- {{data.action}} -->
+    <mat-dialog-actions>
+        <button mat-button mat-raised-button color="primary" (click)="save()" >Save</button>
+        <button [disabled]="data.action !== 'Edit'" color="primary" mat-button  mat-raised-button class="btnAdd" (click)="resetPassword()">Reset password</button>
     </mat-dialog-actions>        
     <br>
     <br>
@@ -43,7 +52,9 @@
             </mat-select>
         </mat-form-field>
         
-        <button  mat-button mat-raised-button color="primary" (click)="addRole()" style="margin-left: 5%">Add Role</button>
+        <button  mat-button mat-raised-button color="primary" 
+            [disabled]="data.action !== 'Edit'"
+            (click)="addRole()" style="margin-left: 5%">Add Role</button>
         <ag-grid-angular 
             #agGrid
             style="height: 300px; width: 100%;" 
@@ -59,9 +70,8 @@
     <!-- </form> -->
     
 </mat-dialog-content>
-<!-- <mat-dialog-actions align="end">
-    <button mat-button mat-raised-button color="primary" (click)="save()" >Save</button>
-    <button mat-button (click)="closeForm()" >Close</button>
-</mat-dialog-actions> -->
+<mat-dialog-actions align="end">
+    <!-- <button mat-button mat-raised-button color="primary" (click)="save()" >Save</button> -->
+    <!-- <button mat-button (click)="closeForm()" >Close</button> -->
+</mat-dialog-actions>
 <br><br>
-</form>   
