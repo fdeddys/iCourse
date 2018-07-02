@@ -5,6 +5,7 @@ import { FormsModule } from '@angular/forms';
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { Ng2Webstorage, LocalStorageService, SessionStorageService  } from 'ngx-webstorage';
 
+import { MainService } from './layouts/main/main.service';
 import { LoginService } from './shared/login/login.service';
 import { AccountService } from './shared/auth/account.service';
 import { AuthServerProvider } from './shared/auth/auth-jwt.service';
@@ -50,6 +51,7 @@ import { ReactiveFormsModule } from '@angular/forms';
         ReactiveFormsModule
     ],
     providers: [
+        MainService,
         LoginService,
         AccountService,
         AuthServerProvider,

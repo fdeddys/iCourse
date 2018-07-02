@@ -4,6 +4,8 @@ import { NgModule } from '@angular/core';
 import { SidebarModule } from '../sidebar/sidebar.module';
 import { MainComponent } from './main.component';
 
+import { MainService } from './main.service';
+
 @NgModule({
  declarations: [
  MainComponent
@@ -12,7 +14,9 @@ imports: [ /* add modules here so Angular knows to use them */
   BrowserModule,
   SidebarModule
  ],
- providers: []
+ providers: [
+   MainService
+ ]
 })
 
 export class MainModule { }
