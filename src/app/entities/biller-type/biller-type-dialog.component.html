@@ -19,7 +19,7 @@
           [color]="'primary'"
             > Postpaid
         </mat-checkbox> -->
-        <mat-form-field class="example-margin">
+        <mat-form-field style="width: 50%;">
             <mat-select placeholder="Type" [(ngModel)]="billerType.ispostpaid" name="type">
                 <mat-option *ngFor="let type of typeList" [value]="type.value">
                     {{type.desc}}
