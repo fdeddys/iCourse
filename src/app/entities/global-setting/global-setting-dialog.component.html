@@ -26,11 +26,11 @@
                     <div *ngIf="form.description.errors.required"> {{form.description.errors.message}}</div>
             </mat-error> 
         </mat-form-field>
-      <br><br> 
+      <br><br>
     
 </mat-dialog-content>
 <mat-dialog-actions align="end">
-  <button mat-button mat-raised-button class="btnSave" (click)="validate()" >Save</button>
+  <button mat-button mat-raised-button color="primary" (click)="validate()" >Save</button> 
   <button mat-button mat-raised-button mat-dialog-close>Cancel</button>
-</mat-dialog-actions> 
+</mat-dialog-actions>
 </form>

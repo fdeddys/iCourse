@@ -49,7 +49,7 @@ export class BillerComponent implements OnInit {
             { headerName: 'No', field: 'no', width: 100, pinned: 'left', editable: false },
             { headerName: 'Name', field: 'description', width: 300, pinned: 'left', editable: false },
             { headerName: 'Date Start', field: 'dateStart', width: 300 },
-            { headerName: 'Date Thru', field: 'dateThru', width: 350 },
+            { headerName: 'Date Through', field: 'dateThru', width: 350 },
             { headerName: ' ', width: 150, cellRenderer: 'actionRenderer'}
             // { headerName: ' ', suppressMenu: true,
             //     suppressSorting: true,

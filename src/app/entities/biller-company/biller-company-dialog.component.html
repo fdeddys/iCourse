@@ -1,8 +1,8 @@
-<h2 mat-dialog-title>
-        <h4 style="color: rgb(226, 0, 0)" >{{data.action}} {{data.entity}}</h4>
-</h2>
+<h1 mat-dialog-title>
+    {{data.action}} {{data.entity}}
+</h1>
 <form name="globalSettingForm" (ngSubmit)="f.form.valid && onSubmit()" #f="ngForm" novalidate>
-<mat-dialog-content> 
+<mat-dialog-content>
         <!-- <mat-form-field class="container-full-width">
             <input matInput placeholder="Id" value="{{billerCompany.id}}" [disabled]="true" >
         </mat-form-field> -->

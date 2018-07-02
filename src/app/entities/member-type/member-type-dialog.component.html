@@ -7,7 +7,7 @@
             <input matInput placeholder="Id" value="{{memberType.id}}" [disabled]="true" >
         </mat-form-field> -->
         <mat-form-field class="container-full-width">  
-            <input matInput placeholder="Name " [(ngModel)]="memberType.name" cdkFocusInitial name ="nm" [(ngModel)]="memberType.name" #name="ngModel" [ngClass]="{ 'is-invalid': f.submitted && name.invalid }" required maxlength="50">
+            <input matInput placeholder="Name " [(ngModel)]="memberType.name" cdkFocusInitial name ="nm" [(ngModel)]="memberType.name" #name="ngModel" [ngClass]="{ 'is-invalid': f.submitted && name.invalid }" [disabled]="data.action === 'EDIT'" required maxlength="50">
             <mat-error *ngIf="submitted && form.name.errors" class="invalid-feedback">
                     <div *ngIf="form.name.errors.required"> {{form.name.errors.message}}</div>
             </mat-error> 
@@ -21,8 +21,8 @@
         </mat-form-field>
       <br><br> 
 </mat-dialog-content>
-<mat-dialog-actions align="end"> 
-  <button mat-button mat-raised-button class="btnSave" (click)="validate()" >Save</button>
-  <button mat-button mat-raised-button mat-dialog-close>Cancel</button>
-</mat-dialog-actions> 
+<mat-dialog-actions align="end">
+  <button mat-button mat-raised-button color="primary" (click)="validate()" >Save</button>
+  <!-- <button mat-button mat-raised-button mat-dialog-close>Cancel</button> -->
+</mat-dialog-actions>
 </form>

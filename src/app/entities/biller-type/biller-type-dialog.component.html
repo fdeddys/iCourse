@@ -6,23 +6,26 @@
         <!-- <mat-form-field class="container-full-width">
             <input matInput placeholder="Id" value="{{billerType.id}}" [disabled]="true" >
         </mat-form-field> -->
-      <!--  <mat-form-field class="container-full-width">
-            <input matInput placeholder="Name " [(ngModel)]="billerType.name" cdkFocusInitial name ="namee" >
-        </mat-form-field> -->
-
          <mat-form-field class="container-full-width">
                 <input matInput placeholder="Name " [(ngModel)]="billerType.name" cdkFocusInitial name ="nm" [(ngModel)]="billerType.name" #name="ngModel" [ngClass]="{ 'is-invalid': f.submitted && name.invalid }" required maxlength="50">
                 <mat-error *ngIf="submitted && form.name.errors" class="invalid-feedback">
                         <div *ngIf="form.name.errors.required"> {{form.name.errors.message}}</div>
                 </mat-error> 
             </mat-form-field> 
-
-        <mat-checkbox
+        <!-- <mat-checkbox
           class="example-margin"
           [(ngModel)]="billerType.ispostpaid"
           name="is_postpaid_"
-            >postpaid
-        </mat-checkbox>
+          [color]="'primary'"
+            > Postpaid
+        </mat-checkbox> -->
+        <mat-form-field class="example-margin">
+            <mat-select placeholder="Type" [(ngModel)]="billerType.ispostpaid" name="type">
+                <mat-option *ngFor="let type of typeList" [value]="type.value">
+                    {{type.desc}}
+                </mat-option>
+            </mat-select>
+        </mat-form-field>
       <br><br>
       <mat-divider></mat-divider>
       <mat-divider></mat-divider>

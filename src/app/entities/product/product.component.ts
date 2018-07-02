@@ -34,6 +34,7 @@ export class ProductComponent implements OnInit {
     statusList = [];
     theme: String = GRID_THEME;
     cssButton = CSS_BUTTON  ;
+    messageNoData: string = NO_DATA_GRID_MESSAGE;
 
     gridOptions = {
         columnDefs: [
@@ -41,8 +42,8 @@ export class ProductComponent implements OnInit {
             { headerName: 'No', field: 'no', width: 100, pinned: 'left', editable: false },
             { headerName: 'Name', field: 'name', width: 250, pinned: 'left', editable: false },
             { headerName: 'Product Code', field: 'productCode', width: 200, editable: false },
-            { headerName: 'Denom', field: 'denom', width: 150, editable: false },
-            { headerName: 'Sell Price', field: 'sellPrice', width: 150 },
+            { headerName: 'Denom', field: 'denom', width: 150, cellStyle: {textAlign: 'right'}, editable: false },
+            { headerName: 'Sell Price', field: 'sellPrice', width: 150, cellStyle: {textAlign: 'right'} },
             { headerName: 'Status', field: 'status', width: 200 },
             // { headerName: 'Search By', field: 'searchBy', width: 250 },
             // { headerName: 'Search By Biller', field: 'searchByMemberId', width: 250 },
@@ -62,6 +63,7 @@ export class ProductComponent implements OnInit {
         // rowSelection: "multiple"
         pagination: true,
         paginationPageSize: 10,
+        localeText: {noRowsToShow: this.messageNoData},
         frameworkComponents: {
             // checkboxRenderer: MatCheckboxComponent,
             actionRenderer: MatActionButtonComponent

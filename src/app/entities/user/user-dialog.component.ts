@@ -9,7 +9,7 @@ import { Role, RoleService } from '../role';
 import { NO_DATA_GRID_MESSAGE, GRID_THEME, CSS_BUTTON, SNACKBAR_DURATION_IN_MILLISECOND } from '../../shared/constant/base-constant';
 import { RoleUserService } from '../role-user/role-user.service';
 import { RoleUserView } from '../role-user/role-user.model';
-import { CommonValidator } from '../../validators/common.validator';
+import { CommonValidatorDirective } from '../../validators/common.validator';
 import { MatCheckboxComponent } from '../../shared/templates/mat-checkbox.component';
 
 @Component({
@@ -32,7 +32,7 @@ export class UserDialogComponent implements OnInit {
     theme: String = GRID_THEME;
     cssButton = CSS_BUTTON  ;
     duration = SNACKBAR_DURATION_IN_MILLISECOND;
-    userForm : FormGroup;
+    userForm: FormGroup;
     submitted = false;
 
     // emailFormControl = new FormControl('', [
@@ -193,11 +193,10 @@ export class UserDialogComponent implements OnInit {
     }
 
     ngOnInit() {
-        
-        this.userForm = this.formBuilder.group({ 
-             name: ['', [CommonValidator.required ]],
-             email: ['', CommonValidator.required],
-             //status: ['', CommonValidator.required]
+        this.userForm = this.formBuilder.group({
+             name: ['', [CommonValidatorDirective.required ]],
+             email: ['', CommonValidatorDirective.required],
+             // status: ['', CommonValidator.required]
          });
 
         this.user = {};
@@ -216,7 +215,7 @@ export class UserDialogComponent implements OnInit {
         this.dialogRef.close();
     }
 
-    save(): void {
+    onSubmit() { 
         // if ( this.data.action === 'Add' ) {
 
         //     if ( this.pass === '' ) {
@@ -286,12 +285,12 @@ export class UserDialogComponent implements OnInit {
         }
     }
 
-    validate(): void { 
-        this.submitted = true; 
+    validate(): void {
+        this.submitted = true;
         // stop here if form is invalid
         if (this.userForm.invalid) {
             return;
-        }  
+        }
     }
 
     getRoleList(): void {

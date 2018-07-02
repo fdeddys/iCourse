@@ -30,7 +30,7 @@ export class MemberComponent implements OnInit {
       { headerName: 'No', field: 'nourut', width: 50, pinned: 'left', editable: false  },
       { headerName: 'Name', field: 'name', width: 100, editable: false },
       { headerName: 'Description', field: 'description', width: 100, editable: false },
-      { headerName: 'Active', field: 'active',  editable: false, valueFormatter: this.boolFormatter },
+      { headerName: 'Status', field: 'active',  editable: false, valueFormatter: this.boolFormatter },
       { headerName: ' ', width: 150, cellRenderer: 'actionRenderer'}
       // { headerName: ' ', suppressMenu: true,
       //   width: 100,
@@ -63,7 +63,7 @@ export class MemberComponent implements OnInit {
   }
 
   boolFormatter(params): string {
-    return params.value === true ? 'Ya' : 'Tidak';
+    return params.value === true ? 'Active' : 'Inactive';
   }
   constructor(  private dialog: MatDialog,
                 private memberService: MemberService) { }
@@ -91,9 +91,9 @@ export class MemberComponent implements OnInit {
 
       dialogRef.afterClosed().subscribe(result => {
         console.log('The dialog was closed = [', result, ']');
-        if (result === 'refresh') {
+        // if (result === 'refresh') {
           this.loadAll();
-        }
+        // }
       });
   }
 
@@ -158,9 +158,9 @@ export class MemberComponent implements OnInit {
 
     dialogRef.afterClosed().subscribe(result => {
       console.log('The dialog was closed = [', result, ']');
-      if (result === 'refresh') {
+      // if (result === 'refresh') {
         this.loadAll();
-      }
+      // }
     });
   }
 

@@ -43,7 +43,7 @@
  
             <!-- Template Header starts -->
             <div class="login-box-header">
-                <img src="assets/images/logo_ottocash_color.png">
+                <img src="assets/images/logo_ottopay_color.png" style="height: 120px;">
             </div>
             <!-- Template Header ends -->
  
@@ -57,7 +57,7 @@
                     </mat-grid-tile>
                     <mat-grid-tile [colspan]="7">
                         <mat-form-field class="justifier">
-                            <input matInput placeholder="Username" text="text" [(ngModel)]="username" required>
+                            <input matInput placeholder="Username" text="text" [(ngModel)]="username" (keyup.enter)="login()" required>
                         </mat-form-field>
                     </mat-grid-tile>
                 </mat-grid-list>
@@ -70,7 +70,7 @@
                     </mat-grid-tile>
                     <mat-grid-tile [colspan]="7">
                         <mat-form-field class="justifier">
-                            <input matInput placeholder="Password" text="password" [(ngModel)]="password" type="password" required>
+                            <input matInput placeholder="Password" text="password" [(ngModel)]="password" type="password" (keyup.enter)="login()" required>
                         </mat-form-field>
                     </mat-grid-tile>
                 </mat-grid-list>

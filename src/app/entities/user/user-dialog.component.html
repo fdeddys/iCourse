@@ -1,31 +1,23 @@
 <h1 mat-dialog-title>
-        <!-- {{data.action}} - {{data.entity}} -->
-        {{data.action}} {{data.entity}}
-    </h1>
+    <!-- {{data.action}} - {{data.entity}} -->
+    {{data.action}} {{data.entity}}
+</h1>
 <form name="userForm" (ngSubmit)="f.form.valid && onSubmit()" #f="ngForm" novalidate>   
-    <mat-dialog-content>
-        <!-- <form class="container-form"> -->
-            <!-- <mat-form-field class="container-full-width">
-                <input matInput placeholder="Id" value="{{user.id}}" [disabled]="true" >
-            </mat-form-field> -->
-        <mat-form-field class="container-half-width" style="margin-right: 10%">
+<mat-dialog-content>
+    <!-- <form class="container-form"> -->
+        <!-- <mat-form-field class="container-full-width">
+            <input matInput placeholder="Id" value="{{user.id}}" [disabled]="true" >
+        </mat-form-field> -->
+    <mat-form-field class="container-half-width" style="margin-right: 10%">
             <!-- <input matInput placeholder="Name " [(ngModel)]="user.name"  cdkFocusInitial name ="namea" > -->
             <input matInput placeholder="Name " [(ngModel)]="user.name" cdkFocusInitial name ="nm" #name="ngModel" [ngClass]="{ 'is-invalid': f.submitted && name.invalid }" required maxlength="50">
             <mat-error *ngIf="submitted && form.name.errors" class="invalid-feedback">
                     <div *ngIf="form.name.errors.required"> {{form.name.errors.message}}</div>
             </mat-error> 
-        </mat-form-field>
-        <!-- <div *ngIf="data.action === 'Add'" >
-            <mat-form-field class="container-full-width">
-                <input type="password" matInput placeholder="Password " [(ngModel)]="pass"  cdkFocusInitial name ="passw" >
-            </mat-form-field>
-            <mat-form-field class="container-full-width">
-                <input type="password" matInput placeholder="Confirm password " [(ngModel)]="confirmP"  cdkFocusInitial name ="confirm_p" >
-            </mat-form-field>
-        </div> -->
-    
-        <mat-form-field class="container-half-width">
-            <input matInput placeholder="Email" [(ngModel)]="user.email" name="emaie"
+    </mat-form-field>
+
+    <mat-form-field class="container-half-width">
+        <input matInput placeholder="Email" [(ngModel)]="user.email" name="emaie"
             [formControl]="emailFormControl" required maxlength="50"> 
         </mat-form-field>
     </div> -->
@@ -53,42 +45,12 @@
     <br>
     <fieldset style="border: 1px #ddd solid">
         <mat-form-field class="container-half-width">
-            <mat-select placeholder="Status" [(ngModel)]="user.status" name="sttss">
-                <mat-option *ngFor="let status of statuses" [value]="status.value">
-                    {{status.viewValue}}
+            <mat-select placeholder="Role" [(ngModel)]="roleSelected" name="role">
+                <mat-option *ngFor="let role of roleList" [value]="role">
+                    {{role.description}}
                 </mat-option>
             </mat-select>
         </mat-form-field>
-        <br>
-        <mat-dialog-actions align="end">
-            <button mat-button mat-raised-button color="primary" (click)="validate()" >Save</button>
-            <!-- <button [disabled]="data.action !== 'Edit'" color="primary" mat-button  mat-raised-button class="btnAdd" (click)="resetPassword()">Reset password</button> -->
-        </mat-dialog-actions>        
-        <br>
-        <br>
-        <fieldset style="border: 1px #ddd solid">
-            <mat-form-field class="container-half-width">
-                <mat-select placeholder="Status" [(ngModel)]="roleSelected" name="role">
-                    <mat-option *ngFor="let role of roleList" [value]="role">
-                        {{role.description}}
-                    </mat-option>
-                </mat-select>
-            </mat-form-field>
-            
-            <button  mat-button mat-raised-button color="primary" (click)="addRole()" style="margin-left: 5%">Add Role</button>
-            <ag-grid-angular 
-                #agGrid
-                style="height: 300px; width: 100%;" 
-                class="{{theme}}"
-                [gridOptions]="gridOptions" 
-                (gridReady)="onGridReady($event)"
-                (cellClicked)="onCellClicked($event)"
-                >
-            </ag-grid-angular>
-        </fieldset>
-        <br>
-    
-        <!-- </form> -->
         
         <button  mat-button mat-raised-button color="primary" 
             [disabled]="data.action !== 'Edit'"

@@ -6,12 +6,13 @@ import { ProductService } from './product.service';
 
 import { Observable } from 'rxjs';
 import { map, startWith } from 'rxjs/operators';
-import { FormBuilder, FormGroup, Validators ,FormControl} from '@angular/forms'; 
+
+import { FormBuilder, FormGroup, Validators ,FormControl} from '@angular/forms';
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
 import { BillerType } from '../biller-type';
 import { BillerCompany } from '../biller-company';
 import { Member } from '../member';
-import { CommonValidator } from '../../validators/common.validator';
+import { CommonValidatorDirective } from '../../validators/common.validator';
 
 @Component({
     selector: 'app-product-dialog',
@@ -36,7 +37,7 @@ export class ProductDialogComponent implements OnInit {
     statusList = [];
 
     modeTitle = '';
-    productForm : FormGroup;
+    productForm: FormGroup;
     submitted = false;
 
     constructor(
@@ -113,9 +114,9 @@ export class ProductDialogComponent implements OnInit {
     }
 
     get form() { return this.productForm.controls; }
-    ngOnInit() { 
-        this.productForm = this.formBuilder.group({ 
-            name: ['', [CommonValidator.required]], 
+    ngOnInit() {
+        this.productForm = this.formBuilder.group({
+            name: ['', [CommonValidatorDirective.required]],
         });
 
         this.product = {};
@@ -177,12 +178,12 @@ export class ProductDialogComponent implements OnInit {
         }
     }
 
-    validate(): void { 
-        this.submitted = true; 
+    validate(): void {
+        this.submitted = true;
         // stop here if form is invalid
         if (this.productForm.invalid) {
             return;
-        }  
+        }
     }
 
 }

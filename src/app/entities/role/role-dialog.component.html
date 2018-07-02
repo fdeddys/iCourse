@@ -1,6 +1,4 @@
-<h1 mat-dialog-title>
-    {{data.action}} {{data.entity}}
-</h1>
+<h1 mat-dialog-title>{{data.action}} {{data.entity}}</h1>
 <form name="roleForm" (ngSubmit)="f.form.valid && onSubmit()" #f="ngForm" novalidate>
 <mat-dialog-content style="width: 100%">
         <!-- <mat-form-field class="container-full-width">
@@ -14,37 +12,46 @@
 
         </mat-form-field>
         <mat-form-field class="container-full-width"> 
-            <input matInput placeholder="Description " [(ngModel)]="role.description"  name ="descr" [(ngModel)]="role.description" #description="ngModel" [ngClass]="{ 'is-invalid': f.submitted && description.invalid }" required maxlength="100">
+            <input matInput placeholder="Description " [(ngModel)]="role.description"  name ="descr" [(ngModel)]="role.description" #description="ngModel" [ngClass]="{ 'is-invalid': f.submitted && description.invalid }" required maxlength="255">
             <mat-error *ngIf="submitted && form.description.errors" class="invalid-feedback">
                     <div *ngIf="form.description.errors.required"> {{form.description.errors.message}}</div> 
             </mat-error>  
         </mat-form-field>
+
         <div align="end">
                 <button mat-raised-button color="primary" (click)="validate()">Save</button>
-            </div>
-            <br>
+        </div>
+        <br>
+
+        <fieldset style="border: 1px #ddd solid">
+            <!-- <mat-form-field class="container-full-width">
+                <mat-select placeholder="Menu" [(ngModel)]="menuSelected" name="selected_menu">
+                    <mat-option *ngFor="let menu of menus" [value]="menu.id">
+                        {{menu.description}}
+                    </mat-option>
+                </mat-select>
+               
+            </mat-form-field>
+            <div style="text-align: right">
+                <button mat-button mat-raised-button class="btnSave" (click)="addMenu()" >Add</button>
+            </div> -->
+            <ag-grid-angular 
+                #agGrid
+                style="height: 300px; width: 100%;" 
+                class="{{theme}}"
+                [gridOptions]="gridOptions" 
+                (gridReady)="onGridReady($event)"
+                (rowClicked)="onRowClicked($event)"
+                >
+            </ag-grid-angular>
+        </fieldset>
+    <!-- </form> -->
     
-            <fieldset style="border: 1px #ddd solid">
-                <!-- <mat-form-field class="container-full-width">
-                    <mat-select placeholder="Menu" [(ngModel)]="menuSelected" name="selected_menu">
-                        <mat-option *ngFor="let menu of menus" [value]="menu.id">
-                            {{menu.description}}
-                        </mat-option>
-                    </mat-select>
-                   
-                </mat-form-field>
-                <div style="text-align: right">
-                    <button mat-button mat-raised-button class="btnSave" (click)="addMenu()" >Add</button>
-                </div> -->
-                <ag-grid-angular 
-                    #agGrid
-                    style="height: 300px; width: 100%;" 
-                    class="{{theme}}"
-                    [gridOptions]="gridOptions" 
-                    (gridReady)="onGridReady($event)"
-                    (rowClicked)="onRowClicked($event)"
-                    >
-                </ag-grid-angular>
-            </fieldset>
-</mat-dialog-content> 
+</mat-dialog-content>
+<!-- <mat-dialog-actions align="end">
+    <button mat-raised-button mat-dialog-close>Cancel</button>
+    <button mat-raised-button color="primary" (click)="save()">Save</button>
+</mat-dialog-actions> -->
 </form>
+                <!-- <div style="align-content: right; align-self: right; align-items: right; text-align: right">
+    </div> -->

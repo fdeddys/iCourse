@@ -18,6 +18,8 @@ import { BillerPriceDetail, BillerPriceDetailService, BillerPriceDetailComponent
 import { MatCheckboxComponent } from '../../shared/templates/mat-checkbox.component';
 import { MatActionButtonComponent } from '../../shared/templates/mat-action-button.component';
 
+import { NO_DATA_GRID_MESSAGE } from '../../shared/constant/base-constant';
+
 @Component({
     selector: 'app-biller-dialog',
     templateUrl: './biller-dialog.component.html',
@@ -28,10 +30,12 @@ export class BillerDialogComponent implements OnInit {
     private gridApi;
     private gridColumnApi;
 
-    membTypeCtrl: FormControl;
-    filteredMembType: Observable<any[]>;
-    membCtrl: FormControl;
-    filteredMemb: Observable<any[]>;
+    // ------ auto complete
+    // membTypeCtrl: FormControl;
+    // filteredMembType: Observable<any[]>;
+    // membCtrl: FormControl;
+    // filteredMemb: Observable<any[]>;
+    //
     dateSCtrl: FormControl;
     dateTCtrl: FormControl;
 
@@ -57,6 +61,8 @@ export class BillerDialogComponent implements OnInit {
     // checked = false;
     btnDisabled = true; // set to false for debug
     btnLabel = 'Biller';
+
+    messageNoData: string = NO_DATA_GRID_MESSAGE;
 
     colDefs = [
         // { headerName: 'Name', field: 'name', checkboxSelection: true, width: 250, pinned: 'left', editable: true },
@@ -86,11 +92,11 @@ export class BillerDialogComponent implements OnInit {
     nonColDefs = [
         // { headerName: 'Name', field: 'name', checkboxSelection: true, width: 250, pinned: 'left', editable: true },
         { headerName: 'No', field: 'no', width: 100, pinned: 'left', editable: false },
-        { headerName: 'Name', field: 'billerProduct.name', width: 200 },
-        { headerName: 'Sales Price', field: 'salesPrice', width: 150 },
+        { headerName: 'Product Name', field: 'billerProduct.name', width: 200 },
+        { headerName: 'Sell Price', field: 'salesPrice', width: 150 },
         { headerName: 'Profit', field: 'profit', width: 150 },
         { headerName: 'Date Start', field: 'dateStart', width: 150 },
-        { headerName: 'Date Thru', field: 'dateThru', width: 150 },
+        { headerName: 'Date Through', field: 'dateThru', width: 150 },
         { headerName: 'Status', field: 'status', width: 150},
         { headerName: ' ', width: 150, cellRenderer: 'actionRenderer'}
         // { headerName: ' ', suppressMenu: true,
@@ -111,6 +117,7 @@ export class BillerDialogComponent implements OnInit {
         // rowSelection: "multiple"
         pagination: true,
         paginationPageSize: 10,
+        localeText: {noRowsToShow: this.messageNoData},
         // rowHeight : 41,
         frameworkComponents: {
             // checkboxRenderer: MatCheckboxComponent,
@@ -127,21 +134,23 @@ export class BillerDialogComponent implements OnInit {
         public dialogRef: MatDialogRef<BillerDialogComponent>,
         @Inject(MAT_DIALOG_DATA) public data: any
     ) {
-        this.membTypeCtrl = new FormControl();
-        this.filteredMembType = this.membTypeCtrl.valueChanges
-        .pipe(
-            startWith<string | MemberType>(''),
-            map(value => typeof value === 'string' ? value : value.name),
-            map(name => name ? this.filterMembType(name) : this.memberTypeList.slice())
-        );
+        // ------ auto complete
+        // this.membTypeCtrl = new FormControl();
+        // this.filteredMembType = this.membTypeCtrl.valueChanges
+        // .pipe(
+        //     startWith<string | MemberType>(''),
+        //     map(value => typeof value === 'string' ? value : value.name),
+        //     map(name => name ? this.filterMembType(name) : this.memberTypeList.slice())
+        // );
 
-        this.membCtrl = new FormControl();
-        this.filteredMemb = this.membCtrl.valueChanges
-        .pipe(
-            startWith<string | Member>(''),
-            map(value => typeof value === 'string' ? value : value.name),
-            map(name => name ? this.filterMemb(name) : this.memberList.slice())
-        );
+        // this.membCtrl = new FormControl();
+        // this.filteredMemb = this.membCtrl.valueChanges
+        // .pipe(
+        //     startWith<string | Member>(''),
+        //     map(value => typeof value === 'string' ? value : value.name),
+        //     map(name => name ? this.filterMemb(name) : this.memberList.slice())
+        // );
+        //
 
         this.dateSCtrl = new FormControl();
         this.dateTCtrl = new FormControl();
@@ -155,34 +164,54 @@ export class BillerDialogComponent implements OnInit {
         };
     }
 
-    filterMembType(name: string) {
-        return this.memberTypeList.filter(memberType =>
-        memberType.name.toLowerCase().indexOf(name.toLowerCase()) === 0);
-    }
+    // ------ auto complete
+    // filterMembType(name: string) {
+    //     return this.memberTypeList.filter(memberType =>
+    //     memberType.name.toLowerCase().indexOf(name.toLowerCase()) === 0);
+    // }
 
-    filterMemb(name: string) {
-        return this.memberList.filter(member =>
-        member.name.toLowerCase().indexOf(name.toLowerCase()) === 0);
-    }
+    // filterMemb(name: string) {
+    //     return this.memberList.filter(member =>
+    //     member.name.toLowerCase().indexOf(name.toLowerCase()) === 0);
+    // }
 
-    displayFnMem(member?: Member): string | undefined {
-        return member ? member.name : undefined;
-    }
+    // displayFnMem(member?: Member): string | undefined {
+    //     return member ? member.name : undefined;
+    // }
 
-    displayFnMemType(memberType?: MemberType): string | undefined {
-        return memberType ? memberType.name : undefined;
-    }
+    // displayFnMemType(memberType?: MemberType): string | undefined {
+    //     return memberType ? memberType.name : undefined;
+    // }
+    //
 
     ngOnInit() {
         console.log('ngOnInit..');
         this.biller = {};
         this.modeTitle = this.data.modeTitle;
-        this.membTypeCtrl.setValue(this.data.rowData.memberType);
+
+        // ------ combo box
+        this.biller = this.data.rowData;
+        //
+
+        // ------ auto complete
+        // this.membTypeCtrl.setValue(this.data.rowData.memberType);
+        //
+        // ------ combo box
+        if (this.data.rowData.memberType !== null) {
+            this.biller.memberTypeId = this.data.rowData.memberType.id;
+        }
+        //
         if (this.data.mode !== 'create') {
             // console.log('edit mode..');
             this.btnDisabled = false;
             // this.membTypeCtrl.setValue(this.data.rowData.memberType);
-            this.membCtrl.setValue(this.data.rowData.member);
+
+            // ------ auto complete
+            // this.membCtrl.setValue(this.data.rowData.member);
+            //
+            // ------ combo box
+            this.biller.memberId = this.data.rowData.member.id;
+            //
             this.dateSCtrl.setValue(this.data.rowData.dateStart);
             this.dateTCtrl.setValue(this.data.rowData.dateThru);
 
@@ -190,7 +219,9 @@ export class BillerDialogComponent implements OnInit {
             // this.addEvent('thru', this.data.rowData.dateThru);
             // const dataDate = new Date(this.data.rowData.dateStart);
         }
-        this.biller = this.data.rowData;
+        // ------ auto complete
+        // this.biller = this.data.rowData;
+        //
         this.memberList = this.data.memberData;
         this.memberTypeList = this.data.memberTypeData;
         this.billerCompanyList = this.data.billerCompanyData;
@@ -232,7 +263,7 @@ export class BillerDialogComponent implements OnInit {
             this.btnLabel = 'Biller';
             this.gridApi.setColumnDefs(this.colDefs);
         } else {
-            this.btnLabel = 'Non Biller';
+            this.btnLabel = 'Biller Subscriber';
             this.gridApi.setColumnDefs(this.nonColDefs);
         }
         this.gridApi.setRowData([]);
@@ -272,8 +303,18 @@ export class BillerDialogComponent implements OnInit {
             }
         } else {
             console.log('load data create..');
-            if (this.membTypeCtrl.value !== null && this.biller.id !== undefined) {
-                if (this.membTypeCtrl.value.id === 1) {
+            // ------ auto complete
+            // if (this.membTypeCtrl.value !== null && this.biller.id !== undefined) {
+            //
+            // ------ combo box
+            if (this.biller.memberTypeId !== null && this.biller.id !== undefined) {
+            //
+                // ------ auto complete
+                // if (this.membTypeCtrl.value.id === 1) {
+                //
+                // ------ combo box
+                if (this.biller.memberTypeId === 1) {
+                //
                     this.getMembType({id: 1});
                     this.billerDetailService.query({
                         page: 1,
@@ -287,7 +328,12 @@ export class BillerDialogComponent implements OnInit {
                             (res: HttpErrorResponse) => this.onError(res.message),
                             () => { console.log('finally'); }
                     );
-                } else if (this.membTypeCtrl.value.id > 1) {
+                // ------ auto complete
+                // } else if (this.membTypeCtrl.value.id > 1) {
+                //
+                // ------ combo box
+                } else if (this.biller.memberTypeId > 1) {
+                //
                     this.getMembType({id: 2});
                     this.billerPriceDetailService.query({
                         page: 1,
@@ -346,7 +392,12 @@ export class BillerDialogComponent implements OnInit {
 
     openBDDialog(mode, data): void {
         console.log('open bd dialog', data);
-        const datasend = this.membTypeCtrl.value.id === 1 ?
+        // ------ auto complete
+        // const datasend = this.membTypeCtrl.value.id === 1 ?
+        //
+        // ------ combo box
+        const datasend = this.biller.memberTypeId === 1 ?
+        //
         {
             mode : 'create',
             modeTitle : 'Create',
@@ -398,7 +449,13 @@ export class BillerDialogComponent implements OnInit {
             datasend.mode = mode;
             datasend.modeTitle = (mode === 'view' ? 'View' : 'Edit');
             // datasend.rowData = data;
-            datasend.rowData = this.membTypeCtrl.value.id === 1 ?
+
+            // ------ auto complete
+            // datasend.rowData = this.membTypeCtrl.value.id === 1 ?
+            //
+            // ------ combo box
+            datasend.rowData = this.biller.memberTypeId === 1 ?
+            //
             {
                 id : data.id,
                 billerProduct : data.billerProduct,
@@ -430,7 +487,12 @@ export class BillerDialogComponent implements OnInit {
         }
         console.log('datasend : ', datasend);
 
-        const dialogRef = this.membTypeCtrl.value.id === 1 ?
+        // ------ auto complete
+        // const dialogRef = this.membTypeCtrl.value.id === 1 ?
+        //
+        // ------ combo box
+        const dialogRef = this.biller.memberTypeId === 1 ?
+        //
         this.dialog.open(BillerDetailComponent, {
             width: '1000px',
             data: datasend
@@ -479,8 +541,14 @@ export class BillerDialogComponent implements OnInit {
             description: this.biller.description,
             dateStart: this.biller.dateStart,
             dateThru: this.biller.dateThru,
-            memberTypeId: this.membTypeCtrl.value.id,
-            memberId: this.membCtrl.value.id,
+            // ------ auto complete
+            // memberTypeId: this.membTypeCtrl.value.id,
+            // memberId: this.membCtrl.value.id,
+            //
+            // ------ combo box
+            memberTypeId: this.biller.memberTypeId,
+            memberId: this.biller.memberId,
+            //
             manualCode: (this.biller.manualCode === undefined ? false : this.biller.manualCode),
             memberCode: (this.biller.memberCode === undefined ? '' : this.biller.memberCode)
         };

@@ -4,7 +4,7 @@ import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
 import { GlobalSetting } from './global-setting.model';
 import { GlobalSettingService } from './global-setting.service';
 import { HttpResponse, HttpErrorResponse } from '@angular/common/http';
-import { CommonValidator } from '../../validators/common.validator';
+import { CommonValidatorDirective } from '../../validators/common.validator';
 
 @Component({
     selector: 'app-global-setting-dialog',
@@ -15,7 +15,7 @@ import { CommonValidator } from '../../validators/common.validator';
 export class GlobalSettingDialogComponent implements OnInit {
 
     globalSetting: GlobalSetting;
-    globalSettingForm : FormGroup;
+    globalSettingForm: FormGroup;
     submitted = false;
     globalTypeOption = [
         {value: 'BANK', viewValue: 'Bank'},
@@ -24,10 +24,9 @@ export class GlobalSettingDialogComponent implements OnInit {
     ];
 
     countries: string[] = ['USA', 'UK', 'Canada'];
-    default: string = 'UK';
-    
+    default: 'UK';
+
     constructor(
-        
         private formBuilder: FormBuilder,
         public globalSettingService: GlobalSettingService,
         public dialogRef: MatDialogRef<GlobalSettingDialogComponent>,
@@ -36,10 +35,9 @@ export class GlobalSettingDialogComponent implements OnInit {
     get form() { return this.globalSettingForm.controls; }
 
     ngOnInit() {
-        
-        this.globalSettingForm = this.formBuilder.group({ 
-             name: ['', [CommonValidator.required]],
-             description: ['', CommonValidator.required]
+        this.globalSettingForm = this.formBuilder.group({
+             name: ['', [CommonValidatorDirective.required]],
+             description: ['', CommonValidatorDirective.required]
          });
 
         this.globalSetting = {};
@@ -71,12 +69,12 @@ export class GlobalSettingDialogComponent implements OnInit {
         }
     }
 
-    validate(): void { 
-        this.submitted = true; 
+    validate(): void {
+        this.submitted = true;
         // stop here if form is invalid
         if (this.globalSettingForm.invalid) {
             return;
-        }  
+        }
     }
 
 }

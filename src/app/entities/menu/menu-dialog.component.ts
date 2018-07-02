@@ -5,7 +5,7 @@ import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
 import { Menu } from './menu.model';
 import { MenuService } from './menu.service';
 import { HttpResponse, HttpErrorResponse } from '@angular/common/http';
-import { CommonValidator } from '../../validators/common.validator';
+import { CommonValidatorDirective } from '../../validators/common.validator';
 
 @Component({
     selector: 'app-menu-dialog',
@@ -21,7 +21,7 @@ export class MenuDialogComponent implements OnInit {
       ]);
 
     menu: Menu;
-    menuForm : FormGroup;
+    menuForm: FormGroup;
     submitted = false;
 
     constructor(
@@ -31,10 +31,9 @@ export class MenuDialogComponent implements OnInit {
         @Inject(MAT_DIALOG_DATA) public data: any) { }
 
     ngOnInit() {
-        
-        this.menuForm = this.formBuilder.group({  
-             name: ['', [CommonValidator.required]],
-             description: ['', CommonValidator.required]
+        this.menuForm = this.formBuilder.group({
+             name: ['', [CommonValidatorDirective.required]],
+             description: ['', CommonValidatorDirective.required]
          });
 
         this.menu = {};
@@ -52,10 +51,10 @@ export class MenuDialogComponent implements OnInit {
 
     save(): void {
 
-        this.submitted = true;  
+        this.submitted = true;
         if (this.menuForm.invalid) {
             return;
-        }   
+        }
 
         console.log('isi object  ', this.menu);
         if (this.menu.id === undefined) {

@@ -76,7 +76,7 @@ export class SidebarComponent {
       name: 'Biller Maintenance', link: 'biller', icon: 'library_books',
       subLinks: [
         {name: 'Biller', link: 'biller'},
-        {name: 'Non Biller', link: 'non-biller'},
+        {name: 'Biller Subscriber', link: 'non-biller'},
       ]
     },
 

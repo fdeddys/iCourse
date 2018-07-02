@@ -5,7 +5,7 @@ import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
 import { BillerType } from './biller-type.model';
 import { BillerTypeService } from './biller-type.service';
 import { HttpResponse, HttpErrorResponse } from '@angular/common/http';
-import { CommonValidator } from '../../validators/common.validator';
+import { CommonValidatorDirective } from '../../validators/common.validator';
 
 @Component({
     selector: 'app-biller-type-dialog',
@@ -18,8 +18,13 @@ export class BillerTypeDialogComponent implements OnInit {
     billerType: BillerType;
     name: string;
     checked = false;
-    billerTypeForm : FormGroup;
+    billerTypeForm: FormGroup;
     submitted = false;
+
+    typeList = [
+        {'value': false, 'desc': 'Prepaid'},
+        {'value': true, 'desc': 'Postpaid'}
+    ];
 
     constructor(
         private formBuilder: FormBuilder,
@@ -30,10 +35,11 @@ export class BillerTypeDialogComponent implements OnInit {
     get form() { return this.billerTypeForm.controls; }
 
     ngOnInit() {
-        this.billerTypeForm = this.formBuilder.group({ 
-            name: ['', [CommonValidator.required]], 
+        this.billerTypeForm = this.formBuilder.group({
+            name: ['', [CommonValidatorDirective.required]],
         });
         this.billerType = {};
+        this.billerType.ispostpaid = false;
         if ( this.data.action === 'Edit' ) {
             // search
             this.billerType = this.data.BillerType;
@@ -64,13 +70,12 @@ export class BillerTypeDialogComponent implements OnInit {
         }
     }
 
-    
-    validate(): void { 
-        this.submitted = true; 
+    validate(): void {
+        this.submitted = true;
         // stop here if form is invalid
         if (this.billerTypeForm.invalid) {
             return;
-        }  
+        }
     }
 
     onChange(events): void {
