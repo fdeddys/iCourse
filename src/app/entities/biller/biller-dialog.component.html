@@ -2,21 +2,30 @@
 <div mat-dialog-content>
     <form class="form-container">	
         <mat-form-field class="form-half-width" style="margin-right: 10%">
-            <input matInput placeholder="Biller" aria-label="Member" [matAutocomplete]="autoM" [formControl]="membCtrl">
+            <!-- <input matInput placeholder="Biller" aria-label="Member" [matAutocomplete]="autoM" [formControl]="membCtrl">
             <mat-autocomplete #autoM="matAutocomplete" [displayWith]="displayFnMem">
                 <mat-option *ngFor="let member of filteredMemb | async" [value]="member">
                     <span>{{ member.name }}</span>
                 </mat-option>
-            </mat-autocomplete>
+            </mat-autocomplete> -->
+            <mat-select placeholder="Biller" name="member" [(ngModel)]="biller.memberId">
+                <mat-option *ngFor="let member of memberList" [value]="member.id">
+                    {{member.name}}
+                </mat-option>
+            </mat-select>
         </mat-form-field>	
 		<mat-form-field class="form-half-width">
-			<input matInput placeholder="Member Type" aria-label="Member Type" [matAutocomplete]="autoMType" [formControl]="membTypeCtrl">
-			<!-- <mat-autocomplete #autoMType="matAutocomplete" [displayWith]="displayFnMemType" (optionSelected)='getMembType($event.option.value)'> -->
+			<!-- <input matInput placeholder="Member Type" aria-label="Member Type" [matAutocomplete]="autoMType" [formControl]="membTypeCtrl">
             <mat-autocomplete #autoMType="matAutocomplete" [displayWith]="displayFnMemType">
 				<mat-option *ngFor="let memberType of filteredMembType | async" [value]="memberType">
 					<span>{{ memberType.name }}</span>
 				</mat-option>
-			</mat-autocomplete>
+            </mat-autocomplete> -->
+            <mat-select placeholder="Member Type" name="memberType" [(ngModel)]="biller.memberTypeId">
+                <mat-option *ngFor="let memberType of memberTypeList" [value]="memberType.id">
+                    {{memberType.name}}
+                </mat-option>
+            </mat-select>
         </mat-form-field>
         <mat-form-field class="form-half-width" style="margin-right: 10%">
             <input matInput [matDatepicker]="picker" placeholder="Date Start" (dateInput)="addEvent('start', $event)" (click)="picker.open()" [formControl]="dateSCtrl" readonly>
