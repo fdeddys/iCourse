@@ -135,6 +135,11 @@ export class RoleComponent implements MainChild, OnInit {
     this.gridColumnApi = params.columnApi;
     this.gridApi.sizeColumnsToFit();
 
+    window.onload = () => {
+        console.log('resize..');
+        this.gridApi.sizeColumnsToFit();
+    };
+
     window.onresize = () => {
         console.log('resize..');
         this.gridApi.sizeColumnsToFit();
@@ -179,7 +184,7 @@ export class RoleComponent implements MainChild, OnInit {
     console.log('is resized?');
     setTimeout(() => {
       this.gridApi.sizeColumnsToFit();
-    }, 370);
+    }, 400);
   }
 
   public exportCSV(reportType): void {
