@@ -3,7 +3,7 @@ import { Role } from './role.model';
 import { MatDialog } from '@angular/material/dialog';
 import { RoleService } from './role.service';
 import { HttpResponse, HttpErrorResponse } from '@angular/common/http';
-import { GRID_THEME, CSS_BUTTON, NO_DATA_GRID_MESSAGE } from '../../shared/constant/base-constant';
+import { GRID_THEME, CSS_BUTTON, NO_DATA_GRID_MESSAGE, TOTAL_RECORD_PER_PAGE } from '../../shared/constant/base-constant';
 import { MatActionButtonComponent } from '../../shared/templates/mat-action-button.component';
 import { RoleDialogComponent } from './role-dialog.component';
 import { RoleConfirmDialogComponent } from './role-confirm-dialog.component';
@@ -22,6 +22,9 @@ export class RoleComponent implements OnInit {
   role: Role[];
   Role: Role;
   messageNoData: string = NO_DATA_GRID_MESSAGE;
+  curPage = 1;
+  totalData = 0;
+  totalRecord = TOTAL_RECORD_PER_PAGE;
 
   gridOptions = {
     columnDefs: [
@@ -47,6 +50,7 @@ export class RoleComponent implements OnInit {
       maxConcurrentDatasourceRequests : 2,
       infiniteInitialRowCount : 1,
       maxBlocksInCache : 2,
+      suppressPaginationPanel : true,
       localeText: {noRowsToShow: this.messageNoData},
       frameworkComponents: {
           actionRenderer: MatActionButtonComponent
@@ -86,7 +90,7 @@ export class RoleComponent implements OnInit {
       dialogRef.afterClosed().subscribe(result => {
         console.log('The dialog was closed = [', result, ']');
         if (result === 'refresh') {
-          this.loadAll();
+          this.loadAll(this.curPage);
         }
       });
   }
@@ -105,11 +109,11 @@ export class RoleComponent implements OnInit {
 
     }
 
-  loadAll() {
+  loadAll(page) {
         console.log('Start call function all header');
         this.roleService.query({
-            page: 1,
-            count: 10000,
+            page: page,
+            count: this.totalRecord,
         })
         .subscribe(
                 (res: HttpResponse<Role[]>) => this.onSuccess(res.body, res.headers),
@@ -133,7 +137,7 @@ export class RoleComponent implements OnInit {
     //     this.gridApi.sizeColumnsToFit();
     // };
 
-    this.loadAll();
+    this.loadAll(this.curPage);
   }
 
   openNewDialog(): void {
@@ -145,7 +149,7 @@ export class RoleComponent implements OnInit {
     dialogRef.afterClosed().subscribe(result => {
       console.log('The dialog was closed = [', result, ']');
       if (result === 'refresh') {
-        this.loadAll();
+        this.loadAll(this.curPage);
       }
     });
   }
@@ -161,11 +165,17 @@ export class RoleComponent implements OnInit {
         role.nourut = urut++;
       }
       this.gridApi.setRowData(this.role);
+      this.totalData = data.totalElements;
   }
 
-  private onError(error) {
-    console.log('error..');
-    this.gridApi.setRowData([]);
-  }
+    private onError(error) {
+        console.log('error..');
+        this.gridApi.setRowData([]);
+    }
 
+    public onPaginateChange($event): void {
+        // console.log('events ', $event);
+        this.curPage = $event.pageIndex + 1;
+        this.loadAll(this.curPage);
+    }
 }

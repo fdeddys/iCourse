@@ -68,13 +68,13 @@ export class BillerTypeComponent implements OnInit {
         return dt.toLocaleString(['id']);
     }
 
-  constructor(  private dialog: MatDialog,
+    constructor(  private dialog: MatDialog,
                 private billerTypeService: BillerTypeService, ) { }
 
-  public onRowClicked(e) {
-      if (e.event.target !== undefined) {
-          const data = e.data;
-          const actionType = e.event.target.getAttribute('data-action-type');
+    public onRowClicked(e) {
+        if (e.event.target !== undefined) {
+            const data = e.data;
+            const actionType = e.event.target.getAttribute('data-action-type');
 
         switch (actionType) {
             case 'edit':
@@ -82,8 +82,8 @@ export class BillerTypeComponent implements OnInit {
             case 'inactive':
                 return this.onActionRemoveClick(data);
         }
-      }
-  }
+        }
+    }
 
     public onActionEditClick(data: any) {
         console.log('View action clicked', data);

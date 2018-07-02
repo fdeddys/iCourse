@@ -12,7 +12,7 @@
         </div>
         <ag-grid-angular 
         #agGrid
-            style="height: 600px;" 
+            style="height: 550px;" 
             class="{{theme}}"
             [gridOptions]="gridOptions" 
             (gridReady)="onGridReady($event)"
@@ -20,7 +20,7 @@
             >
         </ag-grid-angular>
         
-        <div style="width: 750px" >
+        <div >
             <mat-paginator 
                 [length]="totalData"
                 [pageSize]="totalRecord"
