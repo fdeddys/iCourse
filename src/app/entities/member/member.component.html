@@ -2,23 +2,52 @@
     <mat-card-header>
         <mat-card-title style="align-items: center">
             <!-- <h2 style="color: rgb(226, 0, 0)" >Member Registration</h2>         -->
-            <h2 mat-dialog-title>Member Registration</h2>    
+            <h2 mat-dialog-title>Member Maintenance</h2>    
         </mat-card-title>
     </mat-card-header>
     <mat-card-content>
-        <div style="text-align: right">
+        <div style="text-align: left">
             <button mat-raised-button color="primary" (click)="openNewDialog()" style="margin-bottom: 10px;">Add Member</button>
         </div>
-
         <ag-grid-angular 
             #agGrid
-            style="height: 500px;" 
+            style="height: 550px;" 
             class="{{theme}}"
             [gridOptions]="gridOptions" 
             (gridReady)="onGridReady($event)"
             (rowClicked)="onRowClicked($event)"
             >
         </ag-grid-angular>
+        <!-- <button mat-raised-button color="primary" (click)="prevPage()" [disabled]="isFirst"
+            style="width: 50px" >
+        </button>
+         -->
+         <!-- <div class="page_custom" >
+             <button mat-icon-button (click)="firstPage()" [disabled]="isFirst" >
+                 <mat-icon>first_page</mat-icon>
+             </button>
+              <button mat-icon-button (click)="prevPage()" [disabled]="isFirst" >
+                 <mat-icon>chevron_left</mat-icon>
+             </button>
+     
+             Page {{curPage}} of {{totalpage}}
+             <button mat-icon-button (click)="nextPage()" [disabled]="isLast" >
+                 <mat-icon>chevron_right</mat-icon>
+             </button>
+             <button mat-icon-button (click)="lastPage()" [disabled]="isLast" >
+                 <mat-icon>last_page</mat-icon>
+             </button>
+         </div> -->
+         
+        <div style="width: 1100px" >
+            <mat-paginator 
+               [length]="totalData"
+               [pageSize]="totalRecord"
+               [pageSizeOptions]="[totalRecord]"
+               (page)="onPaginateChange($event)">
+           </mat-paginator>
+        </div> 
+
     </mat-card-content>
 </mat-card>
 

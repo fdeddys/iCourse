@@ -5,7 +5,7 @@ import { MemberDialogComponent } from './member-dialog.component';
 import { MemberConfirmComponent } from './member-confirm.component';
 import { Member } from './member.model';
 import { MemberService } from './member.service';
-import { GRID_THEME, CSS_BUTTON, NO_DATA_GRID_MESSAGE } from '../../shared/constant/base-constant';
+import { GRID_THEME, CSS_BUTTON, NO_DATA_GRID_MESSAGE, TOTAL_RECORD_PER_PAGE } from '../../shared/constant/base-constant';
 import { MatActionButtonComponent } from '../../shared/templates/mat-action-button.component';
 
 @Component({
@@ -20,6 +20,9 @@ export class MemberComponent implements OnInit {
   // no: any;
   cssButton = CSS_BUTTON  ;
   theme: String = GRID_THEME;
+  curPage = 1;
+  totalData = 0;
+  totalRecord = TOTAL_RECORD_PER_PAGE;
 
   members: Member[];
   member: Member;
@@ -27,10 +30,10 @@ export class MemberComponent implements OnInit {
 
   gridOptions = {
     columnDefs: [
-      { headerName: 'No', field: 'nourut', width: 50, pinned: 'left', editable: false  },
-      { headerName: 'Name', field: 'name', width: 100, editable: false },
-      { headerName: 'Description', field: 'description', width: 100, editable: false },
-      { headerName: 'Status', field: 'active',  editable: false, valueFormatter: this.boolFormatter },
+      { headerName: 'No', field: 'nourut', width: 100, pinned: 'left', editable: false  },
+      { headerName: 'Name', field: 'name', width: 300, editable: false },
+      { headerName: 'Description', field: 'description', width: 400, editable: false },
+      { headerName: 'Status', field: 'active', width: 200,  editable: false, valueFormatter: this.boolFormatter },
       { headerName: ' ', width: 150, cellRenderer: 'actionRenderer'}
       // { headerName: ' ', suppressMenu: true,
       //   width: 100,
@@ -50,6 +53,7 @@ export class MemberComponent implements OnInit {
       infiniteInitialRowCount : 1,
       maxBlocksInCache : 2,
       onPaginationChanged: this.onPaginationChanged(),
+      suppressPaginationPanel : true,
       localeText: {noRowsToShow: this.messageNoData},
       frameworkComponents: {
           actionRenderer: MatActionButtonComponent
@@ -92,7 +96,7 @@ export class MemberComponent implements OnInit {
       dialogRef.afterClosed().subscribe(result => {
         console.log('The dialog was closed = [', result, ']');
         // if (result === 'refresh') {
-          this.loadAll();
+          this.loadAll(this.curPage);
         // }
       });
   }
@@ -111,11 +115,11 @@ export class MemberComponent implements OnInit {
 
     }
 
-  loadAll() {
+  loadAll(page) {
         console.log('Start call function all header');
         this.memberService.query({
-            page: 1,
-            count: 10000,
+            page: page,
+            count: this.totalRecord,
             // size: this.itemsPerPage,
             // sort: this.sort()
         })
@@ -138,8 +142,8 @@ export class MemberComponent implements OnInit {
     console.log(this.gridApi);
     console.log(this.gridColumnApi);
 
-    this.loadAll();
-    params.api.sizeColumnsToFit();
+    this.loadAll(this.curPage);
+    // params.api.sizeColumnsToFit();
   }
 
   onPaginationChanged() {
@@ -159,27 +163,48 @@ export class MemberComponent implements OnInit {
     dialogRef.afterClosed().subscribe(result => {
       console.log('The dialog was closed = [', result, ']');
       // if (result === 'refresh') {
-        this.loadAll();
+        this.loadAll(this.curPage);
       // }
     });
   }
 
   private onSuccess(data, headers) {
-    if ( data.content.length <= 0 ) {
-      return ;
-    }
-    this.members = data.content;
-    let urut = 1;
-    for (const member of this.members) {
-        member.nourut = urut++;
+      if ( data.content.length <= 0 ) {
+          return ;
+      }
+      this.members = data.content;
+      let urut = 1;
+      for (const member of this.members) {
+          member.nourut = urut++;
       }
 
-    this.gridApi.setRowData(this.members);
-
+      this.gridApi.setRowData(this.members);
+      this.totalData = data.totalElements;
   }
 
   private onError(error) {
-    console.log('error..');
+      console.log('error..');
   }
 
+  // public nextPage(): void {
+  //     this.loadAll(this.curPage + 1 );
+  // }
+
+  // public prevPage(): void {
+  //     this.loadAll(this.curPage - 1 );
+  // }
+
+  // public firstPage(): void {
+  //     this.loadAll( 1 );
+  // }
+
+  // public lastPage(): void {
+  //     this.loadAll(this.totalpage );
+  // }
+
+  public onPaginateChange($event): void {
+      // console.log('events ', $event);
+      this.curPage = $event.pageIndex + 1;
+      this.loadAll(this.curPage);
+  }
 }

@@ -18,5 +18,13 @@
             (rowClicked)="onRowClicked($event)"
             >
         </ag-grid-angular>
+
+        <div style="width: 850px" >
+            <mat-paginator 
+                [length]="totalData"
+                [pageSize]="totalRecord"
+                (page)="onPaginateChange($event)">
+            </mat-paginator>
+        </div>
     </mat-card-content>
 </mat-card>

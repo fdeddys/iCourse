@@ -12,3 +12,4 @@ box-shadow: inset 0 -3px #006400; border-radius: 5px; -webkit-box-shadow: inset 
 
 export const NO_DATA_GRID_MESSAGE = 'No data';
 export const SNACKBAR_DURATION_IN_MILLISECOND = 3000;
+export const TOTAL_RECORD_PER_PAGE = 10;

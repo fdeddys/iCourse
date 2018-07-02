@@ -5,7 +5,7 @@ import { MemberTypeService } from './member-type.service';
 import { MemberTypeDialogComponent } from './member-type-dialog.component';
 import { MemberTypeConfirmComponent } from './member-type-confirm.component';
 import { HttpResponse, HttpErrorResponse } from '@angular/common/http';
-import { GRID_THEME, CSS_BUTTON, NO_DATA_GRID_MESSAGE } from '../../shared/constant/base-constant';
+import { GRID_THEME, CSS_BUTTON, NO_DATA_GRID_MESSAGE, TOTAL_RECORD_PER_PAGE } from '../../shared/constant/base-constant';
 import { MatActionButtonComponent } from '../../shared/templates/mat-action-button.component';
 
 @Component({
@@ -19,7 +19,9 @@ export class MemberTypeComponent implements OnInit {
   private gridColumnApi;
   theme: String = GRID_THEME;
   cssButton = CSS_BUTTON  ;
-
+  curPage = 1;
+  totalData = 0;
+  totalRecord = TOTAL_RECORD_PER_PAGE;
   memberTipes: MemberType[];
   MemberType: MemberType;
   messageNoData: string = NO_DATA_GRID_MESSAGE;
@@ -27,8 +29,8 @@ export class MemberTypeComponent implements OnInit {
   gridOptions = {
     columnDefs: [
       { headerName: 'No', field: 'nourut', width: 100, minWidth: 100, maxWidth: 100, editable: false,  pinned: 'left'},
-      { headerName: 'Name', field: 'name', width: 100, editable: false},
-      { headerName: 'Description', field: 'description',  editable: false },
+      { headerName: 'Name', field: 'name', width: 200, editable: false},
+      { headerName: 'Description', field: 'description', width: 400,  editable: false },
       { headerName: ' ', width: 150, minWidth: 150, maxWidth: 150, cellRenderer: 'actionRenderer'}
       // { headerName: ' ', suppressMenu: true,
       //   width: 100 ,
@@ -48,6 +50,7 @@ export class MemberTypeComponent implements OnInit {
       maxConcurrentDatasourceRequests : 2,
       infiniteInitialRowCount : 1,
       maxBlocksInCache : 2,
+      suppressPaginationPanel : true,
       localeText: {noRowsToShow: this.messageNoData},
       suppressHorizontalScroll: false,
       frameworkComponents: {
@@ -82,7 +85,7 @@ export class MemberTypeComponent implements OnInit {
       dialogRef.afterClosed().subscribe(result => {
         console.log('The dialog was closed = [', result, ']');
         if (result === 'refresh') {
-          this.loadAll();
+          this.loadAll(this.curPage);
         }
       });
   }
@@ -101,11 +104,11 @@ export class MemberTypeComponent implements OnInit {
 
     }
 
-  loadAll() {
-        console.log('Start call function all header');
+  loadAll(page) {
+        console.log('Start call function all header page:', page, ' total per page ', this.totalRecord);
         this.memberTypeService.query({
-            page: 1,
-            count: 10000,
+            page: page,
+            count: this.totalRecord,
         })
         .subscribe(
                 (res: HttpResponse<MemberType[]>) => this.onSuccess(res.body, res.headers),
@@ -124,8 +127,8 @@ export class MemberTypeComponent implements OnInit {
 
     // console.log(this.gridApi);
     // console.log(this.gridColumnApi);
-    params.api.sizeColumnsToFit();
-    this.loadAll();
+    // params.api.sizeColumnsToFit();
+    this.loadAll(this.curPage);
   }
 
   openNewDialog(): void {
@@ -135,10 +138,8 @@ export class MemberTypeComponent implements OnInit {
     });
 
     dialogRef.afterClosed().subscribe(result => {
-      console.log('The dialog was closed = [', result, ']');
-      if (result === 'refresh') {
-        this.loadAll();
-      }
+        console.log('The dialog was closed = [', result, ']');
+        this.loadAll(this.curPage);
     });
   }
 
@@ -153,10 +154,18 @@ export class MemberTypeComponent implements OnInit {
           memberType.nourut = urut++;
       }
       this.gridApi.setRowData(this.memberTipes);
+      this.totalData = data.totalElements;
   }
 
   private onError(error) {
     console.log('error..');
   }
+
+  public onPaginateChange($event): void {
+      // console.log('events ', $event);
+      this.curPage = $event.pageIndex + 1;
+      this.loadAll(this.curPage);
+  }
+
 
 }
