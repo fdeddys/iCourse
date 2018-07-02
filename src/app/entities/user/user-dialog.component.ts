@@ -1,6 +1,6 @@
 import { Component, OnInit, Inject } from '@angular/core';
 
-import { FormsModule, FormControl, Validators } from '@angular/forms';
+import { FormBuilder, FormGroup, FormsModule, FormControl, Validators } from '@angular/forms';
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA, MatSnackBar } from '@angular/material';
 import { User } from './user.model';
 import { UserService } from './user.service';
@@ -9,6 +9,7 @@ import { Role, RoleService } from '../role';
 import { NO_DATA_GRID_MESSAGE, GRID_THEME, CSS_BUTTON, SNACKBAR_DURATION_IN_MILLISECOND } from '../../shared/constant/base-constant';
 import { RoleUserService } from '../role-user/role-user.service';
 import { RoleUserView } from '../role-user/role-user.model';
+import { CommonValidator } from '../../validators/common.validator';
 import { MatCheckboxComponent } from '../../shared/templates/mat-checkbox.component';
 
 @Component({
@@ -31,6 +32,8 @@ export class UserDialogComponent implements OnInit {
     theme: String = GRID_THEME;
     cssButton = CSS_BUTTON  ;
     duration = SNACKBAR_DURATION_IN_MILLISECOND;
+    userForm : FormGroup;
+    submitted = false;
 
     // emailFormControl = new FormControl('', [
     //     Validators.required,
@@ -45,6 +48,7 @@ export class UserDialogComponent implements OnInit {
     ];
 
     constructor(
+        private formBuilder: FormBuilder,
         public userService: UserService,
         public snackBar: MatSnackBar,
         public roleService: RoleService,
@@ -189,6 +193,13 @@ export class UserDialogComponent implements OnInit {
     }
 
     ngOnInit() {
+        
+        this.userForm = this.formBuilder.group({ 
+             name: ['', [CommonValidator.required ]],
+             email: ['', CommonValidator.required],
+             //status: ['', CommonValidator.required]
+         });
+
         this.user = {};
         if ( this.data.action === 'Edit' ) {
             // search
@@ -199,11 +210,30 @@ export class UserDialogComponent implements OnInit {
         }
     }
 
+    get form() { return this.userForm.controls; }
+
     onNoClick(): void {
         this.dialogRef.close();
     }
 
     save(): void {
+        // if ( this.data.action === 'Add' ) {
+
+        //     if ( this.pass === '' ) {
+        //         this.snackBar.open('Password belum di isi !', 'ok', {
+        //             duration: 2000,
+        //         });
+        //         return ;
+        //     }
+
+        //     if ( this.pass !== this.confirmP ) {
+        //         this.snackBar.open('Password dan confirmasi tidak sama !', 'ok', {
+        //             duration: 2000,
+        //         });
+        //         return ;
+        //     }
+        //     this.user.password = atob(this.pass);
+        // }
 
         this.user.password = '';
 
@@ -254,6 +284,14 @@ export class UserDialogComponent implements OnInit {
                 }
             );
         }
+    }
+
+    validate(): void { 
+        this.submitted = true; 
+        // stop here if form is invalid
+        if (this.userForm.invalid) {
+            return;
+        }  
     }
 
     getRoleList(): void {

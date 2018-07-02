@@ -1,10 +1,10 @@
 import { Component, OnInit, Inject } from '@angular/core';
-
-import { FormsModule } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
 import { GlobalSetting } from './global-setting.model';
 import { GlobalSettingService } from './global-setting.service';
 import { HttpResponse, HttpErrorResponse } from '@angular/common/http';
+import { CommonValidator } from '../../validators/common.validator';
 
 @Component({
     selector: 'app-global-setting-dialog',
@@ -15,19 +15,33 @@ import { HttpResponse, HttpErrorResponse } from '@angular/common/http';
 export class GlobalSettingDialogComponent implements OnInit {
 
     globalSetting: GlobalSetting;
-
+    globalSettingForm : FormGroup;
+    submitted = false;
     globalTypeOption = [
         {value: 'BANK', viewValue: 'Bank'},
         {value: 'RELIGION', viewValue: 'Religion'},
         {value: 'MEASUREMENT', viewValue: 'Measurement'}
     ];
 
+    countries: string[] = ['USA', 'UK', 'Canada'];
+    default: string = 'UK';
+    
     constructor(
+        
+        private formBuilder: FormBuilder,
         public globalSettingService: GlobalSettingService,
         public dialogRef: MatDialogRef<GlobalSettingDialogComponent>,
         @Inject(MAT_DIALOG_DATA) public data: any) { }
 
+    get form() { return this.globalSettingForm.controls; }
+
     ngOnInit() {
+        
+        this.globalSettingForm = this.formBuilder.group({ 
+             name: ['', [CommonValidator.required]],
+             description: ['', CommonValidator.required]
+         });
+
         this.globalSetting = {};
         if ( this.data.action === 'Edit' ) {
             // search
@@ -37,25 +51,32 @@ export class GlobalSettingDialogComponent implements OnInit {
             this.globalSetting.globalType = 'BANK';
         }
     }
-
+ 
     onNoClick(): void {
         this.dialogRef.close();
     }
 
-    save(): void {
-
+    onSubmit() {
         console.log('isi member  ', this.globalSetting);
-        if (this.globalSetting.id === undefined) {
+        if (this.globalSetting.id === undefined) {  
             console.log('send to service ', this.globalSetting);
             this.globalSettingService.create(this.globalSetting).subscribe((res: HttpResponse<GlobalSetting>) => {
                 this.dialogRef.close('refresh');
             });
-        } else {
+        } else {    
             console.log('send to service ', this.globalSetting);
             this.globalSettingService.update(this.globalSetting.id, this.globalSetting).subscribe((res: HttpResponse<GlobalSetting>) => {
                 this.dialogRef.close('refresh');
             });
         }
+    }
+
+    validate(): void { 
+        this.submitted = true; 
+        // stop here if form is invalid
+        if (this.globalSettingForm.invalid) {
+            return;
+        }  
     }
 
 }

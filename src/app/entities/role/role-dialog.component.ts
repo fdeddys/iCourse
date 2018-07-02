@@ -1,12 +1,13 @@
-import { Component, OnInit, Inject } from '@angular/core';
-
-import { FormsModule, FormControl, Validators } from '@angular/forms';
-import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
+import { HttpErrorResponse, HttpResponse } from '@angular/common/http';
+import { Component, Inject, OnInit } from '@angular/core';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
+import { CSS_BUTTON, GRID_THEME, NO_DATA_GRID_MESSAGE } from '../../shared/constant/base-constant';
+import { CommonValidator } from '../../validators/common.validator';
+import { Menu, MenuService } from '../menu';
 import { Role, RoleMenuView } from './role.model';
 import { RoleService } from './role.service';
-import { HttpResponse, HttpErrorResponse } from '@angular/common/http';
-import { GRID_THEME, CSS_BUTTON, NO_DATA_GRID_MESSAGE } from '../../shared/constant/base-constant';
-import { MenuService, Menu } from '../menu';
+
 
 @Component({
     selector: 'app-role-dialog',
@@ -18,21 +19,19 @@ export class RoleDialogComponent implements OnInit {
 
     private gridApi;
     private gridColumnApi;
-    menuSelected: any;
-    emailFormControl = new FormControl('', [
-        Validators.required,
-        Validators.email,
-      ]);
-
+    menuSelected: any; 
     role: Role;
-    menu: Menu;
+    menu: Menu; 
     // menus: Menu[];
     menuRegistered: RoleMenuView[];
     theme: String = GRID_THEME;
     cssButton = CSS_BUTTON  ;
-    messageNoData: string = NO_DATA_GRID_MESSAGE;
+    messageNoData: string = NO_DATA_GRID_MESSAGE; 
+    roleForm : FormGroup;
+    submitted = false;
 
     constructor(
+        private formBuilder: FormBuilder,
         public roleService: RoleService,
         private menuService: MenuService,
         public dialogRef: MatDialogRef<RoleDialogComponent>,
@@ -90,6 +89,12 @@ export class RoleDialogComponent implements OnInit {
 
 
     ngOnInit() {
+ 
+        this.roleForm = this.formBuilder.group({ 
+            name: ['', [CommonValidator.required]],
+            description: ['', CommonValidator.required]
+        });
+
         this.role = {};
         if ( this.data.action === 'Edit' ) {
             // search
@@ -102,6 +107,17 @@ export class RoleDialogComponent implements OnInit {
             // this.loadAllMenu();
         }
     }
+
+    get form() { return this.roleForm.controls; }
+
+   /*  onSubmit() {
+        this.submitted = true; 
+        // stop here if form is invalid
+        if (this.roleForm.invalid) {
+            return;
+        } 
+        alert('SUCCESS!! :-)')
+    } */
 
     // loadMenuList(roleid, registered): void {
     //     this.menuService.findByRole(roleid, registered)
@@ -144,8 +160,7 @@ export class RoleDialogComponent implements OnInit {
         this.dialogRef.close();
     }
 
-    save(): void {
-
+    onSubmit() { 
         console.log('isi object  ', this.role);
         if (this.role.id === undefined) {
             console.log('send to service ', this.role);
@@ -158,6 +173,14 @@ export class RoleDialogComponent implements OnInit {
                 this.dialogRef.close('refresh');
             });
         }
+    }
+
+    validate(): void { 
+        this.submitted = true; 
+        // stop here if form is invalid
+        if (this.roleForm.invalid) {
+            return;
+        }  
     }
 
     onGridReady(params) {
@@ -193,6 +216,5 @@ export class RoleDialogComponent implements OnInit {
 
     private onError(error) {
       console.log('error..');
-    }
-
+    } 
 }

@@ -27,6 +27,7 @@ import { MatActionButtonComponent } from './shared/templates/mat-action-button.c
 
 import { HttpClientModule } from '@angular/common/http';
 import { EntityModule } from './entities/entity.module';
+import { ReactiveFormsModule } from '@angular/forms';
 
 @NgModule({
     declarations: [
@@ -45,7 +46,8 @@ import { EntityModule } from './entities/entity.module';
         AppRoutingModule,
         // AgGridModule.withComponents([]),
         HttpClientModule,
-        EntityModule
+        EntityModule,
+        ReactiveFormsModule
     ],
     providers: [
         LoginService,

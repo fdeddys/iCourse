@@ -6,12 +6,12 @@ import { ProductService } from './product.service';
 
 import { Observable } from 'rxjs';
 import { map, startWith } from 'rxjs/operators';
-
-import { FormControl } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators ,FormControl} from '@angular/forms'; 
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
 import { BillerType } from '../biller-type';
 import { BillerCompany } from '../biller-company';
 import { Member } from '../member';
+import { CommonValidator } from '../../validators/common.validator';
 
 @Component({
     selector: 'app-product-dialog',
@@ -36,8 +36,11 @@ export class ProductDialogComponent implements OnInit {
     statusList = [];
 
     modeTitle = '';
+    productForm : FormGroup;
+    submitted = false;
 
     constructor(
+        private formBuilder: FormBuilder,
         public productService: ProductService,
         public dialogRef: MatDialogRef<ProductDialogComponent>,
         @Inject(MAT_DIALOG_DATA) public data: any
@@ -109,7 +112,12 @@ export class ProductDialogComponent implements OnInit {
         }
     }
 
-    ngOnInit() {
+    get form() { return this.productForm.controls; }
+    ngOnInit() { 
+        this.productForm = this.formBuilder.group({ 
+            name: ['', [CommonValidator.required]], 
+        });
+
         this.product = {};
         this.modeTitle = this.data.modeTitle;
 
@@ -142,7 +150,7 @@ export class ProductDialogComponent implements OnInit {
         this.dialogRef.close();
     }
 
-    save(): void {
+    onSubmit() {
         this.productSave = {
             id: this.product.id,
             name: this.product.name,
@@ -168,6 +176,15 @@ export class ProductDialogComponent implements OnInit {
             });
         }
     }
+
+    validate(): void { 
+        this.submitted = true; 
+        // stop here if form is invalid
+        if (this.productForm.invalid) {
+            return;
+        }  
+    }
+
 }
 
 // billerCompany : {id: 1, name: "Telkomsel"}

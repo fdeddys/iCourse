@@ -1,10 +1,11 @@
 import { Component, OnInit, Inject } from '@angular/core';
-
-import { FormsModule } from '@angular/forms';
+ 
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA, MatSnackBar } from '@angular/material';
 import { MemberType } from './member-type.model';
 import { MemberTypeService } from './member-type.service';
 import { HttpResponse, HttpErrorResponse } from '@angular/common/http';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { CommonValidator } from '../../validators/common.validator';
 
 @Component({
     selector: 'app-member-type-dialog',
@@ -15,14 +16,22 @@ import { HttpResponse, HttpErrorResponse } from '@angular/common/http';
 export class MemberTypeDialogComponent implements OnInit {
 
     memberType: MemberType;
+    memberTypeForm : FormGroup;
+    submitted = false;
 
     constructor(
+        private formBuilder: FormBuilder,
         public memberTypeService: MemberTypeService,
         public snackBar: MatSnackBar,
         public dialogRef: MatDialogRef<MemberTypeDialogComponent>,
         @Inject(MAT_DIALOG_DATA) public data: any) { }
 
     ngOnInit() {
+        this.memberTypeForm = this.formBuilder.group({ 
+            name: ['', [CommonValidator.required]],
+            description: ['', CommonValidator.required]
+        });
+
         this.memberType = {};
         if ( this.data.action === 'EDIT' ) {
             // search
@@ -31,12 +40,14 @@ export class MemberTypeDialogComponent implements OnInit {
         }
     }
 
+    get form() { return this.memberTypeForm.controls; }
+
     onNoClick(): void {
         this.dialogRef.close();
     }
 
-    save(): void {
-
+    onSubmit() {
+     
         console.log('isi member  ', this.memberType);
         if (this.memberType.id === undefined) {
             console.log('send to service ', this.memberType);
@@ -52,6 +63,14 @@ export class MemberTypeDialogComponent implements OnInit {
                 this.dialogRef.close('refresh');
             });
         }
+    }
+
+    validate(): void { 
+        this.submitted = true; 
+        // stop here if form is invalid
+        if (this.memberTypeForm.invalid) {
+            return;
+        }  
     }
 
     openSnackbar(): void {

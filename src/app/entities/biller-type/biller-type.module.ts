@@ -1,6 +1,6 @@
 import { NgModule, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 
-import { FormsModule } from '@angular/forms';
+import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { AgGridModule } from 'ag-grid-angular';
 import { CustomMaterialModule } from './../../material.module';
 
@@ -14,6 +14,7 @@ import {
 @NgModule({
     imports: [
         FormsModule,
+        ReactiveFormsModule,
         AgGridModule.withComponents([]),
         CustomMaterialModule
     ],
