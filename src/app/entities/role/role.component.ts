@@ -3,7 +3,7 @@ import { Role } from './role.model';
 import { MatDialog } from '@angular/material/dialog';
 import { RoleService } from './role.service';
 import { HttpResponse, HttpErrorResponse } from '@angular/common/http';
-import { GRID_THEME, CSS_BUTTON, NO_DATA_GRID_MESSAGE } from '../../shared/constant/base-constant';
+import { GRID_THEME, CSS_BUTTON, NO_DATA_GRID_MESSAGE, REPORT_PATH} from '../../shared/constant/base-constant';
 import { MatActionButtonComponent } from '../../shared/templates/mat-action-button.component';
 import { RoleDialogComponent } from './role-dialog.component';
 import { RoleConfirmDialogComponent } from './role-confirm-dialog.component';
@@ -20,6 +20,7 @@ export class RoleComponent implements MainChild, OnInit {
 
   private gridApi;
   private gridColumnApi;
+  private resourceUrl = REPORT_PATH;
   theme: String = GRID_THEME;
   cssButton = CSS_BUTTON  ;
   role: Role[];
@@ -83,7 +84,7 @@ export class RoleComponent implements MainChild, OnInit {
     }
   }
 
-  public onActionEditClick(data: any) {
+  public onActionEditClick(data: any) { 
       console.log('View action clicked', data);
       const dialogRef = this.dialog.open(RoleDialogComponent, {
         width: '1000px',
@@ -180,5 +181,11 @@ export class RoleComponent implements MainChild, OnInit {
       this.gridApi.sizeColumnsToFit();
     }, 370);
   }
+
+  public exportCSV(reportType): void {
+    const path = this.resourceUrl  + 'role';
+    window.open(`${path}/${reportType}`);
+}
+
 
 }

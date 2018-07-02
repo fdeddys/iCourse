@@ -5,7 +5,7 @@ import { HttpResponse, HttpErrorResponse } from '@angular/common/http';
 import { BillerCompanyService } from './biller-company.service';
 import { BillerCompanyDialogComponent } from './biller-company-dialog.component';
 import { BillerCompanyConfirmComponent } from './biller-company-confirm.component';
-import { GRID_THEME, CSS_BUTTON, NO_DATA_GRID_MESSAGE } from '../../shared/constant/base-constant';
+import { GRID_THEME, CSS_BUTTON, NO_DATA_GRID_MESSAGE,REPORT_PATH } from '../../shared/constant/base-constant';
 import { MatActionButtonComponent } from '../../shared/templates/mat-action-button.component';
 
 @Component({
@@ -18,6 +18,7 @@ export class BillerCompanyComponent implements OnInit {
   entityName: String = 'Bill Operator';
   private gridApi;
   private gridColumnApi;
+  private resourceUrl = REPORT_PATH;
 
   theme: String = GRID_THEME;
   cssButton = CSS_BUTTON  ;
@@ -213,6 +214,11 @@ export class BillerCompanyComponent implements OnInit {
   private onError(error) {
     console.log('error..');
   }
+
+  public exportCSV(reportType): void {
+    const path = this.resourceUrl  + 'billercompany';
+    window.open(`${path}/${reportType}`);
+}
 
 
 }
