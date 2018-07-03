@@ -15,7 +15,7 @@ import { Product, ProductService } from '../product';
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
 
 import { BillerDialogComponent } from './biller-dialog.component';
-import { NO_DATA_GRID_MESSAGE, TOTAL_RECORD_PER_PAGE } from '../../shared/constant/base-constant';
+import { NO_DATA_GRID_MESSAGE, TOTAL_RECORD_PER_PAGE, REPORT_PATH } from '../../shared/constant/base-constant';
 import { MatActionButtonComponent } from '../../shared/templates/mat-action-button.component';
 
 @Component({
@@ -30,6 +30,7 @@ export class BillerComponent implements OnInit {
 
     private gridApi;
     private gridColumnApi;
+    private resourceUrl = REPORT_PATH;
     billers: Biller[];
     biller: Biller;
 
@@ -277,6 +278,12 @@ export class BillerComponent implements OnInit {
 
     private onError(error) {
         console.log('error..');
+    }
+
+    public exportCSV(reportType): void {
+        const path = this.resourceUrl  + 'billerheader/' +
+                    (this.memberTypeList.length === 1 && this.memberTypeList[0].id === 1 ? 1 : 0);
+        window.open(`${path}/${reportType}`);
     }
 
     public onPaginateChange($event): void {

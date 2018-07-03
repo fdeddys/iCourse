@@ -5,7 +5,7 @@ import { MemberDialogComponent } from './member-dialog.component';
 import { MemberConfirmComponent } from './member-confirm.component';
 import { Member } from './member.model';
 import { MemberService } from './member.service';
-import { GRID_THEME, CSS_BUTTON, NO_DATA_GRID_MESSAGE, TOTAL_RECORD_PER_PAGE } from '../../shared/constant/base-constant';
+import { GRID_THEME, CSS_BUTTON, NO_DATA_GRID_MESSAGE, TOTAL_RECORD_PER_PAGE, REPORT_PATH } from '../../shared/constant/base-constant';
 import { MatActionButtonComponent } from '../../shared/templates/mat-action-button.component';
 
 @Component({
@@ -23,6 +23,7 @@ export class MemberComponent implements OnInit {
   curPage = 1;
   totalData = 0;
   totalRecord = TOTAL_RECORD_PER_PAGE;
+  private resourceUrl = REPORT_PATH;
 
   members: Member[];
   member: Member;
@@ -207,4 +208,12 @@ export class MemberComponent implements OnInit {
       this.curPage = $event.pageIndex + 1;
       this.loadAll(this.curPage);
   }
+
+  public exportCSV(reportType): void {
+    const path = this.resourceUrl  + 'member';
+    window.open(`${path}/${reportType}`);
+    } 
+
+   
+
 }

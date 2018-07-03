@@ -215,7 +215,7 @@ export class UserDialogComponent implements OnInit {
         this.dialogRef.close();
     }
 
-    onSubmit() { 
+    onSubmit() {
         // if ( this.data.action === 'Add' ) {
 
         //     if ( this.pass === '' ) {

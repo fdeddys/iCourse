@@ -39,6 +39,7 @@ export class ProductComponent implements OnInit {
     theme: String = GRID_THEME;
     cssButton = CSS_BUTTON  ;
     messageNoData: string = NO_DATA_GRID_MESSAGE;
+
     curPage = 1;
     totalData = 0;
     totalRecord = TOTAL_RECORD_PER_PAGE;
@@ -268,16 +269,22 @@ export class ProductComponent implements OnInit {
             this.gridApi.sizeColumnsToFit();
         }, 400);
     }
+<<<<<<< HEAD
+
+    public exportCSV(reportType): void {
+        const path = this.resourceUrl  + 'billProduct';
+        window.open(`${path}/${reportType}`);
+    }
+
     public onPaginateChange($event): void {
         // console.log('events ', $event);
         this.curPage = $event.pageIndex + 1;
         this.loadAll(this.curPage);
     }
-
-    public exportCSV(reportType): void {
-        const path = this.resourceUrl  + 'billerproduct';
-        window.open(`${path}/${reportType}`);
-    }
+    // public exportCSV(reportType): void {
+    //     const path = this.resourceUrl  + 'billerproduct';
+    //     window.open(`${path}/${reportType}`);
+    // }
 }
 
 // billerCompany : {id: 1, name: "Telkomsel"}
