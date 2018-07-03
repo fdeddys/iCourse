@@ -69,7 +69,7 @@ export class SidebarComponent {
         },
         {name: 'Menu Settings', link: 'menu'},
         {name: 'Global Settings', link: 'global-setting'},
-        // {name: 'Change Password', link: 'change-pass'},
+        {name: 'Audit-trail', link: 'audit-trail'},
       ]
     },
     {
