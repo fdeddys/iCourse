@@ -269,6 +269,7 @@ export class ProductComponent implements OnInit {
             this.gridApi.sizeColumnsToFit();
         }, 400);
     }
+<<<<<<< HEAD
 
     public exportCSV(reportType): void {
         const path = this.resourceUrl  + 'billProduct';
