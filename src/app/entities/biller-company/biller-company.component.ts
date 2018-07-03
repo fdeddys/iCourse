@@ -5,8 +5,7 @@ import { HttpResponse, HttpErrorResponse } from '@angular/common/http';
 import { BillerCompanyService } from './biller-company.service';
 import { BillerCompanyDialogComponent } from './biller-company-dialog.component';
 import { BillerCompanyConfirmComponent } from './biller-company-confirm.component';
-import { GRID_THEME, CSS_BUTTON, NO_DATA_GRID_MESSAGE, TOTAL_RECORD_PER_PAGE } from '../../shared/constant/base-constant';
-import { GRID_THEME, CSS_BUTTON, NO_DATA_GRID_MESSAGE,REPORT_PATH } from '../../shared/constant/base-constant';
+import { GRID_THEME, CSS_BUTTON, NO_DATA_GRID_MESSAGE, TOTAL_RECORD_PER_PAGE, REPORT_PATH } from '../../shared/constant/base-constant';
 import { MatActionButtonComponent } from '../../shared/templates/mat-action-button.component';
 
 @Component({
@@ -175,17 +174,10 @@ export class BillerCompanyComponent implements OnInit {
         this.loadAll(this.curPage);
     }
 
-
-  }
-
-  private onError(error) {
-    console.log('error..');
-  }
-
-  public exportCSV(reportType): void {
-    const path = this.resourceUrl  + 'billercompany';
-    window.open(`${path}/${reportType}`);
-}
+    public exportCSV(reportType): void {
+        const path = this.resourceUrl  + 'billercompany';
+        window.open(`${path}/${reportType}`);
+    }
 
 
 }
