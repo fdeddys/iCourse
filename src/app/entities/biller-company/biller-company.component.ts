@@ -179,5 +179,6 @@ export class BillerCompanyComponent implements OnInit {
         const path = this.resourceUrl  + 'billercompany';
         window.open(`${path}/${reportType}`);
     }
+}
 
 }

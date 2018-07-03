@@ -8,7 +8,7 @@ import { BillerType, BillerTypeService } from '../biller-type';
 import { Member, MemberService } from '../member';
 
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
-import { GRID_THEME, CSS_BUTTON, NO_DATA_GRID_MESSAGE, TOTAL_RECORD_PER_PAGE } from '../../shared/constant/base-constant';
+import { GRID_THEME, CSS_BUTTON, NO_DATA_GRID_MESSAGE, TOTAL_RECORD_PER_PAGE, REPORT_PATH } from '../../shared/constant/base-constant';
 import { MatActionButtonComponent } from '../../shared/templates/mat-action-button.component';
 
 import { ProductDialogComponent } from './product-dialog.component';
@@ -28,6 +28,7 @@ export class ProductComponent implements OnInit {
 
     private gridApi;
     private gridColumnApi;
+    private resourceUrl = REPORT_PATH;
     products: Product[];
     product: Product;
     billerTypeList = [];
@@ -271,6 +272,11 @@ export class ProductComponent implements OnInit {
         // console.log('events ', $event);
         this.curPage = $event.pageIndex + 1;
         this.loadAll(this.curPage);
+    }
+
+    public exportCSV(reportType): void {
+        const path = this.resourceUrl  + 'billerproduct';
+        window.open(`${path}/${reportType}`);
     }
 }
 

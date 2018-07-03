@@ -6,7 +6,6 @@ import { HttpResponse, HttpErrorResponse } from '@angular/common/http';
 import { GRID_THEME, CSS_BUTTON, NO_DATA_GRID_MESSAGE,
         SNACKBAR_DURATION_IN_MILLISECOND } from '../../shared/constant/base-constant';
 import { TOTAL_RECORD_PER_PAGE } from '../../shared/constant/base-constant';
-import { REPORT_PATH } from '../../shared/constant/base-constant';
 import { MatActionButtonComponent } from '../../shared/templates/mat-action-button.component';
 import { UserDialogComponent } from './user-dialog.component';
 import { UserConfirmDialogComponent } from './user-confirm-dialog.component';
