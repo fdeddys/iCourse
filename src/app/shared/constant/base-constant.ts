@@ -2,8 +2,8 @@ export const GRID_THEME = 'ag-theme-material';
 // export const SERVER = 'http://45.126.133.31:8080/';
 // export const SERVER = 'http://localhost:8080/raas/';
 
-// export const SERVER = 'http://localhost:8080/';
-export const SERVER = '/ottoagbe/';
+export const SERVER = 'http://localhost:8080/';
+// export const SERVER = '/ottoagbe/';
 export const SERVER_PATH = SERVER + 'api/';
 export const AUTH_PATH = SERVER + 'token/';
 export const REPORT_PATH = SERVER + 'report/';

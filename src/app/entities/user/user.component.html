@@ -11,24 +11,24 @@
                 <button mat-raised-button class="primary"  (click)="exportCSV('csv')" style="margin-bottom: 10px;">Export CSV</button>
         </div>
         
-    <ag-grid-angular 
-    #agGrid
-        style="height: 550px" 
-        class="{{theme}}"
-        [gridOptions]="gridOptions" 
-        (gridReady)="onGridReady($event)"
-        (cellClicked)="onCellClicked($event)"
-        >
-    </ag-grid-angular>
-
-    <div  >
+        <ag-grid-angular 
+            #agGrid
+            style="height: 550px" 
+            class="{{theme}}"
+            [gridOptions]="gridOptions" 
+            (gridReady)="onGridReady($event)"
+            (cellClicked)="onCellClicked($event)"
+            >
+        </ag-grid-angular>
+    
+        <div style="width: 900px;" >
         <mat-paginator 
             [length]="totalData"
             [pageSize]="totalRecord"
             [pageSizeOptions]="[totalRecord]"
             (page)="onPaginateChange($event)">
-        </mat-paginator>
-    </div> 
+            </mat-paginator>
+        </div> 
     </mat-card-content>
 </mat-card>
     

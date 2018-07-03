@@ -18,7 +18,7 @@ import { BillerPriceDetail, BillerPriceDetailService, BillerPriceDetailComponent
 import { MatCheckboxComponent } from '../../shared/templates/mat-checkbox.component';
 import { MatActionButtonComponent } from '../../shared/templates/mat-action-button.component';
 
-import { NO_DATA_GRID_MESSAGE } from '../../shared/constant/base-constant';
+import { NO_DATA_GRID_MESSAGE, TOTAL_RECORD_PER_PAGE } from '../../shared/constant/base-constant';
 
 @Component({
     selector: 'app-biller-dialog',
@@ -62,6 +62,9 @@ export class BillerDialogComponent implements OnInit {
     btnDisabled = true; // set to false for debug
     btnLabel = 'Biller';
 
+    curPage = 1;
+    totalData = 0;
+    totalRecord = TOTAL_RECORD_PER_PAGE;
     messageNoData: string = NO_DATA_GRID_MESSAGE;
 
     colDefs = [
@@ -117,6 +120,7 @@ export class BillerDialogComponent implements OnInit {
         // rowSelection: "multiple"
         pagination: true,
         paginationPageSize: 10,
+        suppressPaginationPanel : true,
         localeText: {noRowsToShow: this.messageNoData},
         // rowHeight : 41,
         frameworkComponents: {
@@ -236,6 +240,7 @@ export class BillerDialogComponent implements OnInit {
             data.content[index].no = index + 1;
         }
         this.gridApi.setRowData(data.content);
+        this.totalData = data.totalElements;
     }
 
     private onError(error) {
@@ -252,7 +257,7 @@ export class BillerDialogComponent implements OnInit {
         this.gridApi = params.api;
         this.gridColumnApi = params.columnApi;
 
-        this.loadAll();
+        this.loadAll(this.curPage);
     }
 
     getMembType(value) {
@@ -269,14 +274,14 @@ export class BillerDialogComponent implements OnInit {
         this.gridApi.setRowData([]);
     }
 
-    loadAll() {
+    loadAll(page) {
         if (this.data.mode !== 'create') {
             console.log('load data update..');
             if (this.data.rowData.memberType.id === 1) {
                 this.getMembType({id: 1});
                 this.billerDetailService.query({
-                    page: 1,
-                    count: 200,
+                    page: page,
+                    count: this.totalRecord,
                     idhdr: this.biller.id
                     // size: this.itemsPerPage,
                     // sort: this.sort()
@@ -289,8 +294,8 @@ export class BillerDialogComponent implements OnInit {
             } else {
                 this.getMembType({id: 2});
                 this.billerPriceDetailService.query({
-                    page: 1,
-                    count: 200,
+                    page: page,
+                    count: this.totalRecord,
                     idhdr: this.biller.id
                     // size: this.itemsPerPage,
                     // sort: this.sort()
@@ -317,8 +322,8 @@ export class BillerDialogComponent implements OnInit {
                 //
                     this.getMembType({id: 1});
                     this.billerDetailService.query({
-                        page: 1,
-                        count: 200,
+                        page: page,
+                        count: this.totalRecord,
                         idhdr: this.biller.id
                         // size: this.itemsPerPage,
                         // sort: this.sort()
@@ -336,8 +341,8 @@ export class BillerDialogComponent implements OnInit {
                 //
                     this.getMembType({id: 2});
                     this.billerPriceDetailService.query({
-                        page: 1,
-                        count: 200,
+                        page: page,
+                        count: this.totalRecord,
                         idhdr: this.biller.id
                         // size: this.itemsPerPage,
                         // sort: this.sort()
@@ -513,7 +518,7 @@ export class BillerDialogComponent implements OnInit {
                 //     this.loadAll();
                 // }
 
-                this.loadAll();
+                this.loadAll(this.curPage);
             }
         });
     }
@@ -565,7 +570,7 @@ export class BillerDialogComponent implements OnInit {
                     }
 
                     if (this.data.billType === 'non-biller') {
-                        this.loadAll();
+                        this.loadAll(this.curPage);
                     }
                     this.snackbarSuccess('Save Success');
 
@@ -591,4 +596,11 @@ export class BillerDialogComponent implements OnInit {
             });
         }
     }
+
+    public onPaginateChange($event): void {
+        // console.log('events ', $event);
+        this.curPage = $event.pageIndex + 1;
+        this.loadAll(this.curPage);
+    }
+
 }

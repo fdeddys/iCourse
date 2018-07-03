@@ -66,7 +66,15 @@
                 (rowClicked)="onRowClicked($event)"
                 >
             </ag-grid-angular>
-        </fieldset>        
+        </fieldset>      
+        <div style="width: 900px">
+			<mat-paginator 
+				[length]="totalData"
+				[pageSize]="totalRecord"
+				[pageSizeOptions]="[totalRecord]"
+				(page)="onPaginateChange($event)">
+			</mat-paginator>
+		</div>  
 	</form>
 </div>
 <div mat-dialog-actions align="end">

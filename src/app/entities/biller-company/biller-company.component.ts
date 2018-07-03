@@ -180,7 +180,4 @@ export class BillerCompanyComponent implements OnInit {
         window.open(`${path}/${reportType}`);
     }
 
-  public exportCSV(reportType): void {
-    const path = this.resourceUrl  + 'billercompany';
-    window.open(`${path}/${reportType}`);
-  }
+}

@@ -4,7 +4,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { UserService } from './user.service';
 import { HttpResponse, HttpErrorResponse } from '@angular/common/http';
 import { GRID_THEME, CSS_BUTTON, NO_DATA_GRID_MESSAGE,
-        SNACKBAR_DURATION_IN_MILLISECOND, REPORT_PATH } from '../../shared/constant/base-constant';
+        SNACKBAR_DURATION_IN_MILLISECOND } from '../../shared/constant/base-constant';
 import { TOTAL_RECORD_PER_PAGE } from '../../shared/constant/base-constant';
 import { REPORT_PATH } from '../../shared/constant/base-constant';
 import { MatActionButtonComponent } from '../../shared/templates/mat-action-button.component';
@@ -42,15 +42,6 @@ export class UserComponent implements OnInit {
         { headerName: 'Email', field: 'email', width: 250, editable: false },
         { headerName: 'Status', field: 'status', width: 150, editable: false, valueFormatter: this.boolFormatter},
         { headerName: ' ', width: 150, field: 'act1', minWidth: 150, maxWidth: 150, cellRenderer: 'actionRenderer'},
-        // { headerName: ' ', width: 150, field: 'act2', minWidth: 150, maxWidth: 150, cellRenderer: 'resetPassRenderer'}
-        // { headerName: ' ', suppressMenu: true,
-        //   width: 100,
-        //   suppressSorting: true,
-        //   template:
-        //     `<button mat-raised-button type="button" data-action-type="edit"  ${this.cssButton} >
-        //       Edit
-        //     </button>
-        //     ` }
     ],
         rowData: this.user,
         enableSorting: true,
