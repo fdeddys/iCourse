@@ -18,7 +18,7 @@ import { BillerPriceDetail, BillerPriceDetailService, BillerPriceDetailComponent
 import { MatCheckboxComponent } from '../../shared/templates/mat-checkbox.component';
 import { MatActionButtonComponent } from '../../shared/templates/mat-action-button.component';
 
-import { NO_DATA_GRID_MESSAGE, TOTAL_RECORD_PER_PAGE } from '../../shared/constant/base-constant';
+import { NO_DATA_GRID_MESSAGE, TOTAL_RECORD_PER_PAGE, REPORT_PATH } from '../../shared/constant/base-constant';
 
 @Component({
     selector: 'app-biller-dialog',
@@ -29,6 +29,7 @@ export class BillerDialogComponent implements OnInit {
 
     private gridApi;
     private gridColumnApi;
+    private resourceUrl = REPORT_PATH;
 
     // ------ auto complete
     // membTypeCtrl: FormControl;
@@ -595,6 +596,13 @@ export class BillerDialogComponent implements OnInit {
                 this.dialogRef.close('refresh');
             });
         }
+    }
+
+    public exportCSV(reportType): void {
+        const path = this.resourceUrl  +
+                    (this.biller.memberTypeId === 1 ? 'billerdetail/' : 'billerpricedetail/') +
+                    this.data.rowData.id;
+        window.open(`${path}/${reportType}`);
     }
 
     public onPaginateChange($event): void {
