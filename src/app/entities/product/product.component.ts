@@ -8,7 +8,7 @@ import { BillerType, BillerTypeService } from '../biller-type';
 import { Member, MemberService } from '../member';
 
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
-import { GRID_THEME, CSS_BUTTON, NO_DATA_GRID_MESSAGE } from '../../shared/constant/base-constant';
+import { GRID_THEME, CSS_BUTTON, NO_DATA_GRID_MESSAGE , REPORT_PATH } from '../../shared/constant/base-constant';
 import { MatActionButtonComponent } from '../../shared/templates/mat-action-button.component';
 
 import { ProductDialogComponent } from './product-dialog.component';
@@ -38,6 +38,7 @@ export class ProductComponent implements OnInit {
     theme: String = GRID_THEME;
     cssButton = CSS_BUTTON  ;
     messageNoData: string = NO_DATA_GRID_MESSAGE;
+    private resourceUrl = REPORT_PATH;
 
     gridOptions = {
         columnDefs: [
@@ -262,6 +263,12 @@ export class ProductComponent implements OnInit {
             this.gridApi.sizeColumnsToFit();
         }, 400);
     }
+
+    public exportCSV(reportType): void {
+        const path = this.resourceUrl  + 'billProduct';
+        window.open(`${path}/${reportType}`);
+        } 
+
 }
 
 // billerCompany : {id: 1, name: "Telkomsel"}

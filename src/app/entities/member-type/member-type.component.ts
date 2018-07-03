@@ -170,7 +170,7 @@ export class MemberTypeComponent implements OnInit {
 
 
   public exportCSV(reportType): void {
-    const path = this.resourceUrl  + 'member';
+    const path = this.resourceUrl  + 'membertype';
     window.open(`${path}/${reportType}`);
   }
 
