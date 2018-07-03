@@ -3,20 +3,25 @@ import { Role } from './role.model';
 import { MatDialog } from '@angular/material/dialog';
 import { RoleService } from './role.service';
 import { HttpResponse, HttpErrorResponse } from '@angular/common/http';
+import { GRID_THEME, CSS_BUTTON, NO_DATA_GRID_MESSAGE, REPORT_PATH} from '../../shared/constant/base-constant';
 import { GRID_THEME, CSS_BUTTON, NO_DATA_GRID_MESSAGE, TOTAL_RECORD_PER_PAGE } from '../../shared/constant/base-constant';
 import { MatActionButtonComponent } from '../../shared/templates/mat-action-button.component';
 import { RoleDialogComponent } from './role-dialog.component';
 import { RoleConfirmDialogComponent } from './role-confirm-dialog.component';
+
+import { MainChild, eventSubscriber } from '../../layouts/main/main-child.interface';
+import { MainService } from '../../layouts/main/main.service';
 
 @Component({
   selector: 'app-role',
   templateUrl: './role.component.html',
   styleUrls: ['./role.component.css']
 })
-export class RoleComponent implements OnInit {
+export class RoleComponent implements MainChild, OnInit {
 
   private gridApi;
   private gridColumnApi;
+  private resourceUrl = REPORT_PATH;
   theme: String = GRID_THEME;
   cssButton = CSS_BUTTON  ;
   role: Role[];
@@ -63,8 +68,12 @@ export class RoleComponent implements OnInit {
     return dt.toLocaleString(['id']);
   }
 
-  constructor(  private dialog: MatDialog,
-                private roleService: RoleService) { }
+  constructor(  private mainService: MainService,
+                private dialog: MatDialog,
+                private roleService: RoleService) {
+                    this.resizeColumn = this.resizeColumn.bind(this);
+                    eventSubscriber(mainService.subscription, this.resizeColumn);
+                }
 
   public onRowClicked(e) {
     if (e.event.target !== undefined) {
@@ -80,7 +89,7 @@ export class RoleComponent implements OnInit {
     }
   }
 
-  public onActionEditClick(data: any) {
+  public onActionEditClick(data: any) { 
       console.log('View action clicked', data);
       const dialogRef = this.dialog.open(RoleDialogComponent, {
         width: '1000px',
@@ -129,13 +138,17 @@ export class RoleComponent implements OnInit {
   onGridReady(params) {
     this.gridApi = params.api;
     this.gridColumnApi = params.columnApi;
-    // params.api.sizeColumnsToFit();
-    // console.log(this.gridApi);
-    // console.log(this.gridColumnApi);
-    // window.onresize = () => {
-    //     console.log('resize..');
-    //     this.gridApi.sizeColumnsToFit();
-    // };
+    this.gridApi.sizeColumnsToFit();
+
+    window.onload = () => {
+        console.log('resize..');
+        this.gridApi.sizeColumnsToFit();
+    };
+
+    window.onresize = () => {
+        console.log('resize..');
+        this.gridApi.sizeColumnsToFit();
+    };
 
     this.loadAll(this.curPage);
   }
@@ -178,4 +191,17 @@ export class RoleComponent implements OnInit {
         this.curPage = $event.pageIndex + 1;
         this.loadAll(this.curPage);
     }
+  resizeColumn() {
+    console.log('is resized?');
+    setTimeout(() => {
+      this.gridApi.sizeColumnsToFit();
+    }, 400);
+  }
+
+  public exportCSV(reportType): void {
+    const path = this.resourceUrl  + 'role';
+    window.open(`${path}/${reportType}`);
+}
+
+
 }

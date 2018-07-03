@@ -5,6 +5,7 @@ import { UserService } from './user.service';
 import { HttpResponse, HttpErrorResponse } from '@angular/common/http';
 import { GRID_THEME, CSS_BUTTON, NO_DATA_GRID_MESSAGE, SNACKBAR_DURATION_IN_MILLISECOND } from '../../shared/constant/base-constant';
 import { TOTAL_RECORD_PER_PAGE } from '../../shared/constant/base-constant';
+import { GRID_THEME, CSS_BUTTON, NO_DATA_GRID_MESSAGE, SNACKBAR_DURATION_IN_MILLISECOND, REPORT_PATH } from '../../shared/constant/base-constant';
 import { MatActionButtonComponent } from '../../shared/templates/mat-action-button.component';
 import { UserDialogComponent } from './user-dialog.component';
 import { UserConfirmDialogComponent } from './user-confirm-dialog.component';
@@ -19,14 +20,16 @@ import { MatSnackBar } from '@angular/material';
 })
 export class UserComponent implements OnInit {
 
-    private gridApi;
-    private gridColumnApi;
+  private gridApi;
+  private gridColumnApi;
+  private resourceUrl = REPORT_PATH;
+  theme: String = GRID_THEME;
+  cssButton = CSS_BUTTON  ;
+  user: User[];
+  User: User;
+  messageNoData: string = NO_DATA_GRID_MESSAGE;
+  duration = SNACKBAR_DURATION_IN_MILLISECOND;
     theme: String = GRID_THEME;
-    cssButton = CSS_BUTTON  ;
-    user: User[];
-    User: User;
-    messageNoData: string = NO_DATA_GRID_MESSAGE;
-    duration = SNACKBAR_DURATION_IN_MILLISECOND;
     curPage = 1;
     totalData = 0;
     totalRecord = TOTAL_RECORD_PER_PAGE;
@@ -211,6 +214,11 @@ export class UserComponent implements OnInit {
         this.loadAll(this.curPage);
     }
 
+  public exportCSV(reportType): void {
+    const path = this.resourceUrl  + 'user';
+    window.open(`${path}/${reportType}`);
+    } 
+
 }
 
 @Component({
@@ -228,7 +236,8 @@ export class MatRemoveButtonComponent implements ICellRendererAngularComp {
         console.log('isi param action button ', this.params.value);
     }
 
-    refresh(params: any): boolean {
-        return false;
-    }
+  refresh(params: any): boolean {
+      return false;
+  }
+  
 }

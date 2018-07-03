@@ -1,7 +1,7 @@
 <mat-toolbar color="primary" class="app-toolbar">
 	<!-- <button mat-button (click)="sidenav.toggle()">nav</button> -->
 	<img src="assets/images/logo_ottopay_white.png" style="height: 60px; margin-left: 50px; margin-right: 90px">
-	<button mat-icon-button (click)="sidenav.toggle()">
+	<button mat-icon-button (click)="sidenav.toggle();">
 		<mat-icon>menu</mat-icon>
 	</button>
 	<span class="spacer"></span>
@@ -23,7 +23,7 @@
 		</mat-menu>
 </mat-toolbar>
 <mat-sidenav-container>	
-	<mat-sidenav #sidenav mode="side" [(opened)]="opened"  class="mat-elevation-z8">
+	<mat-sidenav #sidenav mode="side" [(opened)]="opened" (opened)="resizeColumn()" (closed)="resizeColumn()" class="mat-elevation-z8">
 		<app-sidebar (menuNm)="onChangeMenu($event)"></app-sidebar>
 	</mat-sidenav>
 
