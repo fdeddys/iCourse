@@ -7,6 +7,7 @@ import { CommonValidatorDirective } from '../../validators/common.validator';
 import { Menu, MenuService } from '../menu';
 import { Role, RoleMenuView } from './role.model';
 import { RoleService } from './role.service';
+import { MatCheckboxComponent } from '../../shared/templates/mat-checkbox.component';
 
 
 @Component({
@@ -41,15 +42,16 @@ export class RoleDialogComponent implements OnInit {
         columnDefs: [
             // { headerName: 'No', field: 'nourut', width: 50, pinned: 'left', editable: false },
             { headerName: 'Name', field: 'menuDescription', editable: false },
-            { headerName: 'Status', field: 'status', editable: false },
-            { headerName: ' ', suppressMenu: true,
-            suppressSorting: true,
-            width: 100,
-            template:
-                `<button mat-raised-button type="button" data-action-type="editActivation"  ${this.cssButton} >
-                Active / Inactive
-                </button>
-                ` }
+            // { headerName: 'Status', field: 'status', editable: false },
+            // { headerName: ' ', suppressMenu: true,
+            // suppressSorting: true,
+            // width: 100,
+            // template:
+            //     `<button mat-raised-button type="button" data-action-type="editActivation"  ${this.cssButton} >
+            //     Active / Inactive
+            //     </button>
+            //     ` }
+            { headerName: 'Status', field: 'status', width: 150, cellRenderer: 'checkboxRenderer'}
         ],
             rowData: this.menuRegistered,
             enableSorting: true,
@@ -61,16 +63,33 @@ export class RoleDialogComponent implements OnInit {
             infiniteInitialRowCount : 1,
             maxBlocksInCache : 2,
             localeText: {noRowsToShow: this.messageNoData},
+            frameworkComponents: {
+                checkboxRenderer: MatCheckboxComponent
+            }
         };
 
-    public onRowClicked(e) {
-        console.log('clicked ', e);
+    // public onRowClicked(e) {
+    //     console.log('clicked ', e);
+    //     if (e.event.target !== undefined) {
+    //         const data = e.data;
+    //         const actionType = e.event.target.getAttribute('data-action-type');
+
+    //         switch (actionType) {
+    //             case 'editActivation':
+    //                 return this.onActionClick(data);
+    //         }
+    //     }
+    // }
+
+    public onCellClicked(e) {
+        console.log('clicked cell ', e);
         if (e.event.target !== undefined) {
             const data = e.data;
-            const actionType = e.event.target.getAttribute('data-action-type');
+            const colField = e.colDef.field;
 
-            switch (actionType) {
-                case 'editActivation':
+            switch (colField) {
+                case 'status':
+                    // console.log('Send data ==> ', data);
                     return this.onActionClick(data);
             }
         }
