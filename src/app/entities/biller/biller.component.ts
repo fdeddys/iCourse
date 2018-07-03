@@ -15,7 +15,7 @@ import { Product, ProductService } from '../product';
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
 
 import { BillerDialogComponent } from './biller-dialog.component';
-import { NO_DATA_GRID_MESSAGE } from '../../shared/constant/base-constant';
+import { NO_DATA_GRID_MESSAGE, TOTAL_RECORD_PER_PAGE } from '../../shared/constant/base-constant';
 import { MatActionButtonComponent } from '../../shared/templates/mat-action-button.component';
 
 @Component({
@@ -40,25 +40,19 @@ export class BillerComponent implements OnInit {
     productList = [];
     statusList = [];
     messageNoData: string = NO_DATA_GRID_MESSAGE;
-
+    curPage = 1;
+    totalData = 0;
+    totalRecord = TOTAL_RECORD_PER_PAGE;
     menuName = '';
 
     gridOptions = {
         columnDefs: [
             // { headerName: 'Name', field: 'name', checkboxSelection: true, width: 250, pinned: 'left', editable: true },
             { headerName: 'No', field: 'no', width: 100, pinned: 'left', editable: false },
-            { headerName: 'Name', field: 'description', width: 300, pinned: 'left', editable: false },
+            { headerName: 'Name', field: 'member.name', width: 300, pinned: 'left', editable: false },
             { headerName: 'Date Start', field: 'dateStart', width: 300 },
             { headerName: 'Date Through', field: 'dateThru', width: 350 },
             { headerName: ' ', width: 150, cellRenderer: 'actionRenderer'}
-            // { headerName: ' ', suppressMenu: true,
-            //     suppressSorting: true,
-            //     template: `
-            //     <button mat-button color="primary" data-action-type="edit">
-            //         Edit
-            //     </button>
-            //     `
-            // },
         ],
         rowData: this.billers,
         enableSorting: true,
@@ -66,6 +60,7 @@ export class BillerComponent implements OnInit {
         // rowSelection: "multiple"
         pagination: true,
         paginationPageSize: 10,
+        suppressPaginationPanel : true,
         localeText: {noRowsToShow: this.messageNoData},
         frameworkComponents: {
             actionRenderer: MatActionButtonComponent
@@ -83,12 +78,12 @@ export class BillerComponent implements OnInit {
         private route: ActivatedRoute
     ) { }
 
-    loadAll() {
+    loadAll(page) {
         console.log('Start call function all header');
         this.billerService.query({
             allData: (this.route.snapshot.routeConfig.path === 'non-biller' ? 0 : 1),
-            page: 1,
-            count: 200,
+            page: page,
+            count: this.totalRecord,
             // size: this.itemsPerPage,
             // sort: this.sort()
         })
@@ -187,7 +182,7 @@ export class BillerComponent implements OnInit {
         // console.log(this.gridApi);
         // console.log(this.gridColumnApi);
 
-        this.loadAll();
+        this.loadAll(this.curPage);
     }
 
     onRowClicked(e) {
@@ -242,7 +237,7 @@ export class BillerComponent implements OnInit {
         dialogRef.afterClosed().subscribe(result => {
             console.log('The dialog was closed');
             // if (result === 'refresh') {
-                this.loadAll();
+                this.loadAll(this.curPage);
             // }
             // this.animal = result;
         });
@@ -277,10 +272,17 @@ export class BillerComponent implements OnInit {
             this.billers[index].no = index + 1;
         }
         this.gridApi.setRowData(this.billers);
+        this.totalData = data.totalElements;
     }
 
     private onError(error) {
         console.log('error..');
+    }
+
+    public onPaginateChange($event): void {
+        // console.log('events ', $event);
+        this.curPage = $event.pageIndex + 1;
+        this.loadAll(this.curPage);
     }
 
 }

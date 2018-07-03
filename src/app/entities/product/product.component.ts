@@ -8,7 +8,7 @@ import { BillerType, BillerTypeService } from '../biller-type';
 import { Member, MemberService } from '../member';
 
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
-import { GRID_THEME, CSS_BUTTON, NO_DATA_GRID_MESSAGE , REPORT_PATH } from '../../shared/constant/base-constant';
+import { GRID_THEME, CSS_BUTTON, NO_DATA_GRID_MESSAGE, TOTAL_RECORD_PER_PAGE, REPORT_PATH } from '../../shared/constant/base-constant';
 import { MatActionButtonComponent } from '../../shared/templates/mat-action-button.component';
 
 import { ProductDialogComponent } from './product-dialog.component';
@@ -28,6 +28,7 @@ export class ProductComponent implements OnInit {
 
     private gridApi;
     private gridColumnApi;
+    private resourceUrl = REPORT_PATH;
     products: Product[];
     product: Product;
     billerTypeList = [];
@@ -38,7 +39,9 @@ export class ProductComponent implements OnInit {
     theme: String = GRID_THEME;
     cssButton = CSS_BUTTON  ;
     messageNoData: string = NO_DATA_GRID_MESSAGE;
-    private resourceUrl = REPORT_PATH;
+    curPage = 1;
+    totalData = 0;
+    totalRecord = TOTAL_RECORD_PER_PAGE;
 
     gridOptions = {
         columnDefs: [
@@ -67,6 +70,7 @@ export class ProductComponent implements OnInit {
         // rowSelection: "multiple"
         pagination: true,
         paginationPageSize: 10,
+        suppressPaginationPanel : true,
         localeText: {noRowsToShow: this.messageNoData},
         frameworkComponents: {
             // checkboxRenderer: MatCheckboxComponent,
@@ -86,11 +90,11 @@ export class ProductComponent implements OnInit {
         eventSubscriber(mainService.subscription, this.resizeColumn);
     }
 
-    loadAll() {
+    loadAll(page) {
         console.log('Start call function all header');
         this.productService.query({
-            page: 1,
-            count: 200,
+            page: page,
+            count: this.totalRecord,
             // size: this.itemsPerPage,
             // sort: this.sort()
         })
@@ -179,7 +183,7 @@ export class ProductComponent implements OnInit {
             this.gridApi.sizeColumnsToFit();
         };
 
-        this.loadAll();
+        this.loadAll(this.curPage);
     }
 
     onRowClicked(e) {
@@ -233,7 +237,7 @@ export class ProductComponent implements OnInit {
         dialogRef.afterClosed().subscribe(result => {
             console.log('The dialog was closed');
             // this.animal = result;
-            this.loadAll();
+            this.loadAll(this.curPage);
         });
     }
 
@@ -252,6 +256,7 @@ export class ProductComponent implements OnInit {
             this.products[index].no = index + 1;
         }
         this.gridApi.setRowData(this.products);
+        this.totalData = data.totalElements;
     }
 
     private onError(error) {
@@ -263,12 +268,14 @@ export class ProductComponent implements OnInit {
             this.gridApi.sizeColumnsToFit();
         }, 400);
     }
-
+    public onPaginateChange($event): void {
+        // console.log('events ', $event);
+        this.curPage = $event.pageIndex + 1;
+        this.loadAll(this.curPage);
+    }
     public exportCSV(reportType): void {
         const path = this.resourceUrl  + 'billProduct';
         window.open(`${path}/${reportType}`);
-        } 
-
 }
 
 // billerCompany : {id: 1, name: "Telkomsel"}

@@ -5,59 +5,63 @@ import { GlobalSettingService } from './global-setting.service';
 import { HttpResponse, HttpErrorResponse } from '@angular/common/http';
 import { GlobalSettingDialogComponent } from './global-setting-dialog.component';
 import { GlobalSettingConfirmComponent } from './global-setting-confirm.component';
-import { GRID_THEME, CSS_BUTTON, NO_DATA_GRID_MESSAGE } from '../../shared/constant/base-constant';
+import { GRID_THEME, CSS_BUTTON, NO_DATA_GRID_MESSAGE, TOTAL_RECORD_PER_PAGE } from '../../shared/constant/base-constant';
 import { MatActionButtonComponent } from '../../shared/templates/mat-action-button.component';
 
 @Component({
-  selector: 'app-global-setting',
-  templateUrl: './global-setting.component.html',
-  styleUrls: ['./global-setting.component.css']
+    selector: 'app-global-setting',
+    templateUrl: './global-setting.component.html',
+    styleUrls: ['./global-setting.component.css']
 })
 export class GlobalSettingComponent implements OnInit {
 
-  private gridApi;
-  private gridColumnApi;
+    private gridApi;
+    private gridColumnApi;
 
-  cssButton = CSS_BUTTON  ;
-  theme: String = GRID_THEME;
+    cssButton = CSS_BUTTON  ;
+    theme: String = GRID_THEME;
 
-  memberTipes: GlobalSetting[];
-  GlobalSetting: GlobalSetting;
-  messageNoData: string = NO_DATA_GRID_MESSAGE;
+    memberTipes: GlobalSetting[];
+    GlobalSetting: GlobalSetting;
+    messageNoData: string = NO_DATA_GRID_MESSAGE;
+    curPage = 1;
+    totalData = 0;
+    totalRecord = TOTAL_RECORD_PER_PAGE;
 
-  gridOptions = {
-    columnDefs: [
-      { headerName: 'No', field: 'nourut', width: 10, pinned: 'left', editable: false },
-      { headerName: 'Type', field: 'globalType', width: 30, editable: false },
-      { headerName: 'Name', field: 'name', width: 50, editable: false },
-      { headerName: 'Description', field: 'description', width: 50, editable: false },
-      // { headerName: 'Created at', field: 'createdAt', width: 200, valueFormatter: this.currencyFormatter },
-      // { headerName: 'Update at', field: 'updatedAt', width: 200, valueFormatter: this.currencyFormatter },
-      // { headerName: 'Created By', field: 'createdBy', width: 200 },
-      // { headerName: 'Updated By', field: 'updatedBy', width: 200 },
-      { headerName: ' ', width: 150, cellRenderer: 'actionRenderer'}
-      // { headerName: ' ', suppressMenu: true,
-      //   width: 20,
-      //   suppressSorting: true,
-      //   template:
-      //     `<button mat-raised-button type="button" data-action-type="edit" ${this.cssButton} >
-      //       Edit
-      //     </button>
-      //     ` }
-    ],
-      rowData: this.memberTipes,
-      enableSorting: true,
-      enableFilter: true,
-      pagination: true,
-      paginationPageSize: 10,
-      // cacheOverflowSize : 2,
-      // maxConcurrentDatasourceRequests : 2,
-      // infiniteInitialRowCount : 1,
-      // maxBlocksInCache : 2,
-      localeText: {noRowsToShow: this.messageNoData},
-      frameworkComponents: {
-          actionRenderer: MatActionButtonComponent
-      }
+    gridOptions = {
+        columnDefs: [
+            { headerName: 'No', field: 'nourut', width: 100, pinned: 'left', editable: false },
+            { headerName: 'Type', field: 'globalType', width: 200, editable: false },
+            { headerName: 'Name', field: 'name', width: 200, editable: false },
+            { headerName: 'Description', field: 'description', width: 400, editable: false },
+            // { headerName: 'Created at', field: 'createdAt', width: 200, valueFormatter: this.currencyFormatter },
+            // { headerName: 'Update at', field: 'updatedAt', width: 200, valueFormatter: this.currencyFormatter },
+            // { headerName: 'Created By', field: 'createdBy', width: 200 },
+            // { headerName: 'Updated By', field: 'updatedBy', width: 200 },
+            { headerName: ' ', width: 150, cellRenderer: 'actionRenderer'}
+            // { headerName: ' ', suppressMenu: true,
+            //   width: 20,
+            //   suppressSorting: true,
+            //   template:
+            //     `<button mat-raised-button type="button" data-action-type="edit" ${this.cssButton} >
+            //       Edit
+            //     </button>
+            //     ` }
+            ],
+            rowData: this.memberTipes,
+            enableSorting: true,
+            enableFilter: true,
+            pagination: true,
+            suppressPaginationPanel : true,
+            paginationPageSize: 10,
+            // cacheOverflowSize : 2,
+            // maxConcurrentDatasourceRequests : 2,
+            // infiniteInitialRowCount : 1,
+            // maxBlocksInCache : 2,
+            localeText: {noRowsToShow: this.messageNoData},
+            frameworkComponents: {
+                actionRenderer: MatActionButtonComponent
+            }
   };
 
 
@@ -93,7 +97,7 @@ export class GlobalSettingComponent implements OnInit {
       dialogRef.afterClosed().subscribe(result => {
         console.log('The dialog was closed = [', result, ']');
         if (result === 'refresh') {
-          this.loadAll();
+          this.loadAll(this.curPage);
         }
       });
   }
@@ -112,11 +116,11 @@ export class GlobalSettingComponent implements OnInit {
 
     }
 
-  loadAll() {
+  loadAll(page) {
         console.log('Start call function all header');
         this.globalSettingService.query({
-            page: 1,
-            count: 10000,
+            page: page,
+            count: this.totalRecord,
         })
         .subscribe(
                 (res: HttpResponse<GlobalSetting[]>) => this.onSuccess(res.body, res.headers),
@@ -132,11 +136,11 @@ export class GlobalSettingComponent implements OnInit {
   onGridReady(params) {
     this.gridApi = params.api;
     this.gridColumnApi = params.columnApi;
-    params.api.sizeColumnsToFit();
+    // params.api.sizeColumnsToFit();
     console.log(this.gridApi);
     console.log(this.gridColumnApi);
 
-    this.loadAll();
+    this.loadAll(this.curPage);
   }
 
   openNewDialog(): void {
@@ -148,7 +152,7 @@ export class GlobalSettingComponent implements OnInit {
     dialogRef.afterClosed().subscribe(result => {
       console.log('The dialog was closed = [', result, ']');
       if (result === 'refresh') {
-        this.loadAll();
+        this.loadAll(this.curPage);
       }
     });
   }
@@ -165,6 +169,7 @@ export class GlobalSettingComponent implements OnInit {
             memberType.nourut = urut++;
         }
         this.gridApi.setRowData(this.memberTipes);
+        this.totalData = data.totalElements;
       }
   }
 
@@ -172,5 +177,9 @@ export class GlobalSettingComponent implements OnInit {
     console.log('error..');
   }
 
-
+  public onPaginateChange($event): void {
+    // console.log('events ', $event);
+    this.curPage = $event.pageIndex + 1;
+    this.loadAll(this.curPage);
+  }
 }
