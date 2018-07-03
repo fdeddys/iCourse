@@ -32,16 +32,15 @@
     
     <mat-dialog-actions align="end">
         <button mat-button mat-raised-button color='primary' (click)="onSubmit()" style="margin-bottom: 10px;">Save</button>
-        <button mat-raised-button class="primary"  (click)="exportDetaiCSV('csv')" style="margin-bottom: 10px;">Export CSV</button>
+        <button mat-raised-button class="primary" type="button"  (click)="exportDetaiCSV('csv', member.id)" style="margin-bottom: 10px;">Export CSV</button>
        
         <!-- <button mat-button mat-raised-button mat-dialog-close (click)="onNoClick()">Close</button> -->
-    </mat-dialog-actions>
-    <button   (click)="aaa()" style="margin-bottom: 10px;">Add New Bank Account</button>
+    </mat-dialog-actions> 
     <br><br>
 
     <fieldset style="border: 1px #ddd solid">
         <br>
-        <button mat-raised-button color='primary' (click)="openNewDialog()" style="margin-bottom: 10px;">Add New Bank Account</button>
+        <button type="button" mat-raised-button color='primary' (click)="openNewDialog()" style="margin-bottom: 10px;">Add New Bank Account</button>
         <br>
         <ag-grid-angular 
             #agGrid
@@ -62,9 +61,3 @@
 </form>
 
  
-    <mat-dialog-actions align="end">
-        <button mat-button mat-raised-button color='primary' (click)="onSubmit()" style="margin-bottom: 10px;">Save</button>
-        <button mat-raised-button class="primary"  (click)="exportDetaiCSV('csv')" style="margin-bottom: 10px;">Export CSV</button>
-       
-        <!-- <button mat-button mat-raised-button mat-dialog-close (click)="onNoClick()">Close</button> -->
-    </mat-dialog-actions>

@@ -214,9 +214,6 @@ export class MemberComponent implements OnInit {
     window.open(`${path}/${reportType}`);
     } 
 
-    public exportDetaiCSV(reportType): void {alert('sss');
-      const path = this.resourceUrl  + 'memberdetail';
-      window.open(`${path}/${reportType}`);
-      } 
+   
 
 }
