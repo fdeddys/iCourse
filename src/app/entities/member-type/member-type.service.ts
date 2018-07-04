@@ -4,7 +4,7 @@ import { Observable } from 'rxjs';
 import { map, tap } from 'rxjs/operators';
 import { createRequestOption } from '../../shared/model/request-util';
 import { MemberType } from './member-type.model';
-import { SERVER_PATH } from '../../shared/constant/base-constant';
+import { SERVER_PATH, REPORT_PATH } from '../../shared/constant/base-constant';
 
 export type EntityResponseType = HttpResponse<MemberType>;
 
@@ -12,6 +12,7 @@ export type EntityResponseType = HttpResponse<MemberType>;
 export class MemberTypeService {
 
     private resourceUrl =  SERVER_PATH + 'membertype';
+    private reportUrl = REPORT_PATH;
 
     constructor(private http: HttpClient) { }
 
@@ -93,5 +94,13 @@ export class MemberTypeService {
     private convert( memberType: MemberType): MemberType {
         const copy: MemberType = Object.assign({}, memberType);
         return copy;
+    }
+
+    async exportCSV(): Promise<Blob> {
+        const file =  await this.http.get<Blob>(
+            `${this.reportUrl}membertype/csv`,
+            {responseType: 'blob' as 'json'}
+        ).toPromise();
+        return file;
     }
 }

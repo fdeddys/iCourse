@@ -167,11 +167,23 @@ export class MemberTypeComponent implements OnInit {
       this.curPage = $event.pageIndex + 1;
       this.loadAll(this.curPage);
   }
+  
+  public async exportCSV(reportType): Promise<void> { 
 
+    // const membType = (this.memberTypeList.length === 1 && this.memberTypeList[0].id === 1 ? 1 : 0);
+     const blob = await this.memberTypeService.exportCSV();
+     const url = window.URL.createObjectURL(blob);
 
-  public exportCSV(reportType): void {
-    const path = this.resourceUrl  + 'membertype';
-    window.open(`${path}/${reportType}`);
-  }
+     // const link = this.downloadZipLink.nativeElement;
+     const link = document.createElement('a');
+     document.body.appendChild(link);
+     link.setAttribute('style', 'display: none');
+     link.href = url;
+     link.download = 'membertype.csv';
+     link.click();
+
+     window.URL.revokeObjectURL(url);
+ }
+
 
 }
