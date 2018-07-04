@@ -280,10 +280,24 @@ export class BillerComponent implements OnInit {
         console.log('error..');
     }
 
-    public exportCSV(reportType): void {
-        const path = this.resourceUrl  + 'billerheader/' +
-                    (this.memberTypeList.length === 1 && this.memberTypeList[0].id === 1 ? 1 : 0);
-        window.open(`${path}/${reportType}`);
+    public async exportCSV(reportType): Promise<void> {
+        // const path = this.resourceUrl  + 'billerheader/' +
+        //             (this.memberTypeList.length === 1 && this.memberTypeList[0].id === 1 ? 1 : 0);
+        // window.open(`${path}/${reportType}`);
+
+        const membType = (this.memberTypeList.length === 1 && this.memberTypeList[0].id === 1 ? 1 : 0);
+        const blob = await this.billerService.exportCSV(membType);
+        const url = window.URL.createObjectURL(blob);
+
+        // const link = this.downloadZipLink.nativeElement;
+        const link = document.createElement('a');
+        document.body.appendChild(link);
+        link.setAttribute('style', 'display: none');
+        link.href = url;
+        link.download = 'biller.csv';
+        link.click();
+
+        window.URL.revokeObjectURL(url);
     }
 
     public onPaginateChange($event): void {

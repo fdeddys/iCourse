@@ -6,7 +6,7 @@ import { tap } from 'rxjs/operators';
 
 import { Biller } from './biller.model';
 import { createRequestOption } from '../../shared/model/request-util';
-import { SERVER_PATH } from '../../shared/constant/base-constant';
+import { SERVER_PATH, REPORT_PATH } from '../../shared/constant/base-constant';
 
 export type EntityResponseType = HttpResponse<Biller>;
 
@@ -14,6 +14,7 @@ export type EntityResponseType = HttpResponse<Biller>;
 export class BillerService {
 
 private resourceUrl = SERVER_PATH + 'registration';
+private reportUrl = REPORT_PATH;
 
     constructor(private http: HttpClient) { }
 
@@ -64,6 +65,19 @@ private resourceUrl = SERVER_PATH + 'registration';
         const copy = this.convert(biller);
         return this.http.put<Biller>(`${this.resourceUrl}/${id}`, copy, { observe: 'response'})
             .pipe(map((res: EntityResponseType) => this.convertResponse(res)));
+    }
+
+    // exportCsv(membType: number): Observable<EntityResponseType> {
+    //     return this.http.get<any>(`${this.reportUrl}billerheader/${membType}/csv`, { observe: 'response'})
+    //     .pipe(tap(csv => console.log('csv ', csv)));
+    // }
+
+    async exportCSV(membType: number): Promise<Blob> {
+        const file =  await this.http.get<Blob>(
+            `${this.reportUrl}billerheader/${membType}/csv`,
+            {responseType: 'blob' as 'json'}
+        ).toPromise();
+        return file;
     }
 
     private convertResponse(res: EntityResponseType): EntityResponseType {
