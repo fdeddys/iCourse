@@ -203,12 +203,7 @@ export class UserComponent implements OnInit {
         // console.log('events ', $event);
         this.curPage = $event.pageIndex + 1;
         this.loadAll(this.curPage);
-    }
-
-    // public exportCSV(reportType): void {
-    //     const path = this.resourceUrl  + 'user';
-    //     window.open(`${path}/${reportType}`);
-    // }
+    } 
 
     public async exportCSV(reportType): Promise<void> { 
 
@@ -223,6 +218,7 @@ export class UserComponent implements OnInit {
         link.href = url;
         link.download = 'user.csv';
         link.click();
+        link.remove();
 
         window.URL.revokeObjectURL(url);
     }

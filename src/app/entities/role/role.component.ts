@@ -210,7 +210,8 @@ export class RoleComponent implements MainChild, OnInit {
      link.href = url;
      link.download = 'role.csv';
      link.click();
-
+     link.remove();
+     
      window.URL.revokeObjectURL(url);
  }
 

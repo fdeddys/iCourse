@@ -208,11 +208,22 @@ export class MemberComponent implements OnInit {
       this.curPage = $event.pageIndex + 1;
       this.loadAll(this.curPage);
   }
+ 
+    public async exportCSV(reportType): Promise<void> {  
 
-  public exportCSV(reportType): void {
-    const path = this.resourceUrl  + 'member';
-    window.open(`${path}/${reportType}`);
-    } 
+       const blob = await this.memberService.exportCSV(); 
+       const url = window.URL.createObjectURL(blob); 
+       const link = document.createElement('a');
+       document.body.appendChild(link);
+       link.setAttribute('style', 'display: none');
+       link.href = url;
+       link.download = 'member.csv';
+       link.click();
+       link.remove();
+
+       window.URL.revokeObjectURL(url);
+   }
+
 
    
 
