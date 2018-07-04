@@ -174,10 +174,22 @@ export class BillerCompanyComponent implements OnInit {
         this.curPage = $event.pageIndex + 1;
         this.loadAll(this.curPage);
     }
+  
 
-    public exportCSV(reportType): void {
-        const path = this.resourceUrl  + 'billercompany';
-        window.open(`${path}/${reportType}`);
-    }
+    public async exportCSV(reportType): Promise<void> { 
+ 
+         const blob = await this.billerCompanyService.exportCSV();
+         const url = window.URL.createObjectURL(blob); 
+         const link = document.createElement('a');
+         document.body.appendChild(link);
+         link.setAttribute('style', 'display: none');
+         link.href = url;
+         link.download = 'billoperator.csv';
+         link.click();
+         link.remove();
+ 
+         window.URL.revokeObjectURL(url);
+     }
+
 }
 

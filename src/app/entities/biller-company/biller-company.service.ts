@@ -4,7 +4,7 @@ import { Observable } from 'rxjs';
 import { map, tap } from 'rxjs/operators';
 import { createRequestOption } from '../../shared/model/request-util';
 import { BillerCompany } from '.';
-import { SERVER_PATH } from '../../shared/constant/base-constant';
+import { SERVER_PATH, REPORT_PATH } from '../../shared/constant/base-constant';
 
 export type EntityResponseType = HttpResponse<BillerCompany>;
 
@@ -12,7 +12,8 @@ export type EntityResponseType = HttpResponse<BillerCompany>;
 export class BillerCompanyService {
 
     private resourceUrl = SERVER_PATH + 'billercompany';
-
+    private reportUrl =  REPORT_PATH;
+    
     constructor(private http: HttpClient) { }
 
     find(id: number): Observable<EntityResponseType> {
@@ -97,4 +98,13 @@ export class BillerCompanyService {
         const copy: BillerCompany = Object.assign({}, billerCompany);
         return copy;
     }
+
+    async exportCSV(): Promise<Blob> {
+        const file =  await this.http.get<Blob>(
+            `${this.reportUrl}billercompany/csv`,
+            {responseType: 'blob' as 'json'}
+        ).toPromise();
+        return file;
+    }
+
 }

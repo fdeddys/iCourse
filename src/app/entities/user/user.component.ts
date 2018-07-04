@@ -206,12 +206,10 @@ export class UserComponent implements OnInit {
     } 
 
     public async exportCSV(reportType): Promise<void> { 
-
-       // const membType = (this.memberTypeList.length === 1 && this.memberTypeList[0].id === 1 ? 1 : 0);
+ 
         const blob = await this.userService.exportCSV(); 
         const url = window.URL.createObjectURL(blob);
-
-        // const link = this.downloadZipLink.nativeElement;
+ 
         const link = document.createElement('a');
         document.body.appendChild(link);
         link.setAttribute('style', 'display: none');
