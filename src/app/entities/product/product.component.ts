@@ -1,4 +1,4 @@
-import { Component, OnInit, Inject } from '@angular/core';
+import { Component, OnInit, Inject, ViewChild, ElementRef } from '@angular/core';
 import { HttpResponse, HttpErrorResponse } from '@angular/common/http';
 import { Product } from './product.model';
 import { ProductService } from './product.service';
@@ -25,6 +25,8 @@ export class ProductComponent implements OnInit {
 
     // displayedColumns = ['name', 'denom', 'sales_price', 'status'];
     // dataSource = ELEMENT_DATA;
+
+    @ViewChild('downloadLink') private downloadLink: ElementRef;
 
     private gridApi;
     private gridColumnApi;
@@ -270,9 +272,22 @@ export class ProductComponent implements OnInit {
         }, 400);
     }
 
-    public exportCSV(reportType): void {
-        const path = this.resourceUrl  + 'billProduct';
-        window.open(`${path}/${reportType}`);
+    public async exportCSV(reportType): Promise<void> {
+        // const path = this.resourceUrl  + 'billProduct';
+        // window.open(`${path}/${reportType}`);
+
+        const blob = await this.productService.exportCSV(reportType);
+        const url = window.URL.createObjectURL(blob);
+
+        const link = this.downloadLink.nativeElement;
+        // const link = document.createElement('a');
+        // document.body.appendChild(link);
+        // link.setAttribute('style', 'display: none');
+        link.href = url;
+        link.download = 'product-list.' + reportType;
+        link.click();
+
+        window.URL.revokeObjectURL(url);
     }
 
     public onPaginateChange($event): void {

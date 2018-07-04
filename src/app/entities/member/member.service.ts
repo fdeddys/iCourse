@@ -99,4 +99,20 @@ export class MemberService {
         const copy: Member = Object.assign({}, member);
         return copy;
     }
+
+    async exportCSV(): Promise<Blob> {
+        const file =  await this.http.get<Blob>(
+            `${this.reportUrl}member/csv`,
+            {responseType: 'blob' as 'json'}
+        ).toPromise();
+        return file;
+    }
+
+    async exportDetaiCSV(id): Promise<Blob> {
+        const file =  await this.http.get<Blob>(
+            `${this.reportUrl}memberdetail/csv/${id}`,
+            {responseType: 'blob' as 'json'}
+        ).toPromise();
+        return file;
+    }
 }

@@ -196,12 +196,25 @@ export class RoleComponent implements MainChild, OnInit {
     setTimeout(() => {
       this.gridApi.sizeColumnsToFit();
     }, 400);
-  }
+  } 
 
-  public exportCSV(reportType): void {
-    const path = this.resourceUrl  + 'role';
-    window.open(`${path}/${reportType}`);
-}
+  public async exportCSV(reportType): Promise<void> {  
+    
+     const blob = await this.roleService.exportCSV(); 
+     const url = window.URL.createObjectURL(blob);
+
+     // const link = this.downloadZipLink.nativeElement;
+     const link = document.createElement('a');
+     document.body.appendChild(link);
+     link.setAttribute('style', 'display: none');
+     link.href = url;
+     link.download = 'role.csv';
+     link.click();
+     link.remove();
+     
+     window.URL.revokeObjectURL(url);
+ }
+
 
 
 }

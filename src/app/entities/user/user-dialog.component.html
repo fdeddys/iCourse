@@ -22,9 +22,13 @@
     </mat-form-field> -->
     
     <mat-form-field class="container-half-width">
-        <input matInput placeholder="Email" [(ngModel)]="user.email" name="emaie"
-        [disabled]="data.action === 'Edit'"
-        >
+        <!-- <input matInput placeholder="Email" [(ngModel)]="user.email" name="emaie"
+        [disabled]="data.action === 'Edit'" required maxlength="50"
+        > -->
+        <input matInput placeholder="Email " [(ngModel)]="user.email" cdkFocusInitial name ="emaie" #name="ngModel" [ngClass]="{ 'is-invalid': f.submitted && name.invalid }" required maxlength="50"  [disabled]="data.action === 'Edit'" required maxlength="50">
+        <mat-error *ngIf="submitted && form.name.errors" class="invalid-feedback">
+            <div *ngIf="form.email.errors.required"> {{form.email.errors.message}}</div>
+        </mat-error> 
         <!-- [formControl]="emailFormControl"  -->
     </mat-form-field>
 
@@ -38,7 +42,7 @@
     <br>
     <!-- {{data.action}} -->
     <mat-dialog-actions>
-        <button mat-button mat-raised-button color="primary" (click)="save()" >Save</button>
+        <button mat-button mat-raised-button color="primary" (click)="validate()" >Save</button>
         <button type="button" [disabled]="data.action !== 'Edit'" color="primary" mat-button  mat-raised-button class="btnAdd" (click)="resetPassword()">Reset password</button>
     </mat-dialog-actions>        
     <br>
@@ -56,7 +60,7 @@
                 [disabled]=" ( data.action !== 'Edit' || enableAddRole !== true ) "
                 (click)="addRole()" style="margin-left: 5%">Add Role</button>
                 <!-- [disabled]="data.action !== 'Edit' || enableAddRole === true" -->
-                {{data.action}} - {{enableAddRole}}
+                <!-- {{data.action}} - {{enableAddRole}} -->
         <ag-grid-angular 
             #agGrid
             style="height: 300px; width: 100%;" 

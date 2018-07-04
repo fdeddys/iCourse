@@ -1,4 +1,4 @@
-import { Component, OnInit, Inject } from '@angular/core';
+import { Component, OnInit, Inject, ViewChild, ElementRef } from '@angular/core';
 import * as _ from 'lodash';
 import { HttpResponse, HttpErrorResponse } from '@angular/common/http';
 import { Biller } from './biller.model';
@@ -26,6 +26,8 @@ import { NO_DATA_GRID_MESSAGE, TOTAL_RECORD_PER_PAGE, REPORT_PATH } from '../../
     styleUrls: ['./biller-dialog.component.css']
 })
 export class BillerDialogComponent implements OnInit {
+
+    @ViewChild('downloadLink') private downloadLink: ElementRef;
 
     private gridApi;
     private gridColumnApi;
@@ -598,11 +600,25 @@ export class BillerDialogComponent implements OnInit {
         }
     }
 
-    public exportCSV(reportType): void {
-        const path = this.resourceUrl  +
-                    (this.biller.memberTypeId === 1 ? 'billerdetail/' : 'billerpricedetail/') +
-                    this.data.rowData.id;
-        window.open(`${path}/${reportType}`);
+    public async exportCSV(reportType): Promise<void> {
+        // const path = this.resourceUrl  +
+        //             (this.biller.memberTypeId === 1 ? 'billerdetail/' : 'billerpricedetail/') +
+        //             this.data.rowData.id;
+        // window.open(`${path}/${reportType}`);
+
+        const membType = (this.biller.memberTypeId === 1 ? 'billerdetail' : 'billerpricedetail');
+        const blob = await this.billerService.exportDetailCSV(reportType, membType, this.data.rowData.id);
+        const url = window.URL.createObjectURL(blob);
+
+        const link = this.downloadLink.nativeElement;
+        // const link = document.createElement('a');
+        // document.body.appendChild(link);
+        // link.setAttribute('style', 'display: none');
+        link.href = url;
+        link.download = (this.biller.memberTypeId === 1 ? 'biller-product-list.' : 'biller-subscriber-product-list.') + reportType;
+        link.click();
+
+        window.URL.revokeObjectURL(url);
     }
 
     public onPaginateChange($event): void {
