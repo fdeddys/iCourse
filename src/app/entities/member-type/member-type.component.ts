@@ -181,7 +181,7 @@ export class MemberTypeComponent implements OnInit {
      link.href = url;
      link.download = 'membertype.csv';
      link.click();
-
+     link.remove();
      window.URL.revokeObjectURL(url);
  }
 

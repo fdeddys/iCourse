@@ -243,10 +243,22 @@ export class MemberDialogComponent implements OnInit {
     private onError(error) {
       console.log('error..');
     }
+   
+    public async exportDetaiCSV(reportType, id): Promise<void> { 
+ 
+         const blob = await this.memberService.exportDetaiCSV(id);
+         const url = window.URL.createObjectURL(blob);
+  
+         const link = document.createElement('a');
+         document.body.appendChild(link);
+         link.setAttribute('style', 'display: none');
+         link.href = url;
+         link.download = 'memberdetail.csv';
+         link.click();
+         link.remove();
+ 
+         window.URL.revokeObjectURL(url);
+     }
 
-    public exportDetaiCSV(reportType, id): void { 
-    const path = this.resourceUrl  + 'memberdetail'; 
-    window.open(`${path}/${reportType}/${id}`);
-    } 
 
 }

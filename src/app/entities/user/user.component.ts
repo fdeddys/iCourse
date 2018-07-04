@@ -218,6 +218,7 @@ export class UserComponent implements OnInit {
         link.href = url;
         link.download = 'user.csv';
         link.click();
+        link.remove();
 
         window.URL.revokeObjectURL(url);
     }
