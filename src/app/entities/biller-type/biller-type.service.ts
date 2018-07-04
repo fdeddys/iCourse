@@ -4,7 +4,7 @@ import { Observable } from 'rxjs';
 import { map, tap } from 'rxjs/operators';
 import { createRequestOption } from '../../shared/model/request-util';
 import { BillerType } from './biller-type.model';
-import { SERVER_PATH } from '../../shared/constant/base-constant';
+import { SERVER_PATH, REPORT_PATH } from '../../shared/constant/base-constant';
 
 export type EntityResponseType = HttpResponse<BillerType>;
 
@@ -12,6 +12,7 @@ export type EntityResponseType = HttpResponse<BillerType>;
 export class BillerTypeService {
 
     private resourceUrl = SERVER_PATH + 'billertype';
+    private reportUrl = REPORT_PATH;
 
     constructor(private http: HttpClient) { }
 
@@ -94,4 +95,13 @@ export class BillerTypeService {
         const copy: BillerType = Object.assign({}, billerType);
         return copy;
     }
+
+    async exportCSV(): Promise<Blob> {
+        const file =  await this.http.get<Blob>(
+            `${this.reportUrl}billertype/csv`,
+            {responseType: 'blob' as 'json'}
+        ).toPromise();
+        return file;
+    }
+
 }

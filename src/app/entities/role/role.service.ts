@@ -6,14 +6,15 @@ import { tap } from 'rxjs/operators';
 
 import { Role, RoleMenuView } from './role.model';
 import { createRequestOption } from '../../shared/model/request-util';
-import { SERVER_PATH } from '../../shared/constant/base-constant';
+import { SERVER_PATH, REPORT_PATH } from '../../shared/constant/base-constant';
 
 export type EntityResponseType = HttpResponse<Role>;
 
 @Injectable()
 export class RoleService {
 
-private resourceUrl = SERVER_PATH + 'role';
+    private resourceUrl = SERVER_PATH + 'role';
+    private reportUrl = REPORT_PATH;
 
     constructor(private http: HttpClient) { }
 
@@ -104,4 +105,13 @@ private resourceUrl = SERVER_PATH + 'role';
         const copy: Role = Object.assign({}, role);
         return copy;
     }
+
+    async exportCSV(): Promise<Blob> {
+        const file =  await this.http.get<Blob>(
+            `${this.reportUrl}role/csv`,
+            {responseType: 'blob' as 'json'}
+        ).toPromise();
+        return file;
+    }
+
 }
