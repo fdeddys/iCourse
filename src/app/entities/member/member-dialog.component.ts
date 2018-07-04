@@ -8,7 +8,7 @@ import { HttpResponse, HttpErrorResponse } from '@angular/common/http';
 import { MemberBankDialogComponent } from './member-bank-dialog.component';
 import { MemberBank } from '../member-bank/member-bank.model';
 import { MemberBankService } from '../member-bank';
-import { GRID_THEME, CSS_BUTTON, NO_DATA_GRID_MESSAGE, SNACKBAR_DURATION_IN_MILLISECOND } from '../../shared/constant/base-constant';
+import { GRID_THEME, CSS_BUTTON, NO_DATA_GRID_MESSAGE, SNACKBAR_DURATION_IN_MILLISECOND, REPORT_PATH } from '../../shared/constant/base-constant';
 import { MatActionButtonComponent } from '../../shared/templates/mat-action-button.component';
 import { CommonValidatorDirective } from '../../validators/common.validator';
 
@@ -27,7 +27,7 @@ export class MemberDialogComponent implements OnInit {
     theme: String = GRID_THEME;
     cssButton = CSS_BUTTON  ;
     duration = SNACKBAR_DURATION_IN_MILLISECOND;
-
+    private resourceUrl = REPORT_PATH;
     member: Member;
     name: string;
     memberBanks: MemberBank[];
@@ -243,5 +243,10 @@ export class MemberDialogComponent implements OnInit {
     private onError(error) {
       console.log('error..');
     }
+
+    public exportDetaiCSV(reportType, id): void { 
+    const path = this.resourceUrl  + 'memberdetail'; 
+    window.open(`${path}/${reportType}/${id}`);
+    } 
 
 }

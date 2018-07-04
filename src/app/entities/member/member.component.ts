@@ -214,4 +214,6 @@ export class MemberComponent implements OnInit {
     window.open(`${path}/${reportType}`);
     } 
 
+   
+
 }

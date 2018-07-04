@@ -13,6 +13,7 @@ import { GlobalSettingComponent } from './entities/global-setting';
 import { UserComponent, UserUpdatePasswordComponent } from './entities/user';
 import { RoleComponent } from './entities/role/role.component';
 import { MenuComponent } from './entities/menu';
+import { AuditTrailComponent } from './entities/audit-trail';
 
 const routes: Routes = [
     { path : '', component : LoginComponent },
@@ -33,6 +34,7 @@ const routes: Routes = [
             {path: 'role', component: RoleComponent},
             {path: 'menu', component: MenuComponent},
             {path: 'change-pass', component: UserUpdatePasswordComponent},
+            {path: 'audit-trail', component: AuditTrailComponent},
         ]
     },
     // {path: 'member', component: MemberComponent}

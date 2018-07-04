@@ -34,6 +34,7 @@ export class UserDialogComponent implements OnInit {
     duration = SNACKBAR_DURATION_IN_MILLISECOND;
     userForm: FormGroup;
     submitted = false;
+    enableAddRole = true;
 
     // emailFormControl = new FormControl('', [
     //     Validators.required,
@@ -331,6 +332,11 @@ export class UserDialogComponent implements OnInit {
         //     return ;
         // }
         this.roleRegisterd = data;
+        if ( data.length > 0 ) {
+            this.enableAddRole = false;
+            console.log('data role leng ==> ', data.length);
+        }
+        // enableAddRole
         this.gridApi.setRowData(this.roleRegisterd);
         console.log('isi list dari user role', this.roleRegisterd);
         // this.roleSelected = this.roleList[0];
