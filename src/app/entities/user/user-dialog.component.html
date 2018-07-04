@@ -52,9 +52,11 @@
             </mat-select>
         </mat-form-field>
         
-        <button  type="button"  mat-button mat-raised-button color="primary" 
-            [disabled]="data.action !== 'Edit'"
-            (click)="addRole()" style="margin-left: 5%">Add Role</button>
+            <button  type="button"  mat-button mat-raised-button color="primary" 
+                [disabled]=" ( data.action !== 'Edit' || enableAddRole !== true ) "
+                (click)="addRole()" style="margin-left: 5%">Add Role</button>
+                <!-- [disabled]="data.action !== 'Edit' || enableAddRole === true" -->
+                {{data.action}} - {{enableAddRole}}
         <ag-grid-angular 
             #agGrid
             style="height: 300px; width: 100%;" 
