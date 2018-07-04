@@ -22,9 +22,13 @@
     </mat-form-field> -->
     
     <mat-form-field class="container-half-width">
-        <input matInput placeholder="Email" [(ngModel)]="user.email" name="emaie"
-        [disabled]="data.action === 'Edit'"
-        >
+        <!-- <input matInput placeholder="Email" [(ngModel)]="user.email" name="emaie"
+        [disabled]="data.action === 'Edit'" required maxlength="50"
+        > -->
+        <input matInput placeholder="Email " [(ngModel)]="user.email" cdkFocusInitial name ="emaie" #name="ngModel" [ngClass]="{ 'is-invalid': f.submitted && name.invalid }" required maxlength="50"  [disabled]="data.action === 'Edit'" required maxlength="50">
+        <mat-error *ngIf="submitted && form.name.errors" class="invalid-feedback">
+            <div *ngIf="form.email.errors.required"> {{form.email.errors.message}}</div>
+        </mat-error> 
         <!-- [formControl]="emailFormControl"  -->
     </mat-form-field>
 
