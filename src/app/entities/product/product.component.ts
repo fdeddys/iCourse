@@ -270,9 +270,22 @@ export class ProductComponent implements OnInit {
         }, 400);
     }
 
-    public exportCSV(reportType): void {
-        const path = this.resourceUrl  + 'billProduct';
-        window.open(`${path}/${reportType}`);
+    public async exportCSV(reportType): Promise<void> {
+        // const path = this.resourceUrl  + 'billProduct';
+        // window.open(`${path}/${reportType}`);
+
+        const blob = await this.productService.exportCSV(reportType);
+        const url = window.URL.createObjectURL(blob);
+
+        // const link = this.downloadZipLink.nativeElement;
+        const link = document.createElement('a');
+        document.body.appendChild(link);
+        link.setAttribute('style', 'display: none');
+        link.href = url;
+        link.download = 'product-list.csv';
+        link.click();
+
+        window.URL.revokeObjectURL(url);
     }
 
     public onPaginateChange($event): void {

@@ -6,7 +6,7 @@ import { tap } from 'rxjs/operators';
 
 import { Product } from './product.model';
 import { createRequestOption } from '../../shared/model/request-util';
-import { SERVER_PATH } from '../../shared/constant/base-constant';
+import { SERVER_PATH, REPORT_PATH } from '../../shared/constant/base-constant';
 
 export type EntityResponseType = HttpResponse<Product>;
 
@@ -16,6 +16,8 @@ export class ProductService {
     private resourceUrl =  SERVER_PATH + 'billerproduct';
     private searchByUtilUrl = SERVER_PATH + 'util/searchbylist';
     private statusUtilUrl = SERVER_PATH + 'util/statuses';
+
+    private reportUrl = REPORT_PATH;
 
     constructor(private http: HttpClient) { }
 
@@ -62,6 +64,14 @@ export class ProductService {
         const copy = this.convert(product);
         return this.http.put<Product>(`${this.resourceUrl}/${id}`, copy, { observe: 'response'})
             .pipe(map((res: EntityResponseType) => this.convertResponse(res)));
+    }
+
+    async exportCSV(reportType: string): Promise<Blob> {
+        const file =  await this.http.get<Blob>(
+            `${this.reportUrl}billerproduct/${reportType}`,
+            {responseType: 'blob' as 'json'}
+        ).toPromise();
+        return file;
     }
 
     getSearchBy(req?: any): Observable<HttpResponse<string[]>> {
