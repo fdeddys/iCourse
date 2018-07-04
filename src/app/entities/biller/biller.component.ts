@@ -1,4 +1,4 @@
-import { Component, OnInit, Inject, Input } from '@angular/core';
+import { Component, OnInit, Inject, Input, ViewChild, ElementRef } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import * as _ from 'lodash';
 
@@ -27,6 +27,8 @@ export class BillerComponent implements OnInit {
 
     // displayedColumns = ['memberName', 'memberType', 'dateStart', 'dateThru', 'status'];
     // dataSource = [];
+
+    @ViewChild('downloadLink') private downloadLink: ElementRef;
 
     private gridApi;
     private gridColumnApi;
@@ -289,12 +291,12 @@ export class BillerComponent implements OnInit {
         const blob = await this.billerService.exportCSV(reportType, membType);
         const url = window.URL.createObjectURL(blob);
 
-        // const link = this.downloadZipLink.nativeElement;
-        const link = document.createElement('a');
-        document.body.appendChild(link);
-        link.setAttribute('style', 'display: none');
+        const link = this.downloadLink.nativeElement;
+        // const link = document.createElement('a');
+        // document.body.appendChild(link);
+        // link.setAttribute('style', 'display: none');
         link.href = url;
-        link.download = 'biller.csv';
+        link.download = (membType === 1 ? 'biller-list.' : 'biller-subscriber-list.') + reportType;
         link.click();
 
         window.URL.revokeObjectURL(url);

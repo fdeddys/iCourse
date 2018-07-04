@@ -80,6 +80,14 @@ private reportUrl = REPORT_PATH;
         return file;
     }
 
+    async exportDetailCSV(reportType: string, membType: string, idHdr: number): Promise<Blob> {
+        const file =  await this.http.get<Blob>(
+            `${this.reportUrl}${membType}/${idHdr}/${reportType}`,
+            {responseType: 'blob' as 'json'}
+        ).toPromise();
+        return file;
+    }
+
     private convertResponse(res: EntityResponseType): EntityResponseType {
         const body: Biller = this.convertItemFromServer(res.body);
         return res.clone({body});
