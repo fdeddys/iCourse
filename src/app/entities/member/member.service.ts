@@ -4,7 +4,7 @@ import { Observable } from 'rxjs';
 import { map, tap } from 'rxjs/operators';
 import { createRequestOption } from '../../shared/model/request-util';
 import { Member } from './member.model';
-import { SERVER_PATH } from '../../shared/constant/base-constant';
+import { SERVER_PATH, REPORT_PATH } from '../../shared/constant/base-constant';
 
 export type EntityResponseType = HttpResponse<Member>;
 
@@ -12,6 +12,8 @@ export type EntityResponseType = HttpResponse<Member>;
 export class MemberService {
 
     private resourceUrl = SERVER_PATH + 'member';
+    private reportUrl = REPORT_PATH;
+
 
     constructor(private http: HttpClient) { }
 

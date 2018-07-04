@@ -12,6 +12,40 @@
 			<mat-datepicker #picker></mat-datepicker>
 		</mat-form-field> -->
 		
+		<mat-grid-list cols="12" rowHeight="75px">
+			<mat-grid-tile [colspan]="1">
+				Mulai
+			</mat-grid-tile>
+			<mat-grid-tile [colspan]="3" class="login-icon">
+				<input 
+					matInput [matDatepicker]="pickerSt" 
+					placeholder="Date Start" 
+					(dateInput)="addEvent('start', $event)" 
+					(click)="pickerSt.open()" 
+					[formControl]="dateStatCtrl" readonly>
+				<mat-datepicker-toggle matSuffix [for]="pickerSt"></mat-datepicker-toggle>
+				<mat-datepicker #pickerSt></mat-datepicker>
+			</mat-grid-tile>
+			<mat-grid-tile [colspan]="1">
+				sd
+			</mat-grid-tile>
+			<mat-grid-tile [colspan]="3" class="login-icon">
+				<input 
+					matInput [matDatepicker]="pickerTh" 
+					placeholder="Date Thru" 
+					(dateInput)="addEvent('thru', $event)" 
+					(click)="pickerTh.open()" 
+					[formControl]="dateThruCtrl" readonly>
+				<mat-datepicker-toggle matSuffix [for]="pickerTh"></mat-datepicker-toggle>
+				<mat-datepicker #pickerTh></mat-datepicker>
+			</mat-grid-tile>
+			<mat-grid-tile [colspan]="2">
+				<button mat-raised-button class="login-button" (click)="filter()" color="primary"> 
+					<mat-icon>autorenew</mat-icon> Filter
+				</button>
+			</mat-grid-tile>
+		</mat-grid-list>
+
         <ag-grid-angular 
 			style="height: 600px;" 
 			class="ag-theme-material"
