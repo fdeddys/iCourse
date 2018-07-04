@@ -205,10 +205,28 @@ export class UserComponent implements OnInit {
         this.loadAll(this.curPage);
     }
 
-    public exportCSV(reportType): void {
-        const path = this.resourceUrl  + 'user';
-        window.open(`${path}/${reportType}`);
+    // public exportCSV(reportType): void {
+    //     const path = this.resourceUrl  + 'user';
+    //     window.open(`${path}/${reportType}`);
+    // }
+
+    public async exportCSV(reportType): Promise<void> { 
+
+       // const membType = (this.memberTypeList.length === 1 && this.memberTypeList[0].id === 1 ? 1 : 0);
+        const blob = await this.userService.exportCSV(); 
+        const url = window.URL.createObjectURL(blob);
+
+        // const link = this.downloadZipLink.nativeElement;
+        const link = document.createElement('a');
+        document.body.appendChild(link);
+        link.setAttribute('style', 'display: none');
+        link.href = url;
+        link.download = 'user.csv';
+        link.click();
+
+        window.URL.revokeObjectURL(url);
     }
+
 
 }
 

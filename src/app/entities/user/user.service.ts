@@ -6,7 +6,7 @@ import { tap } from 'rxjs/operators';
 
 import { User } from './user.model';
 import { createRequestOption } from '../../shared/model/request-util';
-import { SERVER_PATH } from '../../shared/constant/base-constant';
+import { SERVER_PATH, REPORT_PATH } from '../../shared/constant/base-constant';
 
 export type EntityResponseType = HttpResponse<User>;
 
@@ -15,6 +15,7 @@ export class UserService {
 
 
     private resourceUrl = SERVER_PATH + 'user';
+    private reportUrl = REPORT_PATH;
 
     constructor(private http: HttpClient) { }
 
@@ -123,4 +124,13 @@ export class UserService {
         const copy: User = Object.assign({}, user);
         return copy;
     }
+
+    async exportCSV(): Promise<Blob> {
+        const file =  await this.http.get<Blob>(
+            `${this.reportUrl}user/csv`,
+            {responseType: 'blob' as 'json'}
+        ).toPromise();
+        return file;
+    }
+
 }
