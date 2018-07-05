@@ -67,9 +67,9 @@ export class SidebarComponent {
             {name: 'Bill Product', link: 'product'},
           ]
         },
-        {name: 'Menu Settings', link: 'menu'},
+        // {name: 'Menu Settings', link: 'menu'},
         {name: 'Global Settings', link: 'global-setting'},
-        {name: 'Audit-trail', link: 'audit-trail'},
+        {name: 'Audit Trail', link: 'audit-trail'},
       ]
     },
     {
