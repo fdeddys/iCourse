@@ -14,6 +14,7 @@ export class MemberService {
     private resourceUrl = SERVER_PATH + 'member';
     private reportUrl = REPORT_PATH;
 
+
     constructor(private http: HttpClient) { }
 
     find(id: number): Observable<EntityResponseType> {
