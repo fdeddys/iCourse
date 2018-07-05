@@ -35,6 +35,10 @@ export class UserDialogComponent implements OnInit {
     userForm: FormGroup;
     submitted = false;
     enableAddRole = true;
+    newpass = {
+        resetPass : null
+    };
+    isReset = false;
 
     // emailFormControl = new FormControl('', [
     //     Validators.required,
@@ -143,7 +147,9 @@ export class UserDialogComponent implements OnInit {
             (res: HttpResponse<User>) => {
                 if (res.body.errMsg === null || res.body.errMsg === '' ) {
                     const decodePass = atob(res.body.password);
-                    this.snackBar.open('Password reset to [ ' + decodePass + ' ] WITHOUT BRACKET ! ', 'ok');
+                    this.isReset = true;
+                    this.snackBar.open('Password has been reset  ', 'ok', { duration: this.duration, });
+                    this.newpass.resetPass = decodePass;
                 } else {
                     this.snackBar.open('Error !' + res.body.errMsg , 'Close', {
                         duration: this.duration,
@@ -197,6 +203,8 @@ export class UserDialogComponent implements OnInit {
         this.userForm = this.formBuilder.group({
              name: ['', [CommonValidatorDirective.required ]],
              email: ['', CommonValidatorDirective.required],
+             firstName: ['', CommonValidatorDirective.required],
+             lastName: ['', CommonValidatorDirective.required],
              // status: ['', CommonValidator.required]
          });
 
@@ -246,7 +254,10 @@ export class UserDialogComponent implements OnInit {
                         const decodePass = atob(res.body.password);
                         this.data.action = 'Edit';
                         this.user.id = res.body.id;
-                        this.snackBar.open('Password  [ ' + decodePass + ' ] WITHOUT BRACKET ! ', 'ok');
+                        this.isReset = true;
+                        this.snackBar.open('Password has been generated  ', 'ok', { duration: this.duration, });
+                        this.newpass.resetPass = decodePass;
+                        // this.snackBar.open('Password  [ ' + decodePass + ' ] WITHOUT BRACKET ! ', 'ok');
                     } else {
                         this.snackBar.open('Error !' + res.body.errMsg , 'Close', {
                             duration: this.duration,
@@ -306,6 +317,11 @@ export class UserDialogComponent implements OnInit {
     }
 
     getRoleRegistered(): void {
+        if  (this.user.id === undefined) {
+            console.log('User id not found');
+            return null;
+        }
+
         this.roleUserService.query(this.user.id)
             .subscribe(
                 (res: HttpResponse<RoleUserView[]>) => this.onSuccessUserRole(res.body, res.headers),

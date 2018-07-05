@@ -181,12 +181,11 @@ export class BillerTypeComponent implements OnInit {
         this.loadAll(this.curPage);
     }
 
-    public async exportCSV(reportType): Promise<void> { 
+    public async exportCSV(reportType): Promise<void> {
 
         // const membType = (this.memberTypeList.length === 1 && this.memberTypeList[0].id === 1 ? 1 : 0);
          const blob = await this.billerTypeService.exportCSV();
          const url = window.URL.createObjectURL(blob);
- 
          // const link = this.downloadZipLink.nativeElement;
          const link = document.createElement('a');
          document.body.appendChild(link);
@@ -194,7 +193,6 @@ export class BillerTypeComponent implements OnInit {
          link.href = url;
          link.download = 'billertype.csv';
          link.click();
- 
          window.URL.revokeObjectURL(url);
      }
 

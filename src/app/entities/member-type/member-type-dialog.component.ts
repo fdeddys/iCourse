@@ -49,10 +49,10 @@ export class MemberTypeDialogComponent implements OnInit {
         console.log('isi member  ', this.memberType);
         if (this.memberType.id === undefined) {
             console.log('send to service ', this.memberType);
-            this.memberTypeService.create(this.memberType).subscribe((res: HttpResponse<MemberType>) => {
-
-                this.openSnackbar();
-                this.dialogRef.close('refresh');
+            this.memberTypeService.create(this.memberType)
+                .subscribe((res: HttpResponse<MemberType>) => {
+                    this.openSnackbar();
+                    this.dialogRef.close('refresh');
             });
         } else {
             console.log('send to service ', this.memberType);

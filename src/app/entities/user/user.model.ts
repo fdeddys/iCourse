@@ -10,6 +10,8 @@ export class User implements BaseEntity {
         public nourut?: number,
         public oldPass?: string,
         public errMsg?: string,
+        public firstName?: string,
+        public lastName?: string,
         // public rememberToken?: string,
     ) {
     }
