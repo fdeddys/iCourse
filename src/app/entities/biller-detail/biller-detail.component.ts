@@ -5,13 +5,14 @@ import { HttpResponse, HttpErrorResponse } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { map, startWith } from 'rxjs/operators';
 
-import { FormControl } from '@angular/forms';
+import { FormControl, FormGroup, FormBuilder } from '@angular/forms';
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
 import { BillerDetail } from './biller-detail.model';
 import { BillerDetailService } from './biller-detail.service';
 import { BillerType } from '../biller-type';
 import { BillerCompany } from '../biller-company';
 import { Product } from '../product';
+import { CommonValidatorDirective } from '../../validators/common.validator';
 
 @Component({
     selector: 'app-biller-detail',
@@ -36,7 +37,11 @@ export class BillerDetailComponent implements OnInit {
     // statusData = true;
     mode = 'Add';
 
+    billerDetForm: FormGroup;
+    submitted = false;
+
     constructor(
+        private formBuilder: FormBuilder,
         private dialog: MatDialog,
         public billerDetailService: BillerDetailService,
         public dialogRef: MatDialogRef<BillerDetailComponent>,
@@ -64,6 +69,15 @@ export class BillerDetailComponent implements OnInit {
     }
 
     ngOnInit() {
+        this.billerDetForm = this.formBuilder.group({
+            billType: ['', [CommonValidatorDirective.required]],
+            billComp: ['', CommonValidatorDirective.required],
+            denom: ['', CommonValidatorDirective.required],
+            buyPrice: ['', CommonValidatorDirective.required],
+            fee: ['', CommonValidatorDirective.required],
+            profit: ['', CommonValidatorDirective.required],
+            status: ['', CommonValidatorDirective.required]
+        });
         this.billerDetail = {};
         this.billerDetail.billerHeaderId = this.data.rowData.billerHeaderId;
         if (this.data.mode !== 'create') {
@@ -91,6 +105,8 @@ export class BillerDetailComponent implements OnInit {
         this.productList = this.data.productData;
         this.statusList = this.data.statusData;
     }
+
+    get form() { return this.billerDetForm.controls; }
 
     filterBillType(name: string) {
         return this.billerTypeList.filter(billerType =>
@@ -141,7 +157,7 @@ export class BillerDetailComponent implements OnInit {
         this.dialogRef.close();
     }
 
-    save(): void {
+    onSubmit(): void {
         console.log(this.billerDetail);
         // this.billerDetail.status = (this.statusData ? 'ACTIVE' : 'INACTIVE');
         this.billerDetail.sellPrice = this.billerDetail.buyPrice + this.billerDetail.fee;
@@ -181,6 +197,14 @@ export class BillerDetailComponent implements OnInit {
             this.billerDetailService.update(this.billerDetail.id, this.billerDetail).subscribe((res: HttpResponse<BillerDetail>) => {
                 this.dialogRef.close(varBack);
             });
+        }
+    }
+
+    validate(): void {
+        this.submitted = true;
+        // stop here if form is invalid
+        if (this.billerDetForm.invalid) {
+            return;
         }
     }
 

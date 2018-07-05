@@ -6,7 +6,7 @@ import { HttpResponse, HttpErrorResponse } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { map, startWith } from 'rxjs/operators';
 
-import { FormControl } from '@angular/forms';
+import { FormControl, FormGroup, FormBuilder } from '@angular/forms';
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA, MatSnackBar } from '@angular/material';
 import { BillerPriceDetail } from './biller-price-detail.model';
 import { BillerPriceDetailService } from './biller-price-detail.service';
@@ -17,6 +17,7 @@ import { BillerCompany } from '../biller-company';
 import { Product } from '../product';
 
 import { BillerPriceInfoBillerComponent } from './biller-price-info-biller.component';
+import { CommonValidatorDirective } from '../../validators/common.validator';
 
 @Component({
     selector: 'app-biller-price-detail',
@@ -47,7 +48,11 @@ export class BillerPriceDetailComponent implements OnInit {
 
     tooltipCust = 'Info about the action&#13;Trial of tooltip';
 
+    billerPDetForm: FormGroup;
+    submitted = false;
+
     constructor(
+        private formBuilder: FormBuilder,
         private dialog: MatDialog,
         private snackBar: MatSnackBar,
         public billerPriceDetailService: BillerPriceDetailService,
@@ -79,6 +84,18 @@ export class BillerPriceDetailComponent implements OnInit {
     }
 
     ngOnInit() {
+        this.billerPDetForm = this.formBuilder.group({
+            billType: ['', [CommonValidatorDirective.required]],
+            billComp: ['', CommonValidatorDirective.required],
+            denom: ['', CommonValidatorDirective.required],
+            sellPrice: ['', CommonValidatorDirective.required],
+            profitMerc: ['', CommonValidatorDirective.required],
+            profitDist: ['', CommonValidatorDirective.required],
+            profitMemb: ['', CommonValidatorDirective.required],
+            dateStart: ['', CommonValidatorDirective.required],
+            dateThru: ['', CommonValidatorDirective.required],
+            status: ['', CommonValidatorDirective.required]
+        });
         this.billerPriceDetail = {};
         this.billerPriceDetail.billerHeaderId = this.data.rowData.billerHeaderId;
         this.disableDenom = false;
@@ -113,6 +130,8 @@ export class BillerPriceDetailComponent implements OnInit {
         this.productList = this.data.productData;
         this.statusList = this.data.statusData;
     }
+
+    get form() { return this.billerPDetForm.controls; }
 
     getListBiller(idProduct: number) {
         this.billerPriceDetailService.getListBiller(idProduct)
@@ -206,7 +225,7 @@ export class BillerPriceDetailComponent implements OnInit {
         this.dialogRef.close();
     }
 
-    save(): void {
+    onSubmit(): void {
         console.log(this.billerPriceDetail);
         this.billerPriceDetail.dateStart = this.dateSCtrl.value;
         this.billerPriceDetail.dateThru = this.dateTCtrl.value;
@@ -227,6 +246,14 @@ export class BillerPriceDetailComponent implements OnInit {
             .subscribe((res: HttpResponse<BillerPriceDetail>) => {
                 this.dialogRef.close(varBack);
             });
+        }
+    }
+
+    validate(): void {
+        this.submitted = true;
+        // stop here if form is invalid
+        if (this.billerPDetForm.invalid) {
+            return;
         }
     }
 

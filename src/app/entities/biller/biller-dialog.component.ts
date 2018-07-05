@@ -8,7 +8,7 @@ import { MatDatepickerInputEvent } from '@angular/material/datepicker';
 import { Observable } from 'rxjs';
 import { map, startWith } from 'rxjs/operators';
 
-import { FormControl } from '@angular/forms';
+import { FormControl, FormGroup, FormBuilder } from '@angular/forms';
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA, MatSnackBar } from '@angular/material';
 import { Member } from '../member';
 import { MemberType } from '../member-type';
@@ -19,6 +19,7 @@ import { MatCheckboxComponent } from '../../shared/templates/mat-checkbox.compon
 import { MatActionButtonComponent } from '../../shared/templates/mat-action-button.component';
 
 import { NO_DATA_GRID_MESSAGE, TOTAL_RECORD_PER_PAGE, REPORT_PATH } from '../../shared/constant/base-constant';
+import { CommonValidatorDirective } from '../../validators/common.validator';
 
 @Component({
     selector: 'app-biller-dialog',
@@ -69,6 +70,9 @@ export class BillerDialogComponent implements OnInit {
     totalData = 0;
     totalRecord = TOTAL_RECORD_PER_PAGE;
     messageNoData: string = NO_DATA_GRID_MESSAGE;
+
+    billerForm: FormGroup;
+    submitted = false;
 
     colDefs = [
         // { headerName: 'Name', field: 'name', checkboxSelection: true, width: 250, pinned: 'left', editable: true },
@@ -133,6 +137,7 @@ export class BillerDialogComponent implements OnInit {
     };
 
     constructor(
+        private formBuilder: FormBuilder,
         private dialog: MatDialog,
         private snackBar: MatSnackBar,
         public billerService: BillerService,
@@ -193,6 +198,14 @@ export class BillerDialogComponent implements OnInit {
 
     ngOnInit() {
         console.log('ngOnInit..');
+
+        this.billerForm = this.formBuilder.group({
+            member: ['', [CommonValidatorDirective.required]],
+            memberType: ['', CommonValidatorDirective.required],
+            dateStart: ['', CommonValidatorDirective.required],
+            dateThru: ['', CommonValidatorDirective.required]
+        });
+
         this.biller = {};
         this.modeTitle = this.data.modeTitle;
 
@@ -236,6 +249,8 @@ export class BillerDialogComponent implements OnInit {
         this.productList = this.data.productData;
         this.statusList = this.data.statusData;
     }
+
+    get form() { return this.billerForm.controls; }
 
     private onSuccess(data, headers) {
         console.log('data detail : ', data.content);
@@ -543,7 +558,7 @@ export class BillerDialogComponent implements OnInit {
         return year + '-' + (mth < 10 ? '0' + mth : mth) + '-' + (day < 10 ? '0' + day : day);
     }
 
-    save(): void {
+    onSubmit(): void {
         this.billerSave = {
             id: this.biller.id,
             description: this.biller.description,
@@ -597,6 +612,14 @@ export class BillerDialogComponent implements OnInit {
             this.billerService.update(this.billerSave.id, this.billerSave).subscribe((res: HttpResponse<Biller>) => {
                 this.dialogRef.close('refresh');
             });
+        }
+    }
+
+    validate(): void {
+        this.submitted = true;
+        // stop here if form is invalid
+        if (this.billerForm.invalid) {
+            return;
         }
     }
 
