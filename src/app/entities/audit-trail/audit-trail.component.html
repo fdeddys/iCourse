@@ -16,7 +16,8 @@
 			<mat-grid-tile [colspan]="1">
 				Mulai
 			</mat-grid-tile>
-			<mat-grid-tile [colspan]="3" class="login-icon">
+			<mat-grid-tile [colspan]="3">
+				<mat-form-field>
 				<input 
 					matInput [matDatepicker]="pickerSt" 
 					placeholder="Date Start" 
@@ -25,11 +26,13 @@
 					[formControl]="dateStatCtrl" readonly>
 				<mat-datepicker-toggle matSuffix [for]="pickerSt"></mat-datepicker-toggle>
 				<mat-datepicker #pickerSt></mat-datepicker>
+				</mat-form-field>
 			</mat-grid-tile>
 			<mat-grid-tile [colspan]="1">
 				sd
 			</mat-grid-tile>
-			<mat-grid-tile [colspan]="3" class="login-icon">
+			<mat-grid-tile [colspan]="3">
+				<mat-form-field>
 				<input 
 					matInput [matDatepicker]="pickerTh" 
 					placeholder="Date Thru" 
@@ -38,6 +41,7 @@
 					[formControl]="dateThruCtrl" readonly>
 				<mat-datepicker-toggle matSuffix [for]="pickerTh"></mat-datepicker-toggle>
 				<mat-datepicker #pickerTh></mat-datepicker>
+				</mat-form-field>
 			</mat-grid-tile>
 			<mat-grid-tile [colspan]="2">
 				<button mat-raised-button class="login-button" (click)="filter()" color="primary"> 
@@ -56,7 +60,7 @@
 		</ag-grid-angular>
 		
 		<!-- <button mat-raised-button color="primary" (click)="" style="margin-bottom: 10px;">search</button>-->
-		 <div style="width: 1500px">
+		 <div>
 			<mat-paginator 
 				[length]="totalData"
 				[pageSize]="totalRecord"
