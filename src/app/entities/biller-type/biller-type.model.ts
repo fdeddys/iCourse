@@ -6,6 +6,7 @@ export class BillerType implements BaseEntity {
         public name?: string,
         public ispostpaid?: boolean,
         public nourut?: any,
+        public errMsg?: any,
     ) {
     }
 }

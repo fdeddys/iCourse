@@ -1,58 +1,81 @@
 <h1 mat-dialog-title>{{ mode }} Biller Product</h1>
+<form name="billerDetForm" (ngSubmit)="f.form.valid && onSubmit()" #f="ngForm" novalidate>
 <div mat-dialog-content>
-    <form class="form-container">		
+    <!-- <form class="form-container"> -->
         <mat-form-field style="width: 30%; margin-right: 5%">
-            <input matInput placeholder="Biller Type" aria-label="Biller Type" [matAutocomplete]="auto" [formControl]="billTypeCtrl">
+            <input matInput placeholder="Biller Type" aria-label="Biller Type" [matAutocomplete]="auto" [formControl]="billTypeCtrl" required>
             <mat-autocomplete #auto="matAutocomplete" [displayWith]="displayFnBil" (closed)='closed()'>
                 <mat-option *ngFor="let billerType of filteredBillType | async" [value]="billerType">
                     <span>{{ billerType.name }}</span>
                 </mat-option>
             </mat-autocomplete>
+            <mat-error *ngIf="submitted && form.billType.errors" class="invalid-feedback">
+                <div *ngIf="form.billType.errors.required"> {{form.billType.errors.message}}</div>
+            </mat-error>
         </mat-form-field>
         <mat-form-field style="width: 30%; margin-right: 5%">
-            <input matInput placeholder="Biller Company" aria-label="Biller Company" [matAutocomplete]="autoComp" [formControl]="billCompanyCtrl">
+            <input matInput placeholder="Biller Company" aria-label="Biller Company" [matAutocomplete]="autoComp" [formControl]="billCompanyCtrl" required>
             <mat-autocomplete #autoComp="matAutocomplete" [displayWith]="displayFnCom" (closed)='closed()'>
                 <mat-option *ngFor="let billerCompany of filteredBillCompany | async" [value]="billerCompany">
                     <span>{{ billerCompany.name }}</span>
                 </mat-option>
             </mat-autocomplete>
+            <mat-error *ngIf="submitted && form.billComp.errors" class="invalid-feedback">
+                <div *ngIf="form.billComp.errors.required"> {{form.billComp.errors.message}}</div>
+            </mat-error>
         </mat-form-field>
         <mat-form-field style="width: 30%">
             <!-- <input matInput placeholder="Product Name" name="product" [value]="product"> -->
-            <mat-select placeholder="Denom" name="product" [(ngModel)]="billerDetail.billerProductId">
+            <mat-select placeholder="Denom" name="product" [(ngModel)]="billerDetail.billerProductId" required>
                 <mat-option *ngFor="let product of productList" [value]="product.id">
                     {{product.denom}}
                 </mat-option>
             </mat-select>
+            <mat-error *ngIf="submitted && form.denom.errors" class="invalid-feedback">
+                <div *ngIf="form.denom.errors.required"> {{form.denom.errors.message}}</div>
+            </mat-error>
         </mat-form-field>
         <!-- <mat-form-field class="form-full-width">
             <input matInput placeholder="External Code" name="externalCode" [(ngModel)]="billerDetail.externalCode">
         </mat-form-field> -->
         <mat-form-field style="width: 30%; margin-right: 5%">
-            <input type="number" matInput placeholder="Buy Price" name="buyPrice" [(ngModel)]="billerDetail.buyPrice">
+            <input type="number" matInput placeholder="Buy Price" name="buyPrice" [(ngModel)]="billerDetail.buyPrice" required>
+            <mat-error *ngIf="submitted && form.buyPrice.errors" class="invalid-feedback">
+                <div *ngIf="form.buyPrice.errors.required"> {{form.buyPrice.errors.message}}</div>
+            </mat-error>
         </mat-form-field>
         <mat-form-field style="width: 30%; margin-right: 5%">
-            <input type="number" matInput placeholder="Fee" name="fee" [(ngModel)]="billerDetail.fee">
+            <input type="number" matInput placeholder="Fee" name="fee" [(ngModel)]="billerDetail.fee" required>
+            <mat-error *ngIf="submitted && form.fee.errors" class="invalid-feedback">
+                <div *ngIf="form.fee.errors.required"> {{form.fee.errors.message}}</div>
+            </mat-error>
         </mat-form-field>
         <mat-form-field style="width: 30%">
-            <input matInput placeholder="Sell Price" name="sellPrice" value="{{ billerDetail.buyPrice + billerDetail.fee | currency:'Rp'}}" disabled>                
+            <input matInput placeholder="Sell Price" name="sellPrice" value="{{ billerDetail.buyPrice + billerDetail.fee | currency:'Rp'}}" disabled>            
         </mat-form-field>        
         <mat-form-field class="form-full-width" style="margin-right: 10%">
-            <input type="number" matInput placeholder="Profit" name="profit" [(ngModel)]="billerDetail.profit">
+            <input type="number" matInput placeholder="Profit" name="profit" [(ngModel)]="billerDetail.profit" required>
+            <mat-error *ngIf="submitted && form.profit.errors" class="invalid-feedback">
+                <div *ngIf="form.profit.errors.required"> {{form.profit.errors.message}}</div>
+            </mat-error>
         </mat-form-field>        
         <!-- <section class="form-full-width">
             <mat-checkbox class="example-margin" [color]="'primary'" [(ngModel)]="statusData" [ngModelOptions]="{standalone: true}">Active</mat-checkbox>
         </section> -->
         <mat-form-field class="form-full-width">
-			<mat-select placeholder="Status" [(ngModel)]="billerDetail.status" name="status">
+			<mat-select placeholder="Status" [(ngModel)]="billerDetail.status" name="status" required>
 				<mat-option *ngFor="let status of statusList" [value]="status">
 					{{status === 'ACTIVE' ? 'AVAILABLE' : 'DISCONTINUED'}}
 				</mat-option>
-			</mat-select>
+            </mat-select>
+            <mat-error *ngIf="submitted && form.status.errors" class="invalid-feedback">
+                <div *ngIf="form.status.errors.required"> {{form.status.errors.message}}</div>
+            </mat-error>
 		</mat-form-field>
-    </form>
+    <!-- </form> -->
 </div>
 <div mat-dialog-actions align="end">
-    <button mat-raised-button (click)="onNoClick()">Cancel</button>
-    <button mat-raised-button color="primary" cdkFocusInitial (click)="save()">{{ mode }} Biller Detail</button>
+    <button mat-raised-button type="button" (click)="onNoClick()">Cancel</button>
+    <button mat-raised-button color="primary" cdkFocusInitial (click)="validate()">{{ mode }} Biller Detail</button>
 </div>
+</form>

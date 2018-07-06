@@ -10,7 +10,8 @@
         </mat-form-field> -->
     <mat-form-field class="container-half-width" style="margin-right: 10%">
             <!-- <input matInput placeholder="Name " [(ngModel)]="user.name"  cdkFocusInitial name ="namea" > -->
-            <input matInput placeholder="Name " [(ngModel)]="user.name" cdkFocusInitial name ="nm" #name="ngModel" [ngClass]="{ 'is-invalid': f.submitted && name.invalid }" required maxlength="50">
+            <input matInput placeholder="User Name " [(ngModel)]="user.name" cdkFocusInitial name ="nm" #name="ngModel" 
+                [ngClass]="{ 'is-invalid': f.submitted && name.invalid }" required maxlength="50"  [disabled]="data.action === 'Edit'">
             <mat-error *ngIf="submitted && form.name.errors" class="invalid-feedback">
                     <div *ngIf="form.name.errors.required"> {{form.name.errors.message}}</div>
             </mat-error> 
@@ -25,13 +26,38 @@
         <!-- <input matInput placeholder="Email" [(ngModel)]="user.email" name="emaie"
         [disabled]="data.action === 'Edit'" required maxlength="50"
         > -->
-        <input matInput placeholder="Email " [(ngModel)]="user.email" cdkFocusInitial name ="emaie" #name="ngModel" [ngClass]="{ 'is-invalid': f.submitted && name.invalid }" required maxlength="50"  [disabled]="data.action === 'Edit'" required maxlength="50">
+        <input matInput placeholder="Email " [(ngModel)]="user.email" cdkFocusInitial name ="emaie" #name="ngModel" 
+            [ngClass]="{ 'is-invalid': f.submitted && name.invalid }" required maxlength="50"  [disabled]="data.action === 'Edit'" required maxlength="50">
         <mat-error *ngIf="submitted && form.name.errors" class="invalid-feedback">
             <div *ngIf="form.email.errors.required"> {{form.email.errors.message}}</div>
         </mat-error> 
         <!-- [formControl]="emailFormControl"  -->
     </mat-form-field>
 
+
+
+    <mat-form-field class="container-half-width" style="margin-right: 10%">
+        <input matInput placeholder="First Name " [(ngModel)]="user.firstName" name ="frnm" #name="ngModel" 
+            [ngClass]="{ 'is-invalid': f.submitted && name.invalid }" 
+            required maxlength="50"  >
+        <mat-error *ngIf="submitted && form.firstName.errors" class="invalid-feedback">
+                <div *ngIf="form.firstName.errors.required"> {{form.firstName.errors.message}}</div>
+        </mat-error> 
+    </mat-form-field>
+
+    <mat-form-field class="container-half-width">
+        <input matInput placeholder="Last Name" [(ngModel)]="user.lastName"  name ="lsnm" #name="ngModel" 
+        [ngClass]="{ 'is-invalid': f.submitted && name.invalid }" required maxlength="50"  >
+        <mat-error *ngIf="submitted && form.lastName.errors" class="invalid-feedback">
+            <div *ngIf="form.lastName.errors.required"> {{form.lastName.errors.message}}</div>
+        </mat-error> 
+    </mat-form-field>
+
+
+    
+    
+    
+    
     <mat-form-field class="container-half-width">
         <mat-select placeholder="Status" [(ngModel)]="user.status" name="sttss">
             <mat-option *ngFor="let status of statuses" [value]="status.value">
@@ -39,6 +65,14 @@
             </mat-option>
         </mat-select>
     </mat-form-field>
+    
+    
+    <mat-form-field class="container-half-width" style="padding-left: 95px; color: red" *ngIf="isReset" >
+        <input matInput placeholder="Password Generated " [(ngModel)]="newpass.resetPass"  [readonly]="true"  name ="rstpass" #name="ngModel" > 
+    </mat-form-field>
+
+
+
     <br>
     <!-- {{data.action}} -->
     <mat-dialog-actions>

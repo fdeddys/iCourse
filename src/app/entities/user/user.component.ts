@@ -37,7 +37,9 @@ export class UserComponent implements OnInit {
     gridOptions = {
     columnDefs: [
         { headerName: 'No', field: 'nourut', width: 100, minWidth: 100, maxWidth: 100, pinned: 'left', editable: false },
-        { headerName: 'Name', field: 'name', width: 250, editable: false },
+        { headerName: 'User Name', field: 'name', width: 250, editable: false },
+        { headerName: 'First Name', field: 'firstName', width: 250, editable: false },
+        { headerName: 'Last Name', field: 'lastName', width: 250, editable: false },
         { headerName: 'Email', field: 'email', width: 250, editable: false },
         { headerName: 'Status', field: 'status', width: 150, editable: false, valueFormatter: this.boolFormatter},
         { headerName: ' ', width: 150, field: 'act1', minWidth: 150, maxWidth: 150, cellRenderer: 'actionRenderer'},
@@ -203,13 +205,12 @@ export class UserComponent implements OnInit {
         // console.log('events ', $event);
         this.curPage = $event.pageIndex + 1;
         this.loadAll(this.curPage);
-    } 
+    }
 
-    public async exportCSV(reportType): Promise<void> { 
- 
-        const blob = await this.userService.exportCSV(); 
+    public async exportCSV(reportType): Promise<void> {
+
+        const blob = await this.userService.exportCSV();
         const url = window.URL.createObjectURL(blob);
- 
         const link = document.createElement('a');
         document.body.appendChild(link);
         link.setAttribute('style', 'display: none');

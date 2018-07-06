@@ -1,11 +1,12 @@
 import { Component, OnInit, Inject } from '@angular/core';
 
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
+import { MatDialog, MatDialogRef, MAT_DIALOG_DATA, MatSnackBar } from '@angular/material';
 import { BillerCompany } from './biller-company.model';
 import { BillerCompanyService } from './biller-company.service';
 import { HttpResponse, HttpErrorResponse } from '@angular/common/http';
 import { CommonValidatorDirective } from '../../validators/common.validator';
+import { SNACKBAR_DURATION_IN_MILLISECOND } from '../../shared/constant/base-constant';
 
 @Component({
     selector: 'app-biller-company-dialog',
@@ -19,9 +20,11 @@ export class BillerCompanyDialogComponent implements OnInit {
     name: string;
     billerCompanyForm: FormGroup;
     submitted = false;
+    duration = SNACKBAR_DURATION_IN_MILLISECOND;
 
     constructor(
         private formBuilder: FormBuilder,
+        public snackBar: MatSnackBar,
         public billerCompanyService: BillerCompanyService,
         public dialogRef: MatDialogRef<BillerCompanyDialogComponent>,
         @Inject(MAT_DIALOG_DATA) public data: any) { }
@@ -53,14 +56,25 @@ export class BillerCompanyDialogComponent implements OnInit {
         console.log('isi biller company ', this.billerCompany);
         if (this.billerCompany.id === undefined) {
             console.log('send to service ', this.billerCompany);
-            this.billerCompanyService.create(this.billerCompany).subscribe((res: HttpResponse<BillerCompany>) => {
-                this.dialogRef.close('refresh');
-            });
+            this.billerCompanyService.create(this.billerCompany)
+                .subscribe((res: HttpResponse<BillerCompany>) => {
+                    if ( res.body.errMsg === '' || res.body.errMsg === null ) {
+                        this.dialogRef.close('refresh');
+                    } else {
+                        this.openSnackBar(res.body.errMsg, 'Ok');
+                    }
+                });
         } else {
             console.log('send to service ', this.billerCompany);
-            this.billerCompanyService.update(this.billerCompany.id, this.billerCompany).subscribe((res: HttpResponse<BillerCompany>) => {
-                this.dialogRef.close('refresh');
-            });
+            this.billerCompanyService.update(this.billerCompany.id, this.billerCompany)
+                .subscribe((res: HttpResponse<BillerCompany>) => {
+                    if ( res.body.errMsg === '' || res.body.errMsg === null ) {
+                        this.dialogRef.close('refresh');
+                    } else {
+                        this.openSnackBar(res.body.errMsg, 'Ok');
+                    }
+                    // this.dialogRef.close('refresh');
+                });
         }
     }
 
@@ -72,4 +86,9 @@ export class BillerCompanyDialogComponent implements OnInit {
         }
     }
 
+    openSnackBar(message: string, action: string) {
+        this.snackBar.open(message, action, {
+          duration: this.duration,
+        });
+    }
 }
