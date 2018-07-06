@@ -51,15 +51,28 @@ export class MemberTypeDialogComponent implements OnInit {
             console.log('send to service ', this.memberType);
             this.memberTypeService.create(this.memberType)
                 .subscribe((res: HttpResponse<MemberType>) => {
-                    this.openSnackbar();
-                    this.dialogRef.close('refresh');
+                    if  (res.body.errMsg === '' || res.body.errMsg === null ) {
+                        this.openSnackbar();
+                        this.dialogRef.close('refresh');
+                    } else {
+                        this.snackBar.open(res.body.errMsg, 'ok', {
+                            duration: 5000,
+                        });
+                    }
             });
         } else {
             console.log('send to service ', this.memberType);
-            this.memberTypeService.update(this.memberType.id, this.memberType).subscribe((res: HttpResponse<MemberType>) => {
-                this.openSnackbar();
-                this.dialogRef.close('refresh');
-            });
+            this.memberTypeService.update(this.memberType.id, this.memberType)
+                .subscribe((res: HttpResponse<MemberType>) => {
+                    if  (res.body.errMsg === '' || res.body.errMsg === null ) {
+                        this.openSnackbar();
+                        this.dialogRef.close('refresh');
+                    } else {
+                        this.snackBar.open(res.body.errMsg, 'ok', {
+                            duration: 5000,
+                        });
+                    }
+                });
         }
     }
 

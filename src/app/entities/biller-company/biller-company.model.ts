@@ -5,6 +5,7 @@ export class BillerCompany implements BaseEntity {
         public id?: number,
         public name?: string,
         public nourut?: any,
+        public errMsg?: any,
     ) {
     }
 }

@@ -29,8 +29,7 @@ export class BillerCompanyComponent implements OnInit {
     messageNoData: string = NO_DATA_GRID_MESSAGE;
     curPage = 1;
     totalData = 0;
-    totalRecord = 2;
-    // TOTAL_RECORD_PER_PAGE;
+    totalRecord = TOTAL_RECORD_PER_PAGE;
 
     gridOptions = {
         columnDefs: [

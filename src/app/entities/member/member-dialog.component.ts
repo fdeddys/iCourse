@@ -8,7 +8,8 @@ import { HttpResponse, HttpErrorResponse } from '@angular/common/http';
 import { MemberBankDialogComponent } from './member-bank-dialog.component';
 import { MemberBank } from '../member-bank/member-bank.model';
 import { MemberBankService } from '../member-bank';
-import { GRID_THEME, CSS_BUTTON, NO_DATA_GRID_MESSAGE, SNACKBAR_DURATION_IN_MILLISECOND, REPORT_PATH } from '../../shared/constant/base-constant';
+import { GRID_THEME, CSS_BUTTON, NO_DATA_GRID_MESSAGE, SNACKBAR_DURATION_IN_MILLISECOND } from '../../shared/constant/base-constant';
+import { REPORT_PATH  } from '../../shared/constant/base-constant';
 import { MatActionButtonComponent } from '../../shared/templates/mat-action-button.component';
 import { CommonValidatorDirective } from '../../validators/common.validator';
 
@@ -152,18 +153,26 @@ export class MemberDialogComponent implements OnInit {
         if (this.member.id === undefined) {
             console.log('send to service ', this.member);
             this.memberService.create(this.member).subscribe((res: HttpResponse<Member>) => {
-                this.member = res.body;
-                this.isUpdateData = true;
-                console.log('refresh data ');
-                this.openSnackBar('Save success', 'Done');
+                if ( res.body.errMsg === '' || res.body.errMsg === null) {
+                    this.openSnackBar('Save success', 'Done');
+                    this.member = res.body;
+                    this.isUpdateData = true;
+                    console.log('refresh data ');
+                } else {
+                    this.openSnackBar(res.body.errMsg, 'Ok');
+                }
                 // this.dialogRef.close('refresh');
             });
         } else {
             console.log('send to service ', this.member);
             this.memberService.update(this.member.id, this.member).subscribe((res: HttpResponse<Member>) => {
-                this.isUpdateData = true;
-                console.log('refresh data ');
-                this.openSnackBar('Save success', 'Done');
+                if ( res.body.errMsg === '' || res.body.errMsg === null) {
+                    this.isUpdateData = true;
+                    console.log('refresh data ');
+                    this.openSnackBar('Save success', 'Done');
+                } else {
+                    this.openSnackBar(res.body.errMsg, 'Ok');
+                }
                 // this.dialogRef.close('refresh');
             });
         }
@@ -243,12 +252,10 @@ export class MemberDialogComponent implements OnInit {
     private onError(error) {
       console.log('error..');
     }
-   
-    public async exportDetaiCSV(reportType, id): Promise<void> { 
- 
+
+    public async exportDetaiCSV(reportType, id): Promise<void> {
          const blob = await this.memberService.exportDetaiCSV(id);
          const url = window.URL.createObjectURL(blob);
-  
          const link = document.createElement('a');
          document.body.appendChild(link);
          link.setAttribute('style', 'display: none');
@@ -256,9 +263,8 @@ export class MemberDialogComponent implements OnInit {
          link.download = 'memberdetail.csv';
          link.click();
          link.remove();
- 
          window.URL.revokeObjectURL(url);
-     }
+    }
 
 
 }
