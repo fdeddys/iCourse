@@ -27,6 +27,7 @@
     "ag-grid-angular": "^17.1.0",
     "bootstrap": "^4.1.1",
     "core-js": "^2.5.4",
+    "js-sha512": "^0.7.1",
     "ngx-webstorage": "^2.0.1",
     "rxjs": "^6.0.0",
     "zone.js": "^0.8.26"

@@ -6,7 +6,7 @@ import { User } from './user.model';
 import { HttpResponse, HttpErrorResponse } from '@angular/common/http';
 import { NO_DATA_GRID_MESSAGE, GRID_THEME, CSS_BUTTON, SNACKBAR_DURATION_IN_MILLISECOND } from '../../shared/constant/base-constant';
 import { UserService } from './user.service';
-
+import * as sha512 from 'js-sha512';
 
 @Component({
     selector: 'app-user-change-password',
@@ -88,8 +88,8 @@ export class UserUpdatePasswordComponent implements OnInit {
             return ;
         }
 
-        this.user.oldPass = btoa(this.oldpass) ;
-        this.user.password = btoa(this.pass);
+        this.user.oldPass = btoa(sha512(this.oldpass)) ;
+        this.user.password = btoa(sha512(this.pass));
         this.userService.updatePassword(this.user).subscribe((res: HttpResponse<User>) => {
             if ( res.body.errMsg === '' || res.body.errMsg === null) {
                 this.user = res.body;
