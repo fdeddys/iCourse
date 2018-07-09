@@ -112,15 +112,27 @@ export class BillerComponent implements OnInit {
             this.menuName = 'Biller';
         }
 
-        this.memberService.query({
-            page: 1,
-            count: 10000,
-        })
-        .subscribe(
-                (res: HttpResponse<Member[]>) => this.onSuccessMemb(res.body, res.headers),
-                (res: HttpErrorResponse) => this.onError(res.message),
-                () => { console.log('finally'); }
-        );
+        if  (this.route.snapshot.routeConfig.path === 'non-biller' ) {
+            this.memberService.query({
+                page: 1,
+                count: 10000,
+            })
+            .subscribe(
+                    (res: HttpResponse<Member[]>) => this.onSuccessMemb(res.body, res.headers),
+                    (res: HttpErrorResponse) => this.onError(res.message),
+                    () => { console.log('finally'); }
+            );
+        } else {
+            this.memberService.findNotAsBiller({
+                page: 1,
+                count: 10000,
+            })
+            .subscribe(
+                    (res: HttpResponse<Member[]>) => this.onSuccessMemb(res.body, res.headers),
+                    (res: HttpErrorResponse) => this.onError(res.message),
+                    () => { console.log('finally'); }
+            );
+        }
 
         this.memberTypeService.query({
             page: 1,
@@ -241,12 +253,25 @@ export class BillerComponent implements OnInit {
             console.log('The dialog was closed');
             // if (result === 'refresh') {
                 this.loadAll(this.curPage);
+
+                if  (this.route.snapshot.routeConfig.path !== 'non-biller' ) {
+                    this.memberService.findNotAsBiller({
+                        page: 1,
+                        count: 10000,
+                    })
+                    .subscribe(
+                        (res: HttpResponse<Member[]>) => this.onSuccessMemb(res.body, res.headers),
+                        (res: HttpErrorResponse) => this.onError(res.message),
+                        () => { console.log('finally'); }
+                    );
+                }
             // }
             // this.animal = result;
         });
     }
 
     private onSuccessMemb(data, headers) {
+        console.log('isi response ==> ', data);
         this.memberList = data.content;
     }
 

@@ -3,6 +3,7 @@ import { HttpResponse, HttpErrorResponse } from '@angular/common/http';
 import { Router } from '@angular/router';
 
 import { LoginService } from './login.service';
+import * as sha512 from 'js-sha512';
 import { SharedService } from '../../shared/services/shared.service';
 
 @Component({
@@ -49,10 +50,11 @@ export class LoginComponent implements OnInit {
         // } else {
         //     alert('Invalid credentials');
         // }
-
+       // alert(sha512(this.password));
         this.loginService.login({
             username: this.username,
-            password: this.password,
+            password: sha512(this.password),
+           //password: this.password,
             langKey: this.langKey
         }).then(() => {
             this.authenticationError = false;
