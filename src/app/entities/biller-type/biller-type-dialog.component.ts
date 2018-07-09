@@ -61,6 +61,7 @@ export class BillerTypeDialogComponent implements OnInit {
         console.log('isi biller company ', this.billerType);
         if (this.billerType.id === undefined) {
             console.log('send to service ', this.billerType);
+
             this.billerTypeService.create(this.billerType)
                 .subscribe((res: HttpResponse<BillerType>) => {
                     if (res.body.errMsg === '' || res.body.errMsg === null ) {
@@ -68,9 +69,18 @@ export class BillerTypeDialogComponent implements OnInit {
                     } else {
                         this.openSnackBar(res.body.errMsg, 'Ok');
                     }
-                });
+                },
+                (res: HttpErrorResponse) => {
+                    this.snackBar.open('Error !' + res.error.message , 'Close', {
+                        duration: 10000,
+                    });
+                    console.log('error msh ', res.error.message);
+                }
+            );
+
         } else {
             console.log('send to service ', this.billerType);
+
             this.billerTypeService.update(this.billerType.id, this.billerType)
                 .subscribe((res: HttpResponse<BillerType>) => {
                     if (res.body.errMsg === '' || res.body.errMsg === null ) {
@@ -78,7 +88,15 @@ export class BillerTypeDialogComponent implements OnInit {
                     } else {
                         this.openSnackBar(res.body.errMsg, 'Ok');
                     }
-                });
+                },
+                (res: HttpErrorResponse) => {
+                    this.snackBar.open('Error !' + res.error.message , 'Close', {
+                        duration: 10000,
+                    });
+                    console.log('error msh ', res.error.message);
+                }
+            );
+
         }
     }
 

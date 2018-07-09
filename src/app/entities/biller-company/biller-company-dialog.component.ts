@@ -57,25 +57,42 @@ export class BillerCompanyDialogComponent implements OnInit {
         if (this.billerCompany.id === undefined) {
             console.log('send to service ', this.billerCompany);
             this.billerCompanyService.create(this.billerCompany)
-                .subscribe((res: HttpResponse<BillerCompany>) => {
-                    if ( res.body.errMsg === '' || res.body.errMsg === null ) {
-                        this.dialogRef.close('refresh');
-                    } else {
-                        this.openSnackBar(res.body.errMsg, 'Ok');
+                .subscribe(
+                    (res: HttpResponse<BillerCompany>) => {
+                        if ( res.body.errMsg === '' || res.body.errMsg === null ) {
+                            this.dialogRef.close('refresh');
+                        } else {
+                            this.openSnackBar(res.body.errMsg, 'Ok');
+                        }
+                    },
+                    (res: HttpErrorResponse) => {
+                        this.snackBar.open('Error !' + res.error.message , 'Close', {
+                            duration: 10000,
+                        });
+                        console.log('error msh ', res.error.message);
                     }
-                });
+                );
+
         } else {
             console.log('send to service ', this.billerCompany);
             this.billerCompanyService.update(this.billerCompany.id, this.billerCompany)
-                .subscribe((res: HttpResponse<BillerCompany>) => {
-                    if ( res.body.errMsg === '' || res.body.errMsg === null ) {
-                        this.dialogRef.close('refresh');
-                    } else {
-                        this.openSnackBar(res.body.errMsg, 'Ok');
+                .subscribe(
+                    (res: HttpResponse<BillerCompany>) => {
+                        if ( res.body.errMsg === '' || res.body.errMsg === null ) {
+                            this.dialogRef.close('refresh');
+                        } else {
+                            this.openSnackBar(res.body.errMsg, 'Ok');
+                        }
+                    },
+                    (res: HttpErrorResponse) => {
+                        this.snackBar.open('Error !' + res.error.message , 'Close', {
+                            duration: 10000,
+                        });
+                        console.log('error msh ', res.error.message);
                     }
-                    // this.dialogRef.close('refresh');
-                });
+                );
         }
+
     }
 
     validate(): void {
