@@ -6,6 +6,7 @@ export class Role implements BaseEntity {
         public name?: string,
         public description?: string,
         public nourut?: number,
+        public errMsg?: string,
     ) {
     }
 }

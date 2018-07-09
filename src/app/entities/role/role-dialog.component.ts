@@ -1,8 +1,8 @@
 import { HttpErrorResponse, HttpResponse } from '@angular/common/http';
 import { Component, Inject, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
-import { CSS_BUTTON, GRID_THEME, NO_DATA_GRID_MESSAGE } from '../../shared/constant/base-constant';
+import { MatDialogRef, MAT_DIALOG_DATA, MatSnackBar } from '@angular/material';
+import { CSS_BUTTON, GRID_THEME, NO_DATA_GRID_MESSAGE, SNACKBAR_DURATION_IN_MILLISECOND } from '../../shared/constant/base-constant';
 import { CommonValidatorDirective } from '../../validators/common.validator';
 import { Menu, MenuService } from '../menu';
 import { Role, RoleMenuView } from './role.model';
@@ -30,11 +30,13 @@ export class RoleDialogComponent implements OnInit {
     messageNoData: string = NO_DATA_GRID_MESSAGE;
     roleForm: FormGroup;
     submitted = false;
+    duration = SNACKBAR_DURATION_IN_MILLISECOND;
 
     constructor(
         private formBuilder: FormBuilder,
         public roleService: RoleService,
         private menuService: MenuService,
+        public snackBar: MatSnackBar,
         public dialogRef: MatDialogRef<RoleDialogComponent>,
         @Inject(MAT_DIALOG_DATA) public data: any) { }
 
@@ -174,14 +176,36 @@ export class RoleDialogComponent implements OnInit {
         console.log('isi object  ', this.role);
         if (this.role.id === undefined) {
             console.log('send to service ', this.role);
-            this.roleService.create(this.role).subscribe((res: HttpResponse<Role>) => {
-                this.dialogRef.close('refresh');
-            });
+            this.roleService.create(this.role).subscribe(
+                (res: HttpResponse<Role>) => {
+                    if (res.body.errMsg === null || res.body.errMsg === '') {
+                        this.dialogRef.close('refresh');
+                    } else {
+                        this.snackBar.open('Error !' + res.body.errMsg , 'Close', {
+                            duration: this.duration,
+                        });
+                    }
+            },
+            (res: HttpErrorResponse) => {
+                this.snackBar.open('Error !' + res.error.message , 'Close', {
+                    duration: this.duration,
+                });
+                console.log('error msh ', res.error.message);
+            }
+        );
         } else {
             console.log('send to service ', this.role);
-            this.roleService.update(this.role.id, this.role).subscribe((res: HttpResponse<Role>) => {
+            this.roleService.update(this.role.id, this.role).subscribe(
+                (res: HttpResponse<Role>) => {
                 this.dialogRef.close('refresh');
-            });
+            },
+            (res: HttpErrorResponse) => {
+                this.snackBar.open('Error !' + res.error.message , 'Close', {
+                    duration: this.duration,
+                });
+                console.log('error msh ', res.error.message);
+            }
+        );
         }
     }
 
