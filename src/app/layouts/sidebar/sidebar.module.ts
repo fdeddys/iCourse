@@ -1,8 +1,14 @@
 /* import modules so that AppModule can access them */
 import { BrowserModule } from '@angular/platform-browser';
-import { NgModule } from '@angular/core';
+import { NgModule, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 
-import { SidebarComponent } from './sidebar.component';
+import { AgGridModule } from 'ag-grid-angular';
+import { CustomMaterialModule } from './../../material.module';
+import { AppRoutingModule } from '../../app.routing.module';
+import {
+    SideBarService,
+    SidebarComponent
+} from './';
 
 @NgModule({
     declarations: [
@@ -10,10 +16,16 @@ import { SidebarComponent } from './sidebar.component';
     ],
     imports: [ /* add modules here so Angular knows to use them */
         BrowserModule,
+        AgGridModule.withComponents([]),
+        CustomMaterialModule,
+        AppRoutingModule
     ],
     exports: [
         SidebarComponent
     ],
-    providers: []
+    providers: [
+        SideBarService
+    ],
+    schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })
 export class SidebarModule { }

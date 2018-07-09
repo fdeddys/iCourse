@@ -1,7 +1,9 @@
 import { Component, OnInit } from '@angular/core';
+import { HttpResponse, HttpErrorResponse } from '@angular/common/http';
 import { Router } from '@angular/router';
 
 import { LoginService } from './login.service';
+import { SharedService } from '../../shared/services/shared.service';
 
 @Component({
     selector: 'app-login',
@@ -19,9 +21,12 @@ export class LoginComponent implements OnInit {
     credentials: any;
 
     hide: boolean;
+    // userMenuArr: UserMenu[];
 
     constructor(
         private loginService: LoginService,
+        // private sidebarService: SideBarService,
+        private sharedService: SharedService,
         private router: Router
     ) {
         this.credentials = {
@@ -69,6 +74,7 @@ export class LoginComponent implements OnInit {
             //     // this.stateStorageService.storeUrl(null);
             //     this.router.navigate([redirect]);
             // }
+
             this.router.navigate(['main']);
 
         }).catch((err) => {
@@ -77,5 +83,4 @@ export class LoginComponent implements OnInit {
         });
         console.log('selesai');
     }
-
 }
