@@ -70,6 +70,25 @@ export class MemberService {
 
     }
 
+    findNotAsBiller(req?: any): Observable<HttpResponse<Member[]>> {
+        const options = createRequestOption(req);
+        let pageNumber = null;
+        let pageCount = null;
+        Object.keys(req).forEach((key) => {
+            if (key === 'page') {
+                pageNumber = req[key];
+            }
+            if (key === 'count') {
+                pageCount = req[key];
+            }
+
+        });
+        return this.http.get<Member[]>(`${this.resourceUrl}/notRegAsBiller/page/${pageNumber}/count/${pageCount}`, {  observe: 'response' })
+        .pipe(
+            tap(billerCompanies => console.log('raw ', billerCompanies ) )
+            );
+    }
+
     private convertResponse(res: EntityResponseType): EntityResponseType {
         const body: Member = this.convertItemFromServer(res.body);
         return res.clone({body});

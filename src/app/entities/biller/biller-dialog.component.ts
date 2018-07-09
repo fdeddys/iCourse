@@ -581,16 +581,22 @@ export class BillerDialogComponent implements OnInit {
             console.log('send to service ', this.billerSave);
             this.billerService.create(this.billerSave).subscribe((res: HttpResponse<Biller>) => {
                     // header id = res.body.id
-                    console.log(res.body.id);
-                    this.btnDisabled = false;
-                    if (this.biller.id === undefined || this.biller.id === null) {
-                        this.biller.id = res.body.id;
+
+                    if (res.body.errMsg === '' || res.body.errMsg === null ) {
+                        console.log(res.body.id);
+                        this.btnDisabled = false;
+                        if (this.biller.id === undefined || this.biller.id === null) {
+                            this.biller.id = res.body.id;
+                        }
+                        if (this.data.billType === 'non-biller') {
+                            this.loadAll(this.curPage);
+                        }
+                        this.snackbarSuccess('Save Success');
+                    } else {
+                        this.snackbarError('Save Error : ' + res.body.errMsg);
+
                     }
 
-                    if (this.data.billType === 'non-biller') {
-                        this.loadAll(this.curPage);
-                    }
-                    this.snackbarSuccess('Save Success');
 
                     // bulk save
                     // const rowData = [];

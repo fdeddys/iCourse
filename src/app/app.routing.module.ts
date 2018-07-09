@@ -32,7 +32,7 @@ const routes: Routes = [
             {path: 'global-setting', component: GlobalSettingComponent},
             {path: 'user', component: UserComponent},
             {path: 'role', component: RoleComponent},
-            {path: 'menu', component: MenuComponent},
+            {path: 'menu', component: MenuComponent },
             {path: 'change-pass', component: UserUpdatePasswordComponent},
             {path: 'audit-trail', component: AuditTrailComponent},
         ]
