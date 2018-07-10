@@ -5,6 +5,8 @@ import { Router } from '@angular/router';
 import { LoginService } from './login.service';
 import * as sha512 from 'js-sha512';
 import { SharedService } from '../../shared/services/shared.service';
+import {SNACKBAR_DURATION_IN_MILLISECOND } from '../../shared/constant/base-constant';
+import {MatSnackBar } from '@angular/material';
 
 @Component({
     selector: 'app-login',
@@ -23,12 +25,14 @@ export class LoginComponent implements OnInit {
 
     hide: boolean;
     // userMenuArr: UserMenu[];
+    duration = SNACKBAR_DURATION_IN_MILLISECOND;
 
     constructor(
         private loginService: LoginService,
         // private sidebarService: SideBarService,
         private sharedService: SharedService,
-        private router: Router
+        private router: Router,
+        public snackBar: MatSnackBar,
     ) {
         this.credentials = {
             username: null,
@@ -51,6 +55,17 @@ export class LoginComponent implements OnInit {
         //     alert('Invalid credentials');
         // }
        // alert(sha512(this.password));
+       if(this.username==null){
+        this.snackBar.open('Error ! Username harus diisi' , 'Close', {
+            duration: this.duration,
+        });
+       }
+       if(this.password==null){
+        this.snackBar.open('Error ! Password harus diisi' , 'Close', {
+            duration: this.duration,
+        });
+       }
+
         this.loginService.login({
             username: this.username,
             password: sha512(this.password),
@@ -81,6 +96,9 @@ export class LoginComponent implements OnInit {
 
         }).catch((err) => {
             console.log('hasil login gagal ', err);
+            this.snackBar.open('Error ! Username atau Password anda salah' , 'Close', {
+                duration: this.duration,
+            });
             this.authenticationError = true;
         });
         console.log('selesai');
