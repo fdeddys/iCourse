@@ -40,6 +40,8 @@ export class BillerPriceDetailComponent implements OnInit {
     productList = [];
     dataListBill = [];
     statusList = [];
+    billPayTypeList = [];
+
 
     // minDate = new Date(2000, 0, 1);
     // maxDate = new Date(2020, 0, 1);
@@ -129,6 +131,7 @@ export class BillerPriceDetailComponent implements OnInit {
         this.billerTypeList = this.data.billerTypeData;
         this.productList = this.data.productData;
         this.statusList = this.data.statusData;
+        this.billPayTypeList = this.data.billPayTypeData;
     }
 
     get form() { return this.billerPDetForm.controls; }

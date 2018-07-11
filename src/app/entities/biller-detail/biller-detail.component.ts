@@ -33,6 +33,7 @@ export class BillerDetailComponent implements OnInit {
     billerCompanyList = [];
     productList = [];
     statusList = [];
+    billPayTypeList = [];
 
     // statusData = true;
     mode = 'Add';
@@ -83,6 +84,8 @@ export class BillerDetailComponent implements OnInit {
         if (this.data.mode !== 'create') {
             console.log(this.data.rowData);
             this.mode = 'Edit';
+
+            console.log( this.data.rowData);
             this.billerDetail = {
                 id : this.data.rowData.id,
                 externalCode : this.data.rowData.externalCode,
@@ -92,7 +95,7 @@ export class BillerDetailComponent implements OnInit {
                 sellPrice : this.data.rowData.sellPrice,
                 billerHeaderId : this.data.rowData.billerHeader.id,
                 billerProductId : this.data.rowData.billerProduct.id,
-                postPaid : this.data.rowData.postPaid,
+                billPayType : this.data.rowData.billPayType,
                 status : this.data.rowData.status
             };
             // this.statusData = (this.data.rowData.status === 'ACTIVE' ? true : false);
@@ -104,6 +107,7 @@ export class BillerDetailComponent implements OnInit {
         this.billerTypeList = this.data.billerTypeData;
         this.productList = this.data.productData;
         this.statusList = this.data.statusData;
+        this.billPayTypeList = this.data.billPayTypeData;
     }
 
     get form() { return this.billerDetForm.controls; }
@@ -161,8 +165,9 @@ export class BillerDetailComponent implements OnInit {
         console.log(this.billerDetail);
         // this.billerDetail.status = (this.statusData ? 'ACTIVE' : 'INACTIVE');
         this.billerDetail.sellPrice = this.billerDetail.buyPrice + this.billerDetail.fee;
-        this.billerDetail.externalCode = '';
-        this.billerDetail.postPaid = 1;
+        // this.billerDetail.externalCode = '';
+       // this.billerDetail.postPaid = 1;
+ 
         const varBack = {
             mode: this.data.mode,
             rowData: {}
