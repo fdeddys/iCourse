@@ -8,6 +8,8 @@ import { MemberService } from './member.service';
 import { GRID_THEME, CSS_BUTTON, NO_DATA_GRID_MESSAGE, TOTAL_RECORD_PER_PAGE, REPORT_PATH } from '../../shared/constant/base-constant';
 import { MatActionButtonComponent } from '../../shared/templates/mat-action-button.component';
 import { SharedService } from '../../shared/services/shared.service';
+import { IFilter } from 'ag-grid';
+import { Filter } from '../../shared/model/filter';
 
 @Component({
   selector: 'app-member',
@@ -25,8 +27,8 @@ export class MemberComponent implements OnInit {
   totalData = 0;
   totalRecord = TOTAL_RECORD_PER_PAGE;
   private resourceUrl = REPORT_PATH;
-  private filter = {
-    name : null,
+  private filter: Filter = {
+    name: null,
     description: null,
     active: 'ALL',
   };
