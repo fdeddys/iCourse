@@ -31,6 +31,10 @@ export class BillerCompanyComponent implements OnInit {
     totalData = 0;
     totalRecord = TOTAL_RECORD_PER_PAGE;
 
+    private filter = {
+      name : null
+    };
+
     gridOptions = {
         columnDefs: [
             { headerName: 'No', field: 'nourut', width: 100, pinned: 'left', editable: false },
@@ -125,6 +129,21 @@ export class BillerCompanyComponent implements OnInit {
       // this.loadAll();
     }
 
+    filterBtn(): void {
+    this.billerCompanyService.filter({
+        page: this.curPage,
+        count: this.totalRecord,
+        filter: this.filter,
+    })
+    .subscribe(
+        (res: HttpResponse<BillerCompany[]>) => this.onSuccess(res.body, res.headers),
+        (res: HttpErrorResponse) => this.onError(res.message),
+        () => { console.log('finally');
+              }
+      );
+    }
+
+
     onGridReady(params) {
       this.gridApi = params.api;
       this.gridColumnApi = params.columnApi;
@@ -151,7 +170,7 @@ export class BillerCompanyComponent implements OnInit {
 
     private onSuccess(data, headers) {
 
-        if ( data.content.length <= 0 ) {
+        if ( data.content.length < 0 ) {
             return ;
         }
 

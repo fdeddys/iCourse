@@ -10,6 +10,24 @@
             <button mat-raised-button color="primary"  (click)="openNewDialog()" style="margin-bottom: 10px;">Add Biller Type</button>
             <button mat-raised-button class="primary"  (click)="exportCSV('csv')" style="margin-bottom: 10px;">Export CSV</button>
         </div>
+        <br>
+        <div>
+            <mat-form-field class="container-half-width" >
+                <input matInput placeholder="Filter Name " [(ngModel)]="filter.name"  
+                    name ="name"  >
+            </mat-form-field> 
+            <mat-form-field class="form-full-width" style="margin-left: 30px">
+                <mat-select placeholder="Filter Type" [(ngModel)]="filter.billPayType" name="billPayType">
+                    <!-- <mat-option [value]= 'ALL'>ALL</mat-option> -->
+                    <mat-option *ngFor="let billPayType of billPayTypeList" [value]="billPayType">
+                        <!-- {{ status === 'true' ? 'ACTIVE' : ( status === 'false' ? 'INACTIVE' : 'ALL' )   }} -->
+                        {{billPayType}}
+                    </mat-option>
+                </mat-select>
+            </mat-form-field>
+            <button mat-raised-button color="primary" (click)="filterBtn()" style="margin-left: 30px">Filter</button>
+        </div>
+        <br>
         <ag-grid-angular 
         #agGrid
             style="height: 550px;" 

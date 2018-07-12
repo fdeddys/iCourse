@@ -31,6 +31,11 @@ export class BillerTypeComponent implements OnInit {
     totalRecord = TOTAL_RECORD_PER_PAGE;
     billPayTypeList = [];
 
+    private filter = {
+        name : null,
+        billPayType: 'ALL',
+      };
+
     gridOptions = {
         columnDefs: [
             { headerName: 'No', field: 'nourut', width: 100, pinned: 'left', editable: false },
@@ -128,11 +133,49 @@ export class BillerTypeComponent implements OnInit {
         );
     }
 
+    filterBtn(): void {
+        let statusAll = false;
+        switch (this.filter.billPayType) {
+          case 'ALL':
+              console.log('hapus active');
+              statusAll = true;
+              // delete this.filter.active ;
+              this.filter.billPayType = null;
+              break;
+      //     case 'ACTIVE':
+      //     // lastStatus = 'ACTIVE';
+      //         this.filter.active = true;
+      //         break;
+      //     default:
+      //         this.filter.active = null;
+      //         break;
+      }
+      this.billerTypeService.filter({
+          page: this.curPage,
+          count: this.totalRecord,
+          filter: this.filter,
+      })
+      .subscribe(
+          (res: HttpResponse<BillerType[]>) => this.onSuccess(res.body, res.headers),
+          (res: HttpErrorResponse) => this.onError(res.message),
+          () => { console.log('finally');
+                  if ( statusAll ) {
+                    this.filter.billPayType = 'ALL';
+                  }
+                }
+        );
+      }
+
     ngOnInit() {
         this.sharedService.getBillPayType()
         .subscribe(
                 (res) => {
-                    this.billPayTypeList = res.body;
+                    this.billPayTypeList = [];
+                    this.billPayTypeList.push('ALL');
+                    for (const datas of res.body) {
+                        console.log(datas);
+                        this.billPayTypeList.push(datas);
+                    }
                 },
                 (res: HttpErrorResponse) => this.onError(res.message),
                 () => { console.log('finally'); }
@@ -163,7 +206,7 @@ export class BillerTypeComponent implements OnInit {
     }
 
     private onSuccess(data, headers) {
-        if ( data.content.length <= 0 ) {
+        if ( data.content.length < 0 ) {
             return ;
         }
 
@@ -206,5 +249,18 @@ export class BillerTypeComponent implements OnInit {
          window.URL.revokeObjectURL(url);
      }
 
-
+    //  loadBillPayType(): void {
+    //     this.sharedService.getBillPayType().subscribe(
+    //         (res) => {
+    //             this.billPayTypeList = [];
+    //             this.billPayTypeList.push('ALL');
+    //             for (const datas of res.body) {
+    //               console.log(datas);
+    //               this.billPayTypeList.push(datas);
+    //             }
+    //         },
+    //         (res: HttpErrorResponse) => this.onError(res.message),
+    //         () => { console.log('finally'); }
+    //     );
+    //   }
 }
