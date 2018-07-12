@@ -10,6 +10,19 @@
             <button mat-raised-button color="primary"  (click)="openNewDialog()" style="margin-bottom: 10px;">Add Member Type</button>
             <button mat-raised-button class="primary"  (click)="exportCSV('csv')" style="margin-bottom: 10px;">Export CSV</button>
         </div>
+        <br>
+        <div>
+            <mat-form-field class="container-half-width" >
+                <input matInput placeholder="Filter Name " [(ngModel)]="filter.name"  
+                    name ="name"  >
+            </mat-form-field>
+            <mat-form-field class="container-half-width"  style="margin-left: 30px">
+                <input matInput placeholder="Filter Description " [(ngModel)]="filter.description"  
+                    name ="descr" >
+            </mat-form-field>
+            <button mat-raised-button color="primary" (click)="filterBtn()" style="margin-left: 30px">Filter</button>
+        </div>
+        <br>
         <ag-grid-angular 
             #agGrid
             style="height: 500px;" 

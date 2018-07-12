@@ -66,6 +66,31 @@ export class MemberTypeService {
 
     }
 
+    filter(req?: any): Observable<HttpResponse<MemberType[]>> {
+        console.log('Filter  ', req);
+
+        const options = createRequestOption(req);
+        let pageNumber = null;
+        let pageCount = null;
+        let newresourceUrl = null;
+
+        Object.keys(req).forEach((key) => {
+            if (key === 'page') {
+                pageNumber = req[key];
+            }
+            if (key === 'count') {
+                pageCount = req[key];
+            }
+        });
+
+        newresourceUrl = this.resourceUrl + `/filter/page/${pageNumber}/count/${pageCount}`;
+        return this.http.post<MemberType[]>(newresourceUrl, req['filter'], {  observe: 'response' })
+            .pipe(
+                tap(results => console.log('raw ', results ) )
+                );
+
+    }
+
     private convertResponse(res: EntityResponseType): EntityResponseType {
         const body: MemberType = this.convertItemFromServer(res.body);
         return res.clone({body});

@@ -12,6 +12,8 @@ import { UserConfirmDialogComponent } from './user-confirm-dialog.component';
 
 import { ICellRendererAngularComp } from 'ag-grid-angular/main';
 import { MatSnackBar } from '@angular/material';
+import { Filter } from '../../shared/model/filter';
+import { SharedService } from '../../shared/services/shared.service';
 
 @Component({
     selector: 'app-user',
@@ -27,23 +29,31 @@ export class UserComponent implements OnInit {
     cssButton = CSS_BUTTON  ;
     user: User[];
     User: User;
+    statuses: any;
     messageNoData: string = NO_DATA_GRID_MESSAGE;
     duration = SNACKBAR_DURATION_IN_MILLISECOND;
-
+    filter: Filter = {
+        name: '',
+        email: '',
+        firstName: '',
+        lastName: '',
+        status: 'ALL'
+    };
     curPage = 1;
     totalData = 0;
     totalRecord = TOTAL_RECORD_PER_PAGE;
 
     gridOptions = {
-    columnDefs: [
-        { headerName: 'No', field: 'nourut', width: 100, minWidth: 100, maxWidth: 100, pinned: 'left', editable: false },
-        { headerName: 'User Name', field: 'name', width: 250, editable: false },
-        { headerName: 'First Name', field: 'firstName', width: 250, editable: false },
-        { headerName: 'Last Name', field: 'lastName', width: 250, editable: false },
-        { headerName: 'Email', field: 'email', width: 250, editable: false },
-        { headerName: 'Status', field: 'status', width: 150, editable: false, valueFormatter: this.boolFormatter},
-        { headerName: ' ', width: 150, field: 'act1', minWidth: 150, maxWidth: 150, cellRenderer: 'actionRenderer'},
-    ],
+        columnDefs: [
+            { headerName: 'No', field: 'nourut', width: 100, minWidth: 100, maxWidth: 100, pinned: 'left', editable: false },
+            { headerName: 'User Name', field: 'name', width: 250, editable: false },
+            { headerName: 'First Name', field: 'firstName', width: 250, editable: false },
+            { headerName: 'Last Name', field: 'lastName', width: 250, editable: false },
+            { headerName: 'Email', field: 'email', width: 250, editable: false },
+            { headerName: 'Status', field: 'status', width: 150, editable: false},
+            { headerName: ' ', width: 150, field: 'act1', minWidth: 150, maxWidth: 150, cellRenderer: 'actionRenderer'},
+        ],
+        // , valueFormatter: this.boolFormatter
         rowData: this.user,
         enableSorting: true,
         enableFilter: true,
@@ -75,7 +85,8 @@ export class UserComponent implements OnInit {
 
     constructor(    private dialog: MatDialog,
                     public snackBar: MatSnackBar,
-                    private userService: UserService) { }
+                    private userService: UserService,
+                    private sharedService: SharedService ) { }
 
     public onCellClicked(e) {
         console.log('row clicked isi nya ====> ', e);
@@ -97,12 +108,12 @@ export class UserComponent implements OnInit {
     public onActionEditClick(data: any) {
         console.log('View action clicked', data);
         const dialogRef = this.dialog.open(UserDialogComponent, {
-        width: '1000px',
-        data: { action: 'Edit', entity: 'User', user: data }
+            width: '1000px',
+            data: { action: 'Edit', entity: 'User', user: data }
         });
 
         dialogRef.afterClosed().subscribe(result => {
-        console.log('The dialog was closed = [', result, ']');
+            console.log('The dialog was closed = [', result, ']');
             this.loadAll(this.curPage);
         });
     }
@@ -161,7 +172,23 @@ export class UserComponent implements OnInit {
     }
 
     ngOnInit() {
-    // this.loadAll();
+        this.loadStatus();
+    }
+
+    loadStatus() {
+        this.sharedService.getStatus().subscribe(
+            (res: HttpResponse<String[]>) => {
+                this.statuses = [];
+                this.statuses.push('ALL');
+                for (const datas of res.body) {
+                  console.log(datas);
+                  this.statuses.push(datas);
+                }
+            },
+            (res: HttpErrorResponse ) => {
+            },
+            ( ) => console.log('finally')
+        );
     }
 
     onGridReady(params) {
@@ -184,18 +211,18 @@ export class UserComponent implements OnInit {
         });
     }
 
-  private onSuccess(data, headers) {
-      if ( data.content.length <= 0 ) {
-          return ;
-      }
-      this.user = data.content;
-      let urut = 1;
-      for (const usr of this.user) {
-        usr.nourut = urut++;
-      }
-      this.totalData = data.totalElements;
-      this.gridApi.setRowData(this.user);
-  }
+        private onSuccess(data, headers) {
+        if ( data.content.length < 0 ) {
+            return ;
+        }
+        this.user = data.content;
+        let urut = 1;
+        for (const usr of this.user) {
+            usr.nourut = urut++;
+        }
+        this.totalData = data.totalElements;
+        this.gridApi.setRowData(this.user);
+    }
 
     private onError(error) {
         console.log('error..');
@@ -222,6 +249,32 @@ export class UserComponent implements OnInit {
         window.URL.revokeObjectURL(url);
     }
 
+    filterBtn(): void {
+        let statusAll = false;
+        switch (this.filter.status) {
+          case 'ALL':
+              console.log('hapus status');
+              statusAll = true;
+              delete this.filter.status ;
+              break;
+        }
+
+        this.userService.filter({
+            page: this.curPage,
+            count: this.totalRecord,
+            filter: this.filter,
+        })
+        .subscribe(
+            (res: HttpResponse<User[]>) => this.onSuccess(res.body, res.headers),
+            (res: HttpErrorResponse) => this.onError(res.message),
+            () => { console.log('finally');
+                    if ( statusAll ) {
+                        this.filter.status = 'ALL';
+                    }
+                }
+        );
+
+    }
 
 }
 

@@ -48,8 +48,8 @@ export class UserDialogComponent implements OnInit {
     user: User;
 
     statuses = [
-        {value: 1, viewValue: 'Active'},
-        {value: 0, viewValue: 'Inactive'}
+        {value: 'ACTIVE', viewValue: 'ACTIVE'},
+        {value: 'INACTIVE', viewValue: 'INACTIVE'}
     ];
 
     constructor(
@@ -91,20 +91,6 @@ export class UserDialogComponent implements OnInit {
                 checkboxRenderer: MatCheckboxComponent
             }
         };
-
-    // public onRowClicked(e) {
-    //     console.log('clicked ', e);
-    //     if (e.event.target !== undefined) {
-    //         const data = e.data;
-    //         const actionType = e.event.target.getAttribute('data-action-type');
-
-    //         switch (actionType) {
-    //             case 'removeRole':
-    //                 console.log('Send data ==> ', data);
-    //                 return this.onActionClick(data);
-    //         }
-    //     }
-    // }
 
     public onCellClicked(e) {
         console.log('clicked cell ', e);
