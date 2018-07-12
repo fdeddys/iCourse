@@ -18,11 +18,11 @@
         </mat-form-field> -->
         <mat-form-field class="container-half-width">
             <!-- <input matInput placeholder="Description" [(ngModel)]="member.description" name ="description"> -->
-                <input matInput placeholder="Description " [(ngModel)]="member.description"  name ="descr" [(ngModel)]="member.description" #description="ngModel" [ngClass]="{ 'is-invalid': f.submitted && description.invalid }" required maxlength="255">
-                <mat-error *ngIf="submitted && form.description.errors" class="invalid-feedback">
-                        <div *ngIf="form.description.errors.required"> {{form.description.errors.message}}</div>
-                </mat-error> 
-            </mat-form-field>
+            <input matInput placeholder="Description " [(ngModel)]="member.description"  name ="descr" [(ngModel)]="member.description" #description="ngModel" [ngClass]="{ 'is-invalid': f.submitted && description.invalid }" required maxlength="255">
+            <mat-error *ngIf="submitted && form.description.errors" class="invalid-feedback">
+                    <div *ngIf="form.description.errors.required"> {{form.description.errors.message}}</div>
+            </mat-error> 
+        </mat-form-field>
         <mat-form-field class="container-half-width">
             <mat-select placeholder="Status" [(ngModel)]="member.active" name="stts">
                 <mat-option *ngFor="let status of statuses" [value]="status.value">

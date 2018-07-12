@@ -217,6 +217,11 @@ export class BillerComponent implements OnInit {
     }
 
     openDialog(mode, data): void {
+
+        if (mode !== 'create') {
+            this.memberList.push(data.member);
+        }
+
         const datasend = {
             mode : 'create',
             modeTitle : 'Create',
