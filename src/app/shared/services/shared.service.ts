@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';
 import { Subject, Observable } from 'rxjs';
 import { HttpClient, HttpResponse } from '@angular/common/http';
-import { SERVER_PATH } from '../constant/base-constant';
-import { tap } from 'rxjs/internal/operators/tap';
+import { SERVER_PATH } from '../../shared/constant/base-constant';
+import { tap } from 'rxjs/operators';
 
 @Injectable()
 export class SharedService {
@@ -10,8 +10,8 @@ export class SharedService {
 
     subscription = new Subject();
 
+    private utilUrl = SERVER_PATH + 'util/';
     constructor(private http: HttpClient) { }
-
     setUserMenu(userMenuArr) {
         console.log('userMenuArr : ', userMenuArr);
         this.subscription.next(userMenuArr);
@@ -23,10 +23,10 @@ export class SharedService {
         return this.subscription.asObservable();
     }
 
-    getStatus(req?: any): Observable<HttpResponse<string[]>> {
-        return this.http.get<string[]>(`${this.statusUtilUrl}`, { observe: 'response'})
+    getBillPayType(req?: any): Observable<HttpResponse<string[]>> {
+        return this.http.get<string[]>(`${this.utilUrl}billpaytype`, { observe: 'response'})
         .pipe(
-            tap(status => { })
+            tap(typeList => { })
         );
     }
 

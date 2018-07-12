@@ -17,6 +17,7 @@ import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
 import { BillerDialogComponent } from './biller-dialog.component';
 import { NO_DATA_GRID_MESSAGE, TOTAL_RECORD_PER_PAGE, REPORT_PATH } from '../../shared/constant/base-constant';
 import { MatActionButtonComponent } from '../../shared/templates/mat-action-button.component';
+import { SharedService } from '../../shared/services/shared.service';
 
 @Component({
     selector: 'app-biller',
@@ -42,6 +43,7 @@ export class BillerComponent implements OnInit {
     billerCompanyList = [];
     productList = [];
     statusList = [];
+    billPayTypeList = [];
     messageNoData: string = NO_DATA_GRID_MESSAGE;
     curPage = 1;
     totalData = 0;
@@ -78,7 +80,8 @@ export class BillerComponent implements OnInit {
         private memberService: MemberService,
         private memberTypeService: MemberTypeService,
         private billerService: BillerService,
-        private route: ActivatedRoute
+        private route: ActivatedRoute,
+        private sharedService: SharedService
     ) { }
 
     loadAll(page) {
@@ -188,6 +191,15 @@ export class BillerComponent implements OnInit {
                 (res: HttpErrorResponse) => this.onError(res.message),
                 () => { console.log('finally'); }
         );
+
+        this.sharedService.getBillPayType()
+        .subscribe(
+                (res) => {
+                    this.billPayTypeList = res.body;
+                },
+                (res: HttpErrorResponse) => this.onError(res.message),
+                () => { console.log('finally'); }
+        );
     }
 
     onGridReady(params) {
@@ -232,6 +244,7 @@ export class BillerComponent implements OnInit {
             memberTypeData : this.memberTypeList,
             productData : this.productList,
             statusData : this.statusList,
+            billPayTypeData : this.billPayTypeList,
             rowData : {
                 description : null,
                 dateStart : null,

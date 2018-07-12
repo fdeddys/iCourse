@@ -54,6 +54,7 @@ export class BillerDialogComponent implements OnInit {
     billerCompanyList = [];
     productList = [];
     statusList = [];
+    billPayTypeList = [];
 
     modeTitle = '';
     configSuccess = {};
@@ -82,11 +83,13 @@ export class BillerDialogComponent implements OnInit {
         { headerName: 'Product Company', field: 'billerProduct.billerCompany.name', width: 175 },
         { headerName: 'Denom', field: 'billerProduct.denom', width: 150 },
         { headerName: 'Buy Price', field: 'buyPrice', width: 125 },
+        { headerName: 'Ext Code', field: 'externalCode', width: 125 },
         // { headerName: 'Fee', field: 'fee', width: 125 },
         // { headerName: 'Profit', field: 'profit', width: 125 },
         // { headerName: 'Sell Price', field: 'sellPrice', width: 125 },
         // { headerName: 'Post Paid', field: 'postPaid', width: 125 },
         // { headerName: 'Status', field: 'status', width: 150, cellRenderer: 'checkboxRenderer'},
+        { headerName: 'Bill Pay Type', field: 'billPayType', width: 125},
         { headerName: 'Status', field: 'status', width: 125},
         { headerName: ' ', width: 150, cellRenderer: 'actionRenderer'}
         // { headerName: 'Action', suppressMenu: true,
@@ -248,6 +251,7 @@ export class BillerDialogComponent implements OnInit {
         this.billerTypeList = this.data.billerTypeData;
         this.productList = this.data.productData;
         this.statusList = this.data.statusData;
+        this.billPayTypeList = this.data.billPayTypeData;
     }
 
     get form() { return this.billerForm.controls; }
@@ -428,6 +432,7 @@ export class BillerDialogComponent implements OnInit {
             billerTypeData : this.billerTypeList,
             productData : this.productList,
             statusData : this.statusList,
+            billPayTypeData : this.billPayTypeList,
             rowData : {
                 id : null,
                 billerProduct : null,
@@ -440,7 +445,7 @@ export class BillerDialogComponent implements OnInit {
                 // billerHeaderId : null,
                 billerHeaderId : (this.biller.id === undefined || this.biller.id === null ? null : this.biller.id),
                 billerProductId : null,
-                postPaid : null,
+                billPayType : null,
                 status : 'ACTIVE'
             },
         } :
@@ -451,6 +456,7 @@ export class BillerDialogComponent implements OnInit {
             billerTypeData : this.billerTypeList,
             productData : this.productList,
             statusData : this.statusList,
+            billPayTypeData : this.billPayTypeList,
             rowData : {
                 id: null,
                 billerProduct : null,
@@ -490,7 +496,7 @@ export class BillerDialogComponent implements OnInit {
                 sellPrice : data.sellPrice,
                 billerHeaderId : data.billerHeader.id,
                 billerProductId : data.billerProduct.id,
-                postPaid : data.postPaid,
+                billPayType : data.billPayType,
                 status : data.status
             } :
             {
