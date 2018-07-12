@@ -174,21 +174,21 @@ export class GlobalSettingComponent implements OnInit {
   }
 
   openNewDialog(): void {
-    const dialogRef = this.dialog.open(GlobalSettingDialogComponent, {
-      width: '1000px',
-      data: { action: 'Add', entity: 'Global Setting' }
-    });
+      const dialogRef = this.dialog.open(GlobalSettingDialogComponent, {
+        width: '1000px',
+        data: { action: 'Add', entity: 'Global Setting' }
+      });
 
-    dialogRef.afterClosed().subscribe(result => {
-      console.log('The dialog was closed = [', result, ']');
-      if (result === 'refresh') {
-        this.loadAll(this.curPage);
-      }
-    });
+      dialogRef.afterClosed().subscribe(result => {
+        console.log('The dialog was closed = [', result, ']');
+        if (result === 'refresh') {
+          this.loadAll(this.curPage);
+        }
+      });
   }
 
   private onSuccess(data, headers) {
-      if ( data.content.length <= 0 ) {
+      if ( data.content.length < 0 ) {
         // this.memberTipes = null;
         // this.gridApi.setRowData(this.memberTipes);
         // return ;

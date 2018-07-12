@@ -206,7 +206,7 @@ export class MemberComponent implements OnInit {
   }
 
   private onSuccess(data, headers) {
-      if ( data.content.length <= 0 ) {
+      if ( data.content.length < 0 ) {
           return ;
       }
       this.members = data.content;
