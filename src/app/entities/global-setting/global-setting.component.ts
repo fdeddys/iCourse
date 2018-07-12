@@ -22,7 +22,12 @@ export class GlobalSettingComponent implements OnInit {
 
     cssButton = CSS_BUTTON  ;
     theme: String = GRID_THEME;
-    filter: Filter;
+    filter: Filter = {
+      name: '',
+      description: '',
+      globalType: 'ALL'
+
+    };
     globalTypeList = [];
     memberTipes: GlobalSetting[];
     GlobalSetting: GlobalSetting;
@@ -73,24 +78,24 @@ export class GlobalSettingComponent implements OnInit {
       return dt.toLocaleString(['id']);
     }
 
-  constructor(  private dialog: MatDialog,
+    constructor(  private dialog: MatDialog,
                 private globalSettingService: GlobalSettingService,
                 private shareService: SharedService,
               ) { }
 
-  public onRowClicked(e) {
-    if (e.event.target !== undefined) {
-        const data = e.data;
-        const actionType = e.event.target.getAttribute('data-action-type');
+    public onRowClicked(e) {
+        if (e.event.target !== undefined) {
+            const data = e.data;
+            const actionType = e.event.target.getAttribute('data-action-type');
 
-        switch (actionType) {
-            case 'edit':
-                return this.onActionEditClick(data);
-            case 'inactive':
-                return this.onActionRemoveClick(data);
+            switch (actionType) {
+                case 'edit':
+                    return this.onActionEditClick(data);
+                case 'inactive':
+                    return this.onActionRemoveClick(data);
+            }
         }
     }
-  }
 
   public onActionEditClick(data: any) {
       console.log('View action clicked', data);
@@ -154,7 +159,8 @@ export class GlobalSettingComponent implements OnInit {
 
   ngOnInit() {
     // this.loadAll();
-    this.filter.globalType = 'ALL';
+    // this.filter.globalType = 'ALL';
+    this.loadTypeGlobalSetting();
   }
 
   onGridReady(params) {
@@ -205,5 +211,32 @@ export class GlobalSettingComponent implements OnInit {
     // console.log('events ', $event);
     this.curPage = $event.pageIndex + 1;
     this.loadAll(this.curPage);
+  }
+
+  filterBtn(): void {
+    let statusAll = false;
+    switch (this.filter.globalType) {
+      case 'ALL':
+          console.log('hapus active');
+          statusAll = true;
+          delete this.filter.globalType ;
+          break;
+    }
+
+    this.globalSettingService.filter({
+      page: this.curPage,
+      count: this.totalRecord,
+      filter: this.filter,
+    })
+    .subscribe(
+        (res: HttpResponse<GlobalSetting[]>) => this.onSuccess(res.body, res.headers),
+        (res: HttpErrorResponse) => this.onError(res.message),
+        () => { console.log('finally');
+              if ( statusAll ) {
+                this.filter.globalType = 'ALL';
+              }
+            }
+    );
+
   }
 }

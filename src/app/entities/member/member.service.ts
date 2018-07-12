@@ -91,7 +91,7 @@ export class MemberService {
         return this.http.post<Member[]>(newresourceUrl, req['filter'], {  observe: 'response' })
             .pipe(
                 // map((res: HttpResponse<Member[]>) => this.convertArrayResponse(res))
-                tap(billerCompanies => console.log('raw ', billerCompanies ) )
+                tap(results => console.log('raw ', results ) )
                     // console.log('observable ', billerCompanies)
                 );
 

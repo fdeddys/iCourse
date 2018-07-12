@@ -1,8 +1,7 @@
-export class Filter  {
-    constructor(
-        public name?: string,
-        public description?: string,
-        public globalType?: any,
-    ) {
-    }
+
+export interface Filter  {
+    name?: string;
+    description?: string;
+    globalType?: any;
+
 }
