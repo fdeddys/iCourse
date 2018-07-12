@@ -9,6 +9,27 @@
         <div style="text-align: left">
             <button mat-raised-button color="primary"  (click)="openNewDialog()" style="margin-bottom: 10px;">Add Global Setting</button>
         </div>
+        <br>
+        <div>
+            <mat-form-field class="container-half-width" >
+                <input matInput placeholder="Filter Name " [(ngModel)]="filter.name"  
+                    name ="name"  >
+            </mat-form-field>
+            <mat-form-field class="container-half-width"  style="margin-left: 30px">
+                <input matInput placeholder="Filter Description " [(ngModel)]="filter.description"  
+                    name ="descr" >
+            </mat-form-field>
+            <mat-form-field class="form-full-width" style="margin-left: 30px">
+                <mat-select placeholder="Filter Type" [(ngModel)]="filter.globalType" name="status">
+                    <mat-option *ngFor="let status of statusList" [value]="status">
+                        <!-- {{ status === 'true' ? 'ACTIVE' : ( status === 'false' ? 'INACTIVE' : 'ALL' )   }} -->
+                        {{status}}
+                    </mat-option>
+                </mat-select>
+            </mat-form-field>
+            <button mat-raised-button color="primary" (click)="filterBtn()" style="margin-left: 30px">Filter</button>
+        </div>
+        <br>
         <ag-grid-angular 
             #agGrid
             style="height: 500px;" 

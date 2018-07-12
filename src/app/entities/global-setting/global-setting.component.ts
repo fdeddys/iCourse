@@ -7,6 +7,8 @@ import { GlobalSettingDialogComponent } from './global-setting-dialog.component'
 import { GlobalSettingConfirmComponent } from './global-setting-confirm.component';
 import { GRID_THEME, CSS_BUTTON, NO_DATA_GRID_MESSAGE, TOTAL_RECORD_PER_PAGE } from '../../shared/constant/base-constant';
 import { MatActionButtonComponent } from '../../shared/templates/mat-action-button.component';
+import { Filter } from '../../shared/model/filter';
+import { SharedService } from '../../shared/services/shared.service';
 
 @Component({
     selector: 'app-global-setting',
@@ -20,7 +22,8 @@ export class GlobalSettingComponent implements OnInit {
 
     cssButton = CSS_BUTTON  ;
     theme: String = GRID_THEME;
-
+    filter: Filter;
+    globalTypeList = [];
     memberTipes: GlobalSetting[];
     GlobalSetting: GlobalSetting;
     messageNoData: string = NO_DATA_GRID_MESSAGE;
@@ -62,16 +65,18 @@ export class GlobalSettingComponent implements OnInit {
             frameworkComponents: {
                 actionRenderer: MatActionButtonComponent
             }
-  };
+    };
 
 
-  currencyFormatter(params): string {
-    const dt  = new Date(params.value);
-    return dt.toLocaleString(['id']);
-  }
+    currencyFormatter(params): string {
+      const dt  = new Date(params.value);
+      return dt.toLocaleString(['id']);
+    }
 
   constructor(  private dialog: MatDialog,
-                private globalSettingService: GlobalSettingService) { }
+                private globalSettingService: GlobalSettingService,
+                private shareService: SharedService,
+              ) { }
 
   public onRowClicked(e) {
     if (e.event.target !== undefined) {
@@ -129,8 +134,27 @@ export class GlobalSettingComponent implements OnInit {
         );
     }
 
+    loadTypeGlobalSetting() {
+
+        this.shareService.getTypeGlobalSetting().subscribe(
+          (res: HttpResponse<String[]>) => {
+            this.globalTypeList = [];
+              this.globalTypeList.push('ALL');
+              for (const datas of res.body) {
+                console.log(datas);
+                this.globalTypeList.push(datas);
+              }
+          },
+          (res: HttpErrorResponse ) => {
+
+          },
+          ( ) => console.log('finally')
+        );
+    }
+
   ngOnInit() {
     // this.loadAll();
+    this.filter.globalType = 'ALL';
   }
 
   onGridReady(params) {
