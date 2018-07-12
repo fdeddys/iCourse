@@ -15,6 +15,7 @@ import { ProductDialogComponent } from './product-dialog.component';
 
 import { MainChild, eventSubscriber } from '../../layouts/main/main-child.interface';
 import { MainService } from '../../layouts/main/main.service';
+import { Filter } from '../../shared/model/filter';
 
 @Component({
     selector: 'app-product',
@@ -41,6 +42,12 @@ export class ProductComponent implements OnInit {
     theme: String = GRID_THEME;
     cssButton = CSS_BUTTON  ;
     messageNoData: string = NO_DATA_GRID_MESSAGE;
+
+    private filter: ProductFilter = {
+        name: null,
+        productCode: null,
+        status: 'ALL',
+      };
 
     curPage = 1;
     totalData = 0;
@@ -164,13 +171,45 @@ export class ProductComponent implements OnInit {
         this.productService.getStatus()
         .subscribe(
                 (res) => {
-                    this.statusList = res.body;
+                    this.statusList = [];
+                    this.statusList.push('ALL');
+                    for (const datas of res.body) {
+                        console.log(datas);
+                        this.statusList.push(datas);
+                    }
+                  //  this.statusList = res.body;
                 },
                 (res: HttpErrorResponse) => this.onError(res.message),
                 () => { console.log('finally'); }
         );
     }
 
+
+    filterBtn(): void {
+        let statusAll = false;
+        switch (this.filter.status) {
+          case 'ALL':
+              console.log('hapus active');
+              statusAll = true;
+              // delete this.filter.active ;
+              this.filter.status = null;
+              break;
+      }
+      this.productService.filter({
+          page: this.curPage,
+          count: this.totalRecord,
+          filter: this.filter,
+      })
+      .subscribe(
+          (res: HttpResponse<Member[]>) => this.onSuccess(res.body, res.headers),
+          (res: HttpErrorResponse) => this.onError(res.message),
+          () => { console.log('finally');
+                  if ( statusAll ) {
+                    this.filter.status = 'ALL';
+                  }
+                }
+        );
+      }
     onGridReady(params) {
         this.gridApi = params.api;
         this.gridColumnApi = params.columnApi;
@@ -311,4 +350,11 @@ export class ProductComponent implements OnInit {
 // searchByMemberId : 10
 // sellPrice : 8000
 // status : "ACTIVE"
+
+export interface ProductFilter  {
+    name?: string;
+    productCode?: string;
+    status?: any;
+
+}
 
