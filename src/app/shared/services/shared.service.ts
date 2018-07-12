@@ -30,4 +30,17 @@ export class SharedService {
         );
     }
 
+    getStatus(req?: any): Observable<HttpResponse<string[]>> {
+        return this.http.get<string[]>(`${this.statusUtilUrl}`, { observe: 'response'})
+        .pipe(
+            tap(status => { })
+        );
+    }
+
+    getTypeGlobalSetting(req?: any): Observable<HttpResponse<string[]>> {
+        return this.http.get<string[]>(`${this.utilUrl}globaltypelist`, { observe: 'response'})
+        .pipe(
+            tap(typeList => { })
+        );
+    }
 }

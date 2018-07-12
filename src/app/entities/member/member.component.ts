@@ -29,7 +29,6 @@ export class MemberComponent implements OnInit {
     name : null,
     description: null,
     active: 'ALL',
-    // status: null,
   };
   status: any;
   statusList = [];
@@ -45,14 +44,6 @@ export class MemberComponent implements OnInit {
       { headerName: 'Description', field: 'description', width: 400, editable: false },
       { headerName: 'Status', field: 'active', width: 200,  editable: false },
       { headerName: ' ', width: 150, cellRenderer: 'actionRenderer'}
-      // , valueFormatter: this.boolFormatter
-      // { headerName: ' ', suppressMenu: true,
-      //   width: 100,
-      //   suppressSorting: true,
-      //   template:
-      //     `<button mat-raised-button type="button" data-action-type="edit"  ${this.cssButton} >
-      //       Edit
-      //     </button>` }
     ],
       rowData: this.members,
       enableSorting: true,
@@ -125,7 +116,7 @@ export class MemberComponent implements OnInit {
         console.log('The dialog was closed');
       });
 
-    }
+  }
 
   loadAll(page) {
         console.log('Start call function all header');
@@ -148,7 +139,8 @@ export class MemberComponent implements OnInit {
         case 'ALL':
             console.log('hapus active');
             statusAll = true;
-            delete this.filter.active ;
+            // delete this.filter.active ;
+            this.filter.active = null;
             break;
     //     case 'ACTIVE':
     //     // lastStatus = 'ACTIVE';
