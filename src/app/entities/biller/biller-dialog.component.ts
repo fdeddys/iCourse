@@ -89,7 +89,7 @@ export class BillerDialogComponent implements OnInit {
         // { headerName: 'Sell Price', field: 'sellPrice', width: 125 },
         // { headerName: 'Post Paid', field: 'postPaid', width: 125 },
         // { headerName: 'Status', field: 'status', width: 150, cellRenderer: 'checkboxRenderer'},
-        { headerName: 'Bill Pay Type', field: 'billPayType', width: 125},
+        // { headerName: 'Bill Pay Type', field: 'billPayType', width: 125},
         { headerName: 'Status', field: 'status', width: 125},
         { headerName: ' ', width: 150, cellRenderer: 'actionRenderer'}
         // { headerName: 'Action', suppressMenu: true,

@@ -77,7 +77,8 @@ export class BillerDetailComponent implements OnInit {
             buyPrice: ['', CommonValidatorDirective.required],
             fee: ['', CommonValidatorDirective.required],
             profit: ['', CommonValidatorDirective.required],
-            status: ['', CommonValidatorDirective.required]
+            status: ['', CommonValidatorDirective.required],
+            externalCode: ['', CommonValidatorDirective.required]
         });
         this.billerDetail = {};
         this.billerDetail.billerHeaderId = this.data.rowData.billerHeaderId;
@@ -95,7 +96,7 @@ export class BillerDetailComponent implements OnInit {
                 sellPrice : this.data.rowData.sellPrice,
                 billerHeaderId : this.data.rowData.billerHeader.id,
                 billerProductId : this.data.rowData.billerProduct.id,
-                billPayType : this.data.rowData.billPayType,
+               // billPayType : this.data.rowData.billPayType,
                 status : this.data.rowData.status
             };
             // this.statusData = (this.data.rowData.status === 'ACTIVE' ? true : false);
@@ -167,7 +168,6 @@ export class BillerDetailComponent implements OnInit {
         this.billerDetail.sellPrice = this.billerDetail.buyPrice + this.billerDetail.fee;
         // this.billerDetail.externalCode = '';
        // this.billerDetail.postPaid = 1;
- 
         const varBack = {
             mode: this.data.mode,
             rowData: {}
