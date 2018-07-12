@@ -6,6 +6,8 @@ import { tap } from 'rxjs/operators';
 
 @Injectable()
 export class SharedService {
+    private statusUtilUrl = SERVER_PATH + 'util/statuses';
+
     subscription = new Subject();
 
     private utilUrl = SERVER_PATH + 'util/';
@@ -28,4 +30,17 @@ export class SharedService {
         );
     }
 
+    getStatus(req?: any): Observable<HttpResponse<string[]>> {
+        return this.http.get<string[]>(`${this.statusUtilUrl}`, { observe: 'response'})
+        .pipe(
+            tap(status => { })
+        );
+    }
+
+    getTypeGlobalSetting(req?: any): Observable<HttpResponse<string[]>> {
+        return this.http.get<string[]>(`${this.utilUrl}globaltypelist`, { observe: 'response'})
+        .pipe(
+            tap(typeList => { })
+        );
+    }
 }

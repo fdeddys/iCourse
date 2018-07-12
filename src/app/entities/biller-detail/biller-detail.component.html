@@ -75,15 +75,18 @@
         
         <mat-form-field class="form-full-width" style="margin-right: 10%">
             <input type="text" matInput placeholder="External Code" name="externalCode" [(ngModel)]="billerDetail.externalCode"> 
+            <mat-error *ngIf="submitted && form.externalCode.errors" class="invalid-feedback">
+                <div *ngIf="form.externalCode.errors.required"> {{form.externalCode.errors.message}}</div>
+            </mat-error>
         </mat-form-field>  
 
-        <mat-form-field class="form-full-width">
+        <!-- <mat-form-field class="form-full-width">
 			<mat-select placeholder="Bill Pay Type" [(ngModel)]="billerDetail.billPayType" name="billPayType">
 				<mat-option *ngFor="let billPayType of billPayTypeList" [value]="billPayType">
 					{{billPayType}}
 				</mat-option>
             </mat-select> 
-        </mat-form-field>
+        </mat-form-field> -->
 <!--         
         <mat-form-field class="form-full-width">
             <mat-select placeholder="Type" [(ngModel)]="billerDetail.postPaid" name="type">

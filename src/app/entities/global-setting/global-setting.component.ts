@@ -7,6 +7,8 @@ import { GlobalSettingDialogComponent } from './global-setting-dialog.component'
 import { GlobalSettingConfirmComponent } from './global-setting-confirm.component';
 import { GRID_THEME, CSS_BUTTON, NO_DATA_GRID_MESSAGE, TOTAL_RECORD_PER_PAGE } from '../../shared/constant/base-constant';
 import { MatActionButtonComponent } from '../../shared/templates/mat-action-button.component';
+import { Filter } from '../../shared/model/filter';
+import { SharedService } from '../../shared/services/shared.service';
 
 @Component({
     selector: 'app-global-setting',
@@ -20,7 +22,13 @@ export class GlobalSettingComponent implements OnInit {
 
     cssButton = CSS_BUTTON  ;
     theme: String = GRID_THEME;
+    filter: Filter = {
+      name: '',
+      description: '',
+      globalType: 'ALL'
 
+    };
+    globalTypeList = [];
     memberTipes: GlobalSetting[];
     GlobalSetting: GlobalSetting;
     messageNoData: string = NO_DATA_GRID_MESSAGE;
@@ -62,30 +70,32 @@ export class GlobalSettingComponent implements OnInit {
             frameworkComponents: {
                 actionRenderer: MatActionButtonComponent
             }
-  };
+    };
 
 
-  currencyFormatter(params): string {
-    const dt  = new Date(params.value);
-    return dt.toLocaleString(['id']);
-  }
+    currencyFormatter(params): string {
+      const dt  = new Date(params.value);
+      return dt.toLocaleString(['id']);
+    }
 
-  constructor(  private dialog: MatDialog,
-                private globalSettingService: GlobalSettingService) { }
+    constructor(  private dialog: MatDialog,
+                private globalSettingService: GlobalSettingService,
+                private shareService: SharedService,
+              ) { }
 
-  public onRowClicked(e) {
-    if (e.event.target !== undefined) {
-        const data = e.data;
-        const actionType = e.event.target.getAttribute('data-action-type');
+    public onRowClicked(e) {
+        if (e.event.target !== undefined) {
+            const data = e.data;
+            const actionType = e.event.target.getAttribute('data-action-type');
 
-        switch (actionType) {
-            case 'edit':
-                return this.onActionEditClick(data);
-            case 'inactive':
-                return this.onActionRemoveClick(data);
+            switch (actionType) {
+                case 'edit':
+                    return this.onActionEditClick(data);
+                case 'inactive':
+                    return this.onActionRemoveClick(data);
+            }
         }
     }
-  }
 
   public onActionEditClick(data: any) {
       console.log('View action clicked', data);
@@ -129,8 +139,28 @@ export class GlobalSettingComponent implements OnInit {
         );
     }
 
+    loadTypeGlobalSetting() {
+
+        this.shareService.getTypeGlobalSetting().subscribe(
+          (res: HttpResponse<String[]>) => {
+            this.globalTypeList = [];
+              this.globalTypeList.push('ALL');
+              for (const datas of res.body) {
+                console.log(datas);
+                this.globalTypeList.push(datas);
+              }
+          },
+          (res: HttpErrorResponse ) => {
+
+          },
+          ( ) => console.log('finally')
+        );
+    }
+
   ngOnInit() {
     // this.loadAll();
+    // this.filter.globalType = 'ALL';
+    this.loadTypeGlobalSetting();
   }
 
   onGridReady(params) {
@@ -144,21 +174,21 @@ export class GlobalSettingComponent implements OnInit {
   }
 
   openNewDialog(): void {
-    const dialogRef = this.dialog.open(GlobalSettingDialogComponent, {
-      width: '1000px',
-      data: { action: 'Add', entity: 'Global Setting' }
-    });
+      const dialogRef = this.dialog.open(GlobalSettingDialogComponent, {
+        width: '1000px',
+        data: { action: 'Add', entity: 'Global Setting' }
+      });
 
-    dialogRef.afterClosed().subscribe(result => {
-      console.log('The dialog was closed = [', result, ']');
-      if (result === 'refresh') {
-        this.loadAll(this.curPage);
-      }
-    });
+      dialogRef.afterClosed().subscribe(result => {
+        console.log('The dialog was closed = [', result, ']');
+        if (result === 'refresh') {
+          this.loadAll(this.curPage);
+        }
+      });
   }
 
   private onSuccess(data, headers) {
-      if ( data.content.length <= 0 ) {
+      if ( data.content.length < 0 ) {
         // this.memberTipes = null;
         // this.gridApi.setRowData(this.memberTipes);
         // return ;
@@ -181,5 +211,32 @@ export class GlobalSettingComponent implements OnInit {
     // console.log('events ', $event);
     this.curPage = $event.pageIndex + 1;
     this.loadAll(this.curPage);
+  }
+
+  filterBtn(): void {
+    let statusAll = false;
+    switch (this.filter.globalType) {
+      case 'ALL':
+          console.log('hapus active');
+          statusAll = true;
+          delete this.filter.globalType ;
+          break;
+    }
+
+    this.globalSettingService.filter({
+      page: this.curPage,
+      count: this.totalRecord,
+      filter: this.filter,
+    })
+    .subscribe(
+        (res: HttpResponse<GlobalSetting[]>) => this.onSuccess(res.body, res.headers),
+        (res: HttpErrorResponse) => this.onError(res.message),
+        () => { console.log('finally');
+              if ( statusAll ) {
+                this.filter.globalType = 'ALL';
+              }
+            }
+    );
+
   }
 }

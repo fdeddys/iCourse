@@ -7,6 +7,7 @@ import { HttpResponse, HttpErrorResponse } from '@angular/common/http';
 import { BillerTypeConfirmComponent } from './biller-type-confirm.component';
 import { GRID_THEME, CSS_BUTTON, NO_DATA_GRID_MESSAGE, REPORT_PATH, TOTAL_RECORD_PER_PAGE } from '../../shared/constant/base-constant';
 import { MatActionButtonComponent } from '../../shared/templates/mat-action-button.component';
+import { SharedService } from '../../shared/services/shared.service';
 
 @Component({
   selector: 'app-biller-type',
@@ -28,12 +29,13 @@ export class BillerTypeComponent implements OnInit {
     curPage = 1;
     totalData = 0;
     totalRecord = TOTAL_RECORD_PER_PAGE;
+    billPayTypeList = [];
 
     gridOptions = {
         columnDefs: [
             { headerName: 'No', field: 'nourut', width: 100, pinned: 'left', editable: false },
             { headerName: 'Name', field: 'name', width: 400, editable: false },
-            { headerName: 'Type', field: 'ispostpaid', valueFormatter: this.boolFormatter, width: 100, editable: false },
+            { headerName: 'Type', field: 'billPayType', width: 150, editable: false },
             { headerName: ' ', width: 150, cellRenderer: 'actionRenderer'}
           // { headerName: ' ', suppressMenu: true,
           //   suppressSorting: true,
@@ -69,7 +71,8 @@ export class BillerTypeComponent implements OnInit {
     }
 
     constructor(  private dialog: MatDialog,
-                private billerTypeService: BillerTypeService, ) { }
+                private billerTypeService: BillerTypeService,
+        private sharedService: SharedService ) { }
 
     public onRowClicked(e) {
         if (e.event.target !== undefined) {
@@ -126,7 +129,14 @@ export class BillerTypeComponent implements OnInit {
     }
 
     ngOnInit() {
-
+        this.sharedService.getBillPayType()
+        .subscribe(
+                (res) => {
+                    this.billPayTypeList = res.body;
+                },
+                (res: HttpErrorResponse) => this.onError(res.message),
+                () => { console.log('finally'); }
+        );
     }
 
     onGridReady(params) {

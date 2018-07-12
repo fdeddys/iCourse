@@ -7,6 +7,9 @@ import { Member } from './member.model';
 import { MemberService } from './member.service';
 import { GRID_THEME, CSS_BUTTON, NO_DATA_GRID_MESSAGE, TOTAL_RECORD_PER_PAGE, REPORT_PATH } from '../../shared/constant/base-constant';
 import { MatActionButtonComponent } from '../../shared/templates/mat-action-button.component';
+import { SharedService } from '../../shared/services/shared.service';
+import { IFilter } from 'ag-grid';
+import { Filter } from '../../shared/model/filter';
 
 @Component({
   selector: 'app-member',
@@ -24,6 +27,13 @@ export class MemberComponent implements OnInit {
   totalData = 0;
   totalRecord = TOTAL_RECORD_PER_PAGE;
   private resourceUrl = REPORT_PATH;
+  private filter: Filter = {
+    name: null,
+    description: null,
+    active: 'ALL',
+  };
+  status: any;
+  statusList = [];
 
   members: Member[];
   member: Member;
@@ -34,15 +44,8 @@ export class MemberComponent implements OnInit {
       { headerName: 'No', field: 'nourut', width: 100, pinned: 'left', editable: false  },
       { headerName: 'Name', field: 'name', width: 300, editable: false },
       { headerName: 'Description', field: 'description', width: 400, editable: false },
-      { headerName: 'Status', field: 'active', width: 200,  editable: false, valueFormatter: this.boolFormatter },
+      { headerName: 'Status', field: 'active', width: 200,  editable: false },
       { headerName: ' ', width: 150, cellRenderer: 'actionRenderer'}
-      // { headerName: ' ', suppressMenu: true,
-      //   width: 100,
-      //   suppressSorting: true,
-      //   template:
-      //     `<button mat-raised-button type="button" data-action-type="edit"  ${this.cssButton} >
-      //       Edit
-      //     </button>` }
     ],
       rowData: this.members,
       enableSorting: true,
@@ -67,11 +70,12 @@ export class MemberComponent implements OnInit {
     return dt.toLocaleString(['id']);
   }
 
-  boolFormatter(params): string {
-    return params.value === true ? 'Active' : 'Inactive';
-  }
+  // boolFormatter(params): string {
+  //   return params.value === true ? 'Active' : 'Inactive';
+  // }
   constructor(  private dialog: MatDialog,
-                private memberService: MemberService) { }
+                private memberService: MemberService,
+                private sharedService: SharedService) { }
 
   public onRowClicked(e) {
     if (e.event.target !== undefined) {
@@ -114,7 +118,7 @@ export class MemberComponent implements OnInit {
         console.log('The dialog was closed');
       });
 
-    }
+  }
 
   loadAll(page) {
         console.log('Start call function all header');
@@ -131,9 +135,43 @@ export class MemberComponent implements OnInit {
         );
     }
 
+    filterBtn(): void {
+      let statusAll = false;
+      switch (this.filter.active) {
+        case 'ALL':
+            console.log('hapus active');
+            statusAll = true;
+            // delete this.filter.active ;
+            this.filter.active = null;
+            break;
+    //     case 'ACTIVE':
+    //     // lastStatus = 'ACTIVE';
+    //         this.filter.active = true;
+    //         break;
+    //     default:
+    //         this.filter.active = null;
+    //         break;
+    }
+    this.memberService.filter({
+        page: this.curPage,
+        count: this.totalRecord,
+        filter: this.filter,
+    })
+    .subscribe(
+        (res: HttpResponse<Member[]>) => this.onSuccess(res.body, res.headers),
+        (res: HttpErrorResponse) => this.onError(res.message),
+        () => { console.log('finally');
+                if ( statusAll ) {
+                  this.filter.active = 'ALL';
+                }
+              }
+      );
+    }
+
   ngOnInit() {
     // this.loadAll();
     // this.no = 0;
+    this.loadStatus();
   }
 
   onGridReady(params) {
@@ -153,7 +191,7 @@ export class MemberComponent implements OnInit {
     // Workaround for bug in events order
     if (this.gridApi) {
     }
-}
+  }
 
   openNewDialog(): void {
     const dialogRef = this.dialog.open(MemberDialogComponent, {
@@ -170,7 +208,7 @@ export class MemberComponent implements OnInit {
   }
 
   private onSuccess(data, headers) {
-      if ( data.content.length <= 0 ) {
+      if ( data.content.length < 0 ) {
           return ;
       }
       this.members = data.content;
@@ -178,7 +216,6 @@ export class MemberComponent implements OnInit {
       for (const member of this.members) {
           member.nourut = urut++;
       }
-
       this.gridApi.setRowData(this.members);
       this.totalData = data.totalElements;
   }
@@ -208,11 +245,11 @@ export class MemberComponent implements OnInit {
       this.curPage = $event.pageIndex + 1;
       this.loadAll(this.curPage);
   }
- 
-    public async exportCSV(reportType): Promise<void> {  
 
-       const blob = await this.memberService.exportCSV(); 
-       const url = window.URL.createObjectURL(blob); 
+    public async exportCSV(reportType): Promise<void> {
+
+       const blob = await this.memberService.exportCSV();
+       const url = window.URL.createObjectURL(blob);
        const link = document.createElement('a');
        document.body.appendChild(link);
        link.setAttribute('style', 'display: none');
@@ -224,7 +261,27 @@ export class MemberComponent implements OnInit {
        window.URL.revokeObjectURL(url);
    }
 
+    loadStatus(): void {
+      this.sharedService.getStatus()
+      .subscribe(
+          (res) => {
+              this.statusList = [];
 
-   
+              // this.statusList.push(res.body);
+              this.statusList.push('ALL');
+              // this.statusList.push('false');
+              // res.body.forEach(function(data) {
+              //   console.log('isi ==>', data);
+              //   this.statusList.push(data);
+              // });
+              for (const datas of res.body) {
+                console.log(datas);
+                this.statusList.push(datas);
+              }
+          },
+          (res: HttpErrorResponse) => this.onError(res.message),
+          () => { console.log('finally'); }
+      );
+    }
 
 }

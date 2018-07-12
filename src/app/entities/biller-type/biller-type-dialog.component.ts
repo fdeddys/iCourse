@@ -7,6 +7,7 @@ import { BillerTypeService } from './biller-type.service';
 import { HttpResponse, HttpErrorResponse } from '@angular/common/http';
 import { CommonValidatorDirective } from '../../validators/common.validator';
 import { SNACKBAR_DURATION_IN_MILLISECOND } from '../../shared/constant/base-constant';
+import { SharedService } from '../../shared/services/shared.service';
 
 @Component({
     selector: 'app-biller-type-dialog',
@@ -22,16 +23,15 @@ export class BillerTypeDialogComponent implements OnInit {
     billerTypeForm: FormGroup;
     submitted = false;
     duration = SNACKBAR_DURATION_IN_MILLISECOND;
-    typeList = [
-        {'value': false, 'desc': 'Prepaid'},
-        {'value': true, 'desc': 'Postpaid'}
-    ];
+
+    billPayTypeList = [];
 
     constructor(
         private formBuilder: FormBuilder,
         public billerTypeService: BillerTypeService,
         public snackBar: MatSnackBar,
         public dialogRef: MatDialogRef<BillerTypeDialogComponent>,
+        private sharedService: SharedService,
         @Inject(MAT_DIALOG_DATA) public data: any) { }
 
     get form() { return this.billerTypeForm.controls; }
@@ -48,6 +48,14 @@ export class BillerTypeDialogComponent implements OnInit {
             this.name = this.billerType.name;
             this.checked =  this.billerType.ispostpaid;
         }
+
+        this.sharedService.getBillPayType()
+        .subscribe(
+                (res) => {
+                    this.billPayTypeList = res.body;
+                }
+        );
+
     }
 
     onNoClick(): void {

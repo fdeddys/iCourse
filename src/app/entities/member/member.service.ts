@@ -70,6 +70,33 @@ export class MemberService {
 
     }
 
+    filter(req?: any): Observable<HttpResponse<Member[]>> {
+        console.log('Filter  ', req);
+
+        const options = createRequestOption(req);
+        let pageNumber = null;
+        let pageCount = null;
+        let newresourceUrl = null;
+
+        Object.keys(req).forEach((key) => {
+            if (key === 'page') {
+                pageNumber = req[key];
+            }
+            if (key === 'count') {
+                pageCount = req[key];
+            }
+        });
+
+        newresourceUrl = this.resourceUrl + `/filter/page/${pageNumber}/count/${pageCount}`;
+        return this.http.post<Member[]>(newresourceUrl, req['filter'], {  observe: 'response' })
+            .pipe(
+                // map((res: HttpResponse<Member[]>) => this.convertArrayResponse(res))
+                tap(results => console.log('raw ', results ) )
+                    // console.log('observable ', billerCompanies)
+                );
+
+    }
+
     findNotAsBiller(req?: any): Observable<HttpResponse<Member[]>> {
         const options = createRequestOption(req);
         let pageNumber = null;
