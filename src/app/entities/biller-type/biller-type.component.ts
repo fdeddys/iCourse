@@ -148,7 +148,7 @@ export class BillerTypeComponent implements OnInit {
         this.loadAll(this.curPage);
     }
 
-    openNewDialog(): void {alert('d');
+    openNewDialog(): void {
         const dialogRef = this.dialog.open(BillerTypeDialogComponent, {
             width: '1000px',
             data: { action: 'Add', entity: 'Bill Type' }
