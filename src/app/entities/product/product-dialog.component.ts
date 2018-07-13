@@ -7,12 +7,13 @@ import { ProductService } from './product.service';
 import { Observable } from 'rxjs';
 import { map, startWith } from 'rxjs/operators';
 
-import { FormBuilder, FormGroup, Validators ,FormControl} from '@angular/forms';
-import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
+import { FormBuilder, FormGroup, Validators , FormControl} from '@angular/forms';
+import { MatDialog, MatDialogRef, MAT_DIALOG_DATA, MatSnackBar } from '@angular/material';
 import { BillerType } from '../biller-type';
 import { BillerCompany } from '../biller-company';
 import { Member } from '../member';
 import { CommonValidatorDirective } from '../../validators/common.validator';
+import { SNACKBAR_DURATION_IN_MILLISECOND } from '../../shared/constant/base-constant';
 
 @Component({
     selector: 'app-product-dialog',
@@ -39,11 +40,13 @@ export class ProductDialogComponent implements OnInit {
     modeTitle = '';
     productForm: FormGroup;
     submitted = false;
+    duration = SNACKBAR_DURATION_IN_MILLISECOND;
 
     constructor(
         private formBuilder: FormBuilder,
         public productService: ProductService,
         public dialogRef: MatDialogRef<ProductDialogComponent>,
+        public snackBar: MatSnackBar,
         @Inject(MAT_DIALOG_DATA) public data: any
     ) {
         this.billTypeCtrl = new FormControl();
@@ -168,7 +171,13 @@ export class ProductDialogComponent implements OnInit {
         if (this.productSave.id === undefined || this.productSave.id === null) {
             console.log('send to service ', this.productSave);
             this.productService.create(this.productSave).subscribe((res: HttpResponse<Product>) => {
-                this.dialogRef.close('refresh');
+                if (res.body.errMsg === null || res.body.errMsg === '') {
+                    this.dialogRef.close('refresh');
+                } else {
+                    this.snackBar.open('Error !' + res.body.errMsg , 'Close', {
+                        duration: this.duration,
+                    });
+                }
             });
         } else {
             console.log('send to service ', this.productSave);
