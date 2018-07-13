@@ -234,7 +234,7 @@ export class AccessMatrixComponent implements OnInit {
         })
         .subscribe((res: HttpResponse<any>) => {
             console.log('save success..');
-            if (res.body.errMsg === '' || res.body.errMsg === null) {
+            if (res.body === '' || res.body === null) {
                 // this.openSnackBar('Save success', 'Done');
                 // console.log('refresh data ');
                 this.openSnackBar(res.body.errMsg, 'Ok');
