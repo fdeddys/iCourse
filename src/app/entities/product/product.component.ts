@@ -39,6 +39,7 @@ export class ProductComponent implements OnInit {
     memberList = [];
     searchByList = [];
     statusList = [];
+    filterStatusList = [];
     theme: String = GRID_THEME;
     cssButton = CSS_BUTTON  ;
     messageNoData: string = NO_DATA_GRID_MESSAGE;
@@ -172,12 +173,12 @@ export class ProductComponent implements OnInit {
         .subscribe(
                 (res) => {
                     this.statusList = [];
-                    this.statusList.push('ALL');
+                   // this.statusList.push('ALL');
+                   this.filterStatusList.push('ALL');
                     for (const datas of res.body) {
-                        console.log(datas);
-                        this.statusList.push(datas);
+                        this.filterStatusList.push(datas); 
                     }
-                  //  this.statusList = res.body;
+                   this.statusList = res.body;
                 },
                 (res: HttpErrorResponse) => this.onError(res.message),
                 () => { console.log('finally'); }
