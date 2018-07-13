@@ -1,6 +1,6 @@
 <h1 mat-dialog-title>{{data.action}} {{data.entity}}</h1>
 <form name="roleForm" (ngSubmit)="f.form.valid && onSubmit()" #f="ngForm" novalidate>
-<mat-dialog-content style="width: 100%">
+    <mat-dialog-content style="width: 100%">
         <!-- <mat-form-field class="container-full-width">
             <input matInput placeholder="Id" value="{{memberType.id}}" [disabled]="true" >
         </mat-form-field> -->
@@ -23,7 +23,7 @@
         </div>
         <br>
 
-        <fieldset style="border: 1px #ddd solid">
+        <!-- <fieldset style="border: 1px #ddd solid"> -->
             <!-- <mat-form-field class="container-full-width">
                 <mat-select placeholder="Menu" [(ngModel)]="menuSelected" name="selected_menu">
                     <mat-option *ngFor="let menu of menus" [value]="menu.id">
@@ -35,7 +35,7 @@
             <div style="text-align: right">
                 <button mat-button mat-raised-button class="btnSave" (click)="addMenu()" >Add</button>
             </div> -->
-            <ag-grid-angular 
+            <!-- <ag-grid-angular 
                 #agGrid
                 style="height: 300px; width: 100%;" 
                 class="{{theme}}"
@@ -43,11 +43,11 @@
                 (gridReady)="onGridReady($event)"
                 (cellClicked)="onCellClicked($event)"
                 >
-            </ag-grid-angular>
-        </fieldset>
+            </ag-grid-angular> -->
+        <!-- </fieldset> -->
     <!-- </form> -->
     
-</mat-dialog-content>
+    </mat-dialog-content>
 <!-- <mat-dialog-actions align="end">
     <button mat-raised-button mat-dialog-close>Cancel</button>
     <button mat-raised-button color="primary" (click)="save()">Save</button>
