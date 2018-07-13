@@ -159,6 +159,29 @@ export class AccessMatrixService {
         });
     }
 
+    save(req?: any): Observable<HttpResponse<any[]>> {
+        console.log('Filter  ', req);
+
+        const options = createRequestOption(req);
+        let roleId = null;
+        let newresourceUrl = null;
+
+        Object.keys(req).forEach((key) => {
+            if (key === 'roleId') {
+                roleId = req[key];
+            }
+        });
+
+        newresourceUrl = SERVER_PATH + `role/${roleId}`;
+        return this.http.post<any[]>(newresourceUrl, req['menuIds'], {  observe: 'response' })
+            .pipe(
+                // map((res: HttpResponse<Member[]>) => this.convertArrayResponse(res))
+                tap(results => console.log('raw ', results ) )
+                    // console.log('observable ', billerCompanies)
+                );
+
+    }
+
     private onSuccess(data, headers) {
         const menudata = this.createTree(data);
         console.log('data tree : ', menudata);

@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { SelectionModel } from '@angular/cdk/collections';
 import { FlatTreeControl } from '@angular/cdk/tree';
 import { MatTreeFlatDataSource, MatTreeFlattener } from '@angular/material/tree';
+import { MatSnackBar } from '@angular/material';
 import * as lod from 'lodash';
 
 import { AccessMatrixService } from './access-matrix.service';
@@ -15,7 +16,7 @@ import { MenuFlatNode } from './menu-flat-node.model';
 import { Observable, of as observableOf } from 'rxjs';
 
 import { HttpResponse, HttpErrorResponse } from '@angular/common/http';
-import { TOTAL_RECORD_PER_PAGE } from '../../shared/constant/base-constant';
+import { TOTAL_RECORD_PER_PAGE, SNACKBAR_DURATION_IN_MILLISECOND } from '../../shared/constant/base-constant';
 
 /**
  * @title Tree with checkboxes
@@ -65,6 +66,7 @@ export class AccessMatrixComponent implements OnInit {
     roles: Role[];
     curPage = 1;
     totalRecord = TOTAL_RECORD_PER_PAGE;
+    duration = SNACKBAR_DURATION_IN_MILLISECOND;
     clonedData = [];
 
     filter = {
@@ -74,7 +76,8 @@ export class AccessMatrixComponent implements OnInit {
     constructor(
         private accessMatrixService: AccessMatrixService,
         private roleService: RoleService,
-        private menuService: MenuService
+        private menuService: MenuService,
+        public snackBar: MatSnackBar,
     ) {
         this.treeFlattener = new MatTreeFlattener(this.transformer, this.getLevel,
             this.isExpandable, this.getChildren);
@@ -220,6 +223,39 @@ export class AccessMatrixComponent implements OnInit {
     saveMenuAccess() {
         // get all selected nodes
         console.log(this.checklistSelection.selected);
+        const saveArr = [];
+        this.checklistSelection.selected.forEach(el => {
+            saveArr.push(el.id);
+        });
+        console.log(saveArr);
+        this.accessMatrixService.save({
+            roleId: this.filter.roleId,
+            menuIds: saveArr
+        })
+        .subscribe((res: HttpResponse<any>) => {
+            console.log('save success..');
+            if (res.body.errMsg === '' || res.body.errMsg === null) {
+                // this.openSnackBar('Save success', 'Done');
+                // console.log('refresh data ');
+                this.openSnackBar(res.body.errMsg, 'Ok');
+            } else {
+                // this.openSnackBar(res.body.errMsg, 'Ok');
+                this.openSnackBar('Save success', 'Done');
+                console.log('refresh data ');
+            }
+        },
+        (res: HttpErrorResponse) => {
+            this.snackBar.open('Error !' + res.error.message , 'Close', {
+                duration: 10000,
+            });
+            console.log('error msh ', res.error.message);
+        });
+    }
+
+    openSnackBar(message: string, action: string) {
+        this.snackBar.open(message, action, {
+            duration: this.duration,
+        });
     }
 
     private onSuccess(data, headers) {
