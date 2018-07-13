@@ -1,4 +1,4 @@
-<h1 mat-dialog-title>{{ modeTitle }} Non Biller Product</h1>
+<h1 mat-dialog-title>{{ modeTitle }} Biller Subscriber Product</h1>
 <form name="billerPDetForm" (ngSubmit)="f.form.valid && onSubmit()" #f="ngForm" novalidate>
 <div mat-dialog-content>
     <!-- <form class="form-container">		 -->
@@ -91,6 +91,6 @@
 </div>
 <div mat-dialog-actions align="end">
     <button mat-raised-button (click)="onNoClick()">Cancel</button>
-    <button mat-raised-button color="primary" cdkFocusInitial (click)="validate()">{{ mode }} Non Biller Product</button>
+    <button mat-raised-button color="primary" cdkFocusInitial (click)="validate()">{{ mode }} Biller Subscriber Product</button>
 </div>
 </form>

@@ -32,12 +32,12 @@
     <mat-card-header>
         <mat-card-title style="align-items: center">
 			<!-- <h2 style="color: rgb(158, 158, 158)" >{{ menuName }} Registration</h2>  -->
-			<h2 mat-dialog-title>{{ menuName === 'Biller' ? 'Biller Maintenance' : 'Biller Subscriber' }}</h2> 			               
+			<h2 mat-dialog-title>{{ menuName === 'Biller' ? 'Biller' : 'Biller Subscriber' }}</h2> 			               
         </mat-card-title>
     </mat-card-header>
     <mat-card-content>
         <!-- <div style="text-align: right"> -->
-			<button mat-raised-button color="primary" (click)="openDialog('create')" style="margin-bottom: 10px;">Add {{ menuName === 'Biller' ? 'Biller Maintenance' : 'Biller Subscriber' }}</button>
+			<button mat-raised-button color="primary" (click)="openDialog('create')" style="margin-bottom: 10px;">Add {{ menuName === 'Biller' ? 'Biller' : 'Biller Subscriber' }}</button>
 			<button mat-raised-button (click)="exportCSV('csv')" style="margin-bottom: 10px;">Export CSV</button>
         <!-- </div> -->
         <ag-grid-angular 
