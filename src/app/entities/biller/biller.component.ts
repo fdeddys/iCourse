@@ -55,8 +55,8 @@ export class BillerComponent implements OnInit {
             // { headerName: 'Name', field: 'name', checkboxSelection: true, width: 250, pinned: 'left', editable: true },
             { headerName: 'No', field: 'no', width: 100, pinned: 'left', editable: false },
             { headerName: 'Name', field: 'member.name', width: 300, pinned: 'left', editable: false },
-            { headerName: 'Date Start', field: 'dateStart', width: 300 },
-            { headerName: 'Date Through', field: 'dateThru', width: 350 },
+            { headerName: 'Date Start', field: 'dateStart', width: 185 },
+            { headerName: 'Date Through', field: 'dateThru', width: 185 },
             { headerName: ' ', width: 150, cellRenderer: 'actionRenderer'}
         ],
         rowData: this.billers,

@@ -14,7 +14,7 @@
 		
 		<mat-grid-list cols="12" rowHeight="75px">
 			<mat-grid-tile [colspan]="1">
-				Mulai
+				From
 			</mat-grid-tile>
 			<mat-grid-tile [colspan]="3">
 				<mat-form-field>
@@ -29,13 +29,13 @@
 				</mat-form-field>
 			</mat-grid-tile>
 			<mat-grid-tile [colspan]="1">
-				sd
+				To
 			</mat-grid-tile>
 			<mat-grid-tile [colspan]="3">
 				<mat-form-field>
 				<input 
 					matInput [matDatepicker]="pickerTh" 
-					placeholder="Date Thru" 
+					placeholder="Date Through" 
 					(dateInput)="addEvent('thru', $event)" 
 					(click)="pickerTh.open()" 
 					[formControl]="dateThruCtrl" readonly>
