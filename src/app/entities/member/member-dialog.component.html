@@ -25,8 +25,8 @@
         </mat-form-field>
         <mat-form-field class="container-half-width">
             <mat-select placeholder="Status" [(ngModel)]="member.active" name="stts">
-                <mat-option *ngFor="let status of statuses" [value]="status.value">
-                  {{status.viewValue}}
+                <mat-option *ngFor="let status of statusList" [value]="status">
+                  {{status}}
                 </mat-option>
             </mat-select>
         </mat-form-field>

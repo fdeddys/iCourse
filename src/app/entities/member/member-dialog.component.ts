@@ -12,6 +12,7 @@ import { GRID_THEME, CSS_BUTTON, NO_DATA_GRID_MESSAGE, SNACKBAR_DURATION_IN_MILL
 import { REPORT_PATH  } from '../../shared/constant/base-constant';
 import { MatActionButtonComponent } from '../../shared/templates/mat-action-button.component';
 import { CommonValidatorDirective } from '../../validators/common.validator';
+import { SharedService } from '../../shared/services/shared.service';
 
 @Component({
     selector: 'app-member-dialog',
@@ -35,6 +36,7 @@ export class MemberDialogComponent implements OnInit {
     messageNoData: string = NO_DATA_GRID_MESSAGE;
     memberForm: FormGroup;
     submitted = false;
+    statusList = [];
 
     gridOptions = {
         columnDefs: [
@@ -68,10 +70,10 @@ export class MemberDialogComponent implements OnInit {
           }
       };
 
-    statuses = [
-        {value: true, viewValue: 'Active'},
-        {value: false, viewValue: 'Inactive'}
-    ];
+        // statuses = [
+        //     {value: 1, viewValue: 'ACTIVE'},
+        //     {value: 0, viewValue: 'INACTIVE'}
+        // ];
 
     constructor(
         private formBuilder: FormBuilder,
@@ -80,6 +82,7 @@ export class MemberDialogComponent implements OnInit {
         public memberBankService: MemberBankService,
         public dialogRef: MatDialogRef<MemberDialogComponent>,
         public snackBar: MatSnackBar,
+        private sharedService: SharedService,
         @Inject(MAT_DIALOG_DATA) public data: any) { }
 
     get form() { return this.memberForm.controls; }
@@ -98,6 +101,14 @@ export class MemberDialogComponent implements OnInit {
             this.name = this.member.name;
             // this.loadMemberBank();
         }
+        this.sharedService.getStatus()
+        .subscribe(
+            (res) => {
+                this.statusList = res.body;
+            },
+            (res: HttpErrorResponse) => this.onError(res.message),
+            () => { console.log('finally'); }
+        );
     }
 
     openNewDialog(): void {
@@ -158,10 +169,10 @@ export class MemberDialogComponent implements OnInit {
                     this.member = res.body;
                     this.isUpdateData = true;
                     console.log('refresh data ');
+                    this.dialogRef.close('refresh');
                 } else {
                     this.openSnackBar(res.body.errMsg, 'Ok');
                 }
-                // this.dialogRef.close('refresh');
             });
         } else {
             console.log('send to service ', this.member);
@@ -170,10 +181,10 @@ export class MemberDialogComponent implements OnInit {
                     this.isUpdateData = true;
                     console.log('refresh data ');
                     this.openSnackBar('Save success', 'Done');
+                    this.dialogRef.close('refresh');
                 } else {
                     this.openSnackBar(res.body.errMsg, 'Ok');
                 }
-                // this.dialogRef.close('refresh');
             });
         }
     }
