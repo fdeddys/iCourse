@@ -13,7 +13,7 @@ import { BillerType, BillerTypeService } from '../biller-type';
 import { Product, ProductService } from '../product';
 
 import { FormControl } from '@angular/forms';
-import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
+import { MatDialog, MatDialogRef, MAT_DIALOG_DATA, MatPaginator } from '@angular/material';
 
 import { BillerDialogComponent } from './biller-dialog.component';
 import { NO_DATA_GRID_MESSAGE, TOTAL_RECORD_PER_PAGE, REPORT_PATH } from '../../shared/constant/base-constant';
@@ -31,6 +31,7 @@ export class BillerComponent implements OnInit {
     // dataSource = [];
 
     @ViewChild('downloadLink') private downloadLink: ElementRef;
+    @ViewChild('paginator') private paginator: MatPaginator;
 
     private gridApi;
     private gridColumnApi;
@@ -266,7 +267,16 @@ export class BillerComponent implements OnInit {
         return year + '-' + (mth < 10 ? '0' + mth : mth) + '-' + (day < 10 ? '0' + day : day);
     }
 
-    filterBtn(): void {
+    actionfilter(): void {
+        this.filterBtn(1);
+        this.paginator.pageIndex = 0;
+    }
+
+    filterBtn(page): void {
+        if (page !== '') {
+            this.curPage = page;
+        }
+
         console.log('this.filChkBox : ', this.filChkBox);
         this.filter.filDateFStart = (this.dateFStartCtrl.value === null ? null : this.dateFormatter(this.dateFStartCtrl.value));
         this.filter.filDateTStart = (this.dateTStartCtrl.value === null ? null : this.dateFormatter(this.dateTStartCtrl.value));
@@ -294,7 +304,8 @@ export class BillerComponent implements OnInit {
         // console.log(this.gridApi);
         // console.log(this.gridColumnApi);
 
-        this.loadAll(this.curPage);
+        // this.loadAll(this.curPage);
+        this.filterBtn('');
     }
 
     onRowClicked(e) {
@@ -356,7 +367,7 @@ export class BillerComponent implements OnInit {
             console.log('The dialog was closed');
             // if (result === 'refresh') {
                 // this.loadAll(this.curPage);
-                this.filterBtn();
+                this.filterBtn('');
 
                 if  (this.route.snapshot.routeConfig.path !== 'non-biller' ) {
                     this.memberService.findNotAsBiller({
@@ -434,7 +445,8 @@ export class BillerComponent implements OnInit {
     public onPaginateChange($event): void {
         // console.log('events ', $event);
         this.curPage = $event.pageIndex + 1;
-        this.loadAll(this.curPage);
+        // this.loadAll(this.curPage);
+        this.filterBtn('');
     }
 
 }

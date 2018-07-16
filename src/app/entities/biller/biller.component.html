@@ -81,11 +81,11 @@
 					<div *ngIf="form.dateThru.errors.required"> {{form.dateThru.errors.message}}</div>
 				</mat-error> -->
 			</mat-form-field>
-            <button mat-raised-button color="primary" (click)="filterBtn()" style="margin-left: 30px">Filter</button>
+            <button mat-raised-button color="primary" (click)="actionfilter()" style="margin-left: 30px">Filter</button>
         </div>
 		<br>
         <ag-grid-angular 
-			style="height: 500px;" 
+			style="height: 550px;" 
 			class="ag-theme-material"
 			[gridOptions]="gridOptions"
 			(gridReady)="onGridReady($event)"
@@ -95,6 +95,7 @@
 
 		<div>
 			<mat-paginator 
+				#paginator
 				[length]="totalData"
 				[pageSize]="totalRecord"
 				[pageSizeOptions]="[totalRecord]"
