@@ -39,7 +39,51 @@
         <!-- <div style="text-align: right"> -->
 			<button mat-raised-button color="primary" (click)="openDialog('create')" style="margin-bottom: 10px;">Add {{ menuName === 'Biller' ? 'Biller' : 'Biller Subscriber' }}</button>
 			<button mat-raised-button (click)="exportCSV('csv')" style="margin-bottom: 10px;">Export CSV</button>
-        <!-- </div> -->
+		<!-- </div> -->
+		<br>
+		<div>
+			<mat-form-field class="form-width" >
+				<input matInput placeholder="Member Name" [(ngModel)]="filter.memberName" name ="name">
+			</mat-form-field>
+			<br>
+			<mat-checkbox class="example-margin" [color]="'primary'" [(ngModel)]="filChkBox.start" [ngModelOptions]="{standalone: true}" (change)="chkBoxChgS($event)" style="margin-right: 20px"></mat-checkbox>
+			<mat-form-field class="form-half-width" style="margin-right: 5%">
+				<input matInput [matDatepicker]="pickerFStart" placeholder="Start Date From :" (click)="pickerFStart.open()" [max]="dateTStartCtrl.value" [formControl]="dateFStartCtrl" readonly>
+				<mat-datepicker-toggle matSuffix [for]="pickerFStart"></mat-datepicker-toggle>
+				<mat-datepicker #pickerFStart></mat-datepicker>
+				<!-- <mat-error *ngIf="submitted && form.dateStart.errors" class="invalid-feedback">
+					<div *ngIf="form.dateStart.errors.required"> {{form.dateStart.errors.message}}</div>
+				</mat-error> -->
+			</mat-form-field>
+			<mat-form-field class="form-half-width">
+				<input matInput [matDatepicker]="pickerTStart" placeholder="Start Date To :" (click)="pickerTStart.open()" [min]="dateFStartCtrl.value" [formControl]="dateTStartCtrl" readonly>
+				<mat-datepicker-toggle matSuffix [for]="pickerTStart"></mat-datepicker-toggle>
+				<mat-datepicker #pickerTStart></mat-datepicker>
+				<!-- <mat-error *ngIf="submitted && form.dateThru.errors" class="invalid-feedback">
+					<div *ngIf="form.dateThru.errors.required"> {{form.dateThru.errors.message}}</div>
+				</mat-error> -->
+			</mat-form-field>
+			<br>
+			<mat-checkbox class="example-margin" [color]="'primary'" [(ngModel)]="filChkBox.through" [ngModelOptions]="{standalone: true}" (change)="chkBoxChgT($event)" style="margin-right: 20px"></mat-checkbox>
+			<mat-form-field class="form-half-width" style="margin-right: 5%">
+				<input matInput [matDatepicker]="pickerFThrough" placeholder="End Date From :" (click)="pickerFThrough.open()" [max]="dateTThroughCtrl.value" [formControl]="dateFThroughCtrl" readonly>
+				<mat-datepicker-toggle matSuffix [for]="pickerFThrough"></mat-datepicker-toggle>
+				<mat-datepicker #pickerFThrough></mat-datepicker>
+				<!-- <mat-error *ngIf="submitted && form.dateStart.errors" class="invalid-feedback">
+					<div *ngIf="form.dateStart.errors.required"> {{form.dateStart.errors.message}}</div>
+				</mat-error> -->
+			</mat-form-field>
+			<mat-form-field class="form-half-width">
+				<input matInput [matDatepicker]="pickerTThrough" placeholder="End Date To :" (click)="pickerTThrough.open()" [min]="dateFThroughCtrl.value" [formControl]="dateTThroughCtrl" readonly>
+				<mat-datepicker-toggle matSuffix [for]="pickerTThrough"></mat-datepicker-toggle>
+				<mat-datepicker #pickerTThrough></mat-datepicker>
+				<!-- <mat-error *ngIf="submitted && form.dateThru.errors" class="invalid-feedback">
+					<div *ngIf="form.dateThru.errors.required"> {{form.dateThru.errors.message}}</div>
+				</mat-error> -->
+			</mat-form-field>
+            <button mat-raised-button color="primary" (click)="filterBtn()" style="margin-left: 30px">Filter</button>
+        </div>
+		<br>
         <ag-grid-angular 
 			style="height: 500px;" 
 			class="ag-theme-material"

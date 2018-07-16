@@ -1,3 +1,13 @@
 table {
 	width: 100%;
 }
+
+.form-half-width {
+	width: 15%;
+	/* margin-right: 5%; */
+}
+
+.form-width {
+	width: 40%;
+	/* margin-right: 5%; */
+}

@@ -12,6 +12,7 @@ import { BillerCompany, BillerCompanyService } from '../biller-company';
 import { BillerType, BillerTypeService } from '../biller-type';
 import { Product, ProductService } from '../product';
 
+import { FormControl } from '@angular/forms';
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
 
 import { BillerDialogComponent } from './biller-dialog.component';
@@ -50,6 +51,24 @@ export class BillerComponent implements OnInit {
     totalRecord = TOTAL_RECORD_PER_PAGE;
     menuName = '';
 
+    dateFStartCtrl: FormControl;
+    dateTStartCtrl: FormControl;
+    dateFThroughCtrl: FormControl;
+    dateTThroughCtrl: FormControl;
+
+    private filter: BillerFilter = {
+        memberName: '',
+        filDateFStart: null,
+        filDateTStart: null,
+        filDateFThru: null,
+        filDateTThru: null
+    };
+
+    filChkBox = {
+        start: false,
+        through: false
+    };
+
     gridOptions = {
         columnDefs: [
             // { headerName: 'Name', field: 'name', checkboxSelection: true, width: 250, pinned: 'left', editable: true },
@@ -82,7 +101,12 @@ export class BillerComponent implements OnInit {
         private billerService: BillerService,
         private route: ActivatedRoute,
         private sharedService: SharedService
-    ) { }
+    ) {
+        this.dateFStartCtrl = new FormControl();
+        this.dateTStartCtrl = new FormControl();
+        this.dateFThroughCtrl = new FormControl();
+        this.dateTThroughCtrl = new FormControl();
+    }
 
     loadAll(page) {
         console.log('Start call function all header');
@@ -114,6 +138,11 @@ export class BillerComponent implements OnInit {
         } else if (this.route.snapshot.routeConfig.path === 'biller') {
             this.menuName = 'Biller';
         }
+
+        this.dateFStartCtrl.disable();
+        this.dateTStartCtrl.disable();
+        this.dateFThroughCtrl.disable();
+        this.dateTThroughCtrl.disable();
 
         if  (this.route.snapshot.routeConfig.path === 'non-biller' ) {
             this.memberService.query({
@@ -202,6 +231,62 @@ export class BillerComponent implements OnInit {
         );
     }
 
+    chkBoxChgS(evt) {
+        console.log('chkBoxChgT(evt) : ', evt);
+        if (evt.checked) {
+            this.dateFStartCtrl.enable();
+            this.dateTStartCtrl.enable();
+        } else {
+            this.dateFStartCtrl.disable();
+            this.dateTStartCtrl.disable();
+            this.dateFStartCtrl.setValue(null);
+            this.dateTStartCtrl.setValue(null);
+        }
+    }
+
+    chkBoxChgT(evt) {
+        console.log('chkBoxChgT(evt) : ', evt);
+        if (evt.checked) {
+            this.dateFThroughCtrl.enable();
+            this.dateTThroughCtrl.enable();
+        } else {
+            this.dateFThroughCtrl.disable();
+            this.dateTThroughCtrl.disable();
+            this.dateFThroughCtrl.setValue(null);
+            this.dateTThroughCtrl.setValue(null);
+        }
+    }
+
+    dateFormatter(params): string {
+        const dt  = new Date(params);
+        const year = dt.getFullYear();
+        const mth = dt.getMonth() + 1;
+        const day = dt.getDate();
+        // return dt.toLocaleString(['id']);
+        return year + '-' + (mth < 10 ? '0' + mth : mth) + '-' + (day < 10 ? '0' + day : day);
+    }
+
+    filterBtn(): void {
+        console.log('this.filChkBox : ', this.filChkBox);
+        this.filter.filDateFStart = (this.dateFStartCtrl.value === null ? null : this.dateFormatter(this.dateFStartCtrl.value));
+        this.filter.filDateTStart = (this.dateTStartCtrl.value === null ? null : this.dateFormatter(this.dateTStartCtrl.value));
+        this.filter.filDateFThru = (this.dateFThroughCtrl.value === null ? null : this.dateFormatter(this.dateFThroughCtrl.value));
+        this.filter.filDateTThru = (this.dateTThroughCtrl.value === null ? null : this.dateFormatter(this.dateTThroughCtrl.value));
+
+        console.log('this.filter : ', this.filter);
+        this.billerService.filter({
+            allData: (this.route.snapshot.routeConfig.path === 'non-biller' ? 0 : 1),
+            page: this.curPage,
+            count: this.totalRecord,
+            filter: this.filter,
+        })
+        .subscribe(
+            (res: HttpResponse<Biller[]>) => this.onSuccess(res.body, res.headers),
+            (res: HttpErrorResponse) => this.onError(res.message),
+            () => { console.log('finally'); }
+        );
+    }
+
     onGridReady(params) {
         this.gridApi = params.api;
         this.gridColumnApi = params.columnApi;
@@ -270,7 +355,8 @@ export class BillerComponent implements OnInit {
         dialogRef.afterClosed().subscribe(result => {
             console.log('The dialog was closed');
             // if (result === 'refresh') {
-                this.loadAll(this.curPage);
+                // this.loadAll(this.curPage);
+                this.filterBtn();
 
                 if  (this.route.snapshot.routeConfig.path !== 'non-biller' ) {
                     this.memberService.findNotAsBiller({
@@ -353,11 +439,10 @@ export class BillerComponent implements OnInit {
 
 }
 
-// export interface BillerElement {
-//     public id?: number,
-//     public description?: string,
-//     public dateStart?: string,
-//     public dateThru?: string,
-//     public memberTypeId?: number,
-//     public memberId?: number,
-// }
+export interface BillerFilter {
+    memberName?: string;
+    filDateFStart?: string;
+    filDateTStart?: string;
+    filDateFThru?: string;
+    filDateTThru?: string;
+}

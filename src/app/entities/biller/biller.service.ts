@@ -55,6 +55,32 @@ private reportUrl = REPORT_PATH;
         }
     }
 
+    filter(req?: any): Observable<HttpResponse<Biller[]>> {
+        const options = createRequestOption(req);
+        let allData = null;
+        let pageNumber = null;
+        let pageCount = null;
+        let newresourceUrl = null;
+
+        Object.keys(req).forEach((key) => {
+            if (key === 'allData') {
+                allData = req[key];
+            }
+            if (key === 'page') {
+                pageNumber = req[key];
+            }
+            if (key === 'count') {
+                pageCount = req[key];
+            }
+        });
+
+        newresourceUrl = this.resourceUrl + `/filter/isAllData/${allData}/page/${pageNumber}/count/${pageCount}`;
+        return this.http.post<Biller[]>(newresourceUrl, req['filter'], {  observe: 'response' })
+            .pipe(
+                tap(results => console.log('raw ', results ) )
+            );
+    }
+
     create(biller: Biller): Observable<EntityResponseType> {
         const copy = this.convert(biller);
         return this.http.post<Biller>(`${this.resourceUrl}`, copy, { observe: 'response'})
