@@ -271,7 +271,6 @@ export class BillerDialogComponent implements OnInit {
     private onError(error) {
         console.log('error..', error);
     }
-
     onNoClick(): void {
         console.log('test refresh..');
         this.dialogRef.close('refresh');
@@ -593,6 +592,7 @@ export class BillerDialogComponent implements OnInit {
 
                     if (res.body.errMsg === '' || res.body.errMsg === null ) {
                         console.log(res.body.id);
+                        this.biller.memberCode = res.body.memberCode;
                         this.btnDisabled = false;
                         if (this.biller.id === undefined || this.biller.id === null) {
                             this.biller.id = res.body.id;
@@ -629,7 +629,8 @@ export class BillerDialogComponent implements OnInit {
             this.billerService.update(this.billerSave.id, this.billerSave).subscribe(
                     (res: HttpResponse<Biller>) => {
                         if (res.body.errMsg === '' || res.body.errMsg === null ) {
-                            this.dialogRef.close('refresh');
+                           // this.dialogRef.close('refresh');
+                           this.openSnackBar('Save Success', 'Ok');
                         } else {
                             this.openSnackBar(res.body.errMsg, 'Ok');
                         }

@@ -11,8 +11,8 @@
             </mat-autocomplete> -->
             
             <mat-select placeholder="Biller" name="member" [(ngModel)]="biller.memberId" required>
-                <mat-option *ngFor="let member of memberList" [value]="member.id">
-                    {{member.name}}
+                <mat-option *ngFor="let member of memberList" [value]="member.id"> 
+                    {{member.name}} 
                 </mat-option>
             </mat-select>
             <mat-error *ngIf="submitted && form.member.errors" class="invalid-feedback">
