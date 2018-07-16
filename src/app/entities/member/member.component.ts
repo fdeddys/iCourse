@@ -40,13 +40,13 @@ export class MemberComponent implements OnInit {
   messageNoData: string = NO_DATA_GRID_MESSAGE;
 
   gridOptions = {
-    columnDefs: [
-      { headerName: 'No', field: 'nourut', width: 100, pinned: 'left', editable: false  },
-      { headerName: 'Name', field: 'name', width: 300, editable: false },
-      { headerName: 'Description', field: 'description', width: 400, editable: false },
-      { headerName: 'Status', field: 'active', width: 200,  editable: false },
-      { headerName: ' ', width: 150, cellRenderer: 'actionRenderer'}
-    ],
+      columnDefs: [
+        { headerName: 'No', field: 'nourut', width: 100, pinned: 'left', editable: false  },
+        { headerName: 'Name', field: 'name', width: 300, editable: false },
+        { headerName: 'Description', field: 'description', width: 400, editable: false },
+        { headerName: 'Status', field: 'active', width: 200,  editable: false },
+        { headerName: ' ', width: 150, cellRenderer: 'actionRenderer'}
+      ],
       rowData: this.members,
       enableSorting: true,
       enableFilter: true,
@@ -101,7 +101,8 @@ export class MemberComponent implements OnInit {
       dialogRef.afterClosed().subscribe(result => {
         console.log('The dialog was closed = [', result, ']');
         // if (result === 'refresh') {
-          this.loadAll(this.curPage);
+          // this.loadAll(this.curPage);
+          this.filterBtn('');
         // }
       });
   }
@@ -135,7 +136,15 @@ export class MemberComponent implements OnInit {
         );
     }
 
-    filterBtn(): void {
+
+    actionfilter(): void {
+      this.filterBtn(1);
+    }
+
+    filterBtn(page): void {
+      if (page !== '') {
+        this.curPage = page;
+      }
       let statusAll = false;
       switch (this.filter.active) {
         case 'ALL':
@@ -152,6 +161,7 @@ export class MemberComponent implements OnInit {
     //         this.filter.active = null;
     //         break;
     }
+
     this.memberService.filter({
         page: this.curPage,
         count: this.totalRecord,
@@ -181,8 +191,9 @@ export class MemberComponent implements OnInit {
     console.log(this.gridApi);
     console.log(this.gridColumnApi);
 
-    this.loadAll(this.curPage);
+    // this.loadAll(this.curPage);
     // params.api.sizeColumnsToFit();
+    this.filterBtn('');
   }
 
   onPaginationChanged() {
@@ -243,7 +254,8 @@ export class MemberComponent implements OnInit {
   public onPaginateChange($event): void {
       // console.log('events ', $event);
       this.curPage = $event.pageIndex + 1;
-      this.loadAll(this.curPage);
+      this.filterBtn('');
+      // this.loadAll(this.curPage);
   }
 
     public async exportCSV(reportType): Promise<void> {
