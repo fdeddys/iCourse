@@ -2,7 +2,10 @@ export const GRID_THEME = 'ag-theme-material';
 // export const SERVER = 'http://45.126.133.31:8080/';
 // export const SERVER = 'https://localhost:8080/ottoagbe/';
 
+// develop
 export const SERVER = 'http://localhost:8080/';
+
+// deploy
 // export const SERVER = '/ottoagbe/';
 export const SERVER_PATH = SERVER + 'api/';
 export const AUTH_PATH = SERVER + 'token/';
