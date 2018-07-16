@@ -27,7 +27,7 @@ export class MemberTypeComponent implements OnInit {
     MemberType: MemberType;
     messageNoData: string = NO_DATA_GRID_MESSAGE;
     private resourceUrl = REPORT_PATH;
-    manualPage = null;
+    // manualPage = null;
     @ViewChild(MatPaginator) paginator: MatPaginator;
 
 
@@ -164,6 +164,7 @@ export class MemberTypeComponent implements OnInit {
 
     public onPaginateChange($event): void {
         // console.log('events ', $event);
+        this.paginator._pageIndex = 0;
         this.curPage = $event.pageIndex + 1;
         // this.loadAll(this.curPage);
         console.log('On page change ', this.curPage);
@@ -211,9 +212,9 @@ export class MemberTypeComponent implements OnInit {
         this.filterBtn(1);
     }
 
-    updateManualPage(index) {
-        this.manualPage = index;
-        this.paginator.pageIndex = index - 1;
-      }
+    // updateManualPage(index) {
+    //     this.manualPage = index;
+    //     this.paginator.pageIndex = index - 1;
+    //   }
 
 }

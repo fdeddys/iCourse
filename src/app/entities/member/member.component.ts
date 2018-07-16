@@ -1,6 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { HttpResponse, HttpErrorResponse } from '@angular/common/http';
-import { MatDialog } from '@angular/material';
+import { MatDialog, MatPaginator } from '@angular/material';
 import { MemberDialogComponent } from './member-dialog.component';
 import { MemberConfirmComponent } from './member-confirm.component';
 import { Member } from './member.model';
@@ -34,7 +34,7 @@ export class MemberComponent implements OnInit {
     };
     status: any;
     statusList = [];
-
+    @ViewChild(MatPaginator) paginator: MatPaginator;
     members: Member[];
     member: Member;
     messageNoData: string = NO_DATA_GRID_MESSAGE;
@@ -138,6 +138,7 @@ export class MemberComponent implements OnInit {
 
 
     actionfilter(): void {
+      this.paginator._pageIndex = 0;
       this.filterBtn(1);
     }
 
@@ -235,22 +236,6 @@ export class MemberComponent implements OnInit {
   private onError(error) {
       console.log('error..');
   }
-
-  // public nextPage(): void {
-  //     this.loadAll(this.curPage + 1 );
-  // }
-
-  // public prevPage(): void {
-  //     this.loadAll(this.curPage - 1 );
-  // }
-
-  // public firstPage(): void {
-  //     this.loadAll( 1 );
-  // }
-
-  // public lastPage(): void {
-  //     this.loadAll(this.totalpage );
-  // }
 
   public onPaginateChange($event): void {
       // console.log('events ', $event);
