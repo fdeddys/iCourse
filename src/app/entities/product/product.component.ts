@@ -44,7 +44,7 @@ export class ProductComponent implements OnInit {
     cssButton = CSS_BUTTON  ;
     messageNoData: string = NO_DATA_GRID_MESSAGE;
 
-    private filter: ProductFilter = {
+    filter: ProductFilter = {
         name: null,
         productCode: null,
         status: 'ALL',
@@ -176,7 +176,7 @@ export class ProductComponent implements OnInit {
                    // this.statusList.push('ALL');
                    this.filterStatusList.push('ALL');
                     for (const datas of res.body) {
-                        this.filterStatusList.push(datas); 
+                        this.filterStatusList.push(datas);
                     }
                    this.statusList = res.body;
                 },

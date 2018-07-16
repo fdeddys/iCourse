@@ -7,7 +7,8 @@ import { CustomMaterialModule } from './../../material.module';
 import {
     RoleService,
     RoleComponent,
-    RoleDialogComponent
+    RoleDialogComponent,
+    RoleConfirmDialogComponent
 } from './';
 
 import { LocalStorageService, SessionStorageService } from 'ngx-webstorage';
@@ -21,11 +22,13 @@ import { LocalStorageService, SessionStorageService } from 'ngx-webstorage';
     ],
     declarations: [
         RoleComponent,
-        RoleDialogComponent
+        RoleDialogComponent,
+        RoleConfirmDialogComponent
     ],
     entryComponents: [
         RoleComponent,
-        RoleDialogComponent
+        RoleDialogComponent,
+        RoleConfirmDialogComponent
     ],
     providers: [
         RoleService,

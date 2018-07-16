@@ -28,8 +28,8 @@ import { ICellRendererAngularComp } from 'ag-grid-angular/main';
 export class MatCheckboxComponent implements ICellRendererAngularComp {
     private params: any;
 
-    private checked: boolean;
-    private stat: string;
+    checked: boolean;
+    stat: string;
     // this.checked = false;
 
     agInit(params: any): void {

@@ -37,7 +37,7 @@
     </mat-card-header>
     <mat-card-content>
         <!-- <div style="text-align: right"> -->
-			<button mat-raised-button color="primary" (click)="openDialog('create')" style="margin-bottom: 10px;">Add {{ menuName === 'Biller' ? 'Biller' : 'Biller Subscriber' }}</button>
+			<button mat-raised-button color="primary" (click)="openDialog('create', null)" style="margin-bottom: 10px;">Add {{ menuName === 'Biller' ? 'Biller' : 'Biller Subscriber' }}</button>
 			<button mat-raised-button (click)="exportCSV('csv')" style="margin-bottom: 10px;">Export CSV</button>
 		<!-- </div> -->
 		<br>

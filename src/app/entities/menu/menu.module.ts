@@ -7,7 +7,8 @@ import { CustomMaterialModule } from './../../material.module';
 import {
     MenuService,
     MenuComponent,
-    MenuDialogComponent
+    MenuDialogComponent,
+    MenuConfirmDialogComponent
 } from './';
 
 import { LocalStorageService, SessionStorageService } from 'ngx-webstorage';
@@ -21,11 +22,13 @@ import { LocalStorageService, SessionStorageService } from 'ngx-webstorage';
     ],
     declarations: [
         MenuComponent,
-        MenuDialogComponent
+        MenuDialogComponent,
+        MenuConfirmDialogComponent
     ],
     entryComponents: [
         MenuComponent,
-        MenuDialogComponent
+        MenuDialogComponent,
+        MenuConfirmDialogComponent
     ],
     providers: [
         MenuService,

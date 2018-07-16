@@ -27,7 +27,7 @@ export class MemberComponent implements OnInit {
     totalData = 0;
     totalRecord = TOTAL_RECORD_PER_PAGE;
     private resourceUrl = REPORT_PATH;
-    private filter: Filter = {
+    filter: Filter = {
       name: null,
       description: null,
       active: 'ALL',

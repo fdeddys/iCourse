@@ -31,7 +31,7 @@ export class BillerTypeComponent implements OnInit {
     totalRecord = TOTAL_RECORD_PER_PAGE;
     billPayTypeList = [];
 
-    private filter = {
+    filter = {
         name : null,
         billPayType: 'ALL',
       };

@@ -57,7 +57,7 @@ export class BillerComponent implements OnInit {
     dateFThroughCtrl: FormControl;
     dateTThroughCtrl: FormControl;
 
-    private filter: BillerFilter = {
+    filter: BillerFilter = {
         memberName: '',
         filDateFStart: null,
         filDateTStart: null,
