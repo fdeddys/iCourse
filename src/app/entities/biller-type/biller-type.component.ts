@@ -1,6 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { BillerType } from './biller-type.model';
-import { MatDialog } from '@angular/material';
+import { MatDialog, MatPaginator } from '@angular/material';
 import { BillerTypeService } from './biller-type.service';
 import { BillerTypeDialogComponent } from './biller-type-dialog.component';
 import { HttpResponse, HttpErrorResponse } from '@angular/common/http';
@@ -30,6 +30,7 @@ export class BillerTypeComponent implements OnInit {
     totalData = 0;
     totalRecord = TOTAL_RECORD_PER_PAGE;
     billPayTypeList = [];
+    @ViewChild(MatPaginator) paginator: MatPaginator;
 
     filter = {
         name : null,
@@ -65,11 +66,6 @@ export class BillerTypeComponent implements OnInit {
             actionRenderer: MatActionButtonComponent
         }
     };
-
-    boolFormatter(params): string {
-        return params.value === true ? 'Postpaid' : 'Prepaid';
-    }
-
     currencyFormatter(params): string {
         const dt  = new Date(params.value);
         return dt.toLocaleString(['id']);
@@ -101,8 +97,9 @@ export class BillerTypeComponent implements OnInit {
         });
 
         dialogRef.afterClosed().subscribe(result => {
-        console.log('The dialog was closed = [', result, ']');
-        this.loadAll(this.curPage);
+            // console.log('The dialog was closed = [', result, ']');
+            // this.loadAll(this.curPage);
+            this.filterBtn('');
         });
     }
 
@@ -133,7 +130,15 @@ export class BillerTypeComponent implements OnInit {
         );
     }
 
-    filterBtn(): void {
+    actionfilter(): void {
+        this.paginator._pageIndex = 0;
+        this.filterBtn(1);
+      }
+
+    filterBtn(page): void {
+        if (page !== '') {
+            this.curPage = page;
+        }
         let statusAll = false;
         switch (this.filter.billPayType) {
           case 'ALL':
@@ -188,7 +193,8 @@ export class BillerTypeComponent implements OnInit {
 
         console.log(this.gridApi);
         console.log(this.gridColumnApi);
-        this.loadAll(this.curPage);
+        // this.loadAll(this.curPage);
+        this.filterBtn('');
     }
 
     openNewDialog(): void {
@@ -231,7 +237,8 @@ export class BillerTypeComponent implements OnInit {
     public onPaginateChange($event): void {
         // console.log('events ', $event);
         this.curPage = $event.pageIndex + 1;
-        this.loadAll(this.curPage);
+        // this.loadAll(this.curPage);
+        this.filterBtn('');
     }
 
     public async exportCSV(reportType): Promise<void> {
