@@ -1,6 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { MemberType } from './member-type.model';
-import { MatDialog } from '@angular/material';
+import { MatDialog, MatPaginator } from '@angular/material';
 import { MemberTypeService } from './member-type.service';
 import { MemberTypeDialogComponent } from './member-type-dialog.component';
 import { MemberTypeConfirmComponent } from './member-type-confirm.component';
@@ -27,64 +27,70 @@ export class MemberTypeComponent implements OnInit {
     MemberType: MemberType;
     messageNoData: string = NO_DATA_GRID_MESSAGE;
     private resourceUrl = REPORT_PATH;
+    manualPage = null;
+    @ViewChild(MatPaginator) paginator: MatPaginator;
+
+
     filter: Filter = {
         name: '',
         description: '',
     };
 
     gridOptions = {
-      columnDefs: [
-        { headerName: 'No', field: 'nourut', width: 100, minWidth: 100, maxWidth: 100, editable: false,  pinned: 'left'},
-        { headerName: 'Name', field: 'name', width: 300, editable: false},
-        { headerName: 'Description', field: 'description', width: 400,  editable: false },
-        { headerName: ' ', width: 150, minWidth: 150, maxWidth: 150, cellRenderer: 'actionRenderer'}
-      ],
-      rowData: this.memberTipes,
-      enableSorting: true,
-      enableFilter: true,
-      pagination: true,
-      paginationPageSize: 10,
-      cacheOverflowSize : 2,
-      maxConcurrentDatasourceRequests : 2,
-      infiniteInitialRowCount : 1,
-      maxBlocksInCache : 2,
-      suppressPaginationPanel : true,
-      localeText: {noRowsToShow: this.messageNoData},
-      suppressHorizontalScroll: false,
-      frameworkComponents: {
-          actionRenderer: MatActionButtonComponent
-      }
+        columnDefs: [
+            { headerName: 'No', field: 'nourut', width: 100, minWidth: 100, maxWidth: 100, editable: false,  pinned: 'left'},
+            { headerName: 'Name', field: 'name', width: 300, editable: false},
+            { headerName: 'Description', field: 'description', width: 400,  editable: false },
+            { headerName: ' ', width: 150, minWidth: 150, maxWidth: 150, cellRenderer: 'actionRenderer'}
+        ],
+        rowData: this.memberTipes,
+        enableSorting: true,
+        enableFilter: true,
+        pagination: true,
+        paginationPageSize: 10,
+        cacheOverflowSize : 2,
+        maxConcurrentDatasourceRequests : 2,
+        infiniteInitialRowCount : 1,
+        maxBlocksInCache : 2,
+        suppressPaginationPanel : true,
+        localeText: {noRowsToShow: this.messageNoData},
+        suppressHorizontalScroll: false,
+        frameworkComponents: {
+            actionRenderer: MatActionButtonComponent
+        }
     };
 
     constructor(  private dialog: MatDialog,
                   private memberTypeService: MemberTypeService) { }
 
     public onRowClicked(e) {
-      if (e.event.target !== undefined) {
-          const data = e.data;
-          const actionType = e.event.target.getAttribute('data-action-type');
+        if (e.event.target !== undefined) {
+            const data = e.data;
+            const actionType = e.event.target.getAttribute('data-action-type');
 
-          switch (actionType) {
-              case 'edit':
-                  return this.onActionEditClick(data);
-              case 'inactive':
-                  return this.onActionRemoveClick(data);
-          }
-      }
+            switch (actionType) {
+                case 'edit':
+                    return this.onActionEditClick(data);
+                case 'inactive':
+                    return this.onActionRemoveClick(data);
+            }
+        }
     }
 
     public onActionEditClick(data: any) {
         console.log('View action clicked', data);
         const dialogRef = this.dialog.open(MemberTypeDialogComponent, {
-          width: '1000px',
-          data: { action: 'EDIT', entity: 'Member Type', memberType: data }
+            width: '1000px',
+            data: { action: 'EDIT', entity: 'Member Type', memberType: data }
         });
 
         dialogRef.afterClosed().subscribe(result => {
-          console.log('The dialog was closed = [', result, ']');
-          if (result === 'refresh') {
-            this.loadAll(this.curPage);
-          }
+            console.log('The dialog was closed = [', result, ']');
+            if (result === 'refresh') {
+                // this.loadAll(this.curPage);
+                // this.loadAll(this.curPage);
+                this.filterBtn('');
+            }
         });
     }
 
@@ -92,53 +98,50 @@ export class MemberTypeComponent implements OnInit {
         console.log('Remove action clicked', data);
         const member: string = data.name;
         const dialogConfirm = this.dialog.open(MemberTypeConfirmComponent, {
-          width: '50%',
-          data: { warningMessage: 'Apakah anda yakin untuk menonaktifkan [  ' + `${member}` + '  ]  ?',  idCompanyMember: data.id }
+            width: '50%',
+            data: { warningMessage: 'Apakah anda yakin untuk menonaktifkan [  ' + `${member}` + '  ]  ?',  idCompanyMember: data.id }
         });
 
         dialogConfirm.afterClosed().subscribe(result => {
-          console.log('The dialog was closed');
+            console.log('The dialog was closed');
         });
 
-      }
+    }
 
     loadAll(page) {
-          console.log('Start call function all header page:', page, ' total per page ', this.totalRecord);
-          this.memberTypeService.query({
-              page: page,
-              count: this.totalRecord,
-          })
-          .subscribe(
-                  (res: HttpResponse<MemberType[]>) => this.onSuccess(res.body, res.headers),
-                  (res: HttpErrorResponse) => this.onError(res.message),
-                  () => { console.log('finally'); }
-          );
-      }
+        console.log('Start call function all header page:', page, ' total per page ', this.totalRecord);
+        this.memberTypeService.query({
+            page: page,
+            count: this.totalRecord,
+        })
+        .subscribe(
+            (res: HttpResponse<MemberType[]>) => this.onSuccess(res.body, res.headers),
+            (res: HttpErrorResponse) => this.onError(res.message),
+            () => { console.log('finally'); }
+        );
+    }
 
     ngOnInit() {
-      // this.loadAll();
+        // this.loadAll();
     }
 
     onGridReady(params) {
-      this.gridApi = params.api;
-      this.gridColumnApi = params.columnApi;
-
-      // console.log(this.gridApi);
-      // console.log(this.gridColumnApi);
-      // params.api.sizeColumnsToFit();
-      this.loadAll(this.curPage);
+        this.gridApi = params.api;
+        this.gridColumnApi = params.columnApi;
+        this.filterBtn('');
     }
 
     openNewDialog(): void {
-      const dialogRef = this.dialog.open(MemberTypeDialogComponent, {
-        width: '1000px',
-        data: { action: 'Add', entity: 'Member Type' }
-      });
+        const dialogRef = this.dialog.open(MemberTypeDialogComponent, {
+            width: '1000px',
+            data: { action: 'Add', entity: 'Member Type' }
+        });
 
-      dialogRef.afterClosed().subscribe(result => {
-          console.log('The dialog was closed = [', result, ']');
-          this.loadAll(this.curPage);
-      });
+        dialogRef.afterClosed().subscribe(result => {
+            console.log('The dialog was closed = [', result, ']');
+            // this.loadAll(this.curPage);
+            this.filterBtn('');
+        });
     }
 
     private onSuccess(data, headers) {
@@ -156,44 +159,61 @@ export class MemberTypeComponent implements OnInit {
     }
 
     private onError(error) {
-      console.log('error..');
+        console.log('error..');
     }
 
     public onPaginateChange($event): void {
         // console.log('events ', $event);
         this.curPage = $event.pageIndex + 1;
-        this.loadAll(this.curPage);
+        // this.loadAll(this.curPage);
+        console.log('On page change ', this.curPage);
+        this.filterBtn('');
     }
 
     public async exportCSV(reportType): Promise<void> {
 
-      // const membType = (this.memberTypeList.length === 1 && this.memberTypeList[0].id === 1 ? 1 : 0);
-      const blob = await this.memberTypeService.exportCSV();
-      const url = window.URL.createObjectURL(blob);
+        // const membType = (this.memberTypeList.length === 1 && this.memberTypeList[0].id === 1 ? 1 : 0);
+        const blob = await this.memberTypeService.exportCSV();
+        const url = window.URL.createObjectURL(blob);
 
-      // const link = this.downloadZipLink.nativeElement;
-      const link = document.createElement('a');
-      document.body.appendChild(link);
-      link.setAttribute('style', 'display: none');
-      link.href = url;
-      link.download = 'membertype.csv';
-      link.click();
-      link.remove();
-      window.URL.revokeObjectURL(url);
-  }
+        // const link = this.downloadZipLink.nativeElement;
+        const link = document.createElement('a');
+        document.body.appendChild(link);
+        link.setAttribute('style', 'display: none');
+        link.href = url;
+        link.download = 'membertype.csv';
+        link.click();
+        link.remove();
+        window.URL.revokeObjectURL(url);
+    }
 
-  filterBtn(): void {
+    filterBtn(page): void {
+        if (page !== '') {
+            this.curPage = page;
+        }
 
-      this.memberTypeService.filter({
-        page: this.curPage,
-        count: this.totalRecord,
-        filter: this.filter,
-      })
-      .subscribe(
-          (res: HttpResponse<MemberType[]>) => this.onSuccess(res.body, res.headers),
-          (res: HttpErrorResponse) => this.onError(res.message),
-          () => { console.log('finally'); }
-      );
-  }
+        this.memberTypeService.filter({
+            page: this.curPage,
+            count: this.totalRecord,
+            filter: this.filter,
+        })
+        .subscribe(
+            (res: HttpResponse<MemberType[]>) => this.onSuccess(res.body, res.headers),
+            (res: HttpErrorResponse) => this.onError(res.message),
+            () => { console.log('finally'); }
+        );
+    }
+
+    actionSearch(): void {
+        // this.curPage = $event.pageIndex + 1;
+        // this.paginator.pageIndex = $event.pageIndex - 1;
+        this.paginator._pageIndex = 0;
+        this.filterBtn(1);
+    }
+
+    updateManualPage(index) {
+        this.manualPage = index;
+        this.paginator.pageIndex = index - 1;
+      }
 
 }

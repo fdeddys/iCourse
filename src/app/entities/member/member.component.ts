@@ -12,63 +12,63 @@ import { IFilter } from 'ag-grid';
 import { Filter } from '../../shared/model/filter';
 
 @Component({
-  selector: 'app-member',
-  templateUrl: './member.component.html',
-  styleUrls: ['./member.component.css']
+    selector: 'app-member',
+    templateUrl: './member.component.html',
+    styleUrls: ['./member.component.css']
 })
 export class MemberComponent implements OnInit {
 
-  private gridApi;
-  private gridColumnApi;
-  // no: any;
-  cssButton = CSS_BUTTON  ;
-  theme: String = GRID_THEME;
-  curPage = 1;
-  totalData = 0;
-  totalRecord = TOTAL_RECORD_PER_PAGE;
-  private resourceUrl = REPORT_PATH;
-  private filter: Filter = {
-    name: null,
-    description: null,
-    active: 'ALL',
-  };
-  status: any;
-  statusList = [];
+    private gridApi;
+    private gridColumnApi;
+    // no: any;
+    cssButton = CSS_BUTTON  ;
+    theme: String = GRID_THEME;
+    curPage = 1;
+    totalData = 0;
+    totalRecord = TOTAL_RECORD_PER_PAGE;
+    private resourceUrl = REPORT_PATH;
+    private filter: Filter = {
+      name: null,
+      description: null,
+      active: 'ALL',
+    };
+    status: any;
+    statusList = [];
 
-  members: Member[];
-  member: Member;
-  messageNoData: string = NO_DATA_GRID_MESSAGE;
+    members: Member[];
+    member: Member;
+    messageNoData: string = NO_DATA_GRID_MESSAGE;
 
-  gridOptions = {
-      columnDefs: [
-        { headerName: 'No', field: 'nourut', width: 100, pinned: 'left', editable: false  },
-        { headerName: 'Name', field: 'name', width: 300, editable: false },
-        { headerName: 'Description', field: 'description', width: 400, editable: false },
-        { headerName: 'Status', field: 'active', width: 200,  editable: false },
-        { headerName: ' ', width: 150, cellRenderer: 'actionRenderer'}
-      ],
-      rowData: this.members,
-      enableSorting: true,
-      enableFilter: true,
-      pagination: true,
-      paginationPageSize: 10,
-      cacheOverflowSize : 2,
-      maxConcurrentDatasourceRequests : 2,
-      infiniteInitialRowCount : 1,
-      maxBlocksInCache : 2,
-      onPaginationChanged: this.onPaginationChanged(),
-      suppressPaginationPanel : true,
-      localeText: {noRowsToShow: this.messageNoData},
-      frameworkComponents: {
-          actionRenderer: MatActionButtonComponent
-      }
-  };
+    gridOptions = {
+        columnDefs: [
+            { headerName: 'No', field: 'nourut', width: 100, pinned: 'left', editable: false  },
+            { headerName: 'Name', field: 'name', width: 300, editable: false },
+            { headerName: 'Description', field: 'description', width: 400, editable: false },
+            { headerName: 'Status', field: 'active', width: 200,  editable: false },
+            { headerName: ' ', width: 150, cellRenderer: 'actionRenderer'}
+        ],
+        rowData: this.members,
+        enableSorting: true,
+        enableFilter: true,
+        pagination: true,
+        paginationPageSize: 10,
+        cacheOverflowSize : 2,
+        maxConcurrentDatasourceRequests : 2,
+        infiniteInitialRowCount : 1,
+        maxBlocksInCache : 2,
+        onPaginationChanged: this.onPaginationChanged(),
+        suppressPaginationPanel : true,
+        localeText: {noRowsToShow: this.messageNoData},
+        frameworkComponents: {
+            actionRenderer: MatActionButtonComponent
+        }
+    };
 
-  currencyFormatter(params): string {
-    const dt  = new Date(params.value);
+    currencyFormatter(params): string {
+        const dt  = new Date(params.value);
 
-    return dt.toLocaleString(['id']);
-  }
+        return dt.toLocaleString(['id']);
+    }
 
   // boolFormatter(params): string {
   //   return params.value === true ? 'Active' : 'Inactive';
@@ -121,7 +121,7 @@ export class MemberComponent implements OnInit {
 
   }
 
-  loadAll(page) {
+    loadAll(page) {
         console.log('Start call function all header');
         this.memberService.query({
             page: page,
@@ -142,17 +142,17 @@ export class MemberComponent implements OnInit {
     }
 
     filterBtn(page): void {
-      if (page !== '') {
-        this.curPage = page;
-      }
-      let statusAll = false;
-      switch (this.filter.active) {
-        case 'ALL':
-            console.log('hapus active');
-            statusAll = true;
-            // delete this.filter.active ;
-            this.filter.active = null;
-            break;
+        if (page !== '') {
+          this.curPage = page;
+        }
+        let statusAll = false;
+        switch (this.filter.active) {
+            case 'ALL':
+              console.log('hapus active');
+              statusAll = true;
+              // delete this.filter.active ;
+              this.filter.active = null;
+              break;
     //     case 'ACTIVE':
     //     // lastStatus = 'ACTIVE';
     //         this.filter.active = true;
@@ -197,25 +197,26 @@ export class MemberComponent implements OnInit {
   }
 
   onPaginationChanged() {
-    console.log('onPaginationPageLoaded');
+      console.log('onPaginationPageLoaded');
 
-    // Workaround for bug in events order
-    if (this.gridApi) {
-    }
+      // Workaround for bug in events order
+      if (this.gridApi) {
+      }
   }
 
   openNewDialog(): void {
-    const dialogRef = this.dialog.open(MemberDialogComponent, {
-      width: '1000px',
-      data: { action: 'Add', entity: 'Member Registration' }
-    });
+      const dialogRef = this.dialog.open(MemberDialogComponent, {
+          width: '1000px',
+          data: { action: 'Add', entity: 'Member Registration' }
+      });
 
-    dialogRef.afterClosed().subscribe(result => {
-      console.log('The dialog was closed = [', result, ']');
-      // if (result === 'refresh') {
-        this.loadAll(this.curPage);
-      // }
-    });
+      dialogRef.afterClosed().subscribe(result => {
+          console.log('The dialog was closed = [', result, ']');
+          // if (result === 'refresh') {
+            // this.loadAll(this.curPage);
+          // }
+          this.filterBtn('');
+      });
   }
 
   private onSuccess(data, headers) {
