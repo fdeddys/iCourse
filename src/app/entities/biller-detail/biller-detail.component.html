@@ -74,7 +74,7 @@
         </mat-form-field>
         
         <mat-form-field class="form-full-width" style="margin-right: 10%">
-            <input type="text" matInput placeholder="External Code" name="externalCode" [(ngModel)]="billerDetail.externalCode"> 
+            <input type="text" matInput placeholder="External Code" name="externalCode" [(ngModel)]="billerDetail.externalCode" required> 
             <mat-error *ngIf="submitted && form.externalCode.errors" class="invalid-feedback">
                 <div *ngIf="form.externalCode.errors.required"> {{form.externalCode.errors.message}}</div>
             </mat-error>

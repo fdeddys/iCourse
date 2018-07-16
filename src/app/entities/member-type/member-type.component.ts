@@ -142,7 +142,7 @@ export class MemberTypeComponent implements OnInit {
     }
 
     private onSuccess(data, headers) {
-        if ( data.content.length <= 0 ) {
+        if ( data.content.length < 0 ) {
             return ;
         }
 

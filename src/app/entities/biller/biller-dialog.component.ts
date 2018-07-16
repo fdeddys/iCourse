@@ -19,6 +19,8 @@ import { MatCheckboxComponent } from '../../shared/templates/mat-checkbox.compon
 import { MatActionButtonComponent } from '../../shared/templates/mat-action-button.component';
 
 import { NO_DATA_GRID_MESSAGE, TOTAL_RECORD_PER_PAGE, REPORT_PATH } from '../../shared/constant/base-constant';
+
+import { SNACKBAR_DURATION_IN_MILLISECOND } from '../../shared/constant/base-constant';
 import { CommonValidatorDirective } from '../../validators/common.validator';
 
 @Component({
@@ -59,6 +61,7 @@ export class BillerDialogComponent implements OnInit {
     modeTitle = '';
     configSuccess = {};
     configError = {};
+    duration = SNACKBAR_DURATION_IN_MILLISECOND;
 
     // minDate = new Date(2000, 0, 1);
     // maxDate = new Date(2020, 0, 1);
@@ -599,8 +602,7 @@ export class BillerDialogComponent implements OnInit {
                         }
                         this.snackbarSuccess('Save Success');
                     } else {
-                        this.snackbarError('Save Error : ' + res.body.errMsg);
-
+                        this.openSnackBar(res.body.errMsg, 'Ok');
                     }
 
 
@@ -621,12 +623,33 @@ export class BillerDialogComponent implements OnInit {
             );
         } else {
             console.log('send to service ', this.billerSave);
-            this.billerService.update(this.billerSave.id, this.billerSave).subscribe((res: HttpResponse<Biller>) => {
-                this.dialogRef.close('refresh');
-            });
+            // this.billerService.update(this.billerSave.id, this.billerSave).subscribe((res: HttpResponse<Biller>) => {
+            //     this.dialogRef.close('refresh');
+            // });
+            this.billerService.update(this.billerSave.id, this.billerSave).subscribe(
+                    (res: HttpResponse<Biller>) => {
+                        if (res.body.errMsg === '' || res.body.errMsg === null ) {
+                            this.dialogRef.close('refresh');
+                        } else {
+                            this.openSnackBar(res.body.errMsg, 'Ok');
+                        }
+                },
+                (res: HttpErrorResponse) => {
+                    this.snackBar.open('Error !' + res.error.message , 'Close', {
+                        duration: this.duration,
+                    });
+                    console.log('error msh ', res.error.message);
+                }
+             );
+
         }
     }
 
+    openSnackBar(message: string, action: string) {
+        this.snackBar.open(message, action, {
+          duration: this.duration,
+        });
+    }
     validate(): void {
         this.submitted = true;
         // stop here if form is invalid
