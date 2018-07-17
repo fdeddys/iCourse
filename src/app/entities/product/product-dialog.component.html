@@ -12,36 +12,54 @@
 			<input matInput placeholder="Product Name" name="name" [(ngModel)]="product.name">
 		</mat-form-field> -->
 		<mat-form-field class="form-full-width">
-			<input matInput placeholder="Code" name="code" [(ngModel)]="product.productCode">
+			<input matInput placeholder="Code" name="code" [(ngModel)]="product.productCode" required>
+			<mat-error *ngIf="submitted && form.productCode.errors" class="invalid-feedback">
+				<div *ngIf="form.productCode.errors.required"> {{form.productCode.errors.message}}</div>
+			</mat-error> 
 		</mat-form-field>
 		<mat-form-field class="form-full-width form-separator">
-			<input matInput placeholder="Type" aria-label="Product Type" [matAutocomplete]="auto" [formControl]="billTypeCtrl">
+			<input matInput placeholder="Type" aria-label="Product Type" [matAutocomplete]="auto" [formControl]="billTypeCtrl" name="billerType" required>
 			<mat-autocomplete #auto="matAutocomplete" [displayWith]="displayFnBil">
 				<mat-option *ngFor="let billerType of filteredBillType | async" [value]="billerType">
 					<span>{{ billerType.name }}</span>
 				</mat-option>
 			</mat-autocomplete>
+			<mat-error *ngIf="submitted && form.billerType.errors" class="invalid-feedback">
+				<div *ngIf="form.billerType.errors.required"> {{form.billerType.errors.message}}</div>
+			</mat-error> 
 		</mat-form-field>		
 		<mat-form-field class="form-full-width">
-			<input matInput placeholder="Company" aria-label="Product Company" [matAutocomplete]="autoComp" [formControl]="billCompanyCtrl">
+			<input matInput placeholder="Company" aria-label="Product Company" [matAutocomplete]="autoComp" [formControl]="billCompanyCtrl" name="billerCompany" required>
 			<mat-autocomplete #autoComp="matAutocomplete" [displayWith]="displayFnCom">
 				<mat-option *ngFor="let billerCompany of filteredBillCompany | async" [value]="billerCompany">
 					<span>{{ billerCompany.name }}</span>
 				</mat-option>
 			</mat-autocomplete>
+			<mat-error *ngIf="submitted && form.billerCompany.errors" class="invalid-feedback">
+				<div *ngIf="form.billerCompany.errors.required"> {{form.billerCompany.errors.message}}</div>
+			</mat-error> 
 		</mat-form-field>
 		<mat-form-field class="form-full-width form-separator">
-			<input matInput placeholder="Denom" name="denom" [(ngModel)]="product.denom">
+			<input matInput placeholder="Denom" name="denom" [(ngModel)]="product.denom" required>
+			<mat-error *ngIf="submitted && form.denom.errors" class="invalid-feedback">
+				<div *ngIf="form.denom.errors.required"> {{form.denom.errors.message}}</div>
+			</mat-error> 
 		</mat-form-field>
 		<mat-form-field class="form-full-width">
-			<input type="number" matInput placeholder="Sell Price" name="sellPrice" [(ngModel)]="product.sellPrice">
+			<input type="number" matInput placeholder="Sell Price" name="sellPrice"  [(ngModel)]="product.sellPrice" required>
+			<mat-error *ngIf="submitted && form.denom.errors" class="invalid-feedback">
+				<div *ngIf="form.sellPrice.errors.required"> {{form.sellPrice.errors.message}}</div>
+			</mat-error> 
 		</mat-form-field>		
 		<mat-form-field class="form-full-width form-separator">
-			<mat-select placeholder="Biller Selection Method" [(ngModel)]="product.searchBy" name="searchBy" (selectionChange)="searchByChg()">
+			<mat-select placeholder="Biller Selection Method" [(ngModel)]="product.searchBy" name="searchBy" (selectionChange)="searchByChg()" name="billerSelectionMtd" required>
 				<mat-option *ngFor="let searchBy of searchByList" [value]="searchBy">
 				  	{{searchBy}}
 				</mat-option>
 			</mat-select>
+			<mat-error *ngIf="submitted && form.billerSelectionMtd.errors" class="invalid-feedback">
+				<div *ngIf="form.billerSelectionMtd.errors.required"> {{form.billerSelectionMtd.errors.message}}</div>
+			</mat-error> 
 		</mat-form-field>
 		<mat-form-field class="form-full-width">
 			<input matInput placeholder="Biller" aria-label="Biller" [matAutocomplete]="autoM" [formControl]="membCtrl">
