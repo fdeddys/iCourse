@@ -49,7 +49,15 @@ export class MenuDialogComponent implements OnInit {
         this.dialogRef.close();
     }
 
-    save(): void {
+    validate(): void {
+        this.submitted = true;
+        // stop here if form is invalid
+        if (this.menuForm.invalid) {
+            return;
+        }
+    }
+
+    onSubmit(): void {
 
         this.submitted = true;
         if (this.menuForm.invalid) {

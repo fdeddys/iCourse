@@ -16,8 +16,8 @@ import { GlobalSettingService, GlobalSetting } from '../global-setting';
 
 export class MemberBankDialogComponent implements OnInit {
 
-    private member: Member;
-    private memberBank: MemberBank;
+    member: Member;
+    memberBank: MemberBank;
     private globalSettings: GlobalSetting[];
     // private bankSelected;
 

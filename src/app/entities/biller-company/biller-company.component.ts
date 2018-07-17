@@ -32,7 +32,7 @@ export class BillerCompanyComponent implements OnInit {
     totalData = 0;
     totalRecord = TOTAL_RECORD_PER_PAGE;
 
-    private filter = {
+    filter = {
       name : null
     };
 

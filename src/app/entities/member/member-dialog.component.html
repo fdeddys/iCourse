@@ -7,7 +7,7 @@
             <input matInput placeholder="Id" value="{{member.id}}" [disabled]="true"  >
         </mat-form-field> -->
         <mat-form-field class="container-half-width" style="margin-right: 10%">
-        <input matInput placeholder="Name " [(ngModel)]="member.name" cdkFocusInitial name ="nm" [(ngModel)]="member.name" #name="ngModel" [ngClass]="{ 'is-invalid': f.submitted && member.invalid }"  required maxlength="50">
+        <input matInput placeholder="Name " [(ngModel)]="member.name" cdkFocusInitial name ="nm" [(ngModel)]="member.name" #name="ngModel" [ngClass]="{ 'is-invalid': f.submitted && name.invalid }"  required maxlength="50">
         <!-- [disabled]="data.action === 'Edit'" -->
         <mat-error *ngIf="submitted && form.name.errors" class="invalid-feedback">
                 <div *ngIf="form.name.errors.required"> {{form.name.errors.message}}</div>

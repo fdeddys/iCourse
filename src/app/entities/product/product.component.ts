@@ -176,7 +176,7 @@ export class ProductComponent implements OnInit {
                    // this.statusList.push('ALL');
                    this.filterStatusList.push('ALL');
                     for (const datas of res.body) {
-                        this.filterStatusList.push(datas); 
+                        this.filterStatusList.push(datas);
                     }
                    this.statusList = res.body;
                 },

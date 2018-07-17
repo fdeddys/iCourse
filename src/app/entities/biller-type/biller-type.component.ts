@@ -32,7 +32,7 @@ export class BillerTypeComponent implements OnInit {
     billPayTypeList = [];
     @ViewChild(MatPaginator) paginator: MatPaginator;
 
-    private filter = {
+    filter = {
         name : null,
         billPayType: 'ALL',
       };

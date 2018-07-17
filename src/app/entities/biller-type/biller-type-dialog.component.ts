@@ -41,12 +41,12 @@ export class BillerTypeDialogComponent implements OnInit {
             name: ['', [CommonValidatorDirective.required]],
         });
         this.billerType = {};
-        this.billerType.ispostpaid = false;
+        this.billerType.billPayType = false;
         if ( this.data.action === 'Edit' ) {
             // search
             this.billerType = this.data.BillerType;
             this.name = this.billerType.name;
-            this.checked =  this.billerType.ispostpaid;
+            this.checked =  this.billerType.billPayType;
         }
 
         this.sharedService.getBillPayType()
