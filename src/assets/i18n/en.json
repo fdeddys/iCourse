@@ -25,6 +25,19 @@
             "pass": "Password",
             "confirmP": "Confirm Password"
         },
+        "billerCompany": {
+            "home":{
+                "title": "Bill Operator",
+                "addLabelButton": "Add Bill Operator"
+            },
+            "filter":{
+                "name": "Name"
+            },
+            "detail":{
+                "title": "{{action}} {{entity}}"
+            },
+            "name": "Name"
+        },
         "biller": {
             "filter": {
                 "member": "Member Name",

@@ -8,6 +8,7 @@ import { BillerCompanyConfirmComponent } from './biller-company-confirm.componen
 import { GRID_THEME, CSS_BUTTON, NO_DATA_GRID_MESSAGE, TOTAL_RECORD_PER_PAGE } from '../../shared/constant/base-constant';
 import { REPORT_PATH } from '../../shared/constant/base-constant';
 import { MatActionButtonComponent } from '../../shared/templates/mat-action-button.component';
+import { TranslateService } from '@ngx-translate/core';
 
 @Component({
     selector: 'app-biller-company',
@@ -67,8 +68,12 @@ export class BillerCompanyComponent implements OnInit {
         return dt.toLocaleString(['id']);
     }
 
-    constructor(  private dialog: MatDialog,
-                  private billerCompanyService: BillerCompanyService) { }
+    constructor(  translate: TranslateService,
+                  private dialog: MatDialog,
+                  private billerCompanyService: BillerCompanyService) {
+                      translate.setDefaultLang('en');
+                      translate.use('en');
+                  }
 
     public onRowClicked(e) {
       if (e.event.target !== undefined) {
