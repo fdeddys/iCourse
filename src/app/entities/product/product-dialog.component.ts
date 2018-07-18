@@ -188,7 +188,13 @@ export class ProductDialogComponent implements OnInit {
         } else {
             console.log('send to service ', this.productSave);
             this.productService.update(this.productSave.id, this.productSave).subscribe((res: HttpResponse<Product>) => {
-                this.dialogRef.close('refresh');
+                if (res.body.errMsg === null || res.body.errMsg === '') {
+                    this.dialogRef.close('refresh');
+                } else {
+                    this.snackBar.open('Error !' + res.body.errMsg , 'Close', {
+                        duration: this.duration,
+                    });
+                }
             });
         }
     }
