@@ -4,6 +4,7 @@ import { HttpResponse, HttpErrorResponse } from '@angular/common/http';
 import { Biller } from './biller.model';
 import { BillerService } from './biller.service';
 import { MatDatepickerInputEvent } from '@angular/material/datepicker';
+import { TranslateService } from '@ngx-translate/core';
 
 import { Observable } from 'rxjs';
 import { map, startWith } from 'rxjs/operators';
@@ -143,6 +144,7 @@ export class BillerDialogComponent implements OnInit {
     };
 
     constructor(
+        translate: TranslateService,
         private formBuilder: FormBuilder,
         private dialog: MatDialog,
         private snackBar: MatSnackBar,
@@ -169,6 +171,8 @@ export class BillerDialogComponent implements OnInit {
         //     map(name => name ? this.filterMemb(name) : this.memberList.slice())
         // );
         //
+
+        translate.use('en');
 
         this.dateSCtrl = new FormControl();
         this.dateTCtrl = new FormControl();

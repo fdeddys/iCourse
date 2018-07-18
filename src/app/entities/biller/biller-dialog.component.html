@@ -1,4 +1,5 @@
-<h1 mat-dialog-title>Add {{ btnLabel }}</h1>
+<h1 mat-dialog-title *ngIf="btnLabel === 'Biller'" translate="ottoAG.billerDetail.detail.title" [translateParams]="{mode: modeTitle}"></h1>
+<h1 mat-dialog-title *ngIf="btnLabel !== 'Biller'" translate="ottoAG.billerPriceDetail.detail.title" [translateParams]="{mode: modeTitle}"></h1>
 <form name="billerForm" (ngSubmit)="f.form.valid && onSubmit()" #f="ngForm" novalidate>
 <div mat-dialog-content>
     <!-- <form class="form-container">	 -->
@@ -70,7 +71,8 @@
         <mat-divider></mat-divider>
         <br>
         <br>
-        <h4 mat-dialog-title>{{ btnLabel }} Product</h4>
+        <h4 mat-dialog-title *ngIf="btnLabel === 'Biller'" translate="ottoAG.billerDetail.detail.gridTitle"></h4>
+        <h4 mat-dialog-title *ngIf="btnLabel !== 'Biller'" translate="ottoAG.billerPriceDetail.detail.gridTitle"></h4>
         <fieldset style="border: 1px #ddd solid">       
             <ag-grid-angular 
                 style="height: 250px;" 
@@ -92,7 +94,8 @@
 	<!-- </form> -->
 </div>
 <div mat-dialog-actions align="end">
-    <button mat-button mat-raised-button type="button" color="primary" (click)="openBDDialog('create', null)" style="margin-top: 30px; margin-bottom: 10px;" [disabled]="btnDisabled">Add {{ btnLabel }} Product</button>
+    <button mat-button mat-raised-button type="button" color="primary" (click)="openBDDialog('create', null)" style="margin-top: 30px; margin-bottom: 10px;" [disabled]="btnDisabled" *ngIf="btnLabel === 'Biller'">{{ "ottoAG.billerDetail.detail.addDetail" | translate }}</button>
+    <button mat-button mat-raised-button type="button" color="primary" (click)="openBDDialog('create', null)" style="margin-top: 30px; margin-bottom: 10px;" [disabled]="btnDisabled" *ngIf="btnLabel !== 'Biller'">{{ "ottoAG.billerPriceDetail.detail.addDetail" | translate }}</button>
     <button mat-button mat-raised-button type="button" (click)="exportCSV('csv')" style="margin-top: 30px; margin-bottom: 10px;">{{ "entity.action.exportCSV" | translate }}</button>
     <!-- <button mat-button mat-raised-button style="margin-top: 30px; margin-bottom: 10px;" (click)="onNoClick()">Close</button> -->
     <!-- <button mat-raised-button color="primary" cdkFocusInitial (click)="save()">Save</button> -->

@@ -2,6 +2,7 @@ import { Component, OnInit, Inject } from '@angular/core';
 import { MatDatepickerInputEvent } from '@angular/material/datepicker';
 import * as _ from 'lodash';
 import { HttpResponse, HttpErrorResponse } from '@angular/common/http';
+import { TranslateService } from '@ngx-translate/core';
 
 import { Observable } from 'rxjs';
 import { map, startWith } from 'rxjs/operators';
@@ -54,6 +55,7 @@ export class BillerPriceDetailComponent implements OnInit {
     submitted = false;
 
     constructor(
+        translate: TranslateService,
         private formBuilder: FormBuilder,
         private dialog: MatDialog,
         private snackBar: MatSnackBar,
@@ -61,6 +63,8 @@ export class BillerPriceDetailComponent implements OnInit {
         public dialogRef: MatDialogRef<BillerPriceDetailComponent>,
         @Inject(MAT_DIALOG_DATA) public data: any
     ) {
+        translate.use('en');
+
         this.billTypeCtrl = new FormControl();
         this.filteredBillType = this.billTypeCtrl.valueChanges
         .pipe(

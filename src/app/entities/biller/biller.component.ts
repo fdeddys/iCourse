@@ -337,7 +337,7 @@ export class BillerComponent implements OnInit {
 
         const datasend = {
             mode : 'create',
-            modeTitle : 'Create',
+            modeTitle : 'Add',
             billType : this.route.snapshot.routeConfig.path,
             billerCompanyData : this.billerCompanyList,
             billerTypeData : this.billerTypeList,

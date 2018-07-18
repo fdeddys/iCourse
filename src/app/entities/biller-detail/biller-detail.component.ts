@@ -1,6 +1,7 @@
 import { Component, OnInit, Inject } from '@angular/core';
 import * as _ from 'lodash';
 import { HttpResponse, HttpErrorResponse } from '@angular/common/http';
+import { TranslateService } from '@ngx-translate/core';
 
 import { Observable } from 'rxjs';
 import { map, startWith } from 'rxjs/operators';
@@ -42,12 +43,15 @@ export class BillerDetailComponent implements OnInit {
     submitted = false;
 
     constructor(
+        translate: TranslateService,
         private formBuilder: FormBuilder,
         private dialog: MatDialog,
         public billerDetailService: BillerDetailService,
         public dialogRef: MatDialogRef<BillerDetailComponent>,
         @Inject(MAT_DIALOG_DATA) public data: any
     ) {
+        translate.use('en');
+
         this.billTypeCtrl = new FormControl();
         this.filteredBillType = this.billTypeCtrl.valueChanges
         .pipe(
