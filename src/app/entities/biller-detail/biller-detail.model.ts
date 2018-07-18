@@ -11,7 +11,8 @@ export class BillerDetail implements BaseEntity {
         public billerHeaderId?: number,
         public billerProductId?: number,
         public billPayType?: string,
-        public status?: string
+        public status?: string,
+        public errMsg?: string
     ) {
     }
 }

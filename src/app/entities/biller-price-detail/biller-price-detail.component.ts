@@ -18,6 +18,7 @@ import { Product } from '../product';
 
 import { BillerPriceInfoBillerComponent } from './biller-price-info-biller.component';
 import { CommonValidatorDirective } from '../../validators/common.validator';
+import { SNACKBAR_DURATION_IN_MILLISECOND } from '../../shared/constant/base-constant';
 
 @Component({
     selector: 'app-biller-price-detail',
@@ -41,7 +42,7 @@ export class BillerPriceDetailComponent implements OnInit {
     dataListBill = [];
     statusList = [];
     billPayTypeList = [];
-
+    duration = SNACKBAR_DURATION_IN_MILLISECOND;
 
     // minDate = new Date(2000, 0, 1);
     // maxDate = new Date(2020, 0, 1);
@@ -241,13 +242,25 @@ export class BillerPriceDetailComponent implements OnInit {
         if (this.billerPriceDetail.id === undefined || this.billerPriceDetail.id === null) {
             console.log('send to service ', this.billerPriceDetail);
             this.billerPriceDetailService.create(this.billerPriceDetail).subscribe((res: HttpResponse<BillerPriceDetail>) => {
-                this.dialogRef.close(varBack);
+                if (res.body.errMsg === null || res.body.errMsg === '') {
+                    this.dialogRef.close('refresh');
+                } else {
+                    this.snackBar.open('Error !' + res.body.errMsg , 'Close', {
+                        duration: this.duration,
+                    });
+                }
             });
         } else {
             console.log('send to service ', this.billerPriceDetail);
             this.billerPriceDetailService.update(this.billerPriceDetail.id, this.billerPriceDetail)
             .subscribe((res: HttpResponse<BillerPriceDetail>) => {
-                this.dialogRef.close(varBack);
+                if (res.body.errMsg === null || res.body.errMsg === '') {
+                    this.dialogRef.close('refresh');
+                } else {
+                    this.snackBar.open('Error !' + res.body.errMsg , 'Close', {
+                        duration: this.duration,
+                    });
+                }
             });
         }
     }
