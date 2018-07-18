@@ -7,13 +7,14 @@ import { Observable } from 'rxjs';
 import { map, startWith } from 'rxjs/operators';
 
 import { FormControl, FormGroup, FormBuilder } from '@angular/forms';
-import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
+import { MatDialog, MatDialogRef, MAT_DIALOG_DATA, MatSnackBar } from '@angular/material';
 import { BillerDetail } from './biller-detail.model';
 import { BillerDetailService } from './biller-detail.service';
 import { BillerType } from '../biller-type';
 import { BillerCompany } from '../biller-company';
 import { Product } from '../product';
 import { CommonValidatorDirective } from '../../validators/common.validator';
+import { SNACKBAR_DURATION_IN_MILLISECOND } from '../../shared/constant/base-constant';
 
 @Component({
     selector: 'app-biller-detail',
@@ -35,7 +36,7 @@ export class BillerDetailComponent implements OnInit {
     productList = [];
     statusList = [];
     billPayTypeList = [];
-
+    duration = SNACKBAR_DURATION_IN_MILLISECOND;
     // statusData = true;
     mode = 'Add';
 
@@ -48,6 +49,7 @@ export class BillerDetailComponent implements OnInit {
         private dialog: MatDialog,
         public billerDetailService: BillerDetailService,
         public dialogRef: MatDialogRef<BillerDetailComponent>,
+        public snackBar: MatSnackBar,
         @Inject(MAT_DIALOG_DATA) public data: any
     ) {
         translate.use('en');
@@ -181,7 +183,13 @@ export class BillerDetailComponent implements OnInit {
             console.log('send to service ', this.billerDetail);
             // direct save
             this.billerDetailService.create(this.billerDetail).subscribe((res: HttpResponse<BillerDetail>) => {
-                this.dialogRef.close(varBack);
+                if (res.body.errMsg === null || res.body.errMsg === '') {
+                    this.dialogRef.close('refresh');
+                } else {
+                    this.snackBar.open('Error !' + res.body.errMsg , 'Close', {
+                        duration: this.duration,
+                    });
+                }
             });
 
             // indirect save
@@ -204,7 +212,13 @@ export class BillerDetailComponent implements OnInit {
         } else {
             console.log('send to service ', this.billerDetail);
             this.billerDetailService.update(this.billerDetail.id, this.billerDetail).subscribe((res: HttpResponse<BillerDetail>) => {
-                this.dialogRef.close(varBack);
+                if (res.body.errMsg === null || res.body.errMsg === '') {
+                    this.dialogRef.close('refresh');
+                } else {
+                    this.snackBar.open('Error !' + res.body.errMsg , 'Close', {
+                        duration: this.duration,
+                    });
+                }
             });
         }
     }
