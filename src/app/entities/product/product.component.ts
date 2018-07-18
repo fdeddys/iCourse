@@ -2,6 +2,7 @@ import { Component, OnInit, Inject, ViewChild, ElementRef } from '@angular/core'
 import { HttpResponse, HttpErrorResponse } from '@angular/common/http';
 import { Product } from './product.model';
 import { ProductService } from './product.service';
+import { TranslateService } from '@ngx-translate/core';
 
 import { BillerCompany, BillerCompanyService } from '../biller-company';
 import { BillerType, BillerTypeService } from '../biller-type';
@@ -48,7 +49,7 @@ export class ProductComponent implements OnInit {
         name: null,
         productCode: null,
         status: 'ALL',
-      };
+    };
 
     curPage = 1;
     totalData = 0;
@@ -90,6 +91,7 @@ export class ProductComponent implements OnInit {
     };
 
     constructor(
+        translate: TranslateService,
         private mainService: MainService,
         private dialog: MatDialog,
         private billerCompanyService: BillerCompanyService,
@@ -97,6 +99,9 @@ export class ProductComponent implements OnInit {
         private memberService: MemberService,
         private productService: ProductService
     ) {
+        translate.setDefaultLang('en');
+        translate.use('en');
+
         this.resizeColumn = this.resizeColumn.bind(this);
         eventSubscriber(mainService.subscription, this.resizeColumn);
     }

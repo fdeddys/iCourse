@@ -32,23 +32,27 @@
     <mat-card-header>
         <mat-card-title style="align-items: center">
 			<!-- <h2 style="color: rgb(158, 158, 158)" >{{ menuName }} Registration</h2>  -->
-			<h2 mat-dialog-title>{{ menuName === 'Biller' ? 'Biller' : 'Biller Subscriber' }}</h2> 			               
+			<!-- <h2 mat-dialog-title>{{ menuName === 'Biller' ? 'Biller' : 'Biller Subscriber' }}</h2> -->
+			<h2 *ngIf="menuName === 'Biller'" mat-dialog-title translate="ottoAG.billerDetail.home.title"></h2>
+			<h2 *ngIf="menuName !== 'Biller'" mat-dialog-title translate="ottoAG.billerPriceDetail.home.title"></h2>
         </mat-card-title>
     </mat-card-header>
     <mat-card-content>
         <!-- <div style="text-align: right"> -->
-			<button mat-raised-button color="primary" (click)="openDialog('create', null)" style="margin-bottom: 10px;">Add {{ menuName === 'Biller' ? 'Biller' : 'Biller Subscriber' }}</button>
-			<button mat-raised-button (click)="exportCSV('csv')" style="margin-bottom: 10px;">Export CSV</button>
+			<!-- <button mat-raised-button color="primary" (click)="openDialog('create', null)" style="margin-bottom: 10px;">Add {{ menuName === 'Biller' ? 'Biller' : 'Biller Subscriber' }}</button> -->
+			<button *ngIf="menuName === 'Biller'" mat-raised-button color="primary" (click)="openDialog('create', null)" style="margin-bottom: 10px;">{{ "ottoAG.billerDetail.home.addLabelButton" | translate }}</button>
+			<button *ngIf="menuName !== 'Biller'" mat-raised-button color="primary" (click)="openDialog('create', null)" style="margin-bottom: 10px;">{{ "ottoAG.billerPriceDetail.home.addLabelButton" | translate }}</button>
+			<button mat-raised-button (click)="exportCSV('csv')" style="margin-bottom: 10px;">{{ "entity.action.exportCSV" | translate }}</button>
 		<!-- </div> -->
 		<br>
 		<div>
 			<mat-form-field class="form-width" >
-				<input matInput placeholder="Member Name" [(ngModel)]="filter.memberName" name ="name">
+				<input matInput placeholder="{{ 'ottoAG.biller.filter.member' | translate }}" [(ngModel)]="filter.memberName" name ="name">
 			</mat-form-field>
 			<br>
 			<mat-checkbox class="example-margin" [color]="'primary'" [(ngModel)]="filChkBox.start" [ngModelOptions]="{standalone: true}" (change)="chkBoxChgS($event)" style="margin-right: 20px"></mat-checkbox>
 			<mat-form-field class="form-half-width" style="margin-right: 5%">
-				<input matInput [matDatepicker]="pickerFStart" placeholder="Start Date From :" (click)="pickerFStart.open()" [max]="dateTStartCtrl.value" [formControl]="dateFStartCtrl" readonly>
+				<input matInput [matDatepicker]="pickerFStart" placeholder="{{ 'ottoAG.biller.filter.startDateFrom' | translate }}" (click)="pickerFStart.open()" [max]="dateTStartCtrl.value" [formControl]="dateFStartCtrl" readonly>
 				<mat-datepicker-toggle matSuffix [for]="pickerFStart"></mat-datepicker-toggle>
 				<mat-datepicker #pickerFStart></mat-datepicker>
 				<!-- <mat-error *ngIf="submitted && form.dateStart.errors" class="invalid-feedback">
@@ -56,7 +60,7 @@
 				</mat-error> -->
 			</mat-form-field>
 			<mat-form-field class="form-half-width">
-				<input matInput [matDatepicker]="pickerTStart" placeholder="Start Date To :" (click)="pickerTStart.open()" [min]="dateFStartCtrl.value" [formControl]="dateTStartCtrl" readonly>
+				<input matInput [matDatepicker]="pickerTStart" placeholder="{{ 'ottoAG.biller.filter.startDateTo' | translate }}" (click)="pickerTStart.open()" [min]="dateFStartCtrl.value" [formControl]="dateTStartCtrl" readonly>
 				<mat-datepicker-toggle matSuffix [for]="pickerTStart"></mat-datepicker-toggle>
 				<mat-datepicker #pickerTStart></mat-datepicker>
 				<!-- <mat-error *ngIf="submitted && form.dateThru.errors" class="invalid-feedback">
@@ -66,7 +70,7 @@
 			<br>
 			<mat-checkbox class="example-margin" [color]="'primary'" [(ngModel)]="filChkBox.through" [ngModelOptions]="{standalone: true}" (change)="chkBoxChgT($event)" style="margin-right: 20px"></mat-checkbox>
 			<mat-form-field class="form-half-width" style="margin-right: 5%">
-				<input matInput [matDatepicker]="pickerFThrough" placeholder="End Date From :" (click)="pickerFThrough.open()" [max]="dateTThroughCtrl.value" [formControl]="dateFThroughCtrl" readonly>
+				<input matInput [matDatepicker]="pickerFThrough" placeholder="{{ 'ottoAG.biller.filter.endDateFrom' | translate }}" (click)="pickerFThrough.open()" [max]="dateTThroughCtrl.value" [formControl]="dateFThroughCtrl" readonly>
 				<mat-datepicker-toggle matSuffix [for]="pickerFThrough"></mat-datepicker-toggle>
 				<mat-datepicker #pickerFThrough></mat-datepicker>
 				<!-- <mat-error *ngIf="submitted && form.dateStart.errors" class="invalid-feedback">
@@ -74,7 +78,7 @@
 				</mat-error> -->
 			</mat-form-field>
 			<mat-form-field class="form-half-width">
-				<input matInput [matDatepicker]="pickerTThrough" placeholder="End Date To :" (click)="pickerTThrough.open()" [min]="dateFThroughCtrl.value" [formControl]="dateTThroughCtrl" readonly>
+				<input matInput [matDatepicker]="pickerTThrough" placeholder="{{ 'ottoAG.biller.filter.endDateTo' | translate }}" (click)="pickerTThrough.open()" [min]="dateFThroughCtrl.value" [formControl]="dateTThroughCtrl" readonly>
 				<mat-datepicker-toggle matSuffix [for]="pickerTThrough"></mat-datepicker-toggle>
 				<mat-datepicker #pickerTThrough></mat-datepicker>
 				<!-- <mat-error *ngIf="submitted && form.dateThru.errors" class="invalid-feedback">

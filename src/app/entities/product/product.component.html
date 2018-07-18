@@ -28,27 +28,27 @@
     <mat-card-header>
         <mat-card-title style="align-items: center">
 			<!-- <h2 style="color: rgb(158, 158, 158)" >Product</h2>   -->
-			<h2 mat-dialog-title>Bill Product</h2>              
+			<h2 mat-dialog-title translate="ottoAG.billerProduct.home.title"></h2>              
         </mat-card-title>
     </mat-card-header>
  
     <mat-card-content> 
 		<div style="text-align: left">
-				<button mat-raised-button color="primary" (click)="openDialog('create', null)" style="margin-bottom: 10px;">Add New Product</button>
-				<button mat-raised-button class="primary"  (click)="exportCSV('csv')" style="margin-bottom: 10px;">Export CSV</button>
+				<button mat-raised-button color="primary" (click)="openDialog('create', null)" style="margin-bottom: 10px;">{{ "ottoAG.billerProduct.home.addLabelButton" | translate }}</button>
+				<button mat-raised-button class="primary"  (click)="exportCSV('csv')" style="margin-bottom: 10px;">{{ "entity.action.exportCSV" | translate }}</button>
 			</div> 
 			<br>
         <div>
             <mat-form-field class="container-half-width" >
-                <input matInput placeholder="Filter Name " [(ngModel)]="filter.name"  
+                <input matInput placeholder="{{ 'ottoAG.billerProduct.filter.name' | translate }}" [(ngModel)]="filter.name"  
                     name ="name"  >
             </mat-form-field>
             <mat-form-field class="container-half-width"  style="margin-left: 30px">
-                <input matInput placeholder="Filter Product Code " [(ngModel)]="filter.productCode"  
+                <input matInput placeholder="{{ 'ottoAG.billerProduct.filter.productCode' | translate }}" [(ngModel)]="filter.productCode"  
                     name ="productCode" >
             </mat-form-field>
             <mat-form-field class="form-full-width" style="margin-left: 30px">
-                <mat-select placeholder="Filter Status" [(ngModel)]="filter.status" name="status">
+                <mat-select placeholder="{{ 'ottoAG.billerProduct.filter.status' | translate }}" [(ngModel)]="filter.status" name="status">
                     <mat-option *ngFor="let status of filterStatusList" [value]="status">
                         <!-- {{ status === 'true' ? 'ACTIVE' : ( status === 'false' ? 'INACTIVE' : 'ALL' )   }} -->
                         {{status}}

@@ -4,6 +4,8 @@ import { FormsModule } from '@angular/forms';
 // import { AgGridModule } from 'ag-grid-angular';
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { Ng2Webstorage, LocalStorageService, SessionStorageService  } from 'ngx-webstorage';
+import { TranslateModule, TranslateLoader } from '@ngx-translate/core';
+import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 
 // import { MainService } from './layouts/main/main.service';
 import { SharedService } from './shared/services/shared.service';
@@ -27,12 +29,17 @@ import { LoginComponent } from './shared/login/login.component';
 import { MatCheckboxComponent } from './shared/templates/mat-checkbox.component';
 import { MatActionButtonComponent } from './shared/templates/mat-action-button.component';
 
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule, HttpClient } from '@angular/common/http';
 import { EntityModule } from './entities/entity.module';
 import { LayoutModule } from './layouts/layout.module';
 import { ReactiveFormsModule } from '@angular/forms';
 
 import { CommonValidatorDirective } from './validators/common.validator';
+
+// AoT requires an exported function for factories
+export function HttpLoaderFactory(http: HttpClient) {
+    return new TranslateHttpLoader(http, './assets/i18n/', '.json');
+}
 
 @NgModule({
     declarations: [
@@ -54,7 +61,14 @@ import { CommonValidatorDirective } from './validators/common.validator';
         HttpClientModule,
         EntityModule,
         LayoutModule,
-        ReactiveFormsModule
+        ReactiveFormsModule,
+        TranslateModule.forRoot({
+            loader: {
+                provide: TranslateLoader,
+                useFactory: HttpLoaderFactory,
+                deps: [HttpClient]
+            }
+        })
     ],
     providers: [
         // MainService,

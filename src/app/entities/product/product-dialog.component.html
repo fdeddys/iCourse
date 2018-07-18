@@ -1,21 +1,21 @@
-<h1 mat-dialog-title>{{ modeTitle }} Bill Product</h1>
+<h1 mat-dialog-title>{{ modeTitle }} {{ "ottoAG.billerProduct.detail.title" | translate }}</h1>
 <form name="globalSettingForm" (ngSubmit)="f.form.valid && onSubmit()" #f="ngForm" novalidate>
 <div mat-dialog-content> 
 		<mat-form-field class="form-full-width form-separator">
-				<input matInput placeholder="Product Name " [(ngModel)]="product.name" cdkFocusInitial name ="nm" [(ngModel)]="product.name" #name="ngModel" [ngClass]="{ 'is-invalid': f.submitted && name.invalid }" required maxlength="50">
-				<mat-error *ngIf="submitted && form.name.errors" class="invalid-feedback">
-						<div *ngIf="form.name.errors.required"> {{form.name.errors.message}}</div>
-				</mat-error> 
-			</mat-form-field>
+			<input matInput placeholder="{{ 'ottoAG.billerProduct.name' | translate }}" [(ngModel)]="product.name" cdkFocusInitial name ="nm" [(ngModel)]="product.name" #name="ngModel" [ngClass]="{ 'is-invalid': f.submitted && name.invalid }" required maxlength="50">
+			<mat-error *ngIf="submitted && form.name.errors" class="invalid-feedback">
+					<div *ngIf="form.name.errors.required"> {{form.name.errors.message}}</div>
+			</mat-error> 
+		</mat-form-field>
 
 	<!-- 	<mat-form-field class="form-full-width">
 			<input matInput placeholder="Product Name" name="name" [(ngModel)]="product.name">
 		</mat-form-field> -->
 		<mat-form-field class="form-full-width">
-			<input matInput placeholder="Code" name="code" [(ngModel)]="product.productCode">
+			<input matInput placeholder="{{ 'ottoAG.billerProduct.productCode' | translate }}" name="code" [(ngModel)]="product.productCode">
 		</mat-form-field>
 		<mat-form-field class="form-full-width form-separator">
-			<input matInput placeholder="Type" aria-label="Product Type" [matAutocomplete]="auto" [formControl]="billTypeCtrl">
+			<input matInput placeholder="{{ 'ottoAG.billerProduct.billerType' | translate }}" aria-label="Product Type" [matAutocomplete]="auto" [formControl]="billTypeCtrl">
 			<mat-autocomplete #auto="matAutocomplete" [displayWith]="displayFnBil">
 				<mat-option *ngFor="let billerType of filteredBillType | async" [value]="billerType">
 					<span>{{ billerType.name }}</span>
@@ -23,7 +23,7 @@
 			</mat-autocomplete>
 		</mat-form-field>		
 		<mat-form-field class="form-full-width">
-			<input matInput placeholder="Company" aria-label="Product Company" [matAutocomplete]="autoComp" [formControl]="billCompanyCtrl">
+			<input matInput placeholder="{{ 'ottoAG.billerProduct.billerCompany' | translate }}" aria-label="Product Company" [matAutocomplete]="autoComp" [formControl]="billCompanyCtrl">
 			<mat-autocomplete #autoComp="matAutocomplete" [displayWith]="displayFnCom">
 				<mat-option *ngFor="let billerCompany of filteredBillCompany | async" [value]="billerCompany">
 					<span>{{ billerCompany.name }}</span>
@@ -31,20 +31,20 @@
 			</mat-autocomplete>
 		</mat-form-field>
 		<mat-form-field class="form-full-width form-separator">
-			<input matInput placeholder="Denom" name="denom" [(ngModel)]="product.denom">
+			<input matInput placeholder="{{ 'ottoAG.billerProduct.denom' | translate }}" name="denom" [(ngModel)]="product.denom">
 		</mat-form-field>
 		<mat-form-field class="form-full-width">
-			<input type="number" matInput placeholder="Sell Price" name="sellPrice" [(ngModel)]="product.sellPrice">
+			<input type="number" matInput placeholder="{{ 'ottoAG.billerProduct.sellPrice' | translate }}" name="sellPrice" [(ngModel)]="product.sellPrice">
 		</mat-form-field>		
 		<mat-form-field class="form-full-width form-separator">
-			<mat-select placeholder="Biller Selection Method" [(ngModel)]="product.searchBy" name="searchBy" (selectionChange)="searchByChg()">
+			<mat-select placeholder="{{ 'ottoAG.billerProduct.searchBy' | translate }}" [(ngModel)]="product.searchBy" name="searchBy" (selectionChange)="searchByChg()">
 				<mat-option *ngFor="let searchBy of searchByList" [value]="searchBy">
 				  	{{searchBy}}
 				</mat-option>
 			</mat-select>
 		</mat-form-field>
 		<mat-form-field class="form-full-width">
-			<input matInput placeholder="Biller" aria-label="Biller" [matAutocomplete]="autoM" [formControl]="membCtrl">
+			<input matInput placeholder="{{ 'ottoAG.billerProduct.searchByMember' | translate }}" aria-label="Biller" [matAutocomplete]="autoM" [formControl]="membCtrl">
 			<mat-autocomplete #autoM="matAutocomplete" [displayWith]="displayFnMem">
 				<mat-option *ngFor="let member of filteredMemb | async" [value]="member">
 					<span>{{ member.name }}</span>
@@ -55,7 +55,7 @@
 			<mat-checkbox class="example-margin" [color]="'primary'" [(ngModel)]="product.status" [ngModelOptions]="{standalone: true}">Status</mat-checkbox>
 		</section> -->
 		<mat-form-field class="form-full-width">
-			<mat-select placeholder="Status" [(ngModel)]="product.status" name="status">
+			<mat-select placeholder="{{ 'ottoAG.billerProduct.status' | translate }}" [(ngModel)]="product.status" name="status">
 				<mat-option *ngFor="let status of statusList" [value]="status">
 					{{status === 'ACTIVE' ? 'AVAILABLE' : 'DISCONTINUED'}}
 				</mat-option>
@@ -64,6 +64,6 @@
 </div>
 <div mat-dialog-actions align="end">
     <!-- <button mat-raised-button (click)="onNoClick()">Cancel</button> -->
-    <button mat-raised-button color="primary" cdkFocusInitial (click)="validate()">Save</button>
+    <button mat-raised-button color="primary" cdkFocusInitial (click)="validate()">{{ "entity.action.save" | translate }}</button>
 </div>
 </form>

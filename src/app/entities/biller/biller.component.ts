@@ -5,6 +5,7 @@ import * as _ from 'lodash';
 import { HttpResponse, HttpErrorResponse } from '@angular/common/http';
 import { Biller } from './biller.model';
 import { BillerService } from './biller.service';
+import { TranslateService } from '@ngx-translate/core';
 
 import { Member, MemberService } from '../member';
 import { MemberType, MemberTypeService } from '../member-type';
@@ -93,6 +94,7 @@ export class BillerComponent implements OnInit {
     };
 
     constructor(
+        translate: TranslateService,
         private dialog: MatDialog,
         private billerCompanyService: BillerCompanyService,
         private billerTypeService: BillerTypeService,
@@ -103,6 +105,9 @@ export class BillerComponent implements OnInit {
         private route: ActivatedRoute,
         private sharedService: SharedService
     ) {
+        translate.setDefaultLang('en');
+        translate.use('en');
+
         this.dateFStartCtrl = new FormControl();
         this.dateTStartCtrl = new FormControl();
         this.dateFThroughCtrl = new FormControl();
