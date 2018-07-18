@@ -10,7 +10,7 @@
                 </mat-option>
             </mat-autocomplete> -->
             
-            <mat-select placeholder="Biller" name="member" [(ngModel)]="biller.memberId" required>
+            <mat-select placeholder="{{ 'ottoAG.biller.member' | translate }}" name="member" [(ngModel)]="biller.memberId" required>
                 <mat-option *ngFor="let member of memberList" [value]="member.id"> 
                     {{member.name}} 
                 </mat-option>
@@ -26,7 +26,7 @@
 					<span>{{ memberType.name }}</span>
 				</mat-option>
             </mat-autocomplete> -->
-            <mat-select placeholder="Member Type" name="memberType" [(ngModel)]="biller.memberTypeId" required>
+            <mat-select placeholder="{{ 'ottoAG.biller.memberType' | translate }}" name="memberType" [(ngModel)]="biller.memberTypeId" required>
                 <mat-option *ngFor="let memberType of memberTypeList" [value]="memberType.id">
                     {{memberType.name}}
                 </mat-option>
@@ -36,7 +36,7 @@
             </mat-error>
         </mat-form-field>
         <mat-form-field class="form-half-width" style="margin-right: 10%">
-            <input matInput [matDatepicker]="picker" placeholder="Date Start" (dateInput)="addEvent('start', $event)" (click)="picker.open()" [max]="dateTCtrl.value" [formControl]="dateSCtrl" readonly required>
+            <input matInput [matDatepicker]="picker" placeholder="{{ 'ottoAG.biller.dateStart' | translate }}" (dateInput)="addEvent('start', $event)" (click)="picker.open()" [max]="dateTCtrl.value" [formControl]="dateSCtrl" readonly required>
             <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
             <mat-datepicker #picker></mat-datepicker>
             <mat-error *ngIf="submitted && form.dateStart.errors" class="invalid-feedback">
@@ -44,7 +44,7 @@
             </mat-error>
         </mat-form-field>
         <mat-form-field class="form-half-width">
-            <input matInput [matDatepicker]="pickerT" placeholder="Date Through" (dateInput)="addEvent('thru', $event)" (click)="pickerT.open()" [min]="dateSCtrl.value" [formControl]="dateTCtrl" readonly required>
+            <input matInput [matDatepicker]="pickerT" placeholder="{{ 'ottoAG.biller.dateThru' | translate }}" (dateInput)="addEvent('thru', $event)" (click)="pickerT.open()" [min]="dateSCtrl.value" [formControl]="dateTCtrl" readonly required>
             <mat-datepicker-toggle matSuffix [for]="pickerT"></mat-datepicker-toggle>
             <mat-datepicker #pickerT></mat-datepicker>
             <mat-error *ngIf="submitted && form.dateThru.errors" class="invalid-feedback">
@@ -52,19 +52,19 @@
             </mat-error>
         </mat-form-field>
         <mat-form-field class="form-full-width">
-            <textarea maxlength="255" matInput placeholder="Description" name="description" [(ngModel)]="biller.description" #desc></textarea>
+            <textarea maxlength="255" matInput placeholder="{{ 'ottoAG.biller.description' | translate }}" name="description" [(ngModel)]="biller.description" #desc></textarea>
         </mat-form-field>        
         <section class="example-section">
-            <mat-checkbox class="example-margin" [color]="'primary'" [(ngModel)]="biller.manualCode" [ngModelOptions]="{standalone: true}">Set Member Code</mat-checkbox>
+            <mat-checkbox class="example-margin" [color]="'primary'" [(ngModel)]="biller.manualCode" [ngModelOptions]="{standalone: true}">{{ 'ottoAG.biller.manualCode' | translate }}</mat-checkbox>
         </section>
         <mat-form-field class="form-half-width">
-			<input matInput placeholder="Member Code" name="memberCode" [(ngModel)]="biller.memberCode" [disabled]="!biller.manualCode" maxlength="8">
+			<input matInput placeholder="{{ 'ottoAG.biller.memberCode' | translate }}" name="memberCode" [(ngModel)]="biller.memberCode" [disabled]="!biller.manualCode" maxlength="8">
         </mat-form-field>
         
         <!-- <button mat-raised-button color="primary" (click)="openBDDialog('create')" style="margin-top: 30px; margin-bottom: 10px; margin-right: 10px;" [disabled]="btnDisabled">{{ btnLabel }}</button> -->
         <!-- <button mat-raised-button color="primary" style="margin-top: 10px; margin-bottom: 10px; margin-right: 0px; margin-left: 75%" cdkFocusInitial (click)="save()">Save</button> -->
         <div align="end" style="margin-top: 10px; margin-bottom: 10px">
-            <button mat-raised-button color="primary" (click)="validate()">Save</button>
+            <button mat-raised-button color="primary" (click)="validate()">{{ "entity.action.save" | translate }}</button>
         </div>        
         
         <mat-divider></mat-divider>
@@ -93,7 +93,7 @@
 </div>
 <div mat-dialog-actions align="end">
     <button mat-button mat-raised-button type="button" color="primary" (click)="openBDDialog('create', null)" style="margin-top: 30px; margin-bottom: 10px;" [disabled]="btnDisabled">Add {{ btnLabel }} Product</button>
-    <button mat-button mat-raised-button type="button" (click)="exportCSV('csv')" style="margin-top: 30px; margin-bottom: 10px;">Export CSV</button>
+    <button mat-button mat-raised-button type="button" (click)="exportCSV('csv')" style="margin-top: 30px; margin-bottom: 10px;">{{ "entity.action.exportCSV" | translate }}</button>
     <!-- <button mat-button mat-raised-button style="margin-top: 30px; margin-bottom: 10px;" (click)="onNoClick()">Close</button> -->
     <!-- <button mat-raised-button color="primary" cdkFocusInitial (click)="save()">Save</button> -->
 </div>

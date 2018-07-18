@@ -3,6 +3,7 @@ import * as _ from 'lodash';
 import { HttpResponse, HttpErrorResponse } from '@angular/common/http';
 import { Product } from './product.model';
 import { ProductService } from './product.service';
+import { TranslateService } from '@ngx-translate/core';
 
 import { Observable } from 'rxjs';
 import { map, startWith } from 'rxjs/operators';
@@ -43,12 +44,16 @@ export class ProductDialogComponent implements OnInit {
     duration = SNACKBAR_DURATION_IN_MILLISECOND;
 
     constructor(
+        translate: TranslateService,
         private formBuilder: FormBuilder,
         public productService: ProductService,
         public dialogRef: MatDialogRef<ProductDialogComponent>,
         public snackBar: MatSnackBar,
         @Inject(MAT_DIALOG_DATA) public data: any
     ) {
+        translate.setDefaultLang('en');
+        translate.use('en');
+
         this.billTypeCtrl = new FormControl();
         this.filteredBillType = this.billTypeCtrl.valueChanges
         .pipe(

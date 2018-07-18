@@ -1,0 +1,77 @@
+{
+    "global": {
+        "title": "OttoAG"
+    },
+    "entity": {
+        "action": {
+            "back": "Back",
+            "cancel": "Cancel",
+            "delete": "Delete",
+            "edit": "Edit",
+            "open": "Open",
+            "save": "Save",
+            "exportCSV": "Export CSV"
+        }
+    },
+    "ottoAG": {
+        "biller": {
+            "filter": {
+                "member": "Member Name",
+                "startDateFrom": "Start Date From :",
+                "startDateTo": "Start Date To :",
+                "endDateFrom": "End Date From :",
+                "endDateTo": "End Date To :"
+            },
+            "description": "Description",
+            "dateStart": "Date Start",
+            "dateThru": "Date Through",
+            "memberType": "Member Type",
+            "member": "Biller",
+            "manualCode": "Set Manual Code",
+            "memberCode": "Member Code"
+        },
+        "billerDetail": {
+            "home": {
+                "title": "Biller",
+                "addLabelButton": "Add Biller"
+            },
+            "detail": {
+                "title": "Add Biller",
+                "gridTitle": "Product"
+            }
+        },
+        "billerPriceDetail": {
+            "home": {
+                "title": "Biller Subscriber",
+                "addLabelButton": "Add Biller Subscriber"
+            },
+            "detail": {
+                "title": "Add Biller Subscriber",
+                "gridTitle": "Product"
+            }
+        },
+        "billerProduct": {
+            "home": {
+                "title": "Bill Product",
+                "addLabelButton": "Add New Product"
+            },
+            "filter": {
+                "name": "Filter Name",
+                "productCode": "Filter Product Code",
+                "status": "Filter Status"
+            },
+            "detail": {
+                "title": "Bill Product"
+            },
+            "billerType": "Type",
+            "billerCompany": "Company",
+            "name": "Product Name",
+            "denom": "Denom",
+            "productCode": "Code",
+            "sellPrice": "Sell Price",
+            "status": "Status",
+            "searchBy": "Biller Selection Method",
+            "searchByMember": "Biller"
+        }
+    }
+}
