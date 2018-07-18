@@ -36,9 +36,23 @@
                 "addLabelButton": "Add Biller"
             },
             "detail": {
-                "title": "Add Biller",
-                "gridTitle": "Product"
-            }
+                "title": "{{mode}} Biller",
+                "gridTitle": "Biller Products",
+                "addDetail": "Add Biller Product",
+                "subDetail": {
+                    "title": "{{mode}} Biller Product",
+                    "addLabelButton": "{{mode}} Product"
+                }
+            },
+            "billerType": "Type",
+            "billerCompany": "Company",
+            "denom": "Denom",
+            "buyPrice": "Buy Price",
+            "fee": "Fee",
+            "sellPrice": "Sell Price",
+            "profit": "Profit",
+            "status": "Status",
+            "externalCode": "External Code"
         },
         "billerPriceDetail": {
             "home": {
@@ -46,9 +60,24 @@
                 "addLabelButton": "Add Biller Subscriber"
             },
             "detail": {
-                "title": "Add Biller Subscriber",
-                "gridTitle": "Product"
-            }
+                "title": "{{mode}} Biller Subscriber",
+                "gridTitle": "Biller Subscriber Products",
+                "addDetail": "Add Biller Subscriber Product",
+                "subDetail": {
+                    "title": "{{mode}} Biller Subscriber Product",
+                    "addLabelButton": "{{mode}} Product"
+                }
+            },
+            "billerType": "Product Type",
+            "billerCompany": "Product Company",
+            "denom": "Denom",
+            "sellPrice": "Sell Price",
+            "profit": "Profit Merchant",
+            "profitDistributorPks": "Profit Distributor",
+            "profitMemberPks": "Profit Member",
+            "dateStart": "Date Start",
+            "dateThru": "Date Through",
+            "status": "Status"
         },
         "billerProduct": {
             "home": {
