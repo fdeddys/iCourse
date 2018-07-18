@@ -6,6 +6,7 @@ import { GlobalSettingService } from './global-setting.service';
 import { HttpResponse, HttpErrorResponse } from '@angular/common/http';
 import { CommonValidatorDirective } from '../../validators/common.validator';
 import { SNACKBAR_DURATION_IN_MILLISECOND } from '../../shared/constant/base-constant';
+import { TranslateService } from '@ngx-translate/core';
 
 @Component({
     selector: 'app-global-setting-dialog',
@@ -29,11 +30,14 @@ export class GlobalSettingDialogComponent implements OnInit {
     default: 'UK';
 
     constructor(
+        translate: TranslateService,
         private snackBar: MatSnackBar,
         private formBuilder: FormBuilder,
         public globalSettingService: GlobalSettingService,
         public dialogRef: MatDialogRef<GlobalSettingDialogComponent>,
-        @Inject(MAT_DIALOG_DATA) public data: any) { }
+        @Inject(MAT_DIALOG_DATA) public data: any) {
+            translate.use('en');
+        }
 
     get form() { return this.globalSettingForm.controls; }
 

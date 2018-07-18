@@ -126,6 +126,23 @@
             "searchBy": "Biller Selection Method",
             "searchByMember": "Biller"
         },
+        "globalSettings":{
+            "home": {
+                "title": "Global Settings",
+                "addLabelButton": "Add Global Settings"
+            },
+            "filter": {
+                "name": "Filter Name",
+                "description": "Filter Description",
+                "type": "Filter Type"
+            },
+            "detail": {
+                "title": "{{action}} {{entity}}"
+            },
+            "name": "Name",
+            "description": "Description",
+            "type": "Global Type"
+        },
         "user": {
             "home": {
                 "title": "User",
