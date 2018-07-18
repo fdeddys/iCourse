@@ -6,6 +6,8 @@ export class Biller implements BaseEntity {
         public description?: string,
         public dateStart?: string,
         public dateThru?: string,
+        public dateStartLocDt?: string,
+        public dateThruLocDt?: string,
         public memberTypeId?: number,
         public memberId?: number,
         public manualCode?: boolean,
