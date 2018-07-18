@@ -11,6 +11,7 @@ import { RoleUserService } from '../role-user/role-user.service';
 import { RoleUserView } from '../role-user/role-user.model';
 import { CommonValidatorDirective } from '../../validators/common.validator';
 import { MatCheckboxComponent } from '../../shared/templates/mat-checkbox.component';
+import { TranslateService } from '@ngx-translate/core';
 
 @Component({
     selector: 'app-user-dialog',
@@ -53,13 +54,16 @@ export class UserDialogComponent implements OnInit {
     ];
 
     constructor(
+        translate: TranslateService,
         private formBuilder: FormBuilder,
         public userService: UserService,
         public snackBar: MatSnackBar,
         public roleService: RoleService,
         private roleUserService: RoleUserService,
         public dialogRef: MatDialogRef<UserDialogComponent>,
-        @Inject(MAT_DIALOG_DATA) public data: any) { }
+        @Inject(MAT_DIALOG_DATA) public data: any) {
+            translate.use('en');
+        }
 
     gridOptions = {
         columnDefs: [

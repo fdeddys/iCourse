@@ -14,6 +14,7 @@ import { ICellRendererAngularComp } from 'ag-grid-angular/main';
 import { MatSnackBar } from '@angular/material';
 import { Filter } from '../../shared/model/filter';
 import { SharedService } from '../../shared/services/shared.service';
+import { TranslateService } from '@ngx-translate/core';
 
 @Component({
     selector: 'app-user',
@@ -83,10 +84,14 @@ export class UserComponent implements OnInit {
         return dt.toLocaleString(['id']);
     }
 
-    constructor(    private dialog: MatDialog,
+    constructor(    translate: TranslateService,
+                    private dialog: MatDialog,
                     public snackBar: MatSnackBar,
                     private userService: UserService,
-                    private sharedService: SharedService ) { }
+                    private sharedService: SharedService ) {
+                        translate.setDefaultLang('en');
+                        translate.use('en');
+                    }
 
     public onCellClicked(e) {
         console.log('row clicked isi nya ====> ', e);

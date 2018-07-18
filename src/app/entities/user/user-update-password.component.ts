@@ -7,6 +7,7 @@ import { HttpResponse, HttpErrorResponse } from '@angular/common/http';
 import { NO_DATA_GRID_MESSAGE, GRID_THEME, CSS_BUTTON, SNACKBAR_DURATION_IN_MILLISECOND } from '../../shared/constant/base-constant';
 import { UserService } from './user.service';
 import * as sha512 from 'js-sha512';
+import { TranslateService } from '@ngx-translate/core';
 
 @Component({
     selector: 'app-user-change-password',
@@ -28,11 +29,14 @@ export class UserUpdatePasswordComponent implements OnInit {
     timedelay = SNACKBAR_DURATION_IN_MILLISECOND;
 
     constructor(
+        translate: TranslateService,
         public userService: UserService,
         public snackBar: MatSnackBar,
         public dialogRef: MatDialogRef<UserUpdatePasswordComponent>,
         // @Inject(MAT_DIALOG_DATA) public data: any
-    ) { }
+    ) {
+        translate.use('en');
+    }
 
 
     ngOnInit() {
