@@ -13,6 +13,9 @@
 		</mat-form-field> -->
 		<mat-form-field class="form-full-width">
 			<input matInput placeholder="{{ 'ottoAG.billerProduct.productCode' | translate }}" name="code" [(ngModel)]="product.productCode">
+			<mat-error *ngIf="submitted && form.productCode.errors" class="invalid-feedback">
+				<div *ngIf="form.productCode.errors.required"> {{form.productCode.errors.message}}</div>
+			</mat-error> 
 		</mat-form-field>
 		<mat-form-field class="form-full-width form-separator">
 			<input matInput placeholder="{{ 'ottoAG.billerProduct.billerType' | translate }}" aria-label="Product Type" [matAutocomplete]="auto" [formControl]="billTypeCtrl">
@@ -21,6 +24,9 @@
 					<span>{{ billerType.name }}</span>
 				</mat-option>
 			</mat-autocomplete>
+			<mat-error *ngIf="submitted && form.billerType.errors" class="invalid-feedback">
+				<div *ngIf="form.billerType.errors.required"> {{form.billerType.errors.message}}</div>
+			</mat-error> 
 		</mat-form-field>		
 		<mat-form-field class="form-full-width">
 			<input matInput placeholder="{{ 'ottoAG.billerProduct.billerCompany' | translate }}" aria-label="Product Company" [matAutocomplete]="autoComp" [formControl]="billCompanyCtrl">
@@ -29,12 +35,21 @@
 					<span>{{ billerCompany.name }}</span>
 				</mat-option>
 			</mat-autocomplete>
+			<mat-error *ngIf="submitted && form.billerCompany.errors" class="invalid-feedback">
+				<div *ngIf="form.billerCompany.errors.required"> {{form.billerCompany.errors.message}}</div>
+			</mat-error> 
 		</mat-form-field>
 		<mat-form-field class="form-full-width form-separator">
 			<input matInput placeholder="{{ 'ottoAG.billerProduct.denom' | translate }}" name="denom" [(ngModel)]="product.denom">
+			<mat-error *ngIf="submitted && form.denom.errors" class="invalid-feedback">
+				<div *ngIf="form.denom.errors.required"> {{form.denom.errors.message}}</div>
+			</mat-error> 
 		</mat-form-field>
 		<mat-form-field class="form-full-width">
 			<input type="number" matInput placeholder="{{ 'ottoAG.billerProduct.sellPrice' | translate }}" name="sellPrice" [(ngModel)]="product.sellPrice">
+			<mat-error *ngIf="submitted && form.denom.errors" class="invalid-feedback">
+				<div *ngIf="form.sellPrice.errors.required"> {{form.sellPrice.errors.message}}</div>
+			</mat-error> 
 		</mat-form-field>		
 		<mat-form-field class="form-full-width form-separator">
 			<mat-select placeholder="{{ 'ottoAG.billerProduct.searchBy' | translate }}" [(ngModel)]="product.searchBy" name="searchBy" (selectionChange)="searchByChg()">
@@ -42,6 +57,9 @@
 				  	{{searchBy}}
 				</mat-option>
 			</mat-select>
+			<mat-error *ngIf="submitted && form.billerSelectionMtd.errors" class="invalid-feedback">
+				<div *ngIf="form.billerSelectionMtd.errors.required"> {{form.billerSelectionMtd.errors.message}}</div>
+			</mat-error> 
 		</mat-form-field>
 		<mat-form-field class="form-full-width">
 			<input matInput placeholder="{{ 'ottoAG.billerProduct.searchByMember' | translate }}" aria-label="Biller" [matAutocomplete]="autoM" [formControl]="membCtrl">

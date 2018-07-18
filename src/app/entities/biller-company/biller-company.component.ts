@@ -1,6 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { BillerCompany } from './biller-company.model';
-import { MatDialog } from '@angular/material';
+import { MatDialog, MatPaginator } from '@angular/material';
 import { HttpResponse, HttpErrorResponse } from '@angular/common/http';
 import { BillerCompanyService } from './biller-company.service';
 import { BillerCompanyDialogComponent } from './biller-company-dialog.component';
@@ -20,6 +20,7 @@ export class BillerCompanyComponent implements OnInit {
   private gridApi;
   private gridColumnApi;
   private resourceUrl = REPORT_PATH;
+  @ViewChild(MatPaginator) paginator: MatPaginator;
 
     theme: String = GRID_THEME;
     cssButton = CSS_BUTTON  ;
@@ -125,11 +126,19 @@ export class BillerCompanyComponent implements OnInit {
         );
       }
 
+    actionfilter(): void {
+        this.paginator._pageIndex = 0;
+        this.filterBtn(1);
+    }
+
     ngOnInit() {
       // this.loadAll();
     }
 
-    filterBtn(): void {
+    filterBtn(page): void {
+      if (page !== '') {
+        this.curPage = page;
+     }
     this.billerCompanyService.filter({
         page: this.curPage,
         count: this.totalRecord,
@@ -151,7 +160,8 @@ export class BillerCompanyComponent implements OnInit {
       console.log(this.gridApi);
       console.log(this.gridColumnApi);
       // params.api.sizeColumnsToFit();
-      this.loadAll(this.curPage);
+      // this.loadAll(this.curPage);
+      this.filterBtn('');
     }
 
     openNewDialog(): void {
@@ -190,7 +200,8 @@ export class BillerCompanyComponent implements OnInit {
     public onPaginateChange($event): void {
         // console.log('events ', $event);
         this.curPage = $event.pageIndex + 1;
-        this.loadAll(this.curPage);
+        // this.loadAll(this.curPage);
+        this.filterBtn('');
     }
 
     public async exportCSV(reportType): Promise<void> {

@@ -8,7 +8,7 @@ import { BillerCompany, BillerCompanyService } from '../biller-company';
 import { BillerType, BillerTypeService } from '../biller-type';
 import { Member, MemberService } from '../member';
 
-import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
+import { MatDialog, MatDialogRef, MAT_DIALOG_DATA, MatPaginator } from '@angular/material';
 import { GRID_THEME, CSS_BUTTON, NO_DATA_GRID_MESSAGE, TOTAL_RECORD_PER_PAGE, REPORT_PATH } from '../../shared/constant/base-constant';
 import { MatActionButtonComponent } from '../../shared/templates/mat-action-button.component';
 
@@ -44,8 +44,8 @@ export class ProductComponent implements OnInit {
     theme: String = GRID_THEME;
     cssButton = CSS_BUTTON  ;
     messageNoData: string = NO_DATA_GRID_MESSAGE;
-
-    filter: ProductFilter = {
+    @ViewChild(MatPaginator) paginator: MatPaginator;
+    private filter: ProductFilter = {
         name: null,
         productCode: null,
         status: 'ALL',
@@ -190,8 +190,15 @@ export class ProductComponent implements OnInit {
         );
     }
 
+    actionfilter(): void {
+        this.paginator._pageIndex = 0;
+        this.filterBtn(1);
+      }
 
-    filterBtn(): void {
+    filterBtn(page): void {
+        if (page !== '') {
+            this.curPage = page;
+        }
         let statusAll = false;
         switch (this.filter.status) {
           case 'ALL':
@@ -231,7 +238,8 @@ export class ProductComponent implements OnInit {
             this.gridApi.sizeColumnsToFit();
         };
 
-        this.loadAll(this.curPage);
+        // this.loadAll(this.curPage);
+        this.filterBtn('');
     }
 
     onRowClicked(e) {
@@ -338,7 +346,8 @@ export class ProductComponent implements OnInit {
     public onPaginateChange($event): void {
         // console.log('events ', $event);
         this.curPage = $event.pageIndex + 1;
-        this.loadAll(this.curPage);
+        // this.loadAll(this.curPage);
+        this.filterBtn('');
     }
     // public exportCSV(reportType): void {
     //     const path = this.resourceUrl  + 'billerproduct';

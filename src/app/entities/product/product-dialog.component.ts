@@ -125,6 +125,12 @@ export class ProductDialogComponent implements OnInit {
     ngOnInit() {
         this.productForm = this.formBuilder.group({
             name: ['', [CommonValidatorDirective.required]],
+            productCode : ['', [CommonValidatorDirective.required]],
+            billerType : ['', [CommonValidatorDirective.required]],
+            billerCompany : ['', [CommonValidatorDirective.required]],
+            denom : ['', [CommonValidatorDirective.required]],
+            sellPrice : ['', [CommonValidatorDirective.required]],
+            billerSelectionMtd : ['', [CommonValidatorDirective.required]],
         });
 
         this.product = {};

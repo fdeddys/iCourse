@@ -1,10 +1,11 @@
 import { Component, OnInit, Inject } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
+import { MatDialog, MatDialogRef, MAT_DIALOG_DATA, MatSnackBar } from '@angular/material';
 import { GlobalSetting } from './global-setting.model';
 import { GlobalSettingService } from './global-setting.service';
 import { HttpResponse, HttpErrorResponse } from '@angular/common/http';
 import { CommonValidatorDirective } from '../../validators/common.validator';
+import { SNACKBAR_DURATION_IN_MILLISECOND } from '../../shared/constant/base-constant';
 
 @Component({
     selector: 'app-global-setting-dialog',
@@ -17,6 +18,7 @@ export class GlobalSettingDialogComponent implements OnInit {
     globalSetting: GlobalSetting;
     globalSettingForm: FormGroup;
     submitted = false;
+    duration = SNACKBAR_DURATION_IN_MILLISECOND;
     globalTypeOption = [
         {value: 'BANK', viewValue: 'Bank'},
         {value: 'RELIGION', viewValue: 'Religion'},
@@ -27,6 +29,7 @@ export class GlobalSettingDialogComponent implements OnInit {
     default: 'UK';
 
     constructor(
+        private snackBar: MatSnackBar,
         private formBuilder: FormBuilder,
         public globalSettingService: GlobalSettingService,
         public dialogRef: MatDialogRef<GlobalSettingDialogComponent>,
@@ -59,12 +62,20 @@ export class GlobalSettingDialogComponent implements OnInit {
         if (this.globalSetting.id === undefined) {
             console.log('send to service ', this.globalSetting);
             this.globalSettingService.create(this.globalSetting).subscribe((res: HttpResponse<GlobalSetting>) => {
-                this.dialogRef.close('refresh');
+                if (res.body.errMsg === '' || res.body.errMsg === null ) {
+                    this.dialogRef.close('refresh');
+                } else {
+                    this.openSnackBar(res.body.errMsg, 'Ok');
+                }
             });
         } else {
             console.log('send to service ', this.globalSetting);
             this.globalSettingService.update(this.globalSetting.id, this.globalSetting).subscribe((res: HttpResponse<GlobalSetting>) => {
-                this.dialogRef.close('refresh');
+                if (res.body.errMsg === '' || res.body.errMsg === null ) {
+                    this.dialogRef.close('refresh');
+                } else {
+                    this.openSnackBar(res.body.errMsg, 'Ok');
+                }
             });
         }
     }
@@ -75,6 +86,12 @@ export class GlobalSettingDialogComponent implements OnInit {
         if (this.globalSettingForm.invalid) {
             return;
         }
+    }
+
+    openSnackBar(message: string, action: string) {
+        this.snackBar.open(message, action, {
+          duration: this.duration,
+        });
     }
 
 }
