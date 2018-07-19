@@ -18,6 +18,7 @@ import { RoleUserModule } from './role-user/role-user.module';
 import { AuditTrailModule } from './audit-trail/audit-trail.module';
 import { AccessMatrixModule } from './access-matrix/access-matrix.module';
 import { TransactionTypeModule } from './transaction-type/transaction-type.module';
+import { ResponseCodeModule} from './response-code/response-code.module';
 
 
 @NgModule({
@@ -40,6 +41,7 @@ import { TransactionTypeModule } from './transaction-type/transaction-type.modul
         AuditTrailModule,
         AccessMatrixModule,
         TransactionTypeModule,
+        ResponseCodeModule,
     ],
     entryComponents: [],
     providers: [],

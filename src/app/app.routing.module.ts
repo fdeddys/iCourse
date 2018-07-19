@@ -15,6 +15,7 @@ import { RoleComponent } from './entities/role/role.component';
 import { MenuComponent } from './entities/menu';
 import { AuditTrailComponent } from './entities/audit-trail';
 import { AccessMatrixComponent } from './entities/access-matrix';
+import { ResponseCode, ResponseCodeComponent } from './entities/response-code';
 import { TransTypeComponent } from './entities/transaction-type';
 
 
@@ -40,6 +41,7 @@ const routes: Routes = [
             {path: 'audit-trail', component: AuditTrailComponent},
             {path: 'access-matrix', component: AccessMatrixComponent},
             {path: 'trans-type', component: TransTypeComponent},
+            {path: 'response-code', component: ResponseCodeComponent},
         ]
     },
     // {path: 'member', component: MemberComponent}

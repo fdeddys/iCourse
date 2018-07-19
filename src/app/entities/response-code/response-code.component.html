@@ -1,0 +1,53 @@
+<mat-card>
+    <mat-card-header>
+        <mat-card-title style="align-items: center">
+            <!-- <h2 style="color: rgb(226, 0, 0)" >Biller Type</h2>         -->
+            <h2 mat-dialog-title>Response Code</h2>
+        </mat-card-title>
+    </mat-card-header>
+    <mat-card-content>
+        <div style="text-align: left">
+            <button mat-raised-button color="primary"  (click)="openNewDialog()" style="margin-bottom: 10px;">Add Respose Code</button>
+            <button mat-raised-button class="primary"  (click)="exportCSV('csv')" style="margin-bottom: 10px;">Export CSV</button>
+        </div>
+        <br>
+        <div>
+            <mat-form-field class="container-half-width" >
+                <input matInput placeholder="Filter Respose Code " [(ngModel)]="filter.responseCode"  
+                    name ="responseCode"  >
+            </mat-form-field> 
+            <mat-form-field class="container-half-width" >
+                <input matInput placeholder="Filter Description " [(ngModel)]="filter.description"  
+                    name ="description"  >
+            </mat-form-field> 
+            <!-- <mat-form-field class="form-full-width" style="margin-left: 30px">
+                <mat-select placeholder="Filter Type" [(ngModel)]="filter.billPayType" name="billPayType"> 
+                    <mat-option *ngFor="let billPayType of billPayTypeList" [value]="billPayType"> 
+                        {{billPayType}}
+                    </mat-option>
+                </mat-select>
+            </mat-form-field> -->
+            <button mat-raised-button color="primary" (click)="actionfilter()" style="margin-left: 30px">Filter</button>
+        </div>
+        <br>
+        <ag-grid-angular 
+        #agGrid
+            style="height: 550px;" 
+            class="{{theme}}"
+            [gridOptions]="gridOptions" 
+            (gridReady)="onGridReady($event)"
+            (rowClicked)="onRowClicked($event)"
+            >
+        </ag-grid-angular>
+        
+        <div >
+            <mat-paginator 
+                [length]="totalData"
+                [pageSize]="totalRecord"
+                [pageSizeOptions]="[totalRecord]"
+                (page)="onPaginateChange($event)">
+            </mat-paginator>
+        </div> 
+    </mat-card-content>
+</mat-card>
+    
