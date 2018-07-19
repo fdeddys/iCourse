@@ -45,13 +45,13 @@ export class UserComponent implements OnInit {
 
     gridOptions = {
         columnDefs: [
-            { headerName: 'No', field: 'nourut', width: 100, minWidth: 100, maxWidth: 100, pinned: 'left', editable: false },
-            { headerName: 'User Name', field: 'name', width: 250, editable: false },
-            { headerName: 'First Name', field: 'firstName', width: 250, editable: false },
-            { headerName: 'Last Name', field: 'lastName', width: 250, editable: false },
-            { headerName: 'Email', field: 'email', width: 250, editable: false },
-            { headerName: 'Status', field: 'status', width: 150, editable: false},
-            { headerName: ' ', width: 150, field: 'act1', minWidth: 150, maxWidth: 150, cellRenderer: 'actionRenderer'},
+            { headerName: 'No', field: 'nourut', width: 90, minWidth: 100, maxWidth: 100, pinned: 'left', editable: false },
+            { headerName: 'User Name', field: 'name', width: 150, editable: false },
+            { headerName: 'First Name', field: 'firstName', width: 190, editable: false },
+            { headerName: 'Last Name', field: 'lastName', width: 200, editable: false },
+            { headerName: 'Email', field: 'email', width: 180, editable: false },
+            { headerName: 'Status', field: 'status', width: 120, editable: false},
+            { headerName: ' ', width: 75, field: 'act1', minWidth: 150, maxWidth: 150, cellRenderer: 'actionRenderer'},
         ],
         // , valueFormatter: this.boolFormatter
         rowData: this.user,

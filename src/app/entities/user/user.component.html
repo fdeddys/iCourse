@@ -16,19 +16,19 @@
                 <input matInput placeholder="Filter User Name " [(ngModel)]="filter.name"  
                     name ="name"  >
             </mat-form-field>
-            <mat-form-field class="container-half-width"  style="margin-left: 30px">
+            <mat-form-field class="container-half-width">
                 <input matInput placeholder="Filter First name " [(ngModel)]="filter.firstName"  
                     name ="fname" >
             </mat-form-field>
-            <mat-form-field class="container-half-width" >
+            <mat-form-field class="container-half-width">
                 <input matInput placeholder="Filter Last Name " [(ngModel)]="filter.lastName"  
                     name ="lname"  >
             </mat-form-field>
-            <mat-form-field class="container-half-width"  style="margin-left: 30px">
+            <mat-form-field class="container-half-width">
                 <input matInput placeholder="Filter Email " [(ngModel)]="filter.email"  
                     name ="email" >
             </mat-form-field>
-            <mat-form-field class="form-full-width" style="margin-left: 30px">
+            <mat-form-field class="form-full-width">
                 <mat-select placeholder="Filter Type" [(ngModel)]="filter.status" name="status">
                     <mat-option *ngFor="let status of statuses" [value]="status">
                         {{status}}
