@@ -143,6 +143,19 @@
             "description": "Description",
             "type": "Global Type"
         },
+        "transactionType": {
+            "home":{
+                "title": "Transaction Type",
+                "addLabelButton": "Add Transaction Type"
+            },
+            "filter":{
+                "name": "Name"
+            },
+            "detail":{
+                "title": "{{action}} {{entity}}"
+            },
+            "name": "Name"
+        },
         "user": {
             "home": {
                 "title": "User",

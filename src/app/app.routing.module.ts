@@ -15,6 +15,7 @@ import { RoleComponent } from './entities/role/role.component';
 import { MenuComponent } from './entities/menu';
 import { AuditTrailComponent } from './entities/audit-trail';
 import { AccessMatrixComponent } from './entities/access-matrix';
+import { TransTypeComponent } from './entities/transaction-type';
 
 
 const routes: Routes = [
@@ -38,6 +39,7 @@ const routes: Routes = [
             {path: 'change-pass', component: UserUpdatePasswordComponent},
             {path: 'audit-trail', component: AuditTrailComponent},
             {path: 'access-matrix', component: AccessMatrixComponent},
+            {path: 'trans-type', component: TransTypeComponent},
         ]
     },
     // {path: 'member', component: MemberComponent}
