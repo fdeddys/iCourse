@@ -16,19 +16,19 @@
                 <input matInput placeholder="{{ 'ottoAG.user.filter.name' | translate }}" [(ngModel)]="filter.name"  
                     name ="name"  >
             </mat-form-field>
-            <mat-form-field class="container-half-width"  style="margin-left: 30px">
+            <mat-form-field class="container-half-width">
                 <input matInput placeholder="{{ 'ottoAG.user.filter.firstName' | translate }}" [(ngModel)]="filter.firstName"  
                     name ="fname" >
             </mat-form-field>
-            <mat-form-field class="container-half-width"  style="margin-left: 30px">
+            <mat-form-field class="container-half-width">
                 <input matInput placeholder="{{ 'ottoAG.user.filter.lastName' | translate }}" [(ngModel)]="filter.lastName"  
                     name ="lname" >
             </mat-form-field>
-            <mat-form-field class="container-half-width"  style="margin-left: 30px">
+            <mat-form-field class="container-half-width">
                 <input matInput placeholder="{{ 'ottoAG.user.filter.email' | translate }}" [(ngModel)]="filter.email"  
                     name ="email" >
             </mat-form-field>
-            <mat-form-field class="form-full-width" style="margin-left: 30px">
+            <mat-form-field class="form-full-width">
                 <mat-select placeholder="{{ 'ottoAG.user.filter.status' | translate }}" [(ngModel)]="filter.status" name="status">
                     <mat-option *ngFor="let status of statuses" [value]="status">
                         {{status}}
