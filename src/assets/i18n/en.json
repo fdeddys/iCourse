@@ -9,11 +9,35 @@
             "delete": "Delete",
             "edit": "Edit",
             "open": "Open",
+            "close": "Close",
             "save": "Save",
-            "exportCSV": "Export CSV"
+            "exportCSV": "Export CSV",
+            "resetPass": "Reset Password"
         }
     },
     "ottoAG": {
+        "changePassword": {
+            "home":{
+                "title": "Change Password"
+            },
+            "name": "Username",
+            "oldpass": "Old Password",
+            "pass": "Password",
+            "confirmP": "Confirm Password"
+        },
+        "billerCompany": {
+            "home":{
+                "title": "Bill Operator",
+                "addLabelButton": "Add Bill Operator"
+            },
+            "filter":{
+                "name": "Name"
+            },
+            "detail":{
+                "title": "{{action}} {{entity}}"
+            },
+            "name": "Name"
+        },
         "biller": {
             "filter": {
                 "member": "Member Name",
@@ -90,7 +114,7 @@
                 "status": "Filter Status"
             },
             "detail": {
-                "title": "Bill Product"
+                "title": "{{mode}} Bill Product"
             },
             "billerType": "Type",
             "billerCompany": "Company",
@@ -101,6 +125,47 @@
             "status": "Status",
             "searchBy": "Biller Selection Method",
             "searchByMember": "Biller"
+        },
+        "globalSettings":{
+            "home": {
+                "title": "Global Settings",
+                "addLabelButton": "Add Global Settings"
+            },
+            "filter": {
+                "name": "Filter Name",
+                "description": "Filter Description",
+                "type": "Filter Type"
+            },
+            "detail": {
+                "title": "{{action}} {{entity}}"
+            },
+            "name": "Name",
+            "description": "Description",
+            "type": "Global Type"
+        },
+        "user": {
+            "home": {
+                "title": "User",
+                "addLabelButton": "Add User"
+            },
+            "filter": {
+                "name": "Filter Username",
+                "firstName": "Filter First Name",
+                "lastName": "Filter Last Name",
+                "email": "Filter Email",
+                "status": "Filter Type"
+            },
+            "detail": {
+                "title": "{{action}} {{entity}}",
+                "addDetail": "Add Role"
+            },
+            "name": "User Name",
+            "firstName": "First Name",
+            "lastName": "Last Name",
+            "email": "Email",
+            "status": "Status",
+            "passwordGenerated": "Password Generated",
+            "role": "Role"
         }
     }
 }

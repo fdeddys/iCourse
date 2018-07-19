@@ -9,6 +9,7 @@ import { GRID_THEME, CSS_BUTTON, NO_DATA_GRID_MESSAGE, TOTAL_RECORD_PER_PAGE } f
 import { MatActionButtonComponent } from '../../shared/templates/mat-action-button.component';
 import { Filter } from '../../shared/model/filter';
 import { SharedService } from '../../shared/services/shared.service';
+import { TranslateService } from '@ngx-translate/core';
 
 @Component({
     selector: 'app-global-setting',
@@ -78,10 +79,13 @@ export class GlobalSettingComponent implements OnInit {
       return dt.toLocaleString(['id']);
     }
 
-    constructor(  private dialog: MatDialog,
+    constructor(  translate: TranslateService,
+                private dialog: MatDialog,
                 private globalSettingService: GlobalSettingService,
                 private shareService: SharedService,
-              ) { }
+              ) {
+                  translate.use('en');
+              }
 
     public onRowClicked(e) {
         if (e.event.target !== undefined) {

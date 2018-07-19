@@ -7,6 +7,7 @@ import { BillerCompanyService } from './biller-company.service';
 import { HttpResponse, HttpErrorResponse } from '@angular/common/http';
 import { CommonValidatorDirective } from '../../validators/common.validator';
 import { SNACKBAR_DURATION_IN_MILLISECOND } from '../../shared/constant/base-constant';
+import { TranslateService } from '@ngx-translate/core';
 
 @Component({
     selector: 'app-biller-company-dialog',
@@ -23,11 +24,15 @@ export class BillerCompanyDialogComponent implements OnInit {
     duration = SNACKBAR_DURATION_IN_MILLISECOND;
 
     constructor(
+        translate: TranslateService,
         private formBuilder: FormBuilder,
         public snackBar: MatSnackBar,
         public billerCompanyService: BillerCompanyService,
         public dialogRef: MatDialogRef<BillerCompanyDialogComponent>,
-        @Inject(MAT_DIALOG_DATA) public data: any) { }
+        @Inject(MAT_DIALOG_DATA) public data: any) {
+            translate.setDefaultLang('en');
+            translate.use('en');
+        }
 
     get form() { return this.billerCompanyForm.controls; }
 

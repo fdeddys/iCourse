@@ -1,4 +1,4 @@
-<h1 mat-dialog-title>{{ modeTitle }} {{ "ottoAG.billerProduct.detail.title" | translate }}</h1>
+<h1 mat-dialog-title>{{ "ottoAG.billerProduct.detail.title" | translate:{mode: modeTitle} }}</h1>
 <form name="globalSettingForm" (ngSubmit)="f.form.valid && onSubmit()" #f="ngForm" novalidate>
 <div mat-dialog-content> 
 		<mat-form-field class="form-full-width form-separator">

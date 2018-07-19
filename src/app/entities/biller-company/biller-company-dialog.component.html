@@ -1,5 +1,5 @@
-<h1 mat-dialog-title>
-    {{data.action}} {{data.entity}}
+<h1 mat-dialog-title translate="ottoAG.billerCompany.detail.title" [translateParams]="data">
+    <!-- {{data.action}} {{data.entity}} -->
 </h1>
 <form name="globalSettingForm" (ngSubmit)="f.form.valid && onSubmit()" #f="ngForm" novalidate>
 <mat-dialog-content>
@@ -10,14 +10,14 @@
             <input matInput placeholder="Name " [(ngModel)]="billerCompany.name" cdkFocusInitial name ="namee">
         </mat-form-field>  -->
         <mat-form-field class="container-full-width">
-                <input matInput placeholder="Name " [(ngModel)]="billerCompany.name" cdkFocusInitial name ="nm" [(ngModel)]="billerCompany.name" #name="ngModel" [ngClass]="{ 'is-invalid': f.submitted && name.invalid }" required maxlength="50">
+                <input matInput placeholder="{{ 'ottoAG.billerCompany.name' | translate }}" [(ngModel)]="billerCompany.name" cdkFocusInitial name ="nm" [(ngModel)]="billerCompany.name" #name="ngModel" [ngClass]="{ 'is-invalid': f.submitted && name.invalid }" required maxlength="50">
                 <mat-error *ngIf="submitted && form.name.errors" class="invalid-feedback">
                         <div *ngIf="form.name.errors.required"> {{form.name.errors.message}}</div>
                 </mat-error> 
             </mat-form-field>
 </mat-dialog-content>
 <mat-dialog-actions align="end">
-  <button mat-button mat-raised-button color="primary" (click)="validate()" >Save</button>  
+  <button mat-button mat-raised-button color="primary" (click)="validate()" >{{ 'entity.action.save' | translate }}</button>  
 </mat-dialog-actions>
 
 </form>
