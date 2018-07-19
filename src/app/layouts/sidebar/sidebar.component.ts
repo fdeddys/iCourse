@@ -22,12 +22,12 @@ export class SidebarComponent implements OnInit {
     ) { }
 
     ngOnInit(): void {
-        console.log('init..');
+        // console.log('init..');
         this.sidebarService.queryMenu()
         .subscribe(
                 (res: HttpResponse<UserMenu[]>) => this.onSuccess(res.body, res.headers),
                 (res: HttpErrorResponse) => this.onError(res.message),
-                () => { console.log('finally'); }
+                () => { }
         );
     }
 
@@ -37,13 +37,13 @@ export class SidebarComponent implements OnInit {
     // }
 
     setUserMenu(arr) {
-        console.log('setUserMenu..');
+        // console.log('setUserMenu..');
         this.links = this.createTree(arr);
-        console.log(this.links);
+        // console.log(this.links);
     }
 
     createTree(arr) {
-        console.log('create tree..');
+        // console.log('create tree..');
         const nodes = {};
         return arr.filter(function(obj) {
             const id = obj['id'], parentId = obj['parentId'];
@@ -57,7 +57,7 @@ export class SidebarComponent implements OnInit {
     }
 
     private onSuccess(data, headers) {
-        console.log('success get user menu..', data);
+        // console.log('success get user menu..', data);
         this.setUserMenu(data);
     }
 

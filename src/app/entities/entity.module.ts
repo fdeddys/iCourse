@@ -17,6 +17,7 @@ import { RoleMenuModule } from './role-menu/role-menu.module';
 import { RoleUserModule } from './role-user/role-user.module';
 import { AuditTrailModule } from './audit-trail/audit-trail.module';
 import { AccessMatrixModule } from './access-matrix/access-matrix.module';
+import { TransactionTypeModule } from './transaction-type/transaction-type.module';
 
 
 @NgModule({
@@ -38,6 +39,7 @@ import { AccessMatrixModule } from './access-matrix/access-matrix.module';
         RoleUserModule,
         AuditTrailModule,
         AccessMatrixModule,
+        TransactionTypeModule,
     ],
     entryComponents: [],
     providers: [],
