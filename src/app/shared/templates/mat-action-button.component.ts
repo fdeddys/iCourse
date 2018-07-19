@@ -12,8 +12,8 @@ export class MatActionButtonComponent implements ICellRendererAngularComp {
 
     agInit(params: any): void {
         this.params = params;
-        console.log('action button = ', this.params);
-        console.log('isi param action button ', this.params.value);
+        // console.log('action button = ', this.params);
+        // console.log('isi param action button ', this.params.value);
     }
 
     refresh(params: any): boolean {

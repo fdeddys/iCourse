@@ -164,10 +164,10 @@ export class MemberTypeComponent implements OnInit {
 
     public onPaginateChange($event): void {
         // console.log('events ', $event);
-        this.paginator._pageIndex = 0;
+        // this.paginator._pageIndex = 0;
         this.curPage = $event.pageIndex + 1;
         // this.loadAll(this.curPage);
-        console.log('On page change ', this.curPage);
+        // console.log('On page change ', this.curPage);
         this.filterBtn('');
     }
 
@@ -208,8 +208,8 @@ export class MemberTypeComponent implements OnInit {
     actionSearch(): void {
         // this.curPage = $event.pageIndex + 1;
         // this.paginator.pageIndex = $event.pageIndex - 1;
-        this.paginator._pageIndex = 0;
         this.filterBtn(1);
+        this.paginator.pageIndex = 0;
     }
 
     // updateManualPage(index) {
