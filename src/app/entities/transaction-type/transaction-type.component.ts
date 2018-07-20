@@ -39,7 +39,8 @@ export class TransTypeComponent implements OnInit {
     gridOptions = {
         columnDefs: [
             { headerName: 'No', field: 'no', width: 100, minWidth: 100, maxWidth: 100, pinned: 'left', editable: false },
-            { headerName: 'Name', field: 'name', width: 450, pinned: 'left', editable: false },
+            { headerName: 'Code', field: 'code', width: 150, pinned: 'left', editable: false },
+            { headerName: 'Name', field: 'name', width: 250, pinned: 'left', editable: false },
             { headerName: ' ', width: 150, minWidth: 150, maxWidth: 150, cellRenderer: 'actionRenderer'}
         ],
         rowData: this.transTypes,

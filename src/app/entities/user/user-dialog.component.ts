@@ -136,7 +136,7 @@ export class UserDialogComponent implements OnInit {
             .subscribe(
             (res: HttpResponse<User>) => {
                 if (res.body.errMsg === null || res.body.errMsg === '' ) {
-                    const decodePass = atob(res.body.password);
+                    const decodePass = atob(res.body.oldPass);
                     this.isReset = true;
                     this.snackBar.open('Password has been reset  ', 'ok', { duration: this.duration, });
                     this.newpass.resetPass = decodePass;
