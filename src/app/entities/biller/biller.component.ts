@@ -80,7 +80,7 @@ export class BillerComponent implements OnInit {
             { headerName: 'Date Start', field: 'dateStart', width: 185 },
             { headerName: 'Date Through', field: 'dateThru', width: 185 },
             { headerName: ' ', width: 150, cellRenderer: 'actionRenderer'}
-        ], 
+        ],
         rowData: this.billers,
         enableSorting: true,
         enableFilter: true,
