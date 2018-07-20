@@ -19,6 +19,7 @@ import { AuditTrailModule } from './audit-trail/audit-trail.module';
 import { AccessMatrixModule } from './access-matrix/access-matrix.module';
 import { TransactionTypeModule } from './transaction-type/transaction-type.module';
 import { ResponseCodeModule} from './response-code/response-code.module';
+import { TransactionListModule } from './transaction-list/transaction-list.module';
 
 
 @NgModule({
@@ -42,6 +43,7 @@ import { ResponseCodeModule} from './response-code/response-code.module';
         AccessMatrixModule,
         TransactionTypeModule,
         ResponseCodeModule,
+        TransactionListModule,
     ],
     entryComponents: [],
     providers: [],
