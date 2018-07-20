@@ -77,6 +77,7 @@ export class TransListComponent implements OnInit {
         rowData: this.transList,
         enableSorting: true,
         enableFilter: true,
+        enableColResize: true,
         // rowSelection: "multiple"
         pagination: true,
         paginationPageSize: 10,
