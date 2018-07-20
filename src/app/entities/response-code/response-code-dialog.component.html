@@ -3,7 +3,18 @@
 </h1>
 <form name="responseCodeForm" (ngSubmit)="f.form.valid && onSubmit()" #f="ngForm" novalidate> 
 <mat-dialog-content> 
-        
+
+       
+  <mat-form-field class="form-half-width" style="margin-right: 10%"> 
+        <mat-select placeholder="Biller" [(ngModel)]="responseCode.billerHeaderId" cdkFocusInitial name ="billerHeaderId"  #name="ngModel" [ngClass]="{ 'is-invalid': f.submitted && billerHeaderId.invalid }" required>
+            <mat-option *ngFor="let biller of billerList" [value]="biller.id"> 
+                {{biller.member.name}} [{{biller.memberType.name}}] 
+            </mat-option>
+        </mat-select>  
+        <mat-error *ngIf="submitted && form.billerHeaderId.errors" class="invalid-feedback">
+            <div *ngIf="form.billerHeaderId.errors.required"> {{form.billerHeaderId.errors.message}}</div>
+        </mat-error>
+    </mat-form-field>	 
          <mat-form-field class="container-full-width">
                 <input matInput placeholder="Response Code " [(ngModel)]="responseCode.responseCode" cdkFocusInitial name ="responseCode" [(ngModel)]="responseCode.responseCode" #name="ngModel" [ngClass]="{ 'is-invalid': f.submitted && responseCode.invalid }" required maxlength="3">
                 <mat-error *ngIf="submitted && form.responseCode.errors" class="invalid-feedback">
@@ -15,40 +26,7 @@
             <mat-error *ngIf="submitted && form.description.errors" class="invalid-feedback">
                     <div *ngIf="form.description.errors.required"> {{form.description.errors.message}}</div>
             </mat-error> 
-         </mat-form-field> 
-         <mat-form-field class="form-half-width" style="margin-right: 10%"> 
-            <mat-select placeholder="Member" name="member" [(ngModel)]="responseCode.memberId" required>
-                <mat-option *ngFor="let member of memberList" [value]="member.id"> 
-                    {{member.name}} 
-                </mat-option>
-            </mat-select>
-            <mat-error *ngIf="submitted && form.member.errors" class="invalid-feedback">
-                <div *ngIf="form.member.errors.required"> {{form.member.errors.message}}</div>
-            </mat-error>
-        </mat-form-field>	
-        <!-- <mat-checkbox
-          class="example-margin"
-          [(ngModel)]="billerType.ispostpaid"
-          name="is_postpaid_"
-          [color]="'primary'"
-            > Postpaid
-        </mat-checkbox> -->
-        <!-- <mat-form-field style="width: 50%;">
-            <mat-select placeholder="Type" [(ngModel)]="billerType.ispostpaid" name="type">
-                <mat-option *ngFor="let type of billPayTypeList" [value]="type.value">
-                    {{type.desc}}
-                </mat-option>
-            </mat-select>
-        </mat-form-field> -->
-
-        <!-- <mat-form-field class="form-full-width">
-			<mat-select placeholder="Bill Pay Type" [(ngModel)]="billerType.billPayType" name="billPayType">
-				<mat-option *ngFor="let billPayType of billPayTypeList" [value]="billPayType">
-					{{billPayType}}
-				</mat-option>
-            </mat-select> 
-        </mat-form-field> -->
-
+         </mat-form-field>   
       <br><br>
 </mat-dialog-content>
 <mat-dialog-actions align="end">

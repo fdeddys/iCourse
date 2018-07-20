@@ -26,6 +26,7 @@ export class ResponseCodeDialogComponent implements OnInit {
 
     billPayTypeList = [];
     memberList = [];
+    billerList = [];
 
     constructor(
         private formBuilder: FormBuilder,
@@ -38,18 +39,19 @@ export class ResponseCodeDialogComponent implements OnInit {
 
     ngOnInit() {
         this.responseCodeForm = this.formBuilder.group({
-            responseCode: ['', [CommonValidatorDirective.required]],
-            description: ['', [CommonValidatorDirective.required]],
+            billerHeaderId: ['', CommonValidatorDirective.required],
+            responseCode: ['', CommonValidatorDirective.required],
+            description: ['', CommonValidatorDirective.required]
         });
         this.responseCode = {};
         // this.responseCode.billPayType = false;
         if ( this.data.action === 'Edit' ) {
             // search
-            this.responseCode = this.data.ResponseCode;
-            this.name = this.responseCode.decription;
-           // this.checked =  this.responseCode.billPayType;
+           // console.log('aaaaaaa', this.data);
+            this.responseCode = this.data.responseCode;
+            this.responseCode.billerHeaderId = this.data.responseCode.billerHeader.id;
         }
-        this.memberList = this.data.memberData;
+        this.billerList = this.data.billerData;
 
     }
 
