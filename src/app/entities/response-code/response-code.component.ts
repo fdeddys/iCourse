@@ -259,7 +259,7 @@ export class ResponseCodeComponent implements OnInit {
     }
 
     public async exportCSV(reportType): Promise<void> {
-
+alert('sds');
         // const membType = (this.memberTypeList.length === 1 && this.memberTypeList[0].id === 1 ? 1 : 0);
          const blob = await this.responseCodeService.exportCSV();
          const url = window.URL.createObjectURL(blob);
@@ -268,7 +268,7 @@ export class ResponseCodeComponent implements OnInit {
          document.body.appendChild(link);
          link.setAttribute('style', 'display: none');
          link.href = url;
-         link.download = 'billertype.csv';
+         link.download = 'responsecode.csv';
          link.click();
          window.URL.revokeObjectURL(url);
      }

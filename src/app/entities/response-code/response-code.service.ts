@@ -98,7 +98,7 @@ export class ResponseCodeService {
 
     async exportCSV(): Promise<Blob> {
         const file =  await this.http.get<Blob>(
-            `${this.reportUrl}ResponseCode/csv`,
+            `${this.reportUrl}responsecode/csv`,
             {responseType: 'blob' as 'json'}
         ).toPromise();
         return file;
