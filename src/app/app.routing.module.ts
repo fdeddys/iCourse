@@ -17,6 +17,7 @@ import { AuditTrailComponent } from './entities/audit-trail';
 import { AccessMatrixComponent } from './entities/access-matrix';
 import { ResponseCode, ResponseCodeComponent } from './entities/response-code';
 import { TransTypeComponent } from './entities/transaction-type';
+import { TransListComponent } from './entities/transaction-list';
 
 
 const routes: Routes = [
@@ -42,6 +43,7 @@ const routes: Routes = [
             {path: 'access-matrix', component: AccessMatrixComponent},
             {path: 'trans-type', component: TransTypeComponent},
             {path: 'response-code', component: ResponseCodeComponent},
+            {path: 'transaction', component: TransListComponent},
         ]
     },
     // {path: 'member', component: MemberComponent}

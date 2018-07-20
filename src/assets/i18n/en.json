@@ -17,7 +17,7 @@
     },
     "ottoAG": {
         "changePassword": {
-            "home":{
+            "home": {
                 "title": "Change Password"
             },
             "name": "Username",
@@ -26,14 +26,14 @@
             "confirmP": "Confirm Password"
         },
         "billerCompany": {
-            "home":{
+            "home": {
                 "title": "Bill Operator",
                 "addLabelButton": "Add Bill Operator"
             },
-            "filter":{
+            "filter": {
                 "name": "Name"
             },
-            "detail":{
+            "detail": {
                 "title": "{{action}} {{entity}}"
             },
             "name": "Name"
@@ -143,15 +143,40 @@
             "description": "Description",
             "type": "Global Type"
         },
+        "transactionList": {
+            "home": {
+                "title": "Transactions"
+            },
+            "detail": {
+                "title": "Detail Transaction"
+            },
+            "requestor": "Requestor",
+            "responder": "Responder",
+            "transType": "Transaction Type",
+            "product": "Product",
+            "buyPrice": "Buy Price",
+            "fee": "Fee",
+            "profit": "Profit RTSM",
+            "sellPrice": "Sell Price",
+            "sellPriceFromTable": "Sell Price",
+            "promotion": "Promotion",
+            "amount": "Amount",
+            "transmission": "Transmission",
+            "stan": "STAN",
+            "rrn": "RRN",
+            "rcInternal": "RC Internal",
+            "rcRequestor": "RC Requestor",
+            "rcResponder": "RC Responder"
+        },
         "transactionType": {
-            "home":{
+            "home": {
                 "title": "Transaction Type",
                 "addLabelButton": "Add Transaction Type"
             },
-            "filter":{
+            "filter": {
                 "name": "Name"
             },
-            "detail":{
+            "detail": {
                 "title": "{{action}} {{entity}}"
             },
             "name": "Name"
