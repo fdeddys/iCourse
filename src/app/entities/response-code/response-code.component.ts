@@ -22,7 +22,7 @@ export class ResponseCodeComponent implements OnInit {
     private resourceUrl = REPORT_PATH;
     theme: String = GRID_THEME;
     cssButton = CSS_BUTTON  ;
-    billerTipes: ResponseCode[];
+    responseCodes: ResponseCode[];
     ResponseCode: ResponseCode;
     messageNoData: string = NO_DATA_GRID_MESSAGE;
     nativeWindow: any;
@@ -40,8 +40,9 @@ export class ResponseCodeComponent implements OnInit {
     gridOptions = {
         columnDefs: [
             { headerName: 'No', field: 'nourut', width: 100, pinned: 'left', editable: false },
-            { headerName: 'Response Code', field: 'responseCode', width: 400, editable: false },
-            { headerName: 'Description', field: 'description', width: 150, editable: false },
+            { headerName: 'Response Code', field: 'responseCode', width: 200, editable: false },
+            { headerName: 'Description', field: 'description', width: 200, editable: false },
+            { headerName: 'Member', field: 'member.name', width: 300, pinned: 'left', editable: false },
             { headerName: ' ', width: 150, cellRenderer: 'actionRenderer'}
           // { headerName: ' ', suppressMenu: true,
           //   suppressSorting: true,
@@ -51,7 +52,7 @@ export class ResponseCodeComponent implements OnInit {
           //     </button>
           //     ` }
         ],
-        rowData: this.billerTipes,
+        rowData: this.responseCodes,
         enableSorting: true,
         enableFilter: true,
         pagination: true,
@@ -93,7 +94,7 @@ export class ResponseCodeComponent implements OnInit {
         console.log('View action clicked', data);
         const dialogRef = this.dialog.open(ResponseCodeDialogComponent, {
         width: '1000px',
-        data: { action: 'Edit', entity: 'Bill Type', ResponseCode: data }
+        data: { action: 'Edit', entity: 'Bill Type', ResponseCode: data, memberData: this.memberList }
         });
 
         dialogRef.afterClosed().subscribe(result => {
@@ -119,7 +120,7 @@ export class ResponseCodeComponent implements OnInit {
 
     loadAll(page) {
         console.log('Start call function all header');
-        this.responseCodeService.query({
+        this.responseCodeService.query  ({
             page: page,
             count: this.totalRecord,
         })
@@ -210,13 +211,13 @@ export class ResponseCodeComponent implements OnInit {
             return ;
         }
 
-        this.billerTipes = data.content;
+        this.responseCodes = data.content;
         let urut = 1;
-        for (const responseCode of this.billerTipes) {
+        for (const responseCode of this.responseCodes) {
             responseCode.nourut = urut++;
         }
         this.totalData = data.totalElements;
-        this.gridApi.setRowData(this.billerTipes);
+        this.gridApi.setRowData(this.responseCodes);
     }
 
     private onError(error) {

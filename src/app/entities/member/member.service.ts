@@ -116,6 +116,13 @@ export class MemberService {
             );
     }
 
+    findMemberBiller(req?: any): Observable<HttpResponse<Member[]>> {
+        return this.http.get<Member[]>(`${this.resourceUrl}/getMemberBiller`, {  observe: 'response' })
+        .pipe(
+            tap(billerCompanies => console.log('raw ', billerCompanies ) )
+            );
+    }
+
     private convertResponse(res: EntityResponseType): EntityResponseType {
         const body: Member = this.convertItemFromServer(res.body);
         return res.clone({body});
