@@ -8,6 +8,7 @@ import { ResponseCodeConfirmComponent } from './response-code-confirm.component'
 import { GRID_THEME, CSS_BUTTON, NO_DATA_GRID_MESSAGE, REPORT_PATH, TOTAL_RECORD_PER_PAGE } from '../../shared/constant/base-constant';
 import { MatActionButtonComponent } from '../../shared/templates/mat-action-button.component';
 import { Member, MemberService } from '../member';
+import { Biller, BillerService } from '../biller';
 
 @Component({
   selector: 'app-response-code',
@@ -30,6 +31,7 @@ export class ResponseCodeComponent implements OnInit {
     totalData = 0;
     totalRecord = TOTAL_RECORD_PER_PAGE;
     memberList = [];
+    billerList = [];
     @ViewChild(MatPaginator) paginator: MatPaginator;
 
     filter = {
@@ -40,9 +42,10 @@ export class ResponseCodeComponent implements OnInit {
     gridOptions = {
         columnDefs: [
             { headerName: 'No', field: 'nourut', width: 100, pinned: 'left', editable: false },
-            { headerName: 'Response Code', field: 'responseCode', width: 200, editable: false },
-            { headerName: 'Description', field: 'description', width: 200, editable: false },
-            { headerName: 'Member', field: 'member.name', width: 300, pinned: 'left', editable: false },
+            { headerName: 'Biller', field: 'billerHeader.member.name', width: 200,   editable: false },
+            { headerName: 'Member Type', field: 'billerHeader.memberType.name', width: 150,  editable: false },
+            { headerName: 'Response Code', field: 'responseCode', width: 180, editable: false },
+            { headerName: 'Description', field: 'description', width: 300, editable: false },
             { headerName: ' ', width: 150, cellRenderer: 'actionRenderer'}
           // { headerName: ' ', suppressMenu: true,
           //   suppressSorting: true,
@@ -74,7 +77,8 @@ export class ResponseCodeComponent implements OnInit {
 
     constructor(  private dialog: MatDialog,
                 private responseCodeService: ResponseCodeService,
-        private memberService: MemberService ) { }
+        private memberService: MemberService,
+        private billerService: BillerService ) { }
 
     public onRowClicked(e) {
         if (e.event.target !== undefined) {
@@ -94,7 +98,7 @@ export class ResponseCodeComponent implements OnInit {
         console.log('View action clicked', data);
         const dialogRef = this.dialog.open(ResponseCodeDialogComponent, {
         width: '1000px',
-        data: { action: 'Edit', entity: 'Bill Type', ResponseCode: data, memberData: this.memberList }
+        data: { action: 'Edit', entity: 'Bill Type', responseCode: data, billerData: this.billerList }
         });
 
         dialogRef.afterClosed().subscribe(result => {
@@ -166,20 +170,38 @@ export class ResponseCodeComponent implements OnInit {
       }
 
     ngOnInit() {
-        this.memberService.query({
+        // this.memberService.query({
+        //     page: 1,
+        //     count: 10000,
+        // })
+        // .subscribe(
+        //         (res: HttpResponse<Member[]>) => this.onSuccessMemb(res.body, res.headers),
+        //         (res: HttpErrorResponse) => this.onError(res.message),
+        //         () => { console.log('finally'); }
+        // );
+
+        this.billerService.queryAll({
             page: 1,
             count: 10000,
         })
         .subscribe(
-                (res: HttpResponse<Member[]>) => this.onSuccessMemb(res.body, res.headers),
+                (res: HttpResponse<Biller[]>) => this.onSuccessMemb(res.body, res.headers),
                 (res: HttpErrorResponse) => this.onError(res.message),
                 () => { console.log('finally'); }
         );
+
     }
 
     private onSuccessMemb(data, headers) {
         console.log('isi response ==> ', data);
-        this.memberList = data.content;
+        // this.memberList = data.content;
+        this.billerList = data.content;
+        // this.billerList = [];
+        // this.billerList.push('ALL');
+        // for (const datas of data) {
+        //     console.log(datas);
+        //     this.billerList.push(datas);
+        // }
     }
 
 
@@ -196,7 +218,7 @@ export class ResponseCodeComponent implements OnInit {
     openNewDialog(mode, data): void {
         const dialogRef = this.dialog.open(ResponseCodeDialogComponent, {
             width: '1000px',
-            data: { action: 'Add', entity: 'Response Code', memberData: this.memberList }
+            data: { action: 'Add', entity: 'Response Code', billerData: this.billerList }
         });
         dialogRef.afterClosed().subscribe(result => {
             console.log('The dialog was closed = [', result, ']');
@@ -237,7 +259,7 @@ export class ResponseCodeComponent implements OnInit {
     }
 
     public async exportCSV(reportType): Promise<void> {
-
+alert('sds');
         // const membType = (this.memberTypeList.length === 1 && this.memberTypeList[0].id === 1 ? 1 : 0);
          const blob = await this.responseCodeService.exportCSV();
          const url = window.URL.createObjectURL(blob);
@@ -246,7 +268,7 @@ export class ResponseCodeComponent implements OnInit {
          document.body.appendChild(link);
          link.setAttribute('style', 'display: none');
          link.href = url;
-         link.download = 'billertype.csv';
+         link.download = 'responsecode.csv';
          link.click();
          window.URL.revokeObjectURL(url);
      }
