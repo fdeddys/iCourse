@@ -13,7 +13,7 @@ import { Biller, BillerService } from '../biller';
 @Component({
   selector: 'app-response-code',
   templateUrl: './response-code.component.html',
-  styleUrls: ['./response-code.component.css'],
+  styleUrls: ['./response-code.component.css', '../../layouts/content/content.component.css'],
 })
 export class ResponseCodeComponent implements OnInit {
 
@@ -43,7 +43,7 @@ export class ResponseCodeComponent implements OnInit {
             { headerName: 'Code', field: 'responseCode', width: 110, editable: false },
             { headerName: 'Description', field: 'description', width: 290, editable: false },
             { headerName: 'Member', field: 'billerHeader.member.name', width: 270,   editable: false },
-            { headerName: 'Member Type', field: 'billerHeader.memberType.name', width: 160,  editable: false },
+            { headerName: 'Member Type', field: 'billerHeader.memberType.name', width: 180,  editable: false },
             { headerName: ' ', width: 100, cellRenderer: 'actionRenderer'}
           // { headerName: ' ', suppressMenu: true,
           //   suppressSorting: true,

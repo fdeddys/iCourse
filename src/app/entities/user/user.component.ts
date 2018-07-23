@@ -19,7 +19,7 @@ import { TranslateService } from '@ngx-translate/core';
 @Component({
     selector: 'app-user',
     templateUrl: './user.component.html',
-    styleUrls: ['./user.component.css']
+    styleUrls: ['./user.component.css', '../../layouts/content/content.component.css']
 })
 export class UserComponent implements OnInit {
 
@@ -49,7 +49,7 @@ export class UserComponent implements OnInit {
             { headerName: 'No', field: 'nourut', width: 90, minWidth: 100, maxWidth: 100, pinned: 'left', editable: false },
             { headerName: 'User Name', field: 'name', width: 150, editable: false },
             { headerName: 'First Name', field: 'firstName', width: 190, editable: false },
-            { headerName: 'Last Name', field: 'lastName', width: 200, editable: false },
+            { headerName: 'Last Name', field: 'lastName', width: 220, editable: false },
             { headerName: 'Email', field: 'email', width: 180, editable: false },
             { headerName: 'Status', field: 'status', width: 120, editable: false},
             { headerName: ' ', width: 75, field: 'act1', minWidth: 150, maxWidth: 150, cellRenderer: 'actionRenderer'},
@@ -60,12 +60,12 @@ export class UserComponent implements OnInit {
         enableFilter: true,
         pagination: true,
         paginationPageSize: 10,
+        enableColResize: true,
         cacheOverflowSize : 2,
         maxConcurrentDatasourceRequests : 2,
         infiniteInitialRowCount : 1,
         maxBlocksInCache : 2,
         suppressPaginationPanel : true,
-        rowHeight : 37,
         localeText: {noRowsToShow: this.messageNoData},
         frameworkComponents: {
             actionRenderer: MatActionButtonComponent,
@@ -114,7 +114,7 @@ export class UserComponent implements OnInit {
     public onActionEditClick(data: any) {
         console.log('View action clicked', data);
         const dialogRef = this.dialog.open(UserDialogComponent, {
-            width: '1000px',
+            width: '850px',
             data: { action: 'Edit', entity: 'User', user: data }
         });
 
@@ -128,7 +128,7 @@ export class UserComponent implements OnInit {
         console.log('reset action clicked', data);
         const nama: string = data.name;
         const dialogConfirm = this.dialog.open(UserConfirmDialogComponent, {
-            width: '1000px',
+            width: '800px',
             data: { warningMessage: 'Apakah anda yakin untuk Reset default password untuk user [  ' + `${nama}` + '  ]  ?',  id: data.id }
         });
 
@@ -207,7 +207,7 @@ export class UserComponent implements OnInit {
 
     openNewDialog(): void {
         const dialogRef = this.dialog.open(UserDialogComponent, {
-            width: '1000px',
+            width: '850px',
             data: { action: 'Add', entity: 'User' }
         });
 

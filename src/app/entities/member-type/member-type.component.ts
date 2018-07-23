@@ -12,7 +12,7 @@ import { Filter } from '../../shared/model/filter';
 @Component({
     selector: 'app-member-type',
     templateUrl: './member-type.component.html',
-    styleUrls: ['./member-type.component.css']
+    styleUrls: ['./member-type.component.css', '../../layouts/content/content.component.css']
 })
 export class MemberTypeComponent implements OnInit {
 
@@ -40,13 +40,14 @@ export class MemberTypeComponent implements OnInit {
         columnDefs: [
             { headerName: 'No', field: 'nourut', width: 100, minWidth: 100, maxWidth: 100, editable: false,  pinned: 'left'},
             { headerName: 'Name', field: 'name', width: 300, editable: false},
-            { headerName: 'Description', field: 'description', width: 400,  editable: false },
+            { headerName: 'Description', field: 'description', width: 470,  editable: false },
             { headerName: ' ', width: 150, minWidth: 150, maxWidth: 150, cellRenderer: 'actionRenderer'}
         ],
         rowData: this.memberTipes,
         enableSorting: true,
         enableFilter: true,
         pagination: true,
+        enableColResize: true,
         paginationPageSize: 10,
         cacheOverflowSize : 2,
         maxConcurrentDatasourceRequests : 2,
@@ -80,7 +81,7 @@ export class MemberTypeComponent implements OnInit {
     public onActionEditClick(data: any) {
         console.log('View action clicked', data);
         const dialogRef = this.dialog.open(MemberTypeDialogComponent, {
-            width: '1000px',
+            width: '600px',
             data: { action: 'EDIT', entity: 'Member Type', memberType: data }
         });
 
@@ -133,7 +134,7 @@ export class MemberTypeComponent implements OnInit {
 
     openNewDialog(): void {
         const dialogRef = this.dialog.open(MemberTypeDialogComponent, {
-            width: '1000px',
+            width: '600px',
             data: { action: 'Add', entity: 'Member Type' }
         });
 

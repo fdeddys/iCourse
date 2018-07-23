@@ -14,7 +14,7 @@ import { TranslateService } from '@ngx-translate/core';
 @Component({
     selector: 'app-global-setting',
     templateUrl: './global-setting.component.html',
-    styleUrls: ['./global-setting.component.css']
+    styleUrls: ['./global-setting.component.css', '../../layouts/content/content.component.css']
 })
 export class GlobalSettingComponent implements OnInit {
 
@@ -47,7 +47,7 @@ export class GlobalSettingComponent implements OnInit {
             // { headerName: 'Update at', field: 'updatedAt', width: 200, valueFormatter: this.currencyFormatter },
             // { headerName: 'Created By', field: 'createdBy', width: 200 },
             // { headerName: 'Updated By', field: 'updatedBy', width: 200 },
-            { headerName: ' ', width: 150, cellRenderer: 'actionRenderer'}
+            { headerName: ' ', width: 120, cellRenderer: 'actionRenderer'}
             // { headerName: ' ', suppressMenu: true,
             //   width: 20,
             //   suppressSorting: true,
@@ -63,6 +63,7 @@ export class GlobalSettingComponent implements OnInit {
             pagination: true,
             suppressPaginationPanel : true,
             paginationPageSize: 10,
+            enableColResize: true,
             // cacheOverflowSize : 2,
             // maxConcurrentDatasourceRequests : 2,
             // infiniteInitialRowCount : 1,
@@ -104,7 +105,7 @@ export class GlobalSettingComponent implements OnInit {
   public onActionEditClick(data: any) {
       console.log('View action clicked', data);
       const dialogRef = this.dialog.open(GlobalSettingDialogComponent, {
-        width: '1000px',
+        width: '60%',
         data: { action: 'Edit', entity: 'Member Type', globalSetting: data }
       });
 
@@ -179,7 +180,7 @@ export class GlobalSettingComponent implements OnInit {
 
   openNewDialog(): void {
       const dialogRef = this.dialog.open(GlobalSettingDialogComponent, {
-        width: '1000px',
+        width: '60%',
         data: { action: 'Add', entity: 'Global Setting' }
       });
 

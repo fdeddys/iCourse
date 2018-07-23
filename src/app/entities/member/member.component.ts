@@ -14,7 +14,7 @@ import { Filter } from '../../shared/model/filter';
 @Component({
     selector: 'app-member',
     templateUrl: './member.component.html',
-    styleUrls: ['./member.component.css']
+    styleUrls: ['./member.component.css', '../../layouts/content/content.component.css']
 })
 export class MemberComponent implements OnInit {
 
@@ -42,22 +42,23 @@ export class MemberComponent implements OnInit {
     gridOptions = {
         columnDefs: [
             { headerName: 'No', field: 'nourut', width: 100, pinned: 'left', editable: false  },
-            { headerName: 'Name', field: 'name', width: 300, editable: false },
+            { headerName: 'Name', field: 'name', width: 250, editable: false },
             { headerName: 'Description', field: 'description', width: 400, editable: false },
-            { headerName: 'Status', field: 'active', width: 200,  editable: false },
-            { headerName: ' ', width: 150, cellRenderer: 'actionRenderer'}
+            { headerName: 'Status', field: 'active', width: 150,  editable: false },
+            { headerName: ' ', width: 100, cellRenderer: 'actionRenderer'}
         ],
         rowData: this.members,
         enableSorting: true,
         enableFilter: true,
+        enableColResize: true,
         pagination: true,
         paginationPageSize: 10,
         cacheOverflowSize : 2,
         maxConcurrentDatasourceRequests : 2,
         infiniteInitialRowCount : 1,
         maxBlocksInCache : 2,
-        onPaginationChanged: this.onPaginationChanged(),
-        suppressPaginationPanel : true,
+        // onPaginationChanged: this.onPaginationChanged(),
+        // suppressPaginationPanel : true,
         localeText: {noRowsToShow: this.messageNoData},
         frameworkComponents: {
             actionRenderer: MatActionButtonComponent

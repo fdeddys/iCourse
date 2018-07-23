@@ -16,16 +16,16 @@
                 <input matInput placeholder="Filter Name " [(ngModel)]="filter.name"  
                     name ="name"  >
             </mat-form-field>
-            <mat-form-field class="container-half-width"  style="margin-left: 30px">
+            <mat-form-field class="container-half-width">
                 <input matInput placeholder="Filter Description " [(ngModel)]="filter.description"  
                     name ="descr" >
             </mat-form-field>
-            <button mat-raised-button color="primary" (click)="actionSearch()" style="margin-left: 30px">Filter</button>
+            <button mat-raised-button color="primary" (click)="actionSearch()" >Filter</button>
         </div>
         <br>
         <ag-grid-angular 
             #agGrid
-            style="height: 550px;" 
+            style="height: 314px;" 
             class="{{theme}}"
             [gridOptions]="gridOptions" 
             (gridReady)="onGridReady($event)"
@@ -33,7 +33,7 @@
             >
         </ag-grid-angular>
 
-        <div style="width: 950px;" >
+        <div>
             <mat-paginator 
                 #paginator
                 [length]="totalData"

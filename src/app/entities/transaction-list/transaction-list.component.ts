@@ -13,7 +13,7 @@ import { TranslateService } from '@ngx-translate/core';
 @Component({
     selector: 'app-transaction-list',
     templateUrl: './transaction-list.component.html',
-    styleUrls: ['./transaction-list.component.css']
+    styleUrls: ['./transaction-list.component.css', '../../layouts/content/content.component.css']
 })
 
 export class TransListComponent implements OnInit {

@@ -13,7 +13,7 @@ import { TranslateService } from '@ngx-translate/core';
 @Component({
     selector: 'app-biller-company',
     templateUrl: './biller-company.component.html',
-    styleUrls: ['./biller-company.component.css']
+    styleUrls: ['./biller-company.component.css', '../../layouts/content/content.component.css']
 })
 export class BillerCompanyComponent implements OnInit {
 
@@ -40,13 +40,14 @@ export class BillerCompanyComponent implements OnInit {
     gridOptions = {
         columnDefs: [
             { headerName: 'No', field: 'nourut', width: 100, pinned: 'left', editable: false },
-            { headerName: 'Name', field: 'name', width: 400, editable: false },
+            { headerName: 'Name', field: 'name', width: 770, editable: false },
             { headerName: ' ', width: 150, cellRenderer: 'actionRenderer'}
         ],
         rowData: this.billerCompanies,
         enableSorting: true,
         enableFilter: true,
         pagination: true,
+        enableColResize: true,
         paginationPageSize: 10,
         cacheOverflowSize : 2,
         maxConcurrentDatasourceRequests : 2,
@@ -92,7 +93,7 @@ export class BillerCompanyComponent implements OnInit {
     public onActionEditClick(data: any) {
         console.log('View action clicked', data);
         const dialogRef = this.dialog.open(BillerCompanyDialogComponent, {
-          width: '1000px',
+          width: '600px',
           data: { action: 'Edit', entity: this.entityName, billerCompany: data }
         });
 
@@ -171,7 +172,7 @@ export class BillerCompanyComponent implements OnInit {
 
     openNewDialog(): void {
       const dialogRef = this.dialog.open(BillerCompanyDialogComponent, {
-        width: '1000px',
+        width: '600px',
         data: { action: 'Add', entity: 'Biller Company' }
       });
 

@@ -7,7 +7,7 @@
     </mat-card-header>
     <mat-card-content>
         <div style="text-align: left;">
-            <button mat-raised-button color="primary"  (click)="openNewDialog()" class="button-custom">Add</button>&nbsp;&nbsp;
+            <button mat-raised-button color="primary"  (click)="openNewDialog()" class="button-custom">Add Response Code</button>
             <button mat-raised-button class="primary"  (click)="exportCSV('csv')" class="button-custom" >Export CSV</button>
         </div>
         <br>
@@ -34,7 +34,7 @@
         <br>
         <ag-grid-angular 
         #agGrid
-            style="height: 313px;" 
+            style="height: 314px;" 
             class="{{theme}}"
             [gridOptions]="gridOptions" 
             (gridReady)="onGridReady($event)"

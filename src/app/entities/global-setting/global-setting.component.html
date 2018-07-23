@@ -32,14 +32,14 @@
         <br>
         <ag-grid-angular 
             #agGrid
-            style="height: 500px;" 
+            style="height: 314px;" 
             class="{{theme}}"
             [gridOptions]="gridOptions" 
             (gridReady)="onGridReady($event)"
             (rowClicked)="onRowClicked($event)"
             >
         </ag-grid-angular>
-        <div style="width: 1000px" >
+        <div>
             <mat-paginator 
                 [length]="totalData"
                 [pageSize]="totalRecord"

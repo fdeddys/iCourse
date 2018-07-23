@@ -6,14 +6,14 @@ import { AuditTrailService } from './audit-trail.service';
 
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA, MatDatepickerInputEvent } from '@angular/material';
 
-import { NO_DATA_GRID_MESSAGE, TOTAL_RECORD_PER_PAGE } from '../../shared/constant/base-constant';
+import { GRID_THEME, NO_DATA_GRID_MESSAGE, TOTAL_RECORD_PER_PAGE } from '../../shared/constant/base-constant';
 import { MatActionButtonComponent } from '../../shared/templates/mat-action-button.component';
 import { FormControl } from '@angular/forms';
 
 @Component({
     selector: 'app-audit-trail',
     templateUrl: './audit-trail.component.html',
-    styleUrls: ['./audit-trail.component.css']
+    styleUrls: ['./audit-trail.component.css', '../../layouts/content/content.component.css']
 })
 export class AuditTrailComponent implements OnInit {
 
@@ -22,7 +22,7 @@ export class AuditTrailComponent implements OnInit {
     private gridColumnApi;
     auditTrails: AuditTrail[];
     // auditTrail: AuditTrail;
-
+    theme: String = GRID_THEME;
     messageNoData: string = NO_DATA_GRID_MESSAGE;
     curPage = 1;
     totalData = 0;
@@ -49,6 +49,7 @@ export class AuditTrailComponent implements OnInit {
         pagination: true,
         paginationPageSize: 10,
         suppressPaginationPanel : true,
+        enableColResize: true,
         localeText: {noRowsToShow: this.messageNoData},
         frameworkComponents: {
             actionRenderer: MatActionButtonComponent

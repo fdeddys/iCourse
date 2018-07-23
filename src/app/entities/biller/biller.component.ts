@@ -17,14 +17,14 @@ import { FormControl } from '@angular/forms';
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA, MatPaginator } from '@angular/material';
 
 import { BillerDialogComponent } from './biller-dialog.component';
-import { NO_DATA_GRID_MESSAGE, TOTAL_RECORD_PER_PAGE, REPORT_PATH } from '../../shared/constant/base-constant';
+import { GRID_THEME, NO_DATA_GRID_MESSAGE, TOTAL_RECORD_PER_PAGE, REPORT_PATH } from '../../shared/constant/base-constant';
 import { MatActionButtonComponent } from '../../shared/templates/mat-action-button.component';
 import { SharedService } from '../../shared/services/shared.service';
 
 @Component({
     selector: 'app-biller',
     templateUrl: './biller.component.html',
-    styleUrls: ['./biller.component.css']
+    styleUrls: ['./biller.component.css', '../../layouts/content/content.component.css']
 })
 export class BillerComponent implements OnInit {
 
@@ -52,7 +52,7 @@ export class BillerComponent implements OnInit {
     totalData = 0;
     totalRecord = TOTAL_RECORD_PER_PAGE;
     menuName = '';
-
+    theme: String = GRID_THEME;
     dateFStartCtrl: FormControl;
     dateTStartCtrl: FormControl;
     dateFThroughCtrl: FormControl;
@@ -77,15 +77,16 @@ export class BillerComponent implements OnInit {
             { headerName: 'No', field: 'no', width: 100, pinned: 'left', editable: false },
             { headerName: 'Member Code', field: 'memberCode', width: 150, pinned: 'left', editable: false },
             { headerName: 'Name', field: 'member.name', width: 300, pinned: 'left', editable: false },
-            { headerName: 'Date Start', field: 'dateStart', width: 185 },
-            { headerName: 'Date Through', field: 'dateThru', width: 185 },
-            { headerName: ' ', width: 150, cellRenderer: 'actionRenderer'}
+            { headerName: 'Date Start', field: 'dateStart', width: 185, pinned: 'left', editable: false },
+            { headerName: 'Date Through', field: 'dateThru', width: 185, pinned: 'left', editable: false },
+            { headerName: ' ', width: 150, cellRenderer: 'actionRenderer', pinned: 'left', editable: false}
         ],
         rowData: this.billers,
         enableSorting: true,
         enableFilter: true,
         // rowSelection: "multiple"
         pagination: true,
+        enableColResize: true,
         paginationPageSize: 10,
         suppressPaginationPanel : true,
         localeText: {noRowsToShow: this.messageNoData},
@@ -365,7 +366,7 @@ export class BillerComponent implements OnInit {
         }
         const dialogRef = this.dialog.open(BillerDialogComponent, {
             width: '1000px',
-            height: '1100px',
+            height: '610px',
             data: datasend
         });
 

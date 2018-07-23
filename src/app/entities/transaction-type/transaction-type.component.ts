@@ -14,7 +14,7 @@ import { TranslateService } from '@ngx-translate/core';
 @Component({
     selector: 'app-transaction-type',
     templateUrl: './transaction-type.component.html',
-    styleUrls: ['./transaction-type.component.css']
+    styleUrls: ['./transaction-type.component.css', '../../layouts/content/content.component.css']
 })
 
 export class TransTypeComponent implements OnInit {
@@ -39,15 +39,16 @@ export class TransTypeComponent implements OnInit {
     gridOptions = {
         columnDefs: [
             { headerName: 'No', field: 'no', width: 100, minWidth: 100, maxWidth: 100, pinned: 'left', editable: false },
-            { headerName: 'Code', field: 'code', width: 150, pinned: 'left', editable: false },
-            { headerName: 'Name', field: 'name', width: 250, pinned: 'left', editable: false },
-            { headerName: ' ', width: 150, minWidth: 150, maxWidth: 150, cellRenderer: 'actionRenderer'}
+            { headerName: 'Code', field: 'code', width: 220, pinned: 'left', editable: false },
+            { headerName: 'Name', field: 'name', width: 600, pinned: 'left', editable: false },
+            { headerName: ' ', width: 100, minWidth: 100, maxWidth: 150, cellRenderer: 'actionRenderer'}
         ],
         rowData: this.transTypes,
         enableSorting: true,
         enableFilter: true,
         // rowSelection: "multiple"
         pagination: true,
+        enableColResize: true,
         paginationPageSize: 10,
         suppressPaginationPanel : true,
         localeText: {noRowsToShow: this.messageNoData},
@@ -148,7 +149,7 @@ export class TransTypeComponent implements OnInit {
     public onActionEditClick(data: any) {
         console.log('View action clicked', data);
         const dialogRef = this.dialog.open(TransTypeDialogComponent, {
-            width: '1000px',
+            width: '60%',
             data: { action: 'Edit', entity: this.entityName, transType: data }
         });
 
@@ -175,8 +176,8 @@ export class TransTypeComponent implements OnInit {
 
     openNewDialog(): void {
         const dialogRef = this.dialog.open(TransTypeDialogComponent, {
-            width: '1000px',
-            data: {action: 'Add', entity: 'Biller Company'}
+            width: '60%',
+            data: {action: 'Add', entity:  this.entityName}
         });
 
         dialogRef.afterClosed().subscribe(result => {

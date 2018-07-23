@@ -51,8 +51,8 @@
 		</mat-grid-list>
 
         <ag-grid-angular 
-			style="height: 600px;" 
-			class="ag-theme-material"
+			style="height: 340px;" 
+			class="{{theme}}"
 			[gridOptions]="gridOptions"
 			(gridReady)="onGridReady($event)"
 			>

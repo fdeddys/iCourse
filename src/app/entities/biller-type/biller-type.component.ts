@@ -12,7 +12,7 @@ import { SharedService } from '../../shared/services/shared.service';
 @Component({
   selector: 'app-biller-type',
   templateUrl: './biller-type.component.html',
-  styleUrls: ['./biller-type.component.css']
+  styleUrls: ['./biller-type.component.css', '../../layouts/content/content.component.css']
 })
 export class BillerTypeComponent implements OnInit {
 
@@ -40,8 +40,8 @@ export class BillerTypeComponent implements OnInit {
     gridOptions = {
         columnDefs: [
             { headerName: 'No', field: 'nourut', width: 100, pinned: 'left', editable: false },
-            { headerName: 'Name', field: 'name', width: 400, editable: false },
-            { headerName: 'Type', field: 'billPayType', width: 150, editable: false },
+            { headerName: 'Name', field: 'name', width: 450, editable: false },
+            { headerName: 'Type', field: 'billPayType', width: 320, editable: false },
             { headerName: ' ', width: 150, cellRenderer: 'actionRenderer'}
           // { headerName: ' ', suppressMenu: true,
           //   suppressSorting: true,
@@ -55,6 +55,7 @@ export class BillerTypeComponent implements OnInit {
         enableSorting: true,
         enableFilter: true,
         pagination: true,
+        enableColResize: true,
         paginationPageSize: 10,
         cacheOverflowSize : 2,
         maxConcurrentDatasourceRequests : 2,
