@@ -18,6 +18,7 @@ import { TranslateService } from '@ngx-translate/core';
 export class TransTypeDialogComponent implements OnInit {
     transType: TransType;
     name: string;
+    code: string;
     transTypeForm: FormGroup;
     submitted = false;
     duration = SNACKBAR_DURATION_IN_MILLISECOND;
@@ -38,6 +39,7 @@ export class TransTypeDialogComponent implements OnInit {
     ngOnInit() {
         this.transTypeForm = this.formBuilder.group({
             name: ['', [CommonValidatorDirective.required]],
+            code: ['', [CommonValidatorDirective.required]],
         });
 
         this.transType = {};
@@ -45,6 +47,7 @@ export class TransTypeDialogComponent implements OnInit {
             // search
             this.transType = this.data.transType;
             this.name = this.transType.name;
+            this.code = this.transType.code;
         }
     }
 

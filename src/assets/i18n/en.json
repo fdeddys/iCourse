@@ -179,7 +179,8 @@
             "detail": {
                 "title": "{{action}} {{entity}}"
             },
-            "name": "Name"
+            "name": "Name",
+            "code": "code"
         },
         "user": {
             "home": {
