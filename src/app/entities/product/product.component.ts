@@ -62,7 +62,7 @@ export class ProductComponent implements OnInit {
             { headerName: 'Name', field: 'name', width: 250, pinned: 'left', editable: false },
             { headerName: 'Product Code', field: 'productCode', width: 200, editable: false },
             { headerName: 'Denom', field: 'denom', width: 150, cellStyle: {textAlign: 'right'}, editable: false },
-            { headerName: 'Sell Price', field: 'sellPrice', width: 150, cellStyle: {textAlign: 'right'} },
+            // { headerName: 'Sell Price', field: 'sellPrice', width: 150, cellStyle: {textAlign: 'right'} },
             { headerName: 'Status', field: 'status', width: 200 },
             // { headerName: 'Search By', field: 'searchBy', width: 250 },
             // { headerName: 'Search By Biller', field: 'searchByMemberId', width: 250 },
@@ -275,7 +275,7 @@ export class ProductComponent implements OnInit {
                 productCode : null,
                 searchBy : null,
                 searchByMemberId : null,
-                sellPrice : null,
+                // sellPrice : null,
                 status : 'ACTIVE'
             },
         };

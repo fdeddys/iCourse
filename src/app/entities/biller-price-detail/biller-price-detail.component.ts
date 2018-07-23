@@ -269,6 +269,12 @@ export class BillerPriceDetailComponent implements OnInit {
         }
     }
 
+    valCheck(el): void {
+        if (this.billerPriceDetail[el] < 0) {
+            this.billerPriceDetail[el] = 0;
+        }
+    }
+
     validate(): void {
         this.submitted = true;
         // stop here if form is invalid
