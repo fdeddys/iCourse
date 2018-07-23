@@ -42,8 +42,8 @@ export class ResponseCodeComponent implements OnInit {
             { headerName: 'No', field: 'nourut', width: 76, pinned: 'left', editable: false },
             { headerName: 'Code', field: 'responseCode', width: 110, editable: false },
             { headerName: 'Description', field: 'description', width: 290, editable: false },
-            { headerName: 'Member Biller', field: 'billerHeader.member.name', width: 200,   editable: false },
-            { headerName: 'Member Type', field: 'billerHeader.memberType.name', width: 150,  editable: false },
+            { headerName: 'Member', field: 'billerHeader.member.name', width: 270,   editable: false },
+            { headerName: 'Member Type', field: 'billerHeader.memberType.name', width: 160,  editable: false },
             { headerName: ' ', width: 100, cellRenderer: 'actionRenderer'}
           // { headerName: ' ', suppressMenu: true,
           //   suppressSorting: true,
@@ -56,6 +56,7 @@ export class ResponseCodeComponent implements OnInit {
         rowData: this.responseCodes,
         enableSorting: true,
         enableFilter: true,
+        enableColResize: true,
         pagination: true,
         paginationPageSize: 10,
         cacheOverflowSize : 2,

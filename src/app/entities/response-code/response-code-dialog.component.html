@@ -5,7 +5,7 @@
 <mat-dialog-content> 
  
   <mat-form-field class="form-half-width" style="margin-right: 10%"> 
-        <mat-select placeholder="Member Biller" [(ngModel)]="responseCode.billerHeaderId"  name ="billerHeaderId"  required>
+        <mat-select placeholder="Member" [(ngModel)]="responseCode.billerHeaderId"  name ="billerHeaderId"  required>
             <mat-option *ngFor="let biller of billerList" [value]="biller.id"> 
                 {{biller.member.name}} [{{biller.memberType.name}}] 
             </mat-option> 
