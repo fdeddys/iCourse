@@ -176,7 +176,7 @@ export class TransTypeComponent implements OnInit {
     openNewDialog(): void {
         const dialogRef = this.dialog.open(TransTypeDialogComponent, {
             width: '1000px',
-            data: {action: 'Add', entity: 'Biller Company'}
+            data: {action: 'Add', entity:  this.entityName}
         });
 
         dialogRef.afterClosed().subscribe(result => {
