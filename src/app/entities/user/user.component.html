@@ -9,8 +9,7 @@
         <div style="text-align: left">
                 <button mat-raised-button color="primary" (click)="openNewDialog()" style="margin-bottom: 10px;">{{ "ottoAG.user.home.addLabelButton" | translate }}</button>
                 <button mat-raised-button class="primary"  (click)="exportCSV('csv')" style="margin-bottom: 10px;">{{ "entity.action.exportCSV" | translate }}</button>
-        </div>
-        <br>
+        </div> 
         <div>
             <mat-form-field class="container-half-width" >
                 <input matInput placeholder="{{ 'ottoAG.user.filter.name' | translate }}" [(ngModel)]="filter.name"  
@@ -39,7 +38,7 @@
         </div>
         <ag-grid-angular 
             #agGrid
-            style="height: 550px" 
+            style="height: 315px" 
             class="{{theme}}"
             [gridOptions]="gridOptions" 
             (gridReady)="onGridReady($event)"

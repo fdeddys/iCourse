@@ -21,7 +21,7 @@ import { Filter } from '../../shared/model/filter';
 @Component({
     selector: 'app-product',
     templateUrl: './product.component.html',
-    styleUrls: ['./product.component.css']
+    styleUrls: ['./product.component.css', '../../layouts/content/content.component.css']
 })
 export class ProductComponent implements OnInit {
 
@@ -59,14 +59,14 @@ export class ProductComponent implements OnInit {
         columnDefs: [
             // { headerName: 'Name', field: 'name', checkboxSelection: true, width: 250, pinned: 'left', editable: true },
             { headerName: 'No', field: 'no', width: 100, minWidth: 100, maxWidth: 100, pinned: 'left', editable: false },
-            { headerName: 'Name', field: 'name', width: 250, pinned: 'left', editable: false },
-            { headerName: 'Product Code', field: 'productCode', width: 200, editable: false },
+            { headerName: 'Name', field: 'name', width: 300, pinned: 'left', editable: false },
+            { headerName: 'Product Code', field: 'productCode', width: 150, editable: false },
             { headerName: 'Denom', field: 'denom', width: 150, cellStyle: {textAlign: 'right'}, editable: false },
             { headerName: 'Sell Price', field: 'sellPrice', width: 150, cellStyle: {textAlign: 'right'} },
-            { headerName: 'Status', field: 'status', width: 200 },
+            { headerName: 'Status', field: 'status', width: 150 },
             // { headerName: 'Search By', field: 'searchBy', width: 250 },
             // { headerName: 'Search By Biller', field: 'searchByMemberId', width: 250 },
-            { headerName: ' ', width: 150, minWidth: 150, maxWidth: 150, cellRenderer: 'actionRenderer'}
+            { headerName: ' ', width: 80, minWidth: 80, maxWidth: 150, cellRenderer: 'actionRenderer'}
             // { headerName: ' ', suppressMenu: true,
             //     suppressSorting: true,
             //     template: `
@@ -81,6 +81,7 @@ export class ProductComponent implements OnInit {
         enableFilter: true,
         // rowSelection: "multiple"
         pagination: true,
+        enableColResize: true,
         paginationPageSize: 10,
         suppressPaginationPanel : true,
         localeText: {noRowsToShow: this.messageNoData},

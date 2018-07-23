@@ -2,13 +2,13 @@
     <mat-card-header>
         <mat-card-title style="align-items: center">
             <!-- <h2 style="color: rgb(226, 0, 0)" >Member Registration</h2>         -->
-            <h2 mat-dialog-title>Member Maintenance</h2>    
+            <h2 mat-dialog-title >Member Maintenance</h2>    
         </mat-card-title>
     </mat-card-header>
     <mat-card-content>
         <div style="text-align: left">
-            <button mat-raised-button color="primary" (click)="openNewDialog()" style="margin-bottom: 10px;">Add Member</button>
-            <button mat-raised-button class="primary"  (click)="exportCSV('csv')" style="margin-bottom: 10px;">Export CSV</button>
+            <button mat-raised-button color="primary" (click)="openNewDialog()">Add Member</button>
+            <button mat-raised-button class="primary"  (click)="exportCSV('csv')">Export CSV</button>
         </div>
         <br>
         <div>
@@ -16,11 +16,11 @@
                 <input matInput placeholder="Filter Name " [(ngModel)]="filter.name"  
                     name ="name"  >
             </mat-form-field>
-            <mat-form-field class="container-half-width"  style="margin-left: 30px">
+            <mat-form-field class="container-half-width" >
                 <input matInput placeholder="Filter Description " [(ngModel)]="filter.description"  
                     name ="descr" >
             </mat-form-field>
-            <mat-form-field class="form-full-width" style="margin-left: 30px">
+            <mat-form-field class="container-half-width">
                 <mat-select placeholder="Filter Status" [(ngModel)]="filter.active" name="status">
                     <mat-option *ngFor="let status of statusList" [value]="status">
                         <!-- {{ status === 'true' ? 'ACTIVE' : ( status === 'false' ? 'INACTIVE' : 'ALL' )   }} -->
@@ -28,12 +28,12 @@
                     </mat-option>
                 </mat-select>
             </mat-form-field>
-            <button mat-raised-button color="primary" (click)="actionfilter()" style="margin-left: 30px">Filter</button>
+            <button mat-raised-button color="primary" (click)="actionfilter()" >Filter</button>
         </div>
         <br>
         <ag-grid-angular 
             #agGrid
-            style="height: 550px;" 
+            style="height: 348px;" 
             class="{{theme}}"
             [gridOptions]="gridOptions" 
             (gridReady)="onGridReady($event)"

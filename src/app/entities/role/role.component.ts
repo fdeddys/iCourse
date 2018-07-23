@@ -15,7 +15,7 @@ import { MainService } from '../../layouts/main/main.service';
 @Component({
   selector: 'app-role',
   templateUrl: './role.component.html',
-  styleUrls: ['./role.component.css']
+  styleUrls: ['./role.component.css', '../../layouts/content/content.component.css']
 })
 export class RoleComponent implements MainChild, OnInit {
 
@@ -54,6 +54,7 @@ export class RoleComponent implements MainChild, OnInit {
       cacheOverflowSize : 2,
       maxConcurrentDatasourceRequests : 2,
       infiniteInitialRowCount : 1,
+      enableColResize: true,
       maxBlocksInCache : 2,
       suppressPaginationPanel : true,
       localeText: {noRowsToShow: this.messageNoData},
@@ -92,7 +93,7 @@ export class RoleComponent implements MainChild, OnInit {
   public onActionEditClick(data: any) {
       console.log('View action clicked', data);
       const dialogRef = this.dialog.open(RoleDialogComponent, {
-        width: '1000px',
+        width: '60%',
         data: { action: 'Edit', entity: 'Role', role: data }
       });
 
@@ -155,7 +156,7 @@ export class RoleComponent implements MainChild, OnInit {
 
   openNewDialog(): void {
     const dialogRef = this.dialog.open(RoleDialogComponent, {
-      width: '1000px',
+      width: '60%',
       data: { action: 'Add', entity: 'Role' }
     });
 
