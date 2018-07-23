@@ -153,11 +153,11 @@ export class BillerPriceDetailComponent implements OnInit {
     private onSuccess(data, headers) {
         console.log('success..', data);
         this.dataListBill = data;
-        if (this.dataListBill.length > 1) {
+        // if (this.dataListBill.length > 1) {
             for (let index = 0; index < this.dataListBill.length; index++) {
                 this.dataListBill[index].no = index + 1;
             }
-        }
+        // }
     }
 
     private onError(error) {
