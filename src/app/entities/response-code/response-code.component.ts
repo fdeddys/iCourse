@@ -34,8 +34,12 @@ export class ResponseCodeComponent implements OnInit {
     billerList = [];
     @ViewChild(MatPaginator) paginator: MatPaginator;
 
-    filter = {
-      };
+    filter: ResponseCodeFilter = {
+        responseCode: '',
+        description: '',
+        memberName: '',
+        memberType: ''
+    };
 
     gridOptions = {
         columnDefs: [
@@ -184,7 +188,7 @@ export class ResponseCodeComponent implements OnInit {
         this.filterBtn('');
     }
 
-    openNewDialog(mode, data): void {
+    openNewDialog(): void {
         const dialogRef = this.dialog.open(ResponseCodeDialogComponent, {
             width: '500px',
             data: { action: 'Add', entity: 'Response Code', billerData: this.billerList }
@@ -241,4 +245,11 @@ export class ResponseCodeComponent implements OnInit {
          link.click();
          window.URL.revokeObjectURL(url);
      }
+}
+
+export interface ResponseCodeFilter {
+    responseCode?: string;
+    description?: string;
+    memberName?: string;
+    memberType?: string;
 }
