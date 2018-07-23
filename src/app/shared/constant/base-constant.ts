@@ -1,4 +1,5 @@
-export const GRID_THEME = 'ag-theme-material';
+// export const GRID_THEME = 'ag-theme-material';
+export const GRID_THEME = 'ag-theme-balham';
 // export const SERVER = 'http://45.126.133.31:8080/';
 // export const SERVER = 'https://localhost:8080/ottoagbe/';
 

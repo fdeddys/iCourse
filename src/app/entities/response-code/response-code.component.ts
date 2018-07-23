@@ -13,7 +13,7 @@ import { Biller, BillerService } from '../biller';
 @Component({
   selector: 'app-response-code',
   templateUrl: './response-code.component.html',
-  styleUrls: ['./response-code.component.css']
+  styleUrls: ['./response-code.component.css'],
 })
 export class ResponseCodeComponent implements OnInit {
 
@@ -35,18 +35,16 @@ export class ResponseCodeComponent implements OnInit {
     @ViewChild(MatPaginator) paginator: MatPaginator;
 
     filter = {
-        name : null,
-        billPayType: 'ALL',
       };
 
     gridOptions = {
         columnDefs: [
-            { headerName: 'No', field: 'nourut', width: 100, pinned: 'left', editable: false },
-            { headerName: 'Biller', field: 'billerHeader.member.name', width: 200,   editable: false },
+            { headerName: 'No', field: 'nourut', width: 76, pinned: 'left', editable: false },
+            { headerName: 'Code', field: 'responseCode', width: 110, editable: false },
+            { headerName: 'Description', field: 'description', width: 290, editable: false },
+            { headerName: 'Member Biller', field: 'billerHeader.member.name', width: 200,   editable: false },
             { headerName: 'Member Type', field: 'billerHeader.memberType.name', width: 150,  editable: false },
-            { headerName: 'Response Code', field: 'responseCode', width: 180, editable: false },
-            { headerName: 'Description', field: 'description', width: 300, editable: false },
-            { headerName: ' ', width: 150, cellRenderer: 'actionRenderer'}
+            { headerName: ' ', width: 100, cellRenderer: 'actionRenderer'}
           // { headerName: ' ', suppressMenu: true,
           //   suppressSorting: true,
           //   template:
@@ -64,6 +62,7 @@ export class ResponseCodeComponent implements OnInit {
         maxConcurrentDatasourceRequests : 2,
         infiniteInitialRowCount : 1,
         maxBlocksInCache : 2,
+       // rowHeight : 34,
         suppressPaginationPanel : true,
         localeText: {noRowsToShow: this.messageNoData},
         frameworkComponents: {
@@ -97,8 +96,8 @@ export class ResponseCodeComponent implements OnInit {
     public onActionEditClick(data: any) {
         console.log('View action clicked', data);
         const dialogRef = this.dialog.open(ResponseCodeDialogComponent, {
-        width: '1000px',
-        data: { action: 'Edit', entity: 'Bill Type', responseCode: data, billerData: this.billerList }
+        width: '500px',
+        data: { action: 'Edit', entity: 'Response Code', responseCode: data, billerData: this.billerList }
         });
 
         dialogRef.afterClosed().subscribe(result => {
@@ -144,15 +143,6 @@ export class ResponseCodeComponent implements OnInit {
         if (page !== '') {
             this.curPage = page;
         }
-        let statusAll = false;
-        switch (this.filter.billPayType) {
-          case 'ALL':
-              console.log('hapus active');
-              statusAll = true;
-              // delete this.filter.active ;
-              this.filter.billPayType = null;
-              break;
-      }
       this.responseCodeService.filter({
           page: this.curPage,
           count: this.totalRecord,
@@ -162,49 +152,27 @@ export class ResponseCodeComponent implements OnInit {
           (res: HttpResponse<ResponseCode[]>) => this.onSuccess(res.body, res.headers),
           (res: HttpErrorResponse) => this.onError(res.message),
           () => { console.log('finally');
-                  if ( statusAll ) {
-                    this.filter.billPayType = 'ALL';
-                  }
                 }
         );
       }
-
     ngOnInit() {
-        // this.memberService.query({
-        //     page: 1,
-        //     count: 10000,
-        // })
-        // .subscribe(
-        //         (res: HttpResponse<Member[]>) => this.onSuccessMemb(res.body, res.headers),
-        //         (res: HttpErrorResponse) => this.onError(res.message),
-        //         () => { console.log('finally'); }
-        // );
-
         this.billerService.queryAll({
             page: 1,
             count: 10000,
         })
         .subscribe(
-                (res: HttpResponse<Biller[]>) => this.onSuccessMemb(res.body, res.headers),
+                (res: HttpResponse<Biller[]>) => {
+                     this.onSuccessMemb(res.body, res.headers);
+                },
                 (res: HttpErrorResponse) => this.onError(res.message),
                 () => { console.log('finally'); }
         );
-
+        console.log('', this.billerList);
     }
 
     private onSuccessMemb(data, headers) {
-        console.log('isi response ==> ', data);
-        // this.memberList = data.content;
-        this.billerList = data.content;
-        // this.billerList = [];
-        // this.billerList.push('ALL');
-        // for (const datas of data) {
-        //     console.log(datas);
-        //     this.billerList.push(datas);
-        // }
+         this.billerList = data.content;
     }
-
-
     onGridReady(params) {
         this.gridApi = params.api;
         this.gridColumnApi = params.columnApi;
@@ -217,7 +185,7 @@ export class ResponseCodeComponent implements OnInit {
 
     openNewDialog(mode, data): void {
         const dialogRef = this.dialog.open(ResponseCodeDialogComponent, {
-            width: '1000px',
+            width: '500px',
             data: { action: 'Add', entity: 'Response Code', billerData: this.billerList }
         });
         dialogRef.afterClosed().subscribe(result => {
@@ -272,19 +240,4 @@ export class ResponseCodeComponent implements OnInit {
          link.click();
          window.URL.revokeObjectURL(url);
      }
-
-    //  loadBillPayType(): void {
-    //     this.sharedService.getBillPayType().subscribe(
-    //         (res) => {
-    //             this.billPayTypeList = [];
-    //             this.billPayTypeList.push('ALL');
-    //             for (const datas of res.body) {
-    //               console.log(datas);
-    //               this.billPayTypeList.push(datas);
-    //             }
-    //         },
-    //         (res: HttpErrorResponse) => this.onError(res.message),
-    //         () => { console.log('finally'); }
-    //     );
-    //   }
 }
