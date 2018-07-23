@@ -8,7 +8,8 @@
         <input matInput placeholder="{{ 'ottoAG.transactionList.responder' | translate }}" name="responder" [(ngModel)]="transList.idResponder.name" disabled>
     </mat-form-field>
     <mat-form-field class="form-full-width">
-        <input matInput placeholder="{{ 'ottoAG.transactionList.transType' | translate }}" name="transType" [(ngModel)]="transList.transType.name" disabled>
+        <input matInput placeholder="{{ 'ottoAG.transactionList.transType' | translate }}" name="transType" 
+        [(ngModel)]="transList.transType.name" disabled>
     </mat-form-field>
     <mat-form-field class="form-full-width form-separator">
         <input matInput placeholder="{{ 'ottoAG.transactionList.product' | translate }}" name="product" [(ngModel)]="transList.billerProduct.name" disabled>

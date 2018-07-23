@@ -19,6 +19,7 @@ export class TransListDialogComponent implements OnInit {
     transList: TransList;
     transListForm: FormGroup;
     submitted = false;
+    modeTitle: any;
     duration = SNACKBAR_DURATION_IN_MILLISECOND;
 
     constructor(
