@@ -180,7 +180,7 @@
                 "title": "{{action}} {{entity}}"
             },
             "name": "Name",
-            "code": "code"
+            "code": "Code"
         },
         "user": {
             "home": {

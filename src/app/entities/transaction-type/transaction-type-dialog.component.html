@@ -3,7 +3,7 @@
 </h1>
 <form name="transTypeForm" (ngSubmit)="f.form.valid && onSubmit()" #f="ngForm" novalidate>
     <mat-dialog-content>
-        <mat-form-field class="form-full-width">
+        <mat-form-field class="form-full-width" style="margin-right: 5%">
             <input matInput placeholder="{{ 'ottoAG.transactionType.name' | translate }}" [(ngModel)]="transType.name" cdkFocusInitial name ="nm" [(ngModel)]="transType.name" #name="ngModel" [ngClass]="{ 'is-invalid': f.submitted && name.invalid }" required maxlength="50">
             <mat-error *ngIf="submitted && form.name.errors" class="invalid-feedback">
                 <div *ngIf="form.name.errors.required"> {{form.name.errors.message}}</div>
@@ -11,7 +11,7 @@
         </mat-form-field>
         <mat-form-field class="form-full-width">
             <input matInput placeholder="{{ 'ottoAG.transactionType.code' | translate }}" [(ngModel)]="transType.code" cdkFocusInitial name ="cd" 
-                [(ngModel)]="transType.code" #name="ngModel" [ngClass]="{ 'is-invalid': f.submitted && code.invalid }" required maxlength="15">
+                [(ngModel)]="transType.code" #name="ngModel" [ngClass]="{ 'is-invalid': f.submitted && code.invalid }" required maxlength="15" [disabled]="data.action === 'Edit'">
             <mat-error *ngIf="submitted && form.code.errors" class="invalid-feedback">
                 <div *ngIf="form.code.errors.required"> {{form.code.errors.message}}</div>
             </mat-error> 
