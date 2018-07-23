@@ -1,13 +1,12 @@
-import { Component, OnInit, Inject } from '@angular/core';
-
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { MatDialog, MatDialogRef, MAT_DIALOG_DATA, MatSnackBar } from '@angular/material';
+import { HttpErrorResponse, HttpResponse } from '@angular/common/http';
+import { Component, Inject, OnInit } from '@angular/core';
+import { FormBuilder, FormGroup } from '@angular/forms';
+import { MatDialogRef, MatSnackBar, MAT_DIALOG_DATA } from '@angular/material';
+import { SNACKBAR_DURATION_IN_MILLISECOND } from '../../shared/constant/base-constant';
+import { CommonValidatorDirective } from '../../validators/common.validator';
 import { ResponseCode } from './response-code.model';
 import { ResponseCodeService } from './response-code.service';
-import { HttpResponse, HttpErrorResponse } from '@angular/common/http';
-import { CommonValidatorDirective } from '../../validators/common.validator';
-import { SNACKBAR_DURATION_IN_MILLISECOND } from '../../shared/constant/base-constant'; 
-import { Member, MemberService } from '../member';
+
 
 @Component({
     selector: 'app-response-code-dialog',
@@ -25,7 +24,7 @@ export class ResponseCodeDialogComponent implements OnInit {
     duration = SNACKBAR_DURATION_IN_MILLISECOND;
 
     billPayTypeList = [];
-    memberList = [];
+    billerList = [];
 
     constructor(
         private formBuilder: FormBuilder,
@@ -38,18 +37,19 @@ export class ResponseCodeDialogComponent implements OnInit {
 
     ngOnInit() {
         this.responseCodeForm = this.formBuilder.group({
-            responseCode: ['', [CommonValidatorDirective.required]],
-            description: ['', [CommonValidatorDirective.required]],
+            billerHeaderId: ['', CommonValidatorDirective.required],
+            code: ['', CommonValidatorDirective.required],
+            description: ['', CommonValidatorDirective.required]
         });
         this.responseCode = {};
         // this.responseCode.billPayType = false;
         if ( this.data.action === 'Edit' ) {
             // search
-            this.responseCode = this.data.ResponseCode;
-            this.name = this.responseCode.decription;
-           // this.checked =  this.responseCode.billPayType;
+            this.responseCode = this.data.responseCode;
+            this.responseCode.billerHeaderId = this.data.responseCode.billerHeader.id;
+            console.log('aaaaaaa', this.responseCode);
         }
-        this.memberList = this.data.memberData;
+        this.billerList = this.data.billerData;
 
     }
 
@@ -59,9 +59,7 @@ export class ResponseCodeDialogComponent implements OnInit {
 
     onSubmit() {
         // this.responseCode.ispostpaid = this.checked  ;
-        console.log('isi biller = ', this.responseCode);
-        // this.responseCode.name = this.name;
-        console.log('isi biller company ', this.responseCode);
+        console.log('isi biller = ', this.responseCode.responseCode);
         if (this.responseCode.id === undefined) {
             console.log('send to service ', this.responseCode);
 
@@ -99,7 +97,6 @@ export class ResponseCodeDialogComponent implements OnInit {
                     console.log('error msh ', res.error.message);
                 }
             );
-
         }
     }
 

@@ -1,5 +1,5 @@
 mat-sidenav {
-    width: 270px;
+    width: 235px;
 }
 
 .main-container {
@@ -8,7 +8,14 @@ mat-sidenav {
 
 /* navbar */
 .mat-toolbar-row, .mat-toolbar-single-row {
-	height: 80px;
+    /* height: 80px; */
+    height: 62px;
+    /* background: #0b51a0; */
+
+    /* background: rgb(2,0,36);
+    background: linear-gradient(90deg, rgba(2,0,36,1) 0%, rgba(13,68,131,1) 0%, rgba(25,103,191,1) 91%);  */
+    background: rgb(2,0,36);
+    background: linear-gradient(90deg, rgba(2,0,36,1) 0%, rgba(24,79,142,1) 0%, rgba(34,115,205,1) 91%); 
 }
 
 .app-toolbar {
@@ -24,5 +31,9 @@ mat-sidenav {
 
 .icon {
 	padding: 0 14px;
+}
+
+.header-title {
+    font-size: 12px;
 }
 /*  */

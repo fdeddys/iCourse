@@ -5,8 +5,8 @@ export class ResponseCode implements BaseEntity {
     constructor(
         public id?: number,
         public responseCode?: string,
-        public decription?: string,
-        public member?: Member,
+        public description?: string,
+        public billerHeaderId?: number,
         public nourut?: any,
         public errMsg?: any,
     ) {

@@ -24,7 +24,8 @@ body {
     overflow: visible;
 } */
 ::-webkit-scrollbar-thumb:horizontal {
-    background: #1565c0;
+    /* background: #1565c0; */
+    background:#0b51a0; 
     /* -webkit-transition: all .5s; */
 }
 /* ::-webkit-scrollbar-thumb:horizontal:hover {
@@ -44,7 +45,7 @@ body {
     font-family: 'Material Icons';
     font-weight: normal;
     font-style: normal;
-    font-size: 24px;
+    font-size: 14px;
     line-height: 1;
     letter-spacing: normal;
     text-transform: none;
@@ -54,6 +55,7 @@ body {
     direction: ltr;
     -webkit-font-feature-settings: 'liga';
     -webkit-font-smoothing: antialiased;
+    margin-top: -10px inherit;
 }
 
 
@@ -62,7 +64,7 @@ body {
 
 .btnAdd {
     color: white; 
-    background-color: #5289c2
+    background-color: #ad0e0e
 }
 
 .btnSave {

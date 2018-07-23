@@ -1,11 +1,17 @@
 .mat-expansion-panel {
     transition: none !important;
-    box-shadow: none !important;
+    box-shadow: none !important; 
+  
 }
 .mat-expansion-panel-header {
     padding: 0 24px 0 0;
 }
 .mat-list-icon {
     color: rgba(0, 0, 0, 0.54);
-    margin-right: 10px;
+    margin-right: 5px;
+    margin-left: -5px;
+}
+.mat-line{
+    font-size: 80%;
+    margin-left: -5px;
 }

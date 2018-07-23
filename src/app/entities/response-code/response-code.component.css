@@ -1,0 +1,41 @@
+.container-half-width {
+    width: 120px;
+    margin-right: 20px;
+}
+.mat-card{
+    font-size: 2px;
+}
+
+.header-title {
+    font-size: 18px;    
+}
+
+.button-custom { 
+    font-size: 12px;    
+    box-sizing: border-box;
+    position: relative;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    cursor: pointer;
+    outline: 0;
+    border: none;
+    -webkit-tap-highlight-color: transparent;
+    display: inline-block;
+    white-space: nowrap;
+    text-decoration: none;
+    vertical-align: baseline;
+    text-align: center;
+    margin: 0;
+        margin-left: 0px;
+    min-width: 75px;
+    line-height: 32px;
+    padding: 0 16px;
+    border-radius: 2px;
+    overflow: visible;
+    transform: translate3d(0,0,0);
+    transition: background .4s cubic-bezier(.25,.8,.25,1),box-shadow 280ms cubic-bezier(.4,0,.2,1);
+ 
+}
+ 

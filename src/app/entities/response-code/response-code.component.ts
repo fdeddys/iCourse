@@ -8,11 +8,12 @@ import { ResponseCodeConfirmComponent } from './response-code-confirm.component'
 import { GRID_THEME, CSS_BUTTON, NO_DATA_GRID_MESSAGE, REPORT_PATH, TOTAL_RECORD_PER_PAGE } from '../../shared/constant/base-constant';
 import { MatActionButtonComponent } from '../../shared/templates/mat-action-button.component';
 import { Member, MemberService } from '../member';
+import { Biller, BillerService } from '../biller';
 
 @Component({
   selector: 'app-response-code',
   templateUrl: './response-code.component.html',
-  styleUrls: ['./response-code.component.css']
+  styleUrls: ['./response-code.component.css'],
 })
 export class ResponseCodeComponent implements OnInit {
 
@@ -30,20 +31,20 @@ export class ResponseCodeComponent implements OnInit {
     totalData = 0;
     totalRecord = TOTAL_RECORD_PER_PAGE;
     memberList = [];
+    billerList = [];
     @ViewChild(MatPaginator) paginator: MatPaginator;
 
     filter = {
-        name : null,
-        billPayType: 'ALL',
       };
 
     gridOptions = {
         columnDefs: [
-            { headerName: 'No', field: 'nourut', width: 100, pinned: 'left', editable: false },
-            { headerName: 'Response Code', field: 'responseCode', width: 200, editable: false },
-            { headerName: 'Description', field: 'description', width: 200, editable: false },
-            { headerName: 'Member', field: 'member.name', width: 300, pinned: 'left', editable: false },
-            { headerName: ' ', width: 150, cellRenderer: 'actionRenderer'}
+            { headerName: 'No', field: 'nourut', width: 76, pinned: 'left', editable: false },
+            { headerName: 'Code', field: 'responseCode', width: 110, editable: false },
+            { headerName: 'Description', field: 'description', width: 290, editable: false },
+            { headerName: 'Member', field: 'billerHeader.member.name', width: 270,   editable: false },
+            { headerName: 'Member Type', field: 'billerHeader.memberType.name', width: 160,  editable: false },
+            { headerName: ' ', width: 100, cellRenderer: 'actionRenderer'}
           // { headerName: ' ', suppressMenu: true,
           //   suppressSorting: true,
           //   template:
@@ -55,12 +56,14 @@ export class ResponseCodeComponent implements OnInit {
         rowData: this.responseCodes,
         enableSorting: true,
         enableFilter: true,
+        enableColResize: true,
         pagination: true,
         paginationPageSize: 10,
         cacheOverflowSize : 2,
         maxConcurrentDatasourceRequests : 2,
         infiniteInitialRowCount : 1,
         maxBlocksInCache : 2,
+       // rowHeight : 34,
         suppressPaginationPanel : true,
         localeText: {noRowsToShow: this.messageNoData},
         frameworkComponents: {
@@ -74,7 +77,8 @@ export class ResponseCodeComponent implements OnInit {
 
     constructor(  private dialog: MatDialog,
                 private responseCodeService: ResponseCodeService,
-        private memberService: MemberService ) { }
+        private memberService: MemberService,
+        private billerService: BillerService ) { }
 
     public onRowClicked(e) {
         if (e.event.target !== undefined) {
@@ -93,8 +97,8 @@ export class ResponseCodeComponent implements OnInit {
     public onActionEditClick(data: any) {
         console.log('View action clicked', data);
         const dialogRef = this.dialog.open(ResponseCodeDialogComponent, {
-        width: '1000px',
-        data: { action: 'Edit', entity: 'Bill Type', ResponseCode: data, memberData: this.memberList }
+        width: '500px',
+        data: { action: 'Edit', entity: 'Response Code', responseCode: data, billerData: this.billerList }
         });
 
         dialogRef.afterClosed().subscribe(result => {
@@ -140,15 +144,6 @@ export class ResponseCodeComponent implements OnInit {
         if (page !== '') {
             this.curPage = page;
         }
-        let statusAll = false;
-        switch (this.filter.billPayType) {
-          case 'ALL':
-              console.log('hapus active');
-              statusAll = true;
-              // delete this.filter.active ;
-              this.filter.billPayType = null;
-              break;
-      }
       this.responseCodeService.filter({
           page: this.curPage,
           count: this.totalRecord,
@@ -158,31 +153,27 @@ export class ResponseCodeComponent implements OnInit {
           (res: HttpResponse<ResponseCode[]>) => this.onSuccess(res.body, res.headers),
           (res: HttpErrorResponse) => this.onError(res.message),
           () => { console.log('finally');
-                  if ( statusAll ) {
-                    this.filter.billPayType = 'ALL';
-                  }
                 }
         );
       }
-
     ngOnInit() {
-        this.memberService.query({
+        this.billerService.queryAll({
             page: 1,
             count: 10000,
         })
         .subscribe(
-                (res: HttpResponse<Member[]>) => this.onSuccessMemb(res.body, res.headers),
+                (res: HttpResponse<Biller[]>) => {
+                     this.onSuccessMemb(res.body, res.headers);
+                },
                 (res: HttpErrorResponse) => this.onError(res.message),
                 () => { console.log('finally'); }
         );
+        console.log('', this.billerList);
     }
 
     private onSuccessMemb(data, headers) {
-        console.log('isi response ==> ', data);
-        this.memberList = data.content;
+         this.billerList = data.content;
     }
-
-
     onGridReady(params) {
         this.gridApi = params.api;
         this.gridColumnApi = params.columnApi;
@@ -195,8 +186,8 @@ export class ResponseCodeComponent implements OnInit {
 
     openNewDialog(mode, data): void {
         const dialogRef = this.dialog.open(ResponseCodeDialogComponent, {
-            width: '1000px',
-            data: { action: 'Add', entity: 'Response Code', memberData: this.memberList }
+            width: '500px',
+            data: { action: 'Add', entity: 'Response Code', billerData: this.billerList }
         });
         dialogRef.afterClosed().subscribe(result => {
             console.log('The dialog was closed = [', result, ']');
@@ -246,23 +237,8 @@ export class ResponseCodeComponent implements OnInit {
          document.body.appendChild(link);
          link.setAttribute('style', 'display: none');
          link.href = url;
-         link.download = 'billertype.csv';
+         link.download = 'responsecode.csv';
          link.click();
          window.URL.revokeObjectURL(url);
      }
-
-    //  loadBillPayType(): void {
-    //     this.sharedService.getBillPayType().subscribe(
-    //         (res) => {
-    //             this.billPayTypeList = [];
-    //             this.billPayTypeList.push('ALL');
-    //             for (const datas of res.body) {
-    //               console.log(datas);
-    //               this.billPayTypeList.push(datas);
-    //             }
-    //         },
-    //         (res: HttpErrorResponse) => this.onError(res.message),
-    //         () => { console.log('finally'); }
-    //     );
-    //   }
 }

@@ -45,7 +45,7 @@ export class ProductComponent implements OnInit {
     cssButton = CSS_BUTTON  ;
     messageNoData: string = NO_DATA_GRID_MESSAGE;
     @ViewChild(MatPaginator) paginator: MatPaginator;
-    private filter: ProductFilter = {
+    filter: ProductFilter = {
         name: null,
         productCode: null,
         status: 'ALL',

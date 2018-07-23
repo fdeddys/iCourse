@@ -2,16 +2,16 @@
     <mat-card-header>
         <mat-card-title style="align-items: center">
             <!-- <h2 style="color: rgb(226, 0, 0)" >Biller Type</h2>         -->
-            <h2 mat-dialog-title>Response Code</h2>
+            <h1 mat-dialog-title class="header-title">Response Code</h1>
         </mat-card-title>
     </mat-card-header>
     <mat-card-content>
-        <div style="text-align: left">
-            <button mat-raised-button color="primary"  (click)="openNewDialog()" style="margin-bottom: 10px;">Add Respose Code</button>
-            <button mat-raised-button class="primary"  (click)="exportCSV('csv')" style="margin-bottom: 10px;">Export CSV</button>
+        <div style="text-align: left;">
+            <button mat-raised-button color="primary"  (click)="openNewDialog()" class="button-custom">Add</button>&nbsp;&nbsp;
+            <button mat-raised-button class="primary"  (click)="exportCSV('csv')" class="button-custom" >Export CSV</button>
         </div>
         <br>
-        <div>
+        <div> 
             <mat-form-field class="container-half-width" >
                 <input matInput placeholder="Filter Respose Code " [(ngModel)]="filter.responseCode"  
                     name ="responseCode"  >
@@ -20,19 +20,21 @@
                 <input matInput placeholder="Filter Description " [(ngModel)]="filter.description"  
                     name ="description"  >
             </mat-form-field> 
-            <!-- <mat-form-field class="form-full-width" style="margin-left: 30px">
-                <mat-select placeholder="Filter Type" [(ngModel)]="filter.billPayType" name="billPayType"> 
-                    <mat-option *ngFor="let billPayType of billPayTypeList" [value]="billPayType"> 
-                        {{billPayType}}
-                    </mat-option>
-                </mat-select>
-            </mat-form-field> -->
-            <button mat-raised-button color="primary" (click)="actionfilter()" style="margin-left: 30px">Filter</button>
+            <mat-form-field class="container-half-width" >
+                <input matInput placeholder="Filter Member " [(ngModel)]="filter.memberName"  
+                    name ="memberName"  >
+            </mat-form-field>  
+            <mat-form-field class="container-half-width" >
+                <input matInput placeholder="Filter Member Type" [(ngModel)]="filter.memberType"  
+                    name ="memberType"  >
+            </mat-form-field>     
+              
+            <button mat-raised-button color="primary" (click)="actionfilter()" style="margin-left: 20px"  class="button-custom">Filter</button>
         </div>
         <br>
         <ag-grid-angular 
         #agGrid
-            style="height: 550px;" 
+            style="height: 313px;" 
             class="{{theme}}"
             [gridOptions]="gridOptions" 
             (gridReady)="onGridReady($event)"

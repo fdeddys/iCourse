@@ -65,6 +65,7 @@ export class UserComponent implements OnInit {
         infiniteInitialRowCount : 1,
         maxBlocksInCache : 2,
         suppressPaginationPanel : true,
+        rowHeight : 37,
         localeText: {noRowsToShow: this.messageNoData},
         frameworkComponents: {
             actionRenderer: MatActionButtonComponent,
