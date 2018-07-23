@@ -129,7 +129,7 @@ export class ProductDialogComponent implements OnInit {
             billerType : ['', [CommonValidatorDirective.required]],
             billerCompany : ['', [CommonValidatorDirective.required]],
             denom : ['', [CommonValidatorDirective.required]],
-            sellPrice : ['', [CommonValidatorDirective.required]],
+            // sellPrice : ['', [CommonValidatorDirective.required]],
             billerSelectionMtd : ['', [CommonValidatorDirective.required]],
         });
 
@@ -171,7 +171,7 @@ export class ProductDialogComponent implements OnInit {
             name: this.product.name,
             productCode: this.product.productCode,
             denom: this.product.denom,
-            sellPrice: this.product.sellPrice,
+            // sellPrice: this.product.sellPrice,
             status: this.product.status,
             billerCompanyId: (this.billCompanyCtrl.value === null ? null : this.billCompanyCtrl.value.id),
             billerTypeId: (this.billTypeCtrl.value === null ? null : this.billTypeCtrl.value.id),

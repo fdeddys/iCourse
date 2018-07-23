@@ -9,3 +9,7 @@
 	width: 45%;
 	/* margin-right: 5%; */
 }
+
+::ng-deep .mat-tooltip  {
+    white-space: pre-line    !important;
+}

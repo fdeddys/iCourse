@@ -41,6 +41,8 @@ export class BillerDetailComponent implements OnInit {
     mode = 'Add';
 
     billerDetForm: FormGroup;
+    extCodeDisabled = false;
+    buyPriceDisabled = false;
     submitted = false;
 
     constructor(
@@ -96,7 +98,7 @@ export class BillerDetailComponent implements OnInit {
             this.billerDetail = {
                 id : this.data.rowData.id,
                 externalCode : this.data.rowData.externalCode,
-                buyPrice : this.data.rowData.buyPrice,
+                buyPrice : (this.data.rowData.billPayType === 'POSTPAID' ? 0 : this.data.rowData.buyPrice),
                 fee : this.data.rowData.fee,
                 profit : this.data.rowData.profit,
                 sellPrice : this.data.rowData.sellPrice,
@@ -109,6 +111,8 @@ export class BillerDetailComponent implements OnInit {
 
             this.billTypeCtrl.setValue(this.data.rowData.billerProduct.billerType);
             this.billCompanyCtrl.setValue(this.data.rowData.billerProduct.billerCompany);
+            this.extCodeDisabled = true;
+            this.buyPriceDisabled = (this.data.rowData.billPayType === 'POSTPAID' ? true : false);
         }
         this.billerCompanyList = this.data.billerCompanyData;
         this.billerTypeList = this.data.billerTypeData;
@@ -220,6 +224,17 @@ export class BillerDetailComponent implements OnInit {
                     });
                 }
             });
+        }
+    }
+
+    valCheck(el): void {
+        if (el === 'profit') {
+            if (this.billerDetail.profit > this.billerDetail.fee) {
+                this.billerDetail.profit = this.billerDetail.fee;
+            }
+        }
+        if (this.billerDetail[el] < 0) {
+            this.billerDetail[el] = 0;
         }
     }
 
