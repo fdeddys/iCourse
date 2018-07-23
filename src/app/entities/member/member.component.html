@@ -61,12 +61,11 @@
              </button>
          </div> -->
          
-        <div style="width: 1150px" >
+        <div>
             <mat-paginator 
-            #paginator
+                #paginator
                [length]="totalData"
-               [pageSize]="totalRecord"
-               [pageSizeOptions]="[totalRecord]"
+               [pageSize]="totalRecord" 
                (page)="onPaginateChange($event)">
            </mat-paginator>
         </div> 

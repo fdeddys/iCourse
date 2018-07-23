@@ -51,7 +51,7 @@ export class MemberComponent implements OnInit {
         enableSorting: true,
         enableFilter: true,
         enableColResize: true,
-        pagination: true,
+        pagination: false,
         paginationPageSize: 10,
         cacheOverflowSize : 2,
         maxConcurrentDatasourceRequests : 2,
