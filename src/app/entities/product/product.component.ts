@@ -276,7 +276,7 @@ export class ProductComponent implements OnInit {
                 productCode : null,
                 searchBy : null,
                 searchByMemberId : null,
-                sellPrice : null,
+                // sellPrice : null,
                 status : 'ACTIVE'
             },
         };

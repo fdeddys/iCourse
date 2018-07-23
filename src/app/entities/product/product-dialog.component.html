@@ -45,13 +45,13 @@
 				<div *ngIf="form.denom.errors.required"> {{form.denom.errors.message}}</div>
 			</mat-error> 
 		</mat-form-field>
-		<mat-form-field class="form-full-width">
+		<!-- <mat-form-field class="form-full-width">
 			<input type="number" matInput placeholder="{{ 'ottoAG.billerProduct.sellPrice' | translate }}" name="sellPrice" [(ngModel)]="product.sellPrice">
 			<mat-error *ngIf="submitted && form.denom.errors" class="invalid-feedback">
 				<div *ngIf="form.sellPrice.errors.required"> {{form.sellPrice.errors.message}}</div>
 			</mat-error> 
-		</mat-form-field>		
-		<mat-form-field class="form-full-width form-separator">
+		</mat-form-field>		 -->
+		<mat-form-field class="form-full-width">
 			<mat-select placeholder="{{ 'ottoAG.billerProduct.searchBy' | translate }}" [(ngModel)]="product.searchBy" name="searchBy" (selectionChange)="searchByChg()">
 				<mat-option *ngFor="let searchBy of searchByList" [value]="searchBy">
 				  	{{searchBy}}
@@ -61,7 +61,7 @@
 				<div *ngIf="form.billerSelectionMtd.errors.required"> {{form.billerSelectionMtd.errors.message}}</div>
 			</mat-error> 
 		</mat-form-field>
-		<mat-form-field class="form-full-width">
+		<mat-form-field class="form-full-width form-separator">
 			<input matInput placeholder="{{ 'ottoAG.billerProduct.searchByMember' | translate }}" aria-label="Biller" [matAutocomplete]="autoM" [formControl]="membCtrl">
 			<mat-autocomplete #autoM="matAutocomplete" [displayWith]="displayFnMem">
 				<mat-option *ngFor="let member of filteredMemb | async" [value]="member">

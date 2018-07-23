@@ -74,7 +74,7 @@
             "buyPrice": "Buy Price",
             "fee": "Fee",
             "sellPrice": "Sell Price",
-            "profit": "Profit",
+            "profit": "Profit RTSM",
             "status": "Status",
             "externalCode": "External Code"
         },
@@ -180,7 +180,7 @@
                 "title": "{{action}} {{entity}}"
             },
             "name": "Name",
-            "code": "code"
+            "code": "Code"
         },
         "user": {
             "home": {

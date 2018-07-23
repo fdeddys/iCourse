@@ -77,6 +77,7 @@ export class BillerDialogComponent implements OnInit {
     messageNoData: string = NO_DATA_GRID_MESSAGE;
 
     billerForm: FormGroup;
+    setMembCode = false;
     submitted = false;
 
     colDefs = [
@@ -234,6 +235,7 @@ export class BillerDialogComponent implements OnInit {
         if (this.data.mode !== 'create') {
             // console.log('edit mode..');
             this.btnDisabled = false;
+            this.setMembCode = true;
             // this.membTypeCtrl.setValue(this.data.rowData.memberType);
 
             // ------ auto complete
