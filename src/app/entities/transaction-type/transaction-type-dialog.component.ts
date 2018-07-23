@@ -39,7 +39,7 @@ export class TransTypeDialogComponent implements OnInit {
     ngOnInit() {
         this.transTypeForm = this.formBuilder.group({
             name: ['', [CommonValidatorDirective.required]],
-            code: ['', [CommonValidatorDirective.required]],
+            code: ['', [CommonValidatorDirective.required]]
         });
 
         this.transType = {};
@@ -59,13 +59,14 @@ export class TransTypeDialogComponent implements OnInit {
         console.log('isi trans type = ', this.transType);
         // this.transType.name = this.name;
 
-        console.log('isi biller company ', this.transType);
         if (this.transType.id === undefined) {
             console.log('send to service ', this.transType);
+            // this.transType.id = null;
             this.transTypeService.create(this.transType)
                 .subscribe(
                     (res: HttpResponse<TransType>) => {
-                        if ( res.body.errMsg === '' || res.body.errMsg === null ) {
+                        console.log('masuk response ==>', this.transType);
+                        if ( res.body.errMsg === null || res.body.errMsg === '' ) {
                             this.dialogRef.close('refresh');
                         } else {
                             this.openSnackBar(res.body.errMsg, 'Ok');
@@ -73,7 +74,7 @@ export class TransTypeDialogComponent implements OnInit {
                     },
                     (res: HttpErrorResponse) => {
                         this.snackBar.open('Error !' + res.error.message , 'Close', {
-                            duration: 10000,
+                            duration: this.duration,
                         });
                         console.log('error msh ', res.error.message);
                     }
