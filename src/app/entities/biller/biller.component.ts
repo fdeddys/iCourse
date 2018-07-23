@@ -365,7 +365,7 @@ export class BillerComponent implements OnInit {
             datasend.rowData = data;
         }
         const dialogRef = this.dialog.open(BillerDialogComponent, {
-            width: '850px',
+            width: '1000px',
             height: '610px',
             data: datasend
         });

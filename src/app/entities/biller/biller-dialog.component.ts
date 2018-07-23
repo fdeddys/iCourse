@@ -109,14 +109,14 @@ export class BillerDialogComponent implements OnInit {
 
     nonColDefs = [
         // { headerName: 'Name', field: 'name', checkboxSelection: true, width: 250, pinned: 'left', editable: true },
-        { headerName: 'No', field: 'no', width: 100, pinned: 'left', editable: false },
-        { headerName: 'Product Name', field: 'billerProduct.name', width: 200 },
-        { headerName: 'Sell Price', field: 'salesPrice', width: 150 },
-        { headerName: 'Profit', field: 'profit', width: 150 },
-        { headerName: 'Date Start', field: 'dateStart', width: 150 },
-        { headerName: 'Date Through', field: 'dateThru', width: 150 },
-        { headerName: 'Status', field: 'status', width: 150},
-        { headerName: ' ', width: 150, cellRenderer: 'actionRenderer'}
+        { headerName: 'No', field: 'no', width: 60, pinned: 'left', editable: false },
+        { headerName: 'Product Name', field: 'billerProduct.name', width: 240 },
+        { headerName: 'Sell Price', field: 'salesPrice', width: 100 },
+        { headerName: 'Profit', field: 'profit', width: 100 },
+        { headerName: 'Date Start', field: 'dateStart', width: 100 },
+        { headerName: 'Date Through', field: 'dateThru', width: 100 },
+        { headerName: 'Status', field: 'status', width: 100},
+        { headerName: ' ', width: 80, cellRenderer: 'actionRenderer'}
         // { headerName: ' ', suppressMenu: true,
         //     suppressSorting: true,
         //     template: `
@@ -134,6 +134,7 @@ export class BillerDialogComponent implements OnInit {
         enableFilter: true,
         // rowSelection: "multiple"
         pagination: true,
+        enableColResize: true,
         paginationPageSize: 10,
         suppressPaginationPanel : true,
         localeText: {noRowsToShow: this.messageNoData},
