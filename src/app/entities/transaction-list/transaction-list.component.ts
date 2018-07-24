@@ -28,8 +28,8 @@ export class TransListComponent implements OnInit {
     cssButton = CSS_BUTTON;
     theme: String = GRID_THEME;
     filter: TransListFilter = {
-        idRequestor: null,
-        idResponder: null,
+        requestor: null,
+        responder: null,
         transType: null,
         billerProduct: null,
         buyPrice: null,
@@ -64,8 +64,8 @@ export class TransListComponent implements OnInit {
         columnDefs: [
             { headerName: 'No', field: 'no', width: 100, minWidth: 100, maxWidth: 100, pinned: 'left', editable: false },
             { headerName: 'Transmission Date', field: 'transmissionDateTime', width: 200, pinned: 'left', editable: false },
-            { headerName: 'Requestor', field: 'idRequestor.name', width: 200 },
-            { headerName: 'Responder', field: 'idResponder.name', width: 200 },
+            { headerName: 'Requestor', field: 'requestor.name', width: 200 },
+            { headerName: 'Responder', field: 'responder.name', width: 200 },
             { headerName: 'Transaction Type', field: 'transType.name', width: 200 },
             { headerName: 'Product', field: 'billerProduct.name', width: 200 },
             { headerName: 'Buy Price', field: 'buyPrice', width: 150 },
@@ -173,7 +173,7 @@ export class TransListComponent implements OnInit {
         }
         const dialogRef = this.dialog.open(TransListDialogComponent, {
             width: '1000px',
-            height: '700px',
+            // height: '700px',
             data: datasend
         });
 
@@ -228,7 +228,8 @@ export class TransListComponent implements OnInit {
     }
 
     private onSuccess(data, headers) {
-        if (data.content.length < 0) {
+        if (data === null || data.content.length < 0) {
+            this.gridApi.setRowData(this.transList);
             return;
         }
         this.transList = data.content;
@@ -267,8 +268,8 @@ export class TransListComponent implements OnInit {
 
 export interface TransListFilter  {
     id?: number;
-    idRequestor?: any;
-    idResponder?: any;
+    requestor?: any;
+    responder?: any;
     transType?: number;
     billerProduct?: number;
     buyPrice?: number;

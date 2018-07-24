@@ -3,8 +3,8 @@ import { BaseEntity } from './../../shared/model/base-entity';
 export class TransList implements BaseEntity {
     constructor(
         public id?: number,
-        public idRequestor?: any,
-        public idResponder?: any,
+        public requestor?: any,
+        public responder?: any,
         public transType?: any,
         public billerProduct?: any,
         public buyPrice?: number,
