@@ -68,10 +68,9 @@ export class TransListComponent implements OnInit {
             { headerName: 'Responder', field: 'responder.name', width: 200 },
             { headerName: 'Transaction Type', field: 'transType.name', width: 200 },
             { headerName: 'Product', field: 'billerProduct.name', width: 200 },
-            { headerName: 'Buy Price', field: 'buyPrice', width: 150 },
-            { headerName: 'Sell Price', field: 'sellPrice', width: 150 },
-            { headerName: 'Amount', field: 'amount', width: 150 },
-            { headerName: 'RC Internal', field: 'rcInternal', width: 150 },
+            { headerName: 'Buy Price', field: 'buyPrice', width: 120 },
+            { headerName: 'Sell Price', field: 'sellPrice', width: 120 },
+            { headerName: 'RC Internal', field: 'rcInternal', width: 120 },
             { headerName: ' ', width: 150, minWidth: 150, maxWidth: 150, cellRenderer: 'actionRenderer'}
         ],
         rowData: this.transList,
