@@ -2,11 +2,10 @@
 <!-- <form name="transListForm" (ngSubmit)="f.form.valid && onSubmit()" #f="ngForm" novalidate> -->
 <div mat-dialog-content>
     <mat-form-field style="width: 20%; margin-right: 5%">
-        <input matInput placeholder="{{ 'ottoAG.transactionList.transType' | translate }}" name="transType" 
-        [(ngModel)]="transList.transType.name" disabled>
+        <input matInput placeholder="{{ 'ottoAG.transactionList.transType' | translate }}" name="transType" [(ngModel)]="transList.transType.name" disabled>
     </mat-form-field>
     <mat-form-field style="width: 20%; margin-right: 5%">
-        <input matInput placeholder="{{ 'ottoAG.transactionList.product' | translate }}" name="product" [(ngModel)]="transList.billerProduct.name" disabled>
+        <input matInput placeholder="{{ 'ottoAG.transactionList.product' | translate }}" name="product" [(ngModel)]="transList.product.name" disabled>
     </mat-form-field> 
     <mat-form-field style="width: 20%; margin-right: 5%">
         <input matInput placeholder="{{ 'ottoAG.transactionList.requestor' | translate }}" name="requestor" [(ngModel)]="transList.requestor.name" disabled>

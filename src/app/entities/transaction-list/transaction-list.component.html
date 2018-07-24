@@ -9,13 +9,48 @@
             <!-- <button mat-raised-button color="primary"  (click)="openNewDialog()" style="margin-bottom: 10px;">{{ 'ottoAG.transactionType.home.addLabelButton' | translate }}</button> -->
             <button mat-raised-button class="primary"  (click)="exportCSV('csv')" style="margin-bottom: 10px;">{{ 'entity.action.exportCSV' | translate}}</button>
         </div>
-        <!-- <br>
+        <br>
         <div>
-            <mat-form-field class="container-half-width">
-                <input matInput placeholder="{{ 'ottoAG.transactionList.filter.name' | translate }}" [(ngModel)]="filter.name" name ="name">
+            <mat-form-field class="form-half-width">
+				<input matInput [matDatepicker]="pickerFStart" placeholder="{{ 'ottoAG.transactionList.filter.startDateFrom' | translate }}" (click)="pickerFStart.open()" [max]="dateTStartCtrl.value" [formControl]="dateFStartCtrl" readonly>
+				<mat-datepicker-toggle matSuffix [for]="pickerFStart"></mat-datepicker-toggle>
+				<mat-datepicker #pickerFStart></mat-datepicker>
+			</mat-form-field>
+			<mat-form-field class="form-half-width">
+				<input matInput [matDatepicker]="pickerTStart" placeholder="{{ 'ottoAG.transactionList.filter.startDateTo' | translate }}" (click)="pickerTStart.open()" [min]="dateFStartCtrl.value" [formControl]="dateTStartCtrl" readonly>
+				<mat-datepicker-toggle matSuffix [for]="pickerTStart"></mat-datepicker-toggle>
+				<mat-datepicker #pickerTStart></mat-datepicker>
+            </mat-form-field>
+            <mat-form-field class="form-half-width">
+                <mat-select placeholder="{{ 'ottoAG.transactionList.filter.transType' | translate }}" [(ngModel)]="filter.transTypeId" name="transType">
+                    <mat-option *ngFor="let transType of transTypeList" [value]="transType.id">
+                        {{transType.name}}
+                    </mat-option>
+                </mat-select>
+            </mat-form-field>
+            <mat-form-field class="form-half-width">
+                <mat-select placeholder="{{ 'ottoAG.transactionList.filter.requestor' | translate }}" [(ngModel)]="filter.requestorId" name="requestor">
+                    <mat-option *ngFor="let requestor of requestorList" [value]="requestor.id">
+                        {{requestor.name}}
+                    </mat-option>
+                </mat-select>
+            </mat-form-field>
+            <mat-form-field class="form-half-width">
+                <mat-select placeholder="{{ 'ottoAG.transactionList.filter.responder' | translate }}" [(ngModel)]="filter.responderId" name="responder">
+                    <mat-option *ngFor="let responder of responderList" [value]="responder.id">
+                        {{responder.name}}
+                    </mat-option>
+                </mat-select>
+            </mat-form-field>
+            <mat-form-field class="form-half-width">
+                <mat-select placeholder="{{ 'ottoAG.transactionList.filter.product' | translate }}" [(ngModel)]="filter.productId" name="product">
+                    <mat-option *ngFor="let product of productList" [value]="product.id">
+                        {{product.name}}
+                    </mat-option>
+                </mat-select>
             </mat-form-field>
             <button mat-raised-button color="primary" (click)="actionfilter()" style="margin-left: 30px">Filter</button>
-        </div> -->
+        </div>
         <br>
         <ag-grid-angular 
             #agGrid

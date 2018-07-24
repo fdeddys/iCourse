@@ -4,16 +4,24 @@ import { TransList } from './transaction-list.model';
 import { TransListService } from './transaction-list.service';
 import { TransListDialogComponent } from './transaction-list-dialog.component';
 
+import { FormControl } from '@angular/forms';
 import { MatDialog, MatPaginator } from '@angular/material';
 import { MatActionButtonComponent } from '../../shared/templates/mat-action-button.component';
 import { GRID_THEME, CSS_BUTTON, NO_DATA_GRID_MESSAGE, TOTAL_RECORD_PER_PAGE } from '../../shared/constant/base-constant';
 import { REPORT_PATH } from '../../shared/constant/base-constant';
 import { TranslateService } from '@ngx-translate/core';
 
+import { TransType } from '../transaction-type/transaction-type.model';
+import { TransTypeService } from '../transaction-type/transaction-type.service';
+import { Product } from '../product/product.model';
+import { ProductService } from '../product/product.service';
+import { Member } from '../member/member.model';
+import { MemberService } from '../member/member.service';
+
 @Component({
     selector: 'app-transaction-list',
     templateUrl: './transaction-list.component.html',
-    styleUrls: ['./transaction-list.component.css', '../../layouts/content/content.component.css']
+    styleUrls: ['./transaction-list.component.css']
 })
 
 export class TransListComponent implements OnInit {
@@ -24,53 +32,39 @@ export class TransListComponent implements OnInit {
     @ViewChild(MatPaginator) paginator: MatPaginator;
 
     transList: TransList[];
+    transTypeList: TransType[];
+    productList: Product[];
+    requestorList: Member[];
+    responderList: Member[];
 
     cssButton = CSS_BUTTON;
     theme: String = GRID_THEME;
     filter: TransListFilter = {
-        requestor: null,
-        responder: null,
-        transType: null,
-        billerProduct: null,
-        buyPrice: null,
-        fee: null,
-        profitRtsm: null,
-        sellPrice: null,
-        sellPriceFromTable: null,
-        promotionId: null,
-        amount: null,
-        transmissionDateTime: '',
-        stan: null,
-        rrn: '',
-        rrnRequestor: '',
-        rcInternal: '',
-        rcRequestor: '',
-        rcResponder: '',
-        tsRcvRequestor: '',
-        tsSndRequestor: '',
-        tsRcvResponder: '',
-        tsSndResponder: '',
-        msg_rcv_requestor: '',
-        msg_snd_requestor: '',
-        msg_snd_responder: '',
-        msg_rcv_responder: '',
+        filDateFStart: null,
+        filDateTStart: null,
+        requestorId: null,
+        responderId: null,
+        transTypeId: null,
+        productId: null
     };
     curPage = 1;
     totalData = 0;
     totalRecord = TOTAL_RECORD_PER_PAGE;
     messageNoData: string = NO_DATA_GRID_MESSAGE;
+    dateFStartCtrl: FormControl;
+    dateTStartCtrl: FormControl;
 
     gridOptions = {
         columnDefs: [
-            { headerName: 'No', field: 'no', width: 100, minWidth: 100, maxWidth: 100, pinned: 'left', editable: false },
-            { headerName: 'Transmission Date', field: 'transmissionDateTime', width: 200, pinned: 'left', editable: false },
-            { headerName: 'Requestor', field: 'requestor.name', width: 200 },
-            { headerName: 'Responder', field: 'responder.name', width: 200 },
-            { headerName: 'Transaction Type', field: 'transType.name', width: 200 },
-            { headerName: 'Product', field: 'billerProduct.name', width: 200 },
-            { headerName: 'Buy Price', field: 'buyPrice', width: 120 },
-            { headerName: 'Sell Price', field: 'sellPrice', width: 120 },
-            { headerName: 'RC Internal', field: 'rcInternal', width: 120 },
+            { headerName: 'No', field: 'no', width: 70, minWidth: 70, maxWidth: 70, pinned: 'left', editable: false },
+            { headerName: 'Transaction Date', field: 'transmissionDateTime', width: 150, pinned: 'left', editable: false },
+            { headerName: 'Requestor', field: 'requestor.name', width: 120 },
+            { headerName: 'Responder', field: 'responder.name', width: 120 },
+            { headerName: 'Transaction Type', field: 'transType.name', width: 150 },
+            { headerName: 'Product', field: 'product.name', width: 200 },
+            { headerName: 'Buy Price', field: 'buyPrice', width: 100 },
+            { headerName: 'Sell Price', field: 'sellPrice', width: 100 },
+            { headerName: 'RC Internal', field: 'rcInternalPrev', width: 120 },
             { headerName: ' ', width: 150, minWidth: 150, maxWidth: 150, cellRenderer: 'actionRenderer'}
         ],
         rowData: this.transList,
@@ -90,13 +84,63 @@ export class TransListComponent implements OnInit {
     constructor(
         translate: TranslateService,
         private transListService: TransListService,
+        private transTypeService: TransTypeService,
+        private productService: ProductService,
+        private memberService: MemberService,
         private dialog: MatDialog,
     ) {
         translate.use('en');
+        this.dateFStartCtrl = new FormControl();
+        this.dateTStartCtrl = new FormControl();
     }
 
     ngOnInit() {
+        this.transTypeService.filter({
+            page: this.curPage,
+            count: this.totalRecord,
+            filter: {
+                'name': ''
+            },
+        })
+        .subscribe(
+            (res: HttpResponse<TransType[]>) => this.onSuccessTransType(res.body, res.headers),
+            (res: HttpErrorResponse) => this.onError(res.message),
+            () => { console.log('finally'); }
+        );
 
+        this.memberService.query({
+            page: 1,
+            count: 10000,
+        })
+        .subscribe(
+                (res: HttpResponse<Member[]>) => this.onSuccessMemb(res.body, res.headers),
+                (res: HttpErrorResponse) => this.onError(res.message),
+                () => { console.log('finally'); }
+        );
+
+        this.memberService.findNotAsBiller({
+            page: 1,
+            count: 10000,
+        })
+        .subscribe(
+                (res: HttpResponse<Member[]>) => this.onSuccessMembNon(res.body, res.headers),
+                (res: HttpErrorResponse) => this.onError(res.message),
+                () => { console.log('finally'); }
+        );
+
+        this.productService.filter({
+            page: this.curPage,
+            count: this.totalRecord,
+            filter: {
+                name: null,
+                productCode: null
+            },
+        })
+        .subscribe(
+            (res: HttpResponse<Member[]>) => this.onSuccessProduct(res.body, res.headers),
+            (res: HttpErrorResponse) => this.onError(res.message),
+            () => { console.log('finally'); }
+        );
     }
 
     onGridReady(params) {
@@ -235,10 +279,32 @@ export class TransListComponent implements OnInit {
         let i = 1;
         for (const transL of this.transList) {
             transL.no = i++;
-            transL.transmissionDateTime = this.dateFormatter(transL.transmissionDateTime);
+            transL.rcInternalPrev = (transL.rcInternal.includes('00') ? 'Approve' : 'Decline');
+            // transL.transmissionDateTime = this.dateFormatter(transL.transmissionDateTime);
+            transL.transmissionDateTime = new Date(transL.transmissionDateTime).toLocaleString('id');
         }
         this.gridApi.setRowData(this.transList);
         this.totalData = data.totalElements;
+    }
+
+    private onSuccessTransType(data, headers) {
+        console.log('isi response trans type ==> ', data);
+        this.transTypeList = data.content;
+    }
+
+    private onSuccessMemb(data, headers) {
+        console.log('isi response responder ==> ', data);
+        this.responderList = data.content;
+    }
+
+    private onSuccessMembNon(data, headers) {
+        console.log('isi response requestor ==> ', data);
+        this.requestorList = data.content;
+    }
+
+    private onSuccessProduct(data, headers) {
+        console.log('isi response product ==> ', data);
+        this.productList = data.content;
     }
 
     private onError(error) {
@@ -266,31 +332,10 @@ export class TransListComponent implements OnInit {
 }
 
 export interface TransListFilter  {
-    id?: number;
-    requestor?: any;
-    responder?: any;
-    transType?: number;
-    billerProduct?: number;
-    buyPrice?: number;
-    fee?: number;
-    profitRtsm?: number;
-    sellPrice?: number;
-    sellPriceFromTable?: number;
-    promotionId?: number;
-    amount?: number;
-    transmissionDateTime?: string;
-    stan?: number;
-    rrn?: string;
-    rrnRequestor?: string;
-    rcInternal?: string;
-    rcRequestor?: string;
-    rcResponder?: string;
-    tsRcvRequestor?: string;
-    tsSndRequestor?: string;
-    tsRcvResponder?: string;
-    tsSndResponder?: string;
-    msg_rcv_requestor?: string;
-    msg_snd_requestor?: string;
-    msg_snd_responder?: string;
-    msg_rcv_responder?: string;
+    filDateFStart: null;
+    filDateTStart: null;
+    requestorId?: any;
+    responderId?: any;
+    transTypeId?: number;
+    productId?: number;
 }
