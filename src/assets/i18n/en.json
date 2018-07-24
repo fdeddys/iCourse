@@ -25,6 +25,17 @@
             "pass": "Password",
             "confirmP": "Confirm Password"
         },
+        "auditTrail": {
+            "home": {
+                "title": "Audit Trail"
+            },
+            "detail": {
+                "activity": "Activity",
+                "beforeValue": "Before value",
+                "insertDate": "Insert Date",
+                "afterValue": "After Value"
+            }
+        },
         "billerCompany": {
             "home": {
                 "title": "Bill Operator",
@@ -145,7 +156,15 @@
         },
         "transactionList": {
             "home": {
-                "title": "Transactions"
+                "title": "Transactions History"
+            },
+            "filter": {
+                "startDateFrom": "Transaction Date From :",
+                "startDateTo": "Transaction Date To :",
+                "transType": "Filter Transaction Type",
+                "product": "Filter Product",
+                "requestor": "Filter Requestor",
+                "responder": "Filter Responder"
             },
             "detail": {
                 "title": "Detail Transaction"
@@ -161,7 +180,7 @@
             "sellPriceFromTable": "Sell Price",
             "promotion": "Promotion",
             "amount": "Amount",
-            "transmission": "Transmission",
+            "transmission": "Transaction Date",
             "stan": "STAN",
             "rrn": "RRN",
             "rcInternal": "RC Internal",

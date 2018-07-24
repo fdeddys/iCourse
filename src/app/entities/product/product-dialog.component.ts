@@ -178,6 +178,7 @@ export class ProductDialogComponent implements OnInit {
             searchBy: this.product.searchBy,
             searchByMemberId: (this.membCtrl.value === null ? null : this.membCtrl.value.id),
         };
+        console.log('isi bill company ', this.billCompanyCtrl);
         console.log(this.productSave);
         if (this.productSave.id === undefined || this.productSave.id === null) {
             console.log('send to service ', this.productSave);

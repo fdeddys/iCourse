@@ -17,8 +17,10 @@
 				<div *ngIf="form.productCode.errors.required"> {{form.productCode.errors.message}}</div>
 			</mat-error> 
 		</mat-form-field>
+
 		<mat-form-field class="form-full-width form-separator">
-			<input matInput placeholder="{{ 'ottoAG.billerProduct.billerType' | translate }}" aria-label="Product Type" [matAutocomplete]="auto" [formControl]="billTypeCtrl">
+			<input matInput placeholder="{{ 'ottoAG.billerProduct.billerType' | translate }}" aria-label="Product Type" 
+				[matAutocomplete]="auto" [formControl]="billTypeCtrl">
 			<mat-autocomplete #auto="matAutocomplete" [displayWith]="displayFnBil">
 				<mat-option *ngFor="let billerType of filteredBillType | async" [value]="billerType">
 					<span>{{ billerType.name }}</span>
@@ -27,9 +29,11 @@
 			<mat-error *ngIf="submitted && form.billerType.errors" class="invalid-feedback">
 				<div *ngIf="form.billerType.errors.required"> {{form.billerType.errors.message}}</div>
 			</mat-error> 
-		</mat-form-field>		
+		</mat-form-field>	
+
 		<mat-form-field class="form-full-width">
-			<input matInput placeholder="{{ 'ottoAG.billerProduct.billerCompany' | translate }}" aria-label="Product Company" [matAutocomplete]="autoComp" [formControl]="billCompanyCtrl">
+			<input matInput placeholder="{{ 'ottoAG.billerProduct.billerCompany' | translate }}" aria-label="Product Company" 
+				[matAutocomplete]="autoComp" [formControl]="billCompanyCtrl">
 			<mat-autocomplete #autoComp="matAutocomplete" [displayWith]="displayFnCom">
 				<mat-option *ngFor="let billerCompany of filteredBillCompany | async" [value]="billerCompany">
 					<span>{{ billerCompany.name }}</span>

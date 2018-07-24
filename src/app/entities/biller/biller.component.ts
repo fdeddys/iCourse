@@ -24,7 +24,7 @@ import { SharedService } from '../../shared/services/shared.service';
 @Component({
     selector: 'app-biller',
     templateUrl: './biller.component.html',
-    styleUrls: ['./biller.component.css', '../../layouts/content/content.component.css']
+    styleUrls: ['./biller.component.css']
 })
 export class BillerComponent implements OnInit {
 

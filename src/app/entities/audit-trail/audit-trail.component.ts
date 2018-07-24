@@ -9,6 +9,8 @@ import { MatDialog, MatDialogRef, MAT_DIALOG_DATA, MatDatepickerInputEvent } fro
 import { GRID_THEME, NO_DATA_GRID_MESSAGE, TOTAL_RECORD_PER_PAGE } from '../../shared/constant/base-constant';
 import { MatActionButtonComponent } from '../../shared/templates/mat-action-button.component';
 import { FormControl } from '@angular/forms';
+import { AuditTrailDialogComponent } from './audit-trail-dialog.component';
+import { TranslateService } from '@ngx-translate/core';
 
 @Component({
     selector: 'app-audit-trail',
@@ -37,11 +39,12 @@ export class AuditTrailComponent implements OnInit {
     gridOptions = {
         columnDefs: [
             // { headerName: 'Name', field: 'name', checkboxSelection: true, width: 250, pinned: 'left', editable: true },
-            { headerName: 'No', field: 'nourut', width: 100, pinned: 'left', editable: false },
-            { headerName: 'Activity', field: 'activity', width: 150,  editable: false },
+            { headerName: 'No', field: 'nourut', width: 80, pinned: 'left', editable: false },
+            { headerName: 'Activity', field: 'activity', width: 125,  editable: false },
             { headerName: 'Insert', field: 'insertDate', width: 200 },
-            { headerName: 'Value', field: 'afterValue', width: 950 },
-            { headerName: 'User', field: 'userInput', width: 150 },
+            { headerName: 'Value', field: 'afterValue', width: 500 },
+            { headerName: 'User', field: 'userInput', width: 100 },
+            { headerName: ' ', width: 50, cellRenderer: 'actionRenderer'}
         ],
         rowData: this.auditTrails,
         enableSorting: true,
@@ -58,11 +61,13 @@ export class AuditTrailComponent implements OnInit {
 
     constructor(
         private dialog: MatDialog,
+        translate: TranslateService,
         private auditTrailService: AuditTrailService,
         private route: ActivatedRoute
     ) {
         this.dateStatCtrl = new FormControl();
         this.dateThruCtrl = new FormControl();
+        translate.use('en');
     }
 
     ngOnInit(): void {
@@ -89,21 +94,31 @@ export class AuditTrailComponent implements OnInit {
         );
     }
 
-    // load(id) {
-    //     this.auditTrailService.find(id)
-    //         .subscribe((productResponse: HttpResponse<AuditTrail>) => {
-    //             this.auditTrail = productResponse.body;
-    //         });
-    // }
+    public onRowClicked(e) {
+        if (e.event.target !== undefined) {
+            const data = e.data;
+            const actionType = e.event.target.getAttribute('data-action-type');
+            switch (actionType) {
+                case 'edit':
+                    return this.onActionEditClick(data);
+            }
+        }
+    }
 
-    // ngOnInit() {
-    //     console.log('this.route : ', this.route);
-    //     if (this.route.snapshot.routeConfig.path === 'non-auditTrail') {
-    //         this.menuName = 'Non-AuditTrail';
-    //     } else if (this.route.snapshot.routeConfig.path === 'auditTrail') {
-    //         this.menuName = 'AuditTrail';
-    //     }
-    // }
+    public onActionEditClick(data: any) {
+        console.log('View action clicked', data);
+        const dialogRef = this.dialog.open(AuditTrailDialogComponent, {
+            width: '60%',
+            data: { action: 'Edit', entity: 'Audit trail', audiTrail: data }
+        });
+
+        dialogRef.afterClosed().subscribe(result => {
+            console.log('The dialog was closed = [', result, ']');
+            if (result === 'refresh') {
+                this.loadAll(this.curPage);
+            }
+        });
+    }
 
     onGridReady(params) {
         this.gridApi = params.api;
