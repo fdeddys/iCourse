@@ -25,6 +25,17 @@
             "pass": "Password",
             "confirmP": "Confirm Password"
         },
+        "auditTrail": {
+            "home": {
+                "title": "Audit Trail"
+            },
+            "detail": {
+                "activity": "Activity",
+                "beforeValue": "Before value",
+                "insertDate": "Insert Date",
+                "afterValue": "After Value"
+            }
+        },
         "billerCompany": {
             "home": {
                 "title": "Bill Operator",

@@ -1,0 +1,38 @@
+<h1 mat-dialog-title>
+    {{ 'ottoAG.auditTrail.home.title' | translate }}
+</h1>
+<mat-dialog-content>
+    <mat-form-field class="container-half-width">
+        <input matInput placeholder="{{ 'ottoAG.auditTrail.detail.activity' | translate }}" 
+            [(ngModel)]="auditTrail.activity"  name ="activity" 
+            #name="ngModel" 
+        > 
+    </mat-form-field>
+</mat-dialog-content>
+<mat-dialog-content>
+    <mat-form-field class="container-half-width">
+        <input matInput placeholder="{{ 'ottoAG.auditTrail.detail.insertDate' | translate }}" 
+            [(ngModel)]="auditTrail.insertDate"  name ="insertDate" 
+            #name="ngModel" 
+        > 
+    </mat-form-field>
+</mat-dialog-content>
+
+<mat-dialog-content>
+    <mat-form-field class="container-full-width">
+        <input matInput placeholder="{{ 'ottoAG.auditTrail.detail.beforeValue' | translate }}" 
+            [(ngModel)]="auditTrail.beforeValue"  name ="beforeValue" 
+            #name="ngModel" 
+        > 
+    </mat-form-field>
+</mat-dialog-content>
+
+
+<mat-dialog-content>
+    <mat-form-field class="container-full-width">
+        <input matInput placeholder="{{ 'ottoAG.auditTrail.detail.afterValue' | translate }}" 
+            [(ngModel)]="auditTrail.afterValue"  name ="afterValue" 
+            #name="ngModel" 
+        > 
+    </mat-form-field>
+</mat-dialog-content>
