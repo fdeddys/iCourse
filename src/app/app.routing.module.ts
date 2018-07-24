@@ -43,6 +43,7 @@ const routes: Routes = [
             {path: 'access-matrix', component: AccessMatrixComponent},
             {path: 'trans-type', component: TransTypeComponent},
             {path: 'response-code', component: ResponseCodeComponent},
+            {path: 'response-code-internal', component: ResponseCodeComponent},
             {path: 'transaction', component: TransListComponent},
         ]
     },

@@ -9,6 +9,9 @@ import { GRID_THEME, CSS_BUTTON, NO_DATA_GRID_MESSAGE, REPORT_PATH, TOTAL_RECORD
 import { MatActionButtonComponent } from '../../shared/templates/mat-action-button.component';
 import { Member, MemberService } from '../member';
 import { Biller, BillerService } from '../biller';
+import { ActivatedRoute } from '@angular/router';
+import { TranslateService } from '@ngx-translate/core';
+
 
 @Component({
   selector: 'app-response-code',
@@ -32,6 +35,9 @@ export class ResponseCodeComponent implements OnInit {
     totalRecord = TOTAL_RECORD_PER_PAGE;
     memberList = [];
     billerList = [];
+    menuName = '';
+    gridOption = '';
+    respCodeInternalList = [];
     @ViewChild(MatPaginator) paginator: MatPaginator;
 
     filter: ResponseCodeFilter = {
@@ -74,6 +80,38 @@ export class ResponseCodeComponent implements OnInit {
             actionRenderer: MatActionButtonComponent
         }
     };
+
+    gridOptionsInternal = {
+        columnDefs: [
+            { headerName: 'No', field: 'nourut', width: 76, pinned: 'left', editable: false },
+            { headerName: 'Code', field: 'responseCode', width: 300, editable: false },
+            { headerName: 'Description', field: 'description', width: 540, editable: false },
+            { headerName: ' ', width: 100, cellRenderer: 'actionRenderer'}
+          // { headerName: ' ', suppressMenu: true,
+          //   suppressSorting: true,
+          //   template:
+          //     `<button mat-raised-button type="button" data-action-type="edit"  ${this.cssButton} >
+          //       Edit
+          //     </button>
+          //     ` }
+        ],
+        rowData: this.responseCodes,
+        enableSorting: true,
+        enableFilter: true,
+        enableColResize: true,
+        pagination: true,
+        paginationPageSize: 10,
+        cacheOverflowSize : 2,
+        maxConcurrentDatasourceRequests : 2,
+        infiniteInitialRowCount : 1,
+        maxBlocksInCache : 2,
+       // rowHeight : 34,
+        suppressPaginationPanel : true,
+        localeText: {noRowsToShow: this.messageNoData},
+        frameworkComponents: {
+            actionRenderer: MatActionButtonComponent
+        }
+    };
     currencyFormatter(params): string {
         const dt  = new Date(params.value);
         return dt.toLocaleString(['id']);
@@ -82,7 +120,12 @@ export class ResponseCodeComponent implements OnInit {
     constructor(  private dialog: MatDialog,
                 private responseCodeService: ResponseCodeService,
         private memberService: MemberService,
-        private billerService: BillerService ) { }
+        private billerService: BillerService,
+        private route: ActivatedRoute,
+        translate: TranslateService, ) {
+            translate.setDefaultLang('en');
+            translate.use('en');
+         }
 
     public onRowClicked(e) {
         if (e.event.target !== undefined) {
@@ -100,9 +143,12 @@ export class ResponseCodeComponent implements OnInit {
 
     public onActionEditClick(data: any) {
         console.log('View action clicked', data);
+        const typeRespCode = (data.billerHeader  === null) ? 0 : 1;
+
         const dialogRef = this.dialog.open(ResponseCodeDialogComponent, {
-        width: '500px',
-        data: { action: 'Edit', entity: 'Response Code', responseCode: data, billerData: this.billerList }
+        width: '750px',
+        data: { action: 'Edit', entity: 'Response Code', responseCode: data, billerData: this.billerList,
+             typeRespCode : typeRespCode, respCodeInternalData: this.respCodeInternalList }
         });
 
         dialogRef.afterClosed().subscribe(result => {
@@ -127,10 +173,11 @@ export class ResponseCodeComponent implements OnInit {
     }
 
     loadAll(page) {
-        console.log('Start call function all header');
-        this.responseCodeService.query  ({
-            page: page,
+        this.responseCodeService.filter({
+            allData: (this.route.snapshot.routeConfig.path === 'response-code-internal' ? 0 : 1),
+            page: this.curPage,
             count: this.totalRecord,
+            filter: this.filter,
         })
         .subscribe(
                 (res: HttpResponse<ResponseCode[]>) => this.onSuccess(res.body, res.headers),
@@ -149,6 +196,7 @@ export class ResponseCodeComponent implements OnInit {
             this.curPage = page;
         }
       this.responseCodeService.filter({
+          allData: (this.route.snapshot.routeConfig.path === 'response-code-internal' ? 0 : 1),
           page: this.curPage,
           count: this.totalRecord,
           filter: this.filter,
@@ -161,6 +209,15 @@ export class ResponseCodeComponent implements OnInit {
         );
       }
     ngOnInit() {
+
+        if (this.route.snapshot.routeConfig.path === 'response-code') {
+            this.menuName = 'ResponseCode';
+            this.gridOption = 'gridOptions';
+        } else if (this.route.snapshot.routeConfig.path === 'response-code-internal') {
+            this.menuName = 'ResponseCodeInternal';
+            this.gridOption = 'gridOptionsInternal';
+        }
+
         this.billerService.queryAll({
             page: 1,
             count: 10000,
@@ -172,9 +229,26 @@ export class ResponseCodeComponent implements OnInit {
                 (res: HttpErrorResponse) => this.onError(res.message),
                 () => { console.log('finally'); }
         );
+
+        this.responseCodeService.filter({
+            allData: 0,
+            page: 1,
+            count: 10000,
+            filter: this.filter,
+        })
+        .subscribe(
+                (res: HttpResponse<ResponseCode[]>) => {
+                     this.onSuccesRespCdInternal(res.body, res.headers);
+                },
+                (res: HttpErrorResponse) => this.onError(res.message),
+                () => { console.log('finally'); }
+        );
         console.log('', this.billerList);
     }
-
+    private onSuccesRespCdInternal(data, headers) {
+        this.respCodeInternalList = data.content;
+        // console.log('respCodeInternalList', this.respCodeInternalList);
+   }
     private onSuccessMemb(data, headers) {
          this.billerList = data.content;
     }
@@ -188,10 +262,11 @@ export class ResponseCodeComponent implements OnInit {
         this.filterBtn('');
     }
 
-    openNewDialog(): void {
+    openNewDialog(typeRespCode): void {
         const dialogRef = this.dialog.open(ResponseCodeDialogComponent, {
-            width: '500px',
-            data: { action: 'Add', entity: 'Response Code', billerData: this.billerList }
+            width: '750px',
+            data: { action: 'Add', entity: 'Response Code', billerData: this.billerList,
+             typeRespCode : typeRespCode, respCodeInternalData: this.respCodeInternalList }
         });
         dialogRef.afterClosed().subscribe(result => {
             console.log('The dialog was closed = [', result, ']');

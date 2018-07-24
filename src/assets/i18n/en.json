@@ -205,6 +205,42 @@
             "status": "Status",
             "passwordGenerated": "Password Generated",
             "role": "Role"
+        },
+        "ResponseCode": {
+            "home": {
+                "title": "Response Code",
+                "addLabelButton": "Add Response Code"
+            },
+            "filter": {
+                "responseCode": "Filter Response Code",
+                "description": "Filter Description",
+                "member": "Filter Member",
+                "memberType": "Filter Member Type"
+            },
+            "detail": {
+                "title": "{{action}} {{entity}}",
+                "addDetail": "Add Response Code"
+            },
+            "responseCode": "Response Code",
+            "description": "Description",
+            "member": "Member",
+            "memberType": "Member Type"
+        },
+        "ResponseCodeInternal": {
+            "home": {
+                "title": "Response Code Internal",
+                "addLabelButton": "Add Response Code Internal"
+            },
+            "filter": {
+                "responseCode": "Filter Response Code Internal",
+                "description": "Filter Description"
+            },
+            "detail": {
+                "title": "{{action}} {{entity}}",
+                "addDetail": "Add Response Code Internal"
+            },
+            "responseCode": "Response Code Internal",
+            "description": "Description"
         }
     }
 }

@@ -6,7 +6,8 @@ import { SNACKBAR_DURATION_IN_MILLISECOND } from '../../shared/constant/base-con
 import { CommonValidatorDirective } from '../../validators/common.validator';
 import { ResponseCode } from './response-code.model';
 import { ResponseCodeService } from './response-code.service';
-
+import { TranslateService } from '@ngx-translate/core';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
     selector: 'app-response-code-dialog',
@@ -22,16 +23,22 @@ export class ResponseCodeDialogComponent implements OnInit {
     responseCodeForm: FormGroup;
     submitted = false;
     duration = SNACKBAR_DURATION_IN_MILLISECOND;
-
+    menuName = '';
     billPayTypeList = [];
     billerList = [];
+    respCodeInternalList = [];
 
     constructor(
+        translate: TranslateService,
         private formBuilder: FormBuilder,
         public responseCodeService: ResponseCodeService,
         public snackBar: MatSnackBar,
         public dialogRef: MatDialogRef<ResponseCodeDialogComponent>,
-        @Inject(MAT_DIALOG_DATA) public data: any) { }
+        private route: ActivatedRoute,
+        @Inject(MAT_DIALOG_DATA) public data: any) {
+            translate.setDefaultLang('en');
+            translate.use('en');
+         }
 
     get form() { return this.responseCodeForm.controls; }
 
@@ -39,7 +46,8 @@ export class ResponseCodeDialogComponent implements OnInit {
         this.responseCodeForm = this.formBuilder.group({
             billerHeaderId: ['', CommonValidatorDirective.required],
             code: ['', CommonValidatorDirective.required],
-            description: ['', CommonValidatorDirective.required]
+            description: ['', CommonValidatorDirective.required],
+            respCodeInternalId: ['', CommonValidatorDirective.required],
         });
         this.responseCode = {};
         // this.responseCode.billPayType = false;
@@ -47,9 +55,12 @@ export class ResponseCodeDialogComponent implements OnInit {
             // search
             this.responseCode = this.data.responseCode;
             this.responseCode.billerHeaderId = this.data.responseCode.billerHeader.id;
-            console.log('aaaaaaa', this.responseCode);
+            this.responseCode.respCodeInternalId = this.data.responseCode.responseCodeInternal;
+            // console.log('aaaaaaa', this.responseCode);
         }
         this.billerList = this.data.billerData;
+        this.respCodeInternalList = this.data.respCodeInternalData;
+       // console.log('Masuk ', this.respCodeInternalList);
 
     }
 

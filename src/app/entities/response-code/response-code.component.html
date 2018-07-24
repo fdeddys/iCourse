@@ -2,13 +2,22 @@
     <mat-card-header>
         <mat-card-title style="align-items: center">
             <!-- <h2 style="color: rgb(226, 0, 0)" >Biller Type</h2>         -->
-            <h1 mat-dialog-title class="header-title">Response Code</h1>
+            <h2 *ngIf="menuName === 'ResponseCode'" mat-dialog-title translate="ottoAG.billerDetail.home.title"></h2>
+            <h2 *ngIf="menuName === 'Response Code Internal'" mat-dialog-title translate="ottoAG.billerPriceDetail.home.title"></h2>
+            {{menuName}}
+            <!-- <h1 mat-dialog-title class="header-title">Response Code</h1> -->
         </mat-card-title>
     </mat-card-header>
     <mat-card-content>
         <div style="text-align: left;">
-            <button mat-raised-button color="primary"  (click)="openNewDialog()" class="button-custom">Add Response Code</button>
-            <button mat-raised-button class="primary"  (click)="exportCSV('csv')" class="button-custom" >Export CSV</button>
+                <span *ngIf="menuName === 'ResponseCode'">  
+                        <button mat-raised-button color="primary"  (click)="openNewDialog(1)" class="button-custom">Add Response Code</button>
+                </span>
+                <span *ngIf="menuName === 'ResponseCodeInternal'">  
+                        <button mat-raised-button color="primary"  (click)="openNewDialog(0)" class="button-custom">Add Response Code</button>
+                </span>
+            
+                <button mat-raised-button class="primary"  (click)="exportCSV('csv')" class="button-custom" >Export CSV</button>
         </div>
         <br>
         <div> 
@@ -20,27 +29,41 @@
                 <input matInput placeholder="Filter Description " [(ngModel)]="filter.description"  
                     name ="description"  >
             </mat-form-field> 
-            <mat-form-field class="container-half-width" >
-                <input matInput placeholder="Filter Member " [(ngModel)]="filter.memberName"  
-                    name ="memberName"  >
-            </mat-form-field>  
-            <mat-form-field class="container-half-width" >
-                <input matInput placeholder="Filter Member Type" [(ngModel)]="filter.memberType"  
-                    name ="memberType"  >
-            </mat-form-field>     
-              
+            <span *ngIf="menuName === 'ResponseCode'">  
+                <mat-form-field class="container-half-width" >
+                    <input matInput placeholder="Filter Member " [(ngModel)]="filter.memberName"  
+                        name ="memberName"  >
+                </mat-form-field>  
+                <mat-form-field class="container-half-width" >
+                    <input matInput placeholder="Filter Member Type" [(ngModel)]="filter.memberType"  
+                        name ="memberType"  >
+                </mat-form-field>     
+            </span> 
             <button mat-raised-button color="primary" (click)="actionfilter()" style="margin-left: 20px"  class="button-custom">Filter</button>
         </div>
-        <br>
-        <ag-grid-angular 
-        #agGrid
-            style="height: 314px;" 
-            class="{{theme}}"
-            [gridOptions]="gridOptions" 
-            (gridReady)="onGridReady($event)"
-            (rowClicked)="onRowClicked($event)"
-            >
-        </ag-grid-angular>
+        <br> 
+        <span *ngIf= "menuName === 'ResponseCode'">
+                <ag-grid-angular 
+                #agGrid
+                    style="height: 314px;" 
+                    class="{{theme}}"
+                    [gridOptions]="gridOptions" 
+                    (gridReady)="onGridReady($event)"
+                    (rowClicked)="onRowClicked($event)"
+                    >
+                </ag-grid-angular>
+        </span>
+        <span *ngIf= "menuName === 'ResponseCodeInternal'">
+                <ag-grid-angular 
+                #agGrid
+                    style="height: 314px;" 
+                    class="{{theme}}"
+                    [gridOptions]="gridOptionsInternal" 
+                    (gridReady)="onGridReady($event)"
+                    (rowClicked)="onRowClicked($event)"
+                    >
+                </ag-grid-angular>
+        </span>
         
         <div >
             <mat-paginator 
