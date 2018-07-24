@@ -1,18 +1,23 @@
 <h1 mat-dialog-title>{{ "ottoAG.transactionList.detail.title" | translate:{mode: modeTitle} }}</h1>
 <!-- <form name="transListForm" (ngSubmit)="f.form.valid && onSubmit()" #f="ngForm" novalidate> -->
-<div mat-dialog-content> 
+<div mat-dialog-content>
+
     <mat-form-field class="form-full-width">
-        <input matInput placeholder="{{ 'ottoAG.transactionList.requestor' | translate }}" name="requestor" [(ngModel)]="transList.idRequestor.name" disabled>
+        <input matInput placeholder="{{ 'ottoAG.transactionList.requestor' | translate }}" 
+        name="requestor" 
+        [(ngModel)]="transList.idRequestor.name" disabled>
     </mat-form-field>
     <mat-form-field class="form-full-width">
-        <input matInput placeholder="{{ 'ottoAG.transactionList.responder' | translate }}" name="responder" [(ngModel)]="transList.idResponder.name" disabled>
+        <input matInput placeholder="{{ 'ottoAG.transactionList.responder' | translate }}" name="responder" 
+        [(ngModel)]="transList.idResponder.name" disabled>
     </mat-form-field>
     <mat-form-field class="form-full-width">
         <input matInput placeholder="{{ 'ottoAG.transactionList.transType' | translate }}" name="transType" 
         [(ngModel)]="transList.transType.name" disabled>
     </mat-form-field>
     <mat-form-field class="form-full-width form-separator">
-        <input matInput placeholder="{{ 'ottoAG.transactionList.product' | translate }}" name="product" [(ngModel)]="transList.billerProduct.name" disabled>
+        <input matInput placeholder="{{ 'ottoAG.transactionList.product' | translate }}" name="product" 
+        [(ngModel)]="transList.billerProduct.name" disabled>
     </mat-form-field>		
     <mat-form-field class="form-full-width">
         <input type="number" matInput placeholder="{{ 'ottoAG.transactionList.buyPrice' | translate }}" name="buyPrice" [(ngModel)]="transList.buyPrice" disabled>

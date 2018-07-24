@@ -62,16 +62,15 @@ export class TransListComponent implements OnInit {
 
     gridOptions = {
         columnDefs: [
-            { headerName: 'No', field: 'no', width: 100, minWidth: 100, maxWidth: 100, pinned: 'left', editable: false },
-            { headerName: 'Transmission Date', field: 'transmissionDateTime', width: 200, pinned: 'left', editable: false },
+            { headerName: 'No', field: 'no', width: 70, minWidth: 100, maxWidth: 100, pinned: 'left', editable: false },
+            { headerName: 'Transaction Date', field: 'transmissionDateTime', width: 200, pinned: 'left', editable: false },
             { headerName: 'Requestor', field: 'idRequestor.name', width: 200 },
             { headerName: 'Responder', field: 'idResponder.name', width: 200 },
             { headerName: 'Transaction Type', field: 'transType.name', width: 200 },
             { headerName: 'Product', field: 'billerProduct.name', width: 200 },
-            { headerName: 'Buy Price', field: 'buyPrice', width: 150 },
-            { headerName: 'Sell Price', field: 'sellPrice', width: 150 },
-            { headerName: 'Amount', field: 'amount', width: 150 },
-            { headerName: 'RC Internal', field: 'rcInternal', width: 150 },
+            { headerName: 'Buy Price', field: 'buyPrice', width: 120 },
+            { headerName: 'Sell Price', field: 'sellPrice', width: 120 },
+            { headerName: 'RC Internal', field: 'rcInternal', width: 120 },
             { headerName: ' ', width: 150, minWidth: 150, maxWidth: 150, cellRenderer: 'actionRenderer'}
         ],
         rowData: this.transList,
