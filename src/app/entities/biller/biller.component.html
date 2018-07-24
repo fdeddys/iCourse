@@ -46,12 +46,11 @@
 		<!-- </div> -->
 		<br>
 		<div>
-			<mat-form-field class="form-width" >
+			<mat-form-field class="form-half-width" style="margin-right: 60px">
 				<input matInput placeholder="{{ 'ottoAG.biller.filter.member' | translate }}" [(ngModel)]="filter.memberName" name ="name">
 			</mat-form-field>
-			<br>
 			<mat-checkbox class="example-margin" [color]="'primary'" [(ngModel)]="filChkBox.start" [ngModelOptions]="{standalone: true}" (change)="chkBoxChgS($event)" style="margin-right: 20px"></mat-checkbox>
-			<mat-form-field class="form-half-width" style="margin-right: 5%">
+			<mat-form-field class="form-half-width" style="margin-right: 15px">
 				<input matInput [matDatepicker]="pickerFStart" placeholder="{{ 'ottoAG.biller.filter.startDateFrom' | translate }}" (click)="pickerFStart.open()" [max]="dateTStartCtrl.value" [formControl]="dateFStartCtrl" readonly>
 				<mat-datepicker-toggle matSuffix [for]="pickerFStart"></mat-datepicker-toggle>
 				<mat-datepicker #pickerFStart></mat-datepicker>
@@ -59,7 +58,7 @@
 					<div *ngIf="form.dateStart.errors.required"> {{form.dateStart.errors.message}}</div>
 				</mat-error> -->
 			</mat-form-field>
-			<mat-form-field class="form-half-width">
+			<mat-form-field class="form-half-width" style="margin-right: 60px">
 				<input matInput [matDatepicker]="pickerTStart" placeholder="{{ 'ottoAG.biller.filter.startDateTo' | translate }}" (click)="pickerTStart.open()" [min]="dateFStartCtrl.value" [formControl]="dateTStartCtrl" readonly>
 				<mat-datepicker-toggle matSuffix [for]="pickerTStart"></mat-datepicker-toggle>
 				<mat-datepicker #pickerTStart></mat-datepicker>
@@ -67,9 +66,8 @@
 					<div *ngIf="form.dateThru.errors.required"> {{form.dateThru.errors.message}}</div>
 				</mat-error> -->
 			</mat-form-field>
-			<br>
 			<mat-checkbox class="example-margin" [color]="'primary'" [(ngModel)]="filChkBox.through" [ngModelOptions]="{standalone: true}" (change)="chkBoxChgT($event)" style="margin-right: 20px"></mat-checkbox>
-			<mat-form-field class="form-half-width" style="margin-right: 5%">
+			<mat-form-field class="form-half-width" style="margin-right: 15px">
 				<input matInput [matDatepicker]="pickerFThrough" placeholder="{{ 'ottoAG.biller.filter.endDateFrom' | translate }}" (click)="pickerFThrough.open()" [max]="dateTThroughCtrl.value" [formControl]="dateFThroughCtrl" readonly>
 				<mat-datepicker-toggle matSuffix [for]="pickerFThrough"></mat-datepicker-toggle>
 				<mat-datepicker #pickerFThrough></mat-datepicker>
