@@ -25,6 +25,17 @@
             "pass": "Password",
             "confirmP": "Confirm Password"
         },
+        "auditTrail": {
+            "home": {
+                "title": "Audit Trail"
+            },
+            "detail": {
+                "activity": "Activity",
+                "beforeValue": "Before value",
+                "insertDate": "Insert Date",
+                "afterValue": "After Value"
+            }
+        },
         "billerCompany": {
             "home": {
                 "title": "Bill Operator",
@@ -166,7 +177,7 @@
             "fee": "Fee",
             "profit": "Profit RTSM",
             "sellPrice": "Sell Price",
-            "sellPriceFromTable": "Sell Price",
+            "sellPriceFromTable": "Sell Price from table",
             "promotion": "Promotion",
             "amount": "Amount",
             "transmission": "Transaction Date",
@@ -213,6 +224,43 @@
             "status": "Status",
             "passwordGenerated": "Password Generated",
             "role": "Role"
+        },
+        "responseCode": {
+            "home": {
+                "title": "Response Code",
+                "addLabelButton": "Add Response Code"
+            },
+            "filter": {
+                "responseCode": "Filter Response Code",
+                "description": "Filter Description",
+                "member": "Filter Member",
+                "memberType": "Filter Member Type"
+            },
+            "detail": {
+                "title": "{{action}} {{entity}}",
+                "addDetail": "Add Response Code"
+            },
+            "responseCode": "Response Code",
+            "responseCodeInternal": "Response Code Internal",
+            "description": "Description",
+            "member": "Member",
+            "memberType": "Member Type"
+        },
+        "responseCodeInternal": {
+            "home": {
+                "title": "Response Code Internal",
+                "addLabelButton": "Add Response Code Internal"
+            },
+            "filter": {
+                "responseCode": "Filter Response Code Internal",
+                "description": "Filter Description"
+            },
+            "detail": {
+                "title": "{{action}} {{entity}}",
+                "addDetail": "Add Response Code Internal"
+            },
+            "responseCode": "Response Code Internal",
+            "description": "Description"
         }
     }
 }

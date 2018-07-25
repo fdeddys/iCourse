@@ -9,6 +9,7 @@ export class ResponseCode implements BaseEntity {
         public billerHeaderId?: number,
         public nourut?: any,
         public errMsg?: any,
+        public respCodeInternalId?: number,
     ) {
     }
 }

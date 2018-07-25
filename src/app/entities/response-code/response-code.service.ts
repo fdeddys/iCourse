@@ -35,10 +35,14 @@ export class ResponseCodeService {
 
     query(req?: any): Observable<HttpResponse<ResponseCode[]>> {
         const options = createRequestOption(req);
+        let allData = null;
         let pageNumber = null;
         let pageCount = null;
         let newresourceUrl = null;
         Object.keys(req).forEach((key) => {
+            if (key === 'allData') {
+                allData = req[key];
+            }
             if (key === 'page') {
                 pageNumber = req[key];
             }
@@ -48,7 +52,7 @@ export class ResponseCodeService {
 
         });
         if (pageNumber !== null ) {
-            newresourceUrl = this.resourceUrl + `/page/${pageNumber}/count/${pageCount}`;
+            newresourceUrl = this.resourceUrl + `/isAllData/${allData}/page/${pageNumber}/count/${pageCount}`;
             return this.http.get<ResponseCode[]>(newresourceUrl, {  observe: 'response' })
                 .pipe(
                     // map((res: HttpResponse<ResponseCode[]>) => this.convertArrayResponse(res))
@@ -96,9 +100,16 @@ export class ResponseCodeService {
         return copy;
     }
 
-    async exportCSV(): Promise<Blob> {
+    async exportMemRespCdCSV(): Promise<Blob> {
         const file =  await this.http.get<Blob>(
-            `${this.reportUrl}responsecode/csv`,
+            `${this.reportUrl}memberresponsecode/csv`,
+            {responseType: 'blob' as 'json'}
+        ).toPromise();
+        return file;
+    }
+    async exportIntlRespCdCSV(): Promise<Blob> {
+        const file =  await this.http.get<Blob>(
+            `${this.reportUrl}internalresponsecode/csv`,
             {responseType: 'blob' as 'json'}
         ).toPromise();
         return file;
@@ -108,11 +119,15 @@ export class ResponseCodeService {
         console.log('Filter  ', req);
 
         const options = createRequestOption(req);
+        let allData = null;
         let pageNumber = null;
         let pageCount = null;
         let newresourceUrl = null;
 
         Object.keys(req).forEach((key) => {
+            if (key === 'allData') {
+                allData = req[key];
+            }
             if (key === 'page') {
                 pageNumber = req[key];
             }
@@ -121,7 +136,7 @@ export class ResponseCodeService {
             }
         });
 
-        newresourceUrl = this.resourceUrl + `/filter/page/${pageNumber}/count/${pageCount}`;
+        newresourceUrl = this.resourceUrl + `/filter/isAllData/${allData}/page/${pageNumber}/count/${pageCount}`;
         return this.http.post<ResponseCode[]>(newresourceUrl, req['filter'], {  observe: 'response' })
             .pipe(
                 // map((res: HttpResponse<Member[]>) => this.convertArrayResponse(res))

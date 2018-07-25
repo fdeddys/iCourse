@@ -21,6 +21,7 @@ export class TransListDialogComponent implements OnInit {
     submitted = false;
     modeTitle: any;
     duration = SNACKBAR_DURATION_IN_MILLISECOND;
+    fromTable: String;
 
     constructor(
         translate: TranslateService,
@@ -41,6 +42,14 @@ export class TransListDialogComponent implements OnInit {
         if (this.data.mode !== 'create') {
             // search
             this.transList = this.data.rowData;
+            switch (this.transList.sellPriceFromTable) {
+                case 1: this.fromTable = 'Biller ';
+                    break;
+                case 2: this.fromTable = 'Price Detail ';
+                    break;
+                case 3: this.fromTable = 'Promotion';
+                    break;
+            }
         }
     }
 }
