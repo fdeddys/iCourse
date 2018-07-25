@@ -100,9 +100,16 @@ export class ResponseCodeService {
         return copy;
     }
 
-    async exportCSV(): Promise<Blob> {
+    async exportMemRespCdCSV(): Promise<Blob> {
         const file =  await this.http.get<Blob>(
-            `${this.reportUrl}responsecode/csv`,
+            `${this.reportUrl}memberresponsecode/csv`,
+            {responseType: 'blob' as 'json'}
+        ).toPromise();
+        return file;
+    }
+    async exportIntlRespCdCSV(): Promise<Blob> {
+        const file =  await this.http.get<Blob>(
+            `${this.reportUrl}internalresponsecode/csv`,
             {responseType: 'blob' as 'json'}
         ).toPromise();
         return file;

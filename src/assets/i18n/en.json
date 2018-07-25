@@ -225,7 +225,7 @@
             "passwordGenerated": "Password Generated",
             "role": "Role"
         },
-        "ResponseCode": {
+        "responseCode": {
             "home": {
                 "title": "Response Code",
                 "addLabelButton": "Add Response Code"
@@ -241,11 +241,12 @@
                 "addDetail": "Add Response Code"
             },
             "responseCode": "Response Code",
+            "responseCodeInternal": "Response Code Internal",
             "description": "Description",
             "member": "Member",
             "memberType": "Member Type"
         },
-        "ResponseCodeInternal": {
+        "responseCodeInternal": {
             "home": {
                 "title": "Response Code Internal",
                 "addLabelButton": "Add Response Code Internal"

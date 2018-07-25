@@ -2,40 +2,39 @@
     <mat-card-header>
         <mat-card-title style="align-items: center">
             <!-- <h2 style="color: rgb(226, 0, 0)" >Biller Type</h2>         -->
-            <h2 *ngIf="menuName === 'ResponseCode'" mat-dialog-title translate="ottoAG.billerDetail.home.title"></h2>
-            <h2 *ngIf="menuName === 'Response Code Internal'" mat-dialog-title translate="ottoAG.billerPriceDetail.home.title"></h2>
-            {{menuName}}
-            <!-- <h1 mat-dialog-title class="header-title">Response Code</h1> -->
+            <h2 *ngIf="menuName === 'ResponseCode'" mat-dialog-title translate="ottoAG.responseCode.home.title"></h2>
+            <h2 *ngIf="menuName === 'ResponseCodeInternal'" mat-dialog-title translate="ottoAG.responseCodeInternal.home.title"></h2>
+             
         </mat-card-title>
     </mat-card-header>
     <mat-card-content>
         <div style="text-align: left;">
-                <span *ngIf="menuName === 'ResponseCode'">  
-                        <button mat-raised-button color="primary"  (click)="openNewDialog(1)" class="button-custom">Add Response Code</button>
+                <span *ngIf="menuName === 'ResponseCode'">   
+                        <button mat-raised-button color="primary"  (click)="openNewDialog(1)" class="button-custom">{{ 'ottoAG.responseCode.home.addLabelButton' | translate }}</button>
+                        <button mat-raised-button class="primary"  (click)="exportMemRespCdCSV('csv')" class="button-custom" >{{ 'entity.action.exportCSV' | translate}}</button>
                 </span>
                 <span *ngIf="menuName === 'ResponseCodeInternal'">  
-                        <button mat-raised-button color="primary"  (click)="openNewDialog(0)" class="button-custom">Add Response Code</button>
-                </span>
-            
-                <button mat-raised-button class="primary"  (click)="exportCSV('csv')" class="button-custom" >Export CSV</button>
+                        <button mat-raised-button color="primary"  (click)="openNewDialog(0)" class="button-custom">{{ 'ottoAG.responseCode.home.addLabelButton' | translate }}</button>
+                        <button mat-raised-button class="primary"  (click)="exportIntRespCdCSV('csv')" class="button-custom" >{{ 'entity.action.exportCSV' | translate}}</button>
+                </span> 
         </div>
         <br>
         <div> 
             <mat-form-field class="container-half-width" >
-                <input matInput placeholder="Filter Respose Code " [(ngModel)]="filter.responseCode"  
+                <input matInput placeholder="{{ 'ottoAG.responseCode.filter.responseCode' | translate }}" [(ngModel)]="filter.responseCode"  
                     name ="responseCode"  >
             </mat-form-field> 
             <mat-form-field class="container-half-width" >
-                <input matInput placeholder="Filter Description " [(ngModel)]="filter.description"  
+                <input matInput placeholder="{{ 'ottoAG.responseCode.filter.description' | translate }}" [(ngModel)]="filter.description"  
                     name ="description"  >
             </mat-form-field> 
             <span *ngIf="menuName === 'ResponseCode'">  
                 <mat-form-field class="container-half-width" >
-                    <input matInput placeholder="Filter Member " [(ngModel)]="filter.memberName"  
+                    <input matInput placeholder="{{ 'ottoAG.responseCode.filter.member' | translate }} " [(ngModel)]="filter.memberName"  
                         name ="memberName"  >
                 </mat-form-field>  
                 <mat-form-field class="container-half-width" >
-                    <input matInput placeholder="Filter Member Type" [(ngModel)]="filter.memberType"  
+                    <input matInput placeholder="{{ 'ottoAG.responseCode.filter.memberType' | translate }}" [(ngModel)]="filter.memberType"  
                         name ="memberType"  >
                 </mat-form-field>     
             </span> 

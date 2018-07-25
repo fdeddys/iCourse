@@ -123,7 +123,7 @@ export class ResponseCodeComponent implements OnInit {
         private billerService: BillerService,
         private route: ActivatedRoute,
         translate: TranslateService, ) {
-            translate.setDefaultLang('en');
+           // translate.setDefaultLang('en');
             translate.use('en');
          }
 
@@ -306,17 +306,28 @@ export class ResponseCodeComponent implements OnInit {
         this.filterBtn('');
     }
 
-    public async exportCSV(reportType): Promise<void> {
+    public async exportMemRespCdCSV(reportType): Promise<void> {
 
-        // const membType = (this.memberTypeList.length === 1 && this.memberTypeList[0].id === 1 ? 1 : 0);
-         const blob = await this.responseCodeService.exportCSV();
+         const blob = await this.responseCodeService.exportMemRespCdCSV();
          const url = window.URL.createObjectURL(blob);
-         // const link = this.downloadZipLink.nativeElement;
          const link = document.createElement('a');
          document.body.appendChild(link);
          link.setAttribute('style', 'display: none');
          link.href = url;
-         link.download = 'responsecode.csv';
+         link.download = 'memberresponsecode.csv';
+         link.click();
+         window.URL.revokeObjectURL(url);
+     }
+
+     public async exportIntRespCdCSV(reportType): Promise<void> {
+
+         const blob = await this.responseCodeService.exportIntlRespCdCSV();
+         const url = window.URL.createObjectURL(blob);
+         const link = document.createElement('a');
+         document.body.appendChild(link);
+         link.setAttribute('style', 'display: none');
+         link.href = url;
+         link.download = 'internalresponsecode.csv';
          link.click();
          window.URL.revokeObjectURL(url);
      }

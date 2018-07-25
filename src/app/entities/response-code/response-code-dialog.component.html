@@ -6,7 +6,7 @@
  
    <span *ngIf= "data.typeRespCode === 1">
             <mat-form-field class="form-half-width" style="margin-right: 10%"> 
-                    <mat-select placeholder="Member" [(ngModel)]="responseCode.billerHeaderId"  name ="billerHeaderId"  required>
+                    <mat-select placeholder="{{ 'ottoAG.responseCode.member' | translate }}" [(ngModel)]="responseCode.billerHeaderId"  name ="billerHeaderId"  required>
                         <mat-option *ngFor="let biller of billerList" [value]="biller.id"> 
                             {{biller.member.name}} [{{biller.memberType.name}}] 
                         </mat-option> 
@@ -16,7 +16,7 @@
                     </mat-error>
                 </mat-form-field>
                 <mat-form-field class="form-half-width" style="margin-right: 10%"> 
-                        <mat-select placeholder="Response Code Internal" [(ngModel)]="responseCode.respCodeInternalId"  name ="respCodeInternalId"  required>
+                        <mat-select placeholder="{{ 'ottoAG.responseCode.responseCodeInternal' | translate }}" [(ngModel)]="responseCode.respCodeInternalId"  name ="respCodeInternalId"  required>
                             <mat-option *ngFor="let respCodeInternal of respCodeInternalList" [value]="respCodeInternal.id"> 
                                 {{respCodeInternal.responseCode}} - {{respCodeInternal.description}}
                             </mat-option> 
@@ -28,20 +28,20 @@
     </span>
 
    <mat-form-field class="container-full-width"> 
-    <input matInput placeholder="Response Code " [(ngModel)]="responseCode.responseCode" cdkFocusInitial name ="code"  required maxlength="3">
+    <input matInput placeholder="{{ 'ottoAG.responseCode.responseCode' | translate }}" [(ngModel)]="responseCode.responseCode" cdkFocusInitial name ="code"  required maxlength="3">
     <mat-error *ngIf="submitted && form.code.errors" class="invalid-feedback">
             <div *ngIf="form.code.errors.required"> {{form.code.errors.message}}</div>
     </mat-error> 
 </mat-form-field> 
 
-<mat-form-field class="container-full-width">
-<input matInput placeholder="Description" [(ngModel)]="responseCode.description"  name ="description"  required maxlength="255">
+<mat-form-field class="container-full-width"> 
+<input matInput placeholder="{{ 'ottoAG.responseCode.description' | translate }}" [(ngModel)]="responseCode.description"  name ="description"  required maxlength="255">
 <mat-error *ngIf="submitted && form.description.errors" class="invalid-feedback">
         <div *ngIf="form.description.errors.required"> {{form.description.errors.message}}</div>
 </mat-error> 
 </mat-form-field>
 
-      <br><br>
+<br><br>
 </mat-dialog-content>
 <mat-dialog-actions align="end">
   <button mat-button mat-raised-button  color="primary" (click)="validate()" class="button-custom">Save</button> 
