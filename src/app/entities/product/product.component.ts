@@ -21,7 +21,7 @@ import { Filter } from '../../shared/model/filter';
 @Component({
     selector: 'app-product',
     templateUrl: './product.component.html',
-    styleUrls: ['./product.component.css', '../../layouts/content/content.component.css']
+    styleUrls: ['./product.component.css']
 })
 export class ProductComponent implements OnInit {
 
