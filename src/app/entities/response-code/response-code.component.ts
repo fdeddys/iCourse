@@ -147,9 +147,9 @@ export class ResponseCodeComponent implements OnInit {
         const typeRespCode = (data.billerHeader  === null) ? 0 : 1;
 
         const dialogRef = this.dialog.open(ResponseCodeDialogComponent, {
-        width: '750px',
-        data: { action: 'Edit', entity: 'Response Code', responseCode: data, billerData: this.billerList,
-             typeRespCode : typeRespCode, respCodeInternalData: this.respCodeInternalList }
+            width: '750px',
+            data: { action: 'Edit', entity: 'Response Code', responseCode: data, billerData: this.billerList,
+                typeRespCode : typeRespCode, respCodeInternalData: this.respCodeInternalList }
         });
 
         dialogRef.afterClosed().subscribe(result => {

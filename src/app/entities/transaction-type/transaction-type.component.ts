@@ -155,9 +155,9 @@ export class TransTypeComponent implements OnInit {
 
         dialogRef.afterClosed().subscribe(result => {
             console.log('The dialog was closed = [', result, ']');
-            if (result === 'refresh') {
+           // if (result === 'refresh') {
                 this.loadAll(this.curPage);
-            }
+           // }
         });
     }
 
