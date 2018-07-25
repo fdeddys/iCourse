@@ -54,6 +54,7 @@ export class ResponseCodeComponent implements OnInit {
             { headerName: 'Description', field: 'description', width: 290, editable: false },
             { headerName: 'Member', field: 'billerHeader.member.name', width: 270,   editable: false },
             { headerName: 'Member Type', field: 'billerHeader.memberType.name', width: 180,  editable: false },
+            { headerName: 'Response Code Internal', field: 'billerHeader.memberType.name', width: 180,  editable: false },
             { headerName: ' ', width: 100, cellRenderer: 'actionRenderer'}
           // { headerName: ' ', suppressMenu: true,
           //   suppressSorting: true,

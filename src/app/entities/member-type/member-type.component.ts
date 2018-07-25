@@ -82,7 +82,7 @@ export class MemberTypeComponent implements OnInit {
         console.log('View action clicked', data);
         const dialogRef = this.dialog.open(MemberTypeDialogComponent, {
             width: '600px',
-            data: { action: 'EDIT', entity: 'Member Type', memberType: data }
+            data: { action: 'Edit', entity: 'Member Type', memberType: data }
         });
 
         dialogRef.afterClosed().subscribe(result => {

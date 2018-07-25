@@ -73,7 +73,7 @@ export class LoginComponent implements OnInit {
             password: sha512(this.password),
            // password: this.password,
             langKey: this.langKey
-        }).then(() => {
+        }).then((err) => {
             this.authenticationError = false;
             console.log('hasil login sucess');
             // if (this.router.url === '/register' || (/^\/activate\//.test(this.router.url)) ||
@@ -98,8 +98,13 @@ export class LoginComponent implements OnInit {
 
         }).catch((err) => {
             console.log('hasil login gagal ', err);
-            if (err.status !== 0) {
-                this.snackBar.open('Error ! Username atau Password anda salah' , 'Close', {
+            // alert(err.status);
+            if (err.status === 501) {
+                this.snackBar.open('Error ! Account not register' , 'Close', {
+                    duration: this.duration,
+                });
+            } else if (err.status === 401) {
+                this.snackBar.open('Error ! Invalid Username or Password' , 'Close', {
                     duration: this.duration,
                 });
             } else {

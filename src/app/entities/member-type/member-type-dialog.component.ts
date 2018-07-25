@@ -32,7 +32,7 @@ export class MemberTypeDialogComponent implements OnInit {
         });
 
         this.memberType = {};
-        if ( this.data.action === 'EDIT' ) {
+        if ( this.data.action === 'Edit' ) {
             // search
             console.log('member type id sending ', this.data.memberType);
             this.memberType = this.data.memberType;
