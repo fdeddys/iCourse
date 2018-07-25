@@ -55,7 +55,7 @@ export class ResponseCodeDialogComponent implements OnInit {
             // search
             this.responseCode = this.data.responseCode;
             this.responseCode.billerHeaderId = this.data.responseCode.billerHeader.id;
-            this.responseCode.respCodeInternalId = this.data.responseCode.responseCodeInternal;
+            this.responseCode.responseCodeInternalId = this.data.responseCode.responseCodeInternalId;
             // console.log('aaaaaaa', this.responseCode);
         }
         this.billerList = this.data.billerData;
