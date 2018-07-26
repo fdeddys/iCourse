@@ -532,11 +532,11 @@ export class BillerDialogComponent implements OnInit {
         const dialogRef = this.biller.memberTypeId === 1 ?
         //
         this.dialog.open(BillerDetailComponent, {
-            width: '1000px',
+            width: '800px',
             data: datasend
         }) :
         this.dialog.open(BillerPriceDetailComponent, {
-            width: '1000px',
+            width: '800px',
             data: datasend
         });
 

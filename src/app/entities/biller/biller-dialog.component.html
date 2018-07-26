@@ -65,7 +65,7 @@
         <!-- <button mat-raised-button color="primary" (click)="openBDDialog('create')" style="margin-top: 30px; margin-bottom: 10px; margin-right: 10px;" [disabled]="btnDisabled">{{ btnLabel }}</button> -->
         <!-- <button mat-raised-button color="primary" style="margin-top: 10px; margin-bottom: 10px; margin-right: 0px; margin-left: 75%" cdkFocusInitial (click)="save()">Save</button> -->
         <!-- <div align="end" style="margin-top: 10px; margin-bottom: 10px"> -->
-        <div style="margin-top: 10px; margin-bottom: 10px; float: right;">
+        <div style="margin-bottom: 10px; float: right;">
             <button mat-raised-button color="primary" (click)="validate()">{{ "entity.action.save" | translate }}</button>
         </div>        
         
@@ -84,7 +84,7 @@
                 >
             </ag-grid-angular>
         </fieldset>      
-        <div style="width: 900px">
+        <div style="width: 700px">
 			<mat-paginator 
 				[length]="totalData"
 				[pageSize]="totalRecord"

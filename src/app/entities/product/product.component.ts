@@ -286,8 +286,8 @@ export class ProductComponent implements OnInit {
             datasend.rowData = data;
         }
         const dialogRef = this.dialog.open(ProductDialogComponent, {
-            width: '1000px',
-            height: '500px',
+            width: '700px',
+            // height: '500px',
             data: datasend
         });
 

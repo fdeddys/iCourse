@@ -8,11 +8,12 @@ import { BillerTypeConfirmComponent } from './biller-type-confirm.component';
 import { GRID_THEME, CSS_BUTTON, NO_DATA_GRID_MESSAGE, REPORT_PATH, TOTAL_RECORD_PER_PAGE } from '../../shared/constant/base-constant';
 import { MatActionButtonComponent } from '../../shared/templates/mat-action-button.component';
 import { SharedService } from '../../shared/services/shared.service';
+import { TranslateService } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-biller-type',
   templateUrl: './biller-type.component.html',
-  styleUrls: ['./biller-type.component.css', '../../layouts/content/content.component.css']
+  styleUrls: ['./biller-type.component.css']
 })
 export class BillerTypeComponent implements OnInit {
 
@@ -72,9 +73,12 @@ export class BillerTypeComponent implements OnInit {
         return dt.toLocaleString(['id']);
     }
 
-    constructor(  private dialog: MatDialog,
+    constructor(translateService: TranslateService,
+                private dialog: MatDialog,
                 private billerTypeService: BillerTypeService,
-        private sharedService: SharedService ) { }
+        private sharedService: SharedService ) {
+            translateService.use('en');
+        }
 
     public onRowClicked(e) {
         if (e.event.target !== undefined) {
