@@ -1,0 +1,22 @@
+<mat-nav-list style="padding-top: 0">
+    <div *ngFor="let link of links">
+        <mat-expansion-panel *ngIf="link.subLinks && link.subLinks.length > 0">
+            <mat-expansion-panel-header [collapsedHeight]="'38px'" [expandedHeight]="'38px'">
+                <mat-list-item>
+                    <mat-icon mat-list-icon *ngIf="link.parentId === 0">{{ link.icon }}</mat-icon>
+                    <a style="cursor: pointer;" [ngStyle]="{'margin-left':getMargin(link)}">
+                        <p mat-line>{{link.description}}</p>
+                    </a>
+                </mat-list-item>
+            </mat-expansion-panel-header>
+            <div *ngIf="link.subLinks.length > 0">
+                <app-tree-view [links]="link.subLinks"></app-tree-view>
+            </div>
+        </mat-expansion-panel>
+        <mat-list-item [routerLink]="link.link" *ngIf="link.subLinks === undefined || link.subLinks.length === 0">
+            <a style="cursor: pointer;" [ngStyle]="{'margin-left':getMargin(link)}">
+                <p mat-line> {{link.description}}</p>
+            </a>
+        </mat-list-item>
+    </div>
+</mat-nav-list>    

@@ -194,7 +194,7 @@ export class ProductComponent implements OnInit {
     actionfilter(): void {
         this.paginator._pageIndex = 0;
         this.filterBtn(1);
-      }
+    }
 
     filterBtn(page): void {
         if (page !== '') {
@@ -202,28 +202,29 @@ export class ProductComponent implements OnInit {
         }
         let statusAll = false;
         switch (this.filter.status) {
-          case 'ALL':
-              console.log('hapus active');
-              statusAll = true;
-              // delete this.filter.active ;
-              this.filter.status = null;
-              break;
-      }
-      this.productService.filter({
-          page: this.curPage,
-          count: this.totalRecord,
-          filter: this.filter,
-      })
-      .subscribe(
-          (res: HttpResponse<Member[]>) => this.onSuccess(res.body, res.headers),
-          (res: HttpErrorResponse) => this.onError(res.message),
-          () => { console.log('finally');
-                  if ( statusAll ) {
-                    this.filter.status = 'ALL';
-                  }
-                }
+            case 'ALL':
+                console.log('hapus active');
+                statusAll = true;
+                // delete this.filter.active ;
+                this.filter.status = null;
+                break;
+        }
+        this.productService.filter({
+            page: this.curPage,
+            count: this.totalRecord,
+            filter: this.filter,
+        })
+        .subscribe(
+            (res: HttpResponse<Member[]>) => this.onSuccess(res.body, res.headers),
+            (res: HttpErrorResponse) => this.onError(res.message),
+            () => { console.log('finally');
+                    if ( statusAll ) {
+                        this.filter.status = 'ALL';
+                    }
+            }
         );
-      }
+    }
+
     onGridReady(params) {
         this.gridApi = params.api;
         this.gridColumnApi = params.columnApi;
@@ -286,15 +287,16 @@ export class ProductComponent implements OnInit {
             datasend.rowData = data;
         }
         const dialogRef = this.dialog.open(ProductDialogComponent, {
-            width: '1000px',
-            height: '500px',
+            width: '700px',
+            // height: '500px',
             data: datasend
         });
 
         dialogRef.afterClosed().subscribe(result => {
             console.log('The dialog was closed');
             // this.animal = result;
-            this.loadAll(this.curPage);
+            // this.loadAll(this.curPage);
+            this.filterBtn('');
         });
     }
 
