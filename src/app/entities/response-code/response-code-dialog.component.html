@@ -15,8 +15,9 @@
                         <div *ngIf="form.billerHeaderId.errors.required"> {{form.billerHeaderId.errors.message}}</div>
                     </mat-error>
                 </mat-form-field>
+   
                 <mat-form-field class="form-half-width" style="margin-right: 10%"> 
-                        <mat-select placeholder="{{ 'ottoAG.responseCode.responseCodeInternal' | translate }}" [(ngModel)]="responseCode.respCodeInternalId"  name ="respCodeInternalId"  required>
+                        <mat-select placeholder="{{ 'ottoAG.responseCode.responseCodeInternal' | translate }}" [(ngModel)]="responseCode.responseCodeInternalId"  name ="respCodeInternalId"  required>
                             <mat-option *ngFor="let respCodeInternal of respCodeInternalList" [value]="respCodeInternal.id"> 
                                 {{respCodeInternal.responseCode}} - {{respCodeInternal.description}}
                             </mat-option> 
