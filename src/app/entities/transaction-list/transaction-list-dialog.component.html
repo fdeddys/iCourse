@@ -26,7 +26,7 @@
         <input type="number" matInput placeholder="{{ 'ottoAG.transactionList.sellPrice' | translate }}" name="sellPrice" [(ngModel)]="transList.sellPrice" disabled>
     </mat-form-field>
     <mat-form-field class="form-full-width">
-        <input type="number" matInput placeholder="{{ 'ottoAG.transactionList.sellPriceFromTable' | translate }}" 
+        <input type="text" matInput placeholder="{{ 'ottoAG.transactionList.sellPriceFromTable' | translate }}" 
             name="sellPriceFromTable" [(ngModel)]="fromTable" disabled>
     </mat-form-field>
     <mat-form-field style="width: 25%;">
@@ -53,15 +53,15 @@
     <mat-form-field style="width: 25%;">
         <input matInput placeholder="{{ 'ottoAG.transactionList.rcResponder' | translate }}" name="rcResponder" [(ngModel)]="transList.rcResponder" disabled>
     </mat-form-field>
+    <ag-grid-angular 
+        #agGrid
+        style="height: 200px;" 
+        class="{{theme}}"
+        [gridOptions]="gridOptions" 
+        (gridReady)="onGridReady($event)"
+        >
+    </ag-grid-angular>
 </div>
-<ag-grid-angular 
-    #agGrid
-    style="height: 200px;" 
-    class="{{theme}}"
-    [gridOptions]="gridOptions" 
-    (gridReady)="onGridReady($event)"
-    >
-</ag-grid-angular>
 <!-- <div mat-dialog-actions align="end">
     <button mat-raised-button color="primary" cdkFocusInitial (click)="validate()">{{ "entity.action.save" | translate }}</button>
 </div>
