@@ -121,11 +121,18 @@ export class MemberTypeService {
         return copy;
     }
 
-    async exportCSV(): Promise<Blob> {
-        const file =  await this.http.get<Blob>(
-            `${this.reportUrl}membertype/csv`,
-            {responseType: 'blob' as 'json'}
+    async exportCSV(req?: any): Promise<HttpResponse<Blob>> {
+        const file =  await this.http.post<Blob>(
+            `${this.reportUrl}membertype/csv`, req['filter'],
+            {responseType: 'blob' as 'json', observe: 'response'}
         ).toPromise();
         return file;
     }
+    // async exportCSV(): Promise<Blob> {
+    //     const file =  await this.http.get<Blob>(
+    //         `${this.reportUrl}membertype/csv`,
+    //         {responseType: 'blob' as 'json'}
+    //     ).toPromise();
+    //     return file;
+    // }
 }

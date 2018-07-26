@@ -217,7 +217,7 @@ export class UserComponent implements OnInit {
         });
     }
 
-        private onSuccess(data, headers) {
+    private onSuccess(data, headers) {
         if ( data.content.length < 0 ) {
             return ;
         }
@@ -242,17 +242,29 @@ export class UserComponent implements OnInit {
 
     public async exportCSV(reportType): Promise<void> {
 
-        const blob = await this.userService.exportCSV();
-        const url = window.URL.createObjectURL(blob);
-        const link = document.createElement('a');
-        document.body.appendChild(link);
-        link.setAttribute('style', 'display: none');
-        link.href = url;
-        link.download = 'user.csv';
-        link.click();
-        link.remove();
+        // const blob = await this.userService.exportCSV();
+        // const url = window.URL.createObjectURL(blob);
+        // const link = document.createElement('a');
+        // document.body.appendChild(link);
+        // link.setAttribute('style', 'display: none');
+        // link.href = url;
+        // link.download = 'user.csv';
+        // link.click();
+        // link.remove();
 
-        window.URL.revokeObjectURL(url);
+        // window.URL.revokeObjectURL(url);
+        const blob = await this.userService.exportCSV({filter: this.filter }).then(
+            (resp) => {
+                const url = window.URL.createObjectURL(resp.body);
+                const link = document.createElement('a');
+                document.body.appendChild(link);
+                link.setAttribute('style', 'display: none');
+                link.href = url;
+                link.download = resp.headers.get('File-Name');
+                link.click();
+                link.remove();
+                window.URL.revokeObjectURL(url);
+            });
     }
 
     filterBtn(): void {
