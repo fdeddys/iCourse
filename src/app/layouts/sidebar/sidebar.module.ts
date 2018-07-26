@@ -7,12 +7,14 @@ import { CustomMaterialModule } from './../../material.module';
 import { AppRoutingModule } from '../../app.routing.module';
 import {
     SideBarService,
-    SidebarComponent
+    SidebarComponent,
+    TreeViewComponent
 } from './';
 
 @NgModule({
     declarations: [
-        SidebarComponent
+        SidebarComponent,
+        TreeViewComponent
     ],
     imports: [ /* add modules here so Angular knows to use them */
         BrowserModule,
@@ -21,7 +23,8 @@ import {
         AppRoutingModule
     ],
     exports: [
-        SidebarComponent
+        SidebarComponent,
+        TreeViewComponent
     ],
     providers: [
         SideBarService

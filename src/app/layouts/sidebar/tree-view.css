@@ -1,0 +1,21 @@
+.mat-expansion-panel {
+    transition: none !important;
+    box-shadow: none !important;
+}
+.mat-expansion-panel-header {
+    padding: 0 24px 0 0;
+}
+.mat-list-icon {
+    color: rgba(0, 0, 0, 0.54);
+    margin-right: 10px;
+}
+/* set padding-top of app-tree-view to 8px */
+/* ::ng-deep .mat-nav-list {
+    padding-top: 0     !important;
+} */
+::ng-deep .mat-list-item {
+    height: 38px     !important;
+}
+::ng-deep .mat-expansion-panel-body {
+    padding: 0     !important;
+}

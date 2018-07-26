@@ -1,9 +1,38 @@
 @import '~@angular/material/theming';
 @include mat-core();
-
     $primary: mat-palette($mat-blue,800);
     $accent: mat-palette($mat-orange,200);
-
     $theme: mat-light-theme($primary, $accent);
-
 @include angular-material-theme($theme);
+
+$custom-typography: mat-typography-config(
+    /*
+    display-4, display-3, display-2 and display-1 - Large, one-off headers, usually at the top of the page (e.g. a hero header).
+    headline - Section heading corresponding to the <h1> tag.
+    title - Section heading corresponding to the <h2> tag.
+    subheading-2 - Section heading corresponding to the <h3> tag.
+    subheading-1 - Section heading corresponding to the <h4> tag.
+    body-1 - Base body text.
+    body-2 - Bolder body text.
+    caption - Smaller body and hint text.
+    button - Buttons and anchors.
+    input - Form input fields.
+    */
+
+    $font-family:   'Roboto, "Helvetica Neue", sans-serif',
+    $display-4:     mat-typography-level(112px, 112px, 300),
+    $display-3:     mat-typography-level(56px, 56px, 400),
+    $display-2:     mat-typography-level(45px, 48px, 400),
+    $display-1:     mat-typography-level(34px, 40px, 400),
+    $headline:      mat-typography-level(20px, 32px, 400),
+    $title:         mat-typography-level(18px, 32px, 500),
+    $subheading-2:  mat-typography-level(12px, 28px, 400),
+    $subheading-1:  mat-typography-level(12px, 24px, 400),
+    $body-2:        mat-typography-level(12px, 24px, 500),
+    $body-1:        mat-typography-level(12px, 20px, 400),
+    $caption:       mat-typography-level(12px, 20px, 400),
+    $button:        mat-typography-level(11px, 14px, 500),
+    /* Line-height must be unit-less fraction of the font-size. */
+    $input:         mat-typography-level(11px, 1.125, 400)
+);
+@include angular-material-typography($custom-typography);
