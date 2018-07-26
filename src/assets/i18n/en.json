@@ -42,12 +42,27 @@
                 "addLabelButton": "Add Bill Operator"
             },
             "filter": {
-                "name": "Name"
+                "name": "Filter Name"
             },
             "detail": {
                 "title": "{{action}} {{entity}}"
             },
             "name": "Name"
+        },
+        "billerType": {
+            "home": {
+                "title": "Bill Type",
+                "addLabelButton": "Add Biller Type"
+            },
+            "filter": {
+                "name": "Filter Name",
+                "billPayType": "Filter type"
+            },
+            "detail": {
+                "title": "{{action}} {{entity}}"
+            },
+            "name": "Name",
+            "billPayType": "Bill Pay Type"
         },
         "biller": {
             "filter": {
