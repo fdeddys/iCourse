@@ -54,6 +54,14 @@
         <input matInput placeholder="{{ 'ottoAG.transactionList.rcResponder' | translate }}" name="rcResponder" [(ngModel)]="transList.rcResponder" disabled>
     </mat-form-field>
 </div>
+<ag-grid-angular 
+    #agGrid
+    style="height: 200px;" 
+    class="{{theme}}"
+    [gridOptions]="gridOptions" 
+    (gridReady)="onGridReady($event)"
+    >
+</ag-grid-angular>
 <!-- <div mat-dialog-actions align="end">
     <button mat-raised-button color="primary" cdkFocusInitial (click)="validate()">{{ "entity.action.save" | translate }}</button>
 </div>
