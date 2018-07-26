@@ -1,12 +1,14 @@
 import { Component, OnInit, Inject } from '@angular/core';
 
-import { FormsModule } from '@angular/forms';
-import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
+import { FormsModule, FormGroup, FormBuilder } from '@angular/forms';
+import { MatDialog, MatDialogRef, MAT_DIALOG_DATA, MatSnackBar } from '@angular/material';
 import { HttpResponse, HttpErrorResponse } from '@angular/common/http';
 import { MemberBankService } from '../member-bank/member-bank.service';
 import { Member } from './member.model';
 import { MemberBank } from '../member-bank/member-bank.model';
 import { GlobalSettingService, GlobalSetting } from '../global-setting';
+import { SNACKBAR_DURATION_IN_MILLISECOND } from '../../shared/constant/base-constant';
+import { CommonValidatorDirective } from '../../validators/common.validator';
 
 @Component({
     selector: 'app-member-bank-dialog',
@@ -20,8 +22,13 @@ export class MemberBankDialogComponent implements OnInit {
     memberBank: MemberBank;
     private globalSettings: GlobalSetting[];
     // private bankSelected;
+    duration = SNACKBAR_DURATION_IN_MILLISECOND;
+    memberBankForm: FormGroup;
+    submitted = false;
 
     constructor(
+        private formBuilder: FormBuilder,
+        public snackBar: MatSnackBar,
         private dialog: MatDialog,
         public dialogRef: MatDialogRef<MemberBankDialogComponent>,
         @Inject(MAT_DIALOG_DATA) public data: any,
@@ -31,6 +38,10 @@ export class MemberBankDialogComponent implements OnInit {
 
 
     ngOnInit() {
+        this.memberBankForm = this.formBuilder.group({
+            accountNumber: ['', CommonValidatorDirective.required]
+        });
+
         this.member = this.data.member;
         this.memberBank = new MemberBank();
         const global = new GlobalSetting();
@@ -49,6 +60,8 @@ export class MemberBankDialogComponent implements OnInit {
         this.loadBank();
     }
 
+    get form() { return this.memberBankForm.controls; }
+
     loadBank(): void {
         this.globalSettingService.findByGlobalType('BANK')
             .subscribe(
@@ -65,21 +78,53 @@ export class MemberBankDialogComponent implements OnInit {
         this.dialogRef.close();
     }
 
-    save(): void {
+    validate(): void {
+        console.log('isi  this.memberBank',  this.memberBank);
+        this.submitted = true;
+        if (this.memberBank.globalSetting.id === 0) {
+            this.openSnackBar('Bank is Required', 'ok');
+            return;
+        }
+
+        if (this.memberBank.accountNumber === undefined) {
+            this.openSnackBar('Account Number is Required', 'ok');
+            return;
+        }
+        // stop here if form is invalid
+        if (this.memberBankForm.invalid) {
+            return;
+        }
+    }
+
+    onSubmit() {
         this.memberBank.member = this.member;
 
-        if (this.memberBank.id === undefined) {
+        if (this.memberBank.id === undefined || this.memberBank.id === 0) {
             this.memberBank.id = 0;
             console.log('send to service ', this.memberBank);
             this.memberBankService.create(this.memberBank).subscribe((res: HttpResponse<Member>) => {
-                this.dialogRef.close('refresh');
+                if (res.body.errMsg === '' || res.body.errMsg === null ) {
+                    this.dialogRef.close('refresh');
+                } else {
+                    this.openSnackBar(res.body.errMsg, 'Ok');
+                }
             });
         } else {
             console.log('send to service ', this.memberBank);
             this.memberBankService.update(this.memberBank.id, this.memberBank).subscribe((res: HttpResponse<Member>) => {
-                this.dialogRef.close('refresh');
+                if (res.body.errMsg === '' || res.body.errMsg === null ) {
+                    this.dialogRef.close('refresh');
+                } else {
+                    this.openSnackBar(res.body.errMsg, 'Ok');
+                }
             });
         }
+    }
+
+    openSnackBar(message: string, action: string) {
+        this.snackBar.open(message, action, {
+          duration: this.duration,
+        });
     }
 
 

@@ -33,6 +33,9 @@
 					{{billPayType}}
 				</mat-option>
             </mat-select> 
+            <mat-error *ngIf="submitted && form.billPayTypeId.errors" class="invalid-feedback">
+                <div *ngIf="form.billPayTypeId.errors.required"> {{form.billPayTypeId.errors.message}}</div>
+            </mat-error> 
         </mat-form-field>
 
       <br><br>

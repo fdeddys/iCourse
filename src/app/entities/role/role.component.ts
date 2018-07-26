@@ -93,7 +93,7 @@ export class RoleComponent implements MainChild, OnInit {
   public onActionEditClick(data: any) {
       console.log('View action clicked', data);
       const dialogRef = this.dialog.open(RoleDialogComponent, {
-        width: '60%',
+        width: '550px',
         data: { action: 'Edit', entity: 'Role', role: data }
       });
 
@@ -156,7 +156,7 @@ export class RoleComponent implements MainChild, OnInit {
 
   openNewDialog(): void {
     const dialogRef = this.dialog.open(RoleDialogComponent, {
-      width: '60%',
+      width: '550px',
       data: { action: 'Add', entity: 'Role' }
     });
 

@@ -12,7 +12,7 @@
 			<input matInput placeholder="Product Name" name="name" [(ngModel)]="product.name">
 		</mat-form-field> -->
 		<mat-form-field class="form-full-width">
-			<input matInput placeholder="{{ 'ottoAG.billerProduct.productCode' | translate }}" name="code" [(ngModel)]="product.productCode">
+			<input matInput placeholder="{{ 'ottoAG.billerProduct.productCode' | translate }}" name="code" [(ngModel)]="product.productCode" required>
 			<mat-error *ngIf="submitted && form.productCode.errors" class="invalid-feedback">
 				<div *ngIf="form.productCode.errors.required"> {{form.productCode.errors.message}}</div>
 			</mat-error> 
@@ -20,7 +20,7 @@
 
 		<mat-form-field class="form-full-width form-separator">
 			<input matInput placeholder="{{ 'ottoAG.billerProduct.billerType' | translate }}" aria-label="Product Type" 
-				[matAutocomplete]="auto" [formControl]="billTypeCtrl">
+				[matAutocomplete]="auto" [formControl]="billTypeCtrl" required>
 			<mat-autocomplete #auto="matAutocomplete" [displayWith]="displayFnBil">
 				<mat-option *ngFor="let billerType of filteredBillType | async" [value]="billerType">
 					<span>{{ billerType.name }}</span>
@@ -33,7 +33,7 @@
 
 		<mat-form-field class="form-full-width">
 			<input matInput placeholder="{{ 'ottoAG.billerProduct.billerCompany' | translate }}" aria-label="Product Company" 
-				[matAutocomplete]="autoComp" [formControl]="billCompanyCtrl">
+				[matAutocomplete]="autoComp" [formControl]="billCompanyCtrl" required>
 			<mat-autocomplete #autoComp="matAutocomplete" [displayWith]="displayFnCom">
 				<mat-option *ngFor="let billerCompany of filteredBillCompany | async" [value]="billerCompany">
 					<span>{{ billerCompany.name }}</span>
@@ -44,7 +44,7 @@
 			</mat-error> 
 		</mat-form-field>
 		<mat-form-field class="form-full-width form-separator">
-			<input matInput placeholder="{{ 'ottoAG.billerProduct.denom' | translate }}" name="denom" [(ngModel)]="product.denom">
+			<input matInput placeholder="{{ 'ottoAG.billerProduct.denom' | translate }}" name="denom" [(ngModel)]="product.denom" required>
 			<mat-error *ngIf="submitted && form.denom.errors" class="invalid-feedback">
 				<div *ngIf="form.denom.errors.required"> {{form.denom.errors.message}}</div>
 			</mat-error> 
@@ -56,7 +56,7 @@
 			</mat-error> 
 		</mat-form-field>		 -->
 		<mat-form-field class="form-full-width">
-			<mat-select placeholder="{{ 'ottoAG.billerProduct.searchBy' | translate }}" [(ngModel)]="product.searchBy" name="searchBy" (selectionChange)="searchByChg()">
+			<mat-select placeholder="{{ 'ottoAG.billerProduct.searchBy' | translate }}" [(ngModel)]="product.searchBy" name="searchBy" (selectionChange)="searchByChg()" required>
 				<mat-option *ngFor="let searchBy of searchByList" [value]="searchBy">
 				  	{{searchBy}}
 				</mat-option>

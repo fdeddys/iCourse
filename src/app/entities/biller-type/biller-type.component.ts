@@ -97,7 +97,7 @@ export class BillerTypeComponent implements OnInit {
     public onActionEditClick(data: any) {
         console.log('View action clicked', data);
         const dialogRef = this.dialog.open(BillerTypeDialogComponent, {
-        width: '1000px',
+        width: '600px',
         data: { action: 'Edit', entity: 'Bill Type', BillerType: data }
         });
 
@@ -204,7 +204,7 @@ export class BillerTypeComponent implements OnInit {
 
     openNewDialog(): void {
         const dialogRef = this.dialog.open(BillerTypeDialogComponent, {
-            width: '1000px',
+            width: '600px',
             data: { action: 'Add', entity: 'Bill Type' }
         });
 

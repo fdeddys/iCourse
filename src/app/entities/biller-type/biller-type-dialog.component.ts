@@ -39,6 +39,7 @@ export class BillerTypeDialogComponent implements OnInit {
     ngOnInit() {
         this.billerTypeForm = this.formBuilder.group({
             name: ['', [CommonValidatorDirective.required]],
+            billPayTypeId : ['', [CommonValidatorDirective.required]]
         });
         this.billerType = {};
         this.billerType.billPayType = false;
@@ -67,6 +68,13 @@ export class BillerTypeDialogComponent implements OnInit {
         console.log('isi biller = ', this.billerType);
         // this.BillerType.name = this.name;
         console.log('isi biller company ', this.billerType);
+        if (this.billerType.billPayType === false) {
+            this.snackBar.open('Error !' + ' Bill Pay Type is Required' , 'Close', {
+                duration: 2000,
+            });
+            return;
+        }
+
         if (this.billerType.id === undefined) {
             console.log('send to service ', this.billerType);
 

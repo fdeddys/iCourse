@@ -121,7 +121,7 @@ export class MemberDialogComponent implements OnInit {
         }
 
         const dialogRef = this.dialog.open(MemberBankDialogComponent, {
-          width: '1000px',
+          width: '500px',
           data: { action: 'Add', entity: 'Bank', member: this.member }
         });
 
@@ -136,15 +136,15 @@ export class MemberDialogComponent implements OnInit {
     public onActionEditClick(data: any) {
         // console.log('View action clicked', data);
         const dialogRef = this.dialog.open(MemberBankDialogComponent, {
-          width: '1000px',
+          width: '500px',
           data: { action: 'Edit', entity: 'Bank', member: this.member, memberBank: data }
         });
 
         dialogRef.afterClosed().subscribe(result => {
           console.log('The dialog was closed = [', result, ']');
-          if (result === 'refresh') {
+         // if (result === 'refresh') {
             this.loadMemberBank();
-          }
+         // }
         });
     }
 
