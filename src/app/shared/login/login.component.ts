@@ -55,19 +55,19 @@ export class LoginComponent implements OnInit {
         //     alert('Invalid credentials');
         // }
        // alert(sha512(this.password));
-       if (this.username == null) {
-        this.snackBar.open('Error ! Username harus diisi' , 'Close', {
-            duration: this.duration,
-        });
-        return;
-       }
-       if (this.password == null) {
-        this.snackBar.open('Error ! Password harus diisi' , 'Close', {
-            duration: this.duration,
-        });
-        return;
-       }
+       // alert(this.username.trim());
 
+       if (this.username === null || this.username.trim() === '') {
+        this.snackBar.open('Error ! Username is required' , 'Close', {
+            duration: this.duration,
+        });
+        return;
+       } else if (this.password == null || this.password.trim() === '') {
+        this.snackBar.open('Error ! Password is required' , 'Close', {
+            duration: this.duration,
+        });
+        return;
+       } else {
         this.loginService.login({
             username: this.username,
             password: sha512(this.password),
@@ -114,6 +114,8 @@ export class LoginComponent implements OnInit {
             }
             this.authenticationError = true;
         });
+       }
+
         console.log('selesai');
     }
 }

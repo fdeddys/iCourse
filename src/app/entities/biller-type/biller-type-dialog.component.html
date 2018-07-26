@@ -6,8 +6,8 @@
         <!-- <mat-form-field class="container-full-width">
             <input matInput placeholder="Id" value="{{billerType.id}}" [disabled]="true" >
         </mat-form-field> -->
-         <mat-form-field class="container-full-width">
-                <input matInput placeholder="Name " [(ngModel)]="billerType.name" cdkFocusInitial name ="nm" [(ngModel)]="billerType.name" #name="ngModel" [ngClass]="{ 'is-invalid': f.submitted && name.invalid }" required maxlength="50">
+         <mat-form-field class="container-full-width"> 
+                <input matInput placeholder="Name " [(ngModel)]="billerType.name" cdkFocusInitial name ="name"  required maxlength="50">
                 <mat-error *ngIf="submitted && form.name.errors" class="invalid-feedback">
                         <div *ngIf="form.name.errors.required"> {{form.name.errors.message}}</div>
                 </mat-error> 
@@ -28,11 +28,14 @@
         </mat-form-field> -->
 
         <mat-form-field class="form-full-width">
-			<mat-select placeholder="Bill Pay Type" [(ngModel)]="billerType.billPayType" name="billPayType">
+			<mat-select placeholder="Bill Pay Type" [(ngModel)]="billerType.billPayType" name="billPayTypeId"  required>
 				<mat-option *ngFor="let billPayType of billPayTypeList" [value]="billPayType">
 					{{billPayType}}
 				</mat-option>
             </mat-select> 
+            <mat-error *ngIf="submitted && form.billPayTypeId.errors" class="invalid-feedback">
+                <div *ngIf="form.billPayTypeId.errors.required"> {{form.billPayTypeId.errors.message}}</div>
+            </mat-error> 
         </mat-form-field>
 
       <br><br>

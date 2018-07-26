@@ -95,7 +95,7 @@ export class MemberComponent implements OnInit {
   public onActionEditClick(data: any) {
       console.log('View action clicked', data);
       const dialogRef = this.dialog.open(MemberDialogComponent, {
-        width: '1000px',
+        width: '820px',
         data: { action: 'Edit', entity: 'Member Registration', member: data }
       });
 
@@ -208,7 +208,7 @@ export class MemberComponent implements OnInit {
 
   openNewDialog(): void {
       const dialogRef = this.dialog.open(MemberDialogComponent, {
-          width: '1000px',
+          width: '820px',
           data: { action: 'Add', entity: 'Member Registration' }
       });
 
