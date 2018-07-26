@@ -136,7 +136,7 @@ export class BillerDialogComponent implements OnInit {
         pagination: true,
         enableColResize: true,
         paginationPageSize: 10,
-        suppressPaginationPanel : true,
+        // suppressPaginationPanel : true,
         localeText: {noRowsToShow: this.messageNoData},
         // rowHeight : 41,
         frameworkComponents: {
@@ -312,7 +312,8 @@ export class BillerDialogComponent implements OnInit {
                 this.getMembType({id: 1});
                 this.billerDetailService.query({
                     page: page,
-                    count: this.totalRecord,
+                    // count: this.totalRecord,
+                    count: 100000,
                     idhdr: this.biller.id
                     // size: this.itemsPerPage,
                     // sort: this.sort()
@@ -326,7 +327,8 @@ export class BillerDialogComponent implements OnInit {
                 this.getMembType({id: 2});
                 this.billerPriceDetailService.query({
                     page: page,
-                    count: this.totalRecord,
+                    // count: this.totalRecord,
+                    count: 100000,
                     idhdr: this.biller.id
                     // size: this.itemsPerPage,
                     // sort: this.sort()

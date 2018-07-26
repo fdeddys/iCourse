@@ -84,14 +84,6 @@ export class TransListService {
         return copy;
     }
 
-    // async exportCSV(): Promise<Blob> {
-    //     const file =  await this.http.get<Blob>(
-    //         `${this.reportUrl}trans/csv`,
-    //         {responseType: 'blob' as 'json'}
-    //     ).toPromise();
-    //     return file;
-    // }
-
     async exportCSV(): Promise<HttpResponse<Blob>> {
         const file =  await this.http.get<Blob>(
             `${this.reportUrl}trans/csv`,
