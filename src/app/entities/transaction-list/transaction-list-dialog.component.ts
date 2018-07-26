@@ -6,7 +6,7 @@ import { TransList } from './transaction-list.model';
 import { TransListService } from './transaction-list.service';
 import { HttpResponse, HttpErrorResponse } from '@angular/common/http';
 // import { CommonValidatorDirective } from '../../validators/common.validator';
-import { SNACKBAR_DURATION_IN_MILLISECOND, NO_DATA_GRID_MESSAGE } from '../../shared/constant/base-constant';
+import { SNACKBAR_DURATION_IN_MILLISECOND, NO_DATA_GRID_MESSAGE, GRID_THEME } from '../../shared/constant/base-constant';
 import { TranslateService } from '@ngx-translate/core';
 
 @Component({
@@ -27,8 +27,9 @@ export class TransListDialogComponent implements OnInit {
     messageNoData: string = NO_DATA_GRID_MESSAGE;
     curPage = 1;
     totalData = 0;
-    private gridApi;
-    private gridColumnApi;
+    gridApi;
+    gridColumnApi;
+    theme: String = GRID_THEME;
     constructor(
         translate: TranslateService,
         public snackBar: MatSnackBar,
@@ -43,10 +44,10 @@ export class TransListDialogComponent implements OnInit {
     gridOptions = {
         columnDefs: [
             { headerName: 'No', field: 'no', width: 70, minWidth: 70, maxWidth: 70, pinned: 'left', editable: false },
-            { headerName: 'Transaction Date', field: 'transmissionDateTime', width: 150, pinned: 'left', editable: false },
-            { headerName: 'Requestor', field: 'requestor.name', width: 120 },
-            { headerName: 'Responder', field: 'responder.name', width: 120 },
-            { headerName: 'Transaction Type', field: 'transType.name', width: 150 },
+            { headerName: 'Transaction Date', field: 'transmissionDateTime', width: 200, pinned: 'left', editable: false },
+            { headerName: 'Type', field: 'transType.code', width: 120 },
+            { headerName: 'Desc', field: 'transType.name', width: 250 },
+            { headerName: 'Updated', field: 'updatedAt', width: 200 },
         ],
         rowData: this.transGridDetils,
         enableSorting: true,
@@ -57,9 +58,6 @@ export class TransListDialogComponent implements OnInit {
         paginationPageSize: 10,
         suppressPaginationPanel : true,
         localeText: {noRowsToShow: this.messageNoData},
-        frameworkComponents: {
-
-        }
     };
 
     ngOnInit() {
@@ -86,7 +84,6 @@ export class TransListDialogComponent implements OnInit {
         console.log('grid detil on ready');
         this.gridApi = params.api;
         this.gridColumnApi = params.columnApi;
-        this.transGridDetils = [];
         console.log('grid detil on ready finish');
         // console.log(this.gridApi);
         // console.log(this.gridColumnApi);
@@ -114,8 +111,12 @@ export class TransListDialogComponent implements OnInit {
     }
 
     private onSuccess(data, headers) {
-        console.log('isi response product ==> ', data);
+        console.log('isi response product ==> ', data.content);
         this.transGridDetils = data.content;
+        if  ( this.transGridDetils.length > 0 ) {
+            this.fillNumber(this.transGridDetils);
+        }
+        this.gridApi.setRowData(data.content);
         console.log('isi response product ==> FINISH ');
     }
 
@@ -129,4 +130,12 @@ export class TransListDialogComponent implements OnInit {
         // this.loadAll(this.curPage);
         this.filterData('');
     }
+
+    private fillNumber(transList: TransList[]) {
+        let i = 1;
+        for (const transL of transList) {
+            transL.no = i++;
+        }
+    }
+
 }

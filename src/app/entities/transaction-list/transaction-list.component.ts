@@ -318,16 +318,19 @@ export class TransListComponent implements OnInit {
     }
 
     public async exportCSV(reportType): Promise<void> {
-        const blob = await this.transListService.exportCSV();
-        const url = window.URL.createObjectURL(blob);
-        const link = document.createElement('a');
-        document.body.appendChild(link);
-        link.setAttribute('style', 'display: none');
-        link.href = url;
-        link.download = 'Transations.csv';
-        link.click();
-        link.remove();
-        window.URL.revokeObjectURL(url);
+        const blob = await this.transListService.exportCSV().then(
+        (resp) => {
+            // console.log('file name : ', resp.headers.get('File-Name'));
+            const url = window.URL.createObjectURL(resp.body);
+            const link = document.createElement('a');
+            document.body.appendChild(link);
+            link.setAttribute('style', 'display: none');
+            link.href = url;
+            link.download = resp.headers.get('File-Name');
+            link.click();
+            link.remove();
+            window.URL.revokeObjectURL(url);
+        });
     }
 }
 
