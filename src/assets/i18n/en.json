@@ -174,6 +174,30 @@
             "description": "Description",
             "type": "Global Type"
         },
+        "member": {
+            "home":{
+                "title": "Member Maintenance",
+                "addLabelButton": "Add Member"
+            },
+            "filter": {
+                "name": "Filter Name",
+                "description": "Filter Description",
+                "status": "Filter Status"
+            },
+            "detail": {
+                "title": "{{action}} Member",
+                "addDetail": "Add New Bank Account",
+                "subDetail": {
+                    "title": "{{action}} - {{entity}}",
+                    "name": "Name",
+                    "bank": "Bank",
+                    "accountNumber": "Account Number"
+                }
+            },
+            "name": "Name",
+            "description": "Description",
+            "status": "Status"
+        },
         "memberType": {
             "home": {
                 "title": "Member Type",
@@ -182,6 +206,17 @@
             "filter": {
                 "name": "Filter Name",
                 "description": "Filter Description"
+            },
+            "detail": {
+                "title": "{{action}} {{entity}}"
+            },
+            "name": "Name",
+            "description": "Description"
+        },
+        "role": {
+            "home": {
+                "title": "Role",
+                "addLabelButton": "Add New Role"
             },
             "detail": {
                 "title": "{{action}} {{entity}}"
