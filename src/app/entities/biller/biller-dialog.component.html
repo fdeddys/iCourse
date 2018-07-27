@@ -53,7 +53,10 @@
             </mat-error>
         </mat-form-field>
         <mat-form-field class="form-full-width">
-            <textarea maxlength="255" matInput placeholder="{{ 'ottoAG.biller.description' | translate }}" name="description" [(ngModel)]="biller.description" #desc></textarea>
+            <textarea maxlength="255" matInput placeholder="{{ 'ottoAG.biller.description' | translate }}" name="description" [(ngModel)]="biller.description" #desc required></textarea>
+            <mat-error *ngIf="submitted && form.description.errors" class="invalid-feedback">
+                <div *ngIf="form.description.errors.required"> {{form.description.errors.message}}</div>
+            </mat-error>
         </mat-form-field>        
         <section class="example-section">
             <mat-checkbox class="example-margin" [color]="'primary'" [(ngModel)]="biller.manualCode" [ngModelOptions]="{standalone: true}" [disabled]="setMembCode">{{ 'ottoAG.biller.manualCode' | translate }}</mat-checkbox>

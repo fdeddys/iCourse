@@ -215,7 +215,8 @@ export class BillerDialogComponent implements OnInit {
             member: ['', [CommonValidatorDirective.required]],
             memberType: ['', CommonValidatorDirective.required],
             dateStart: ['', CommonValidatorDirective.required],
-            dateThru: ['', CommonValidatorDirective.required]
+            dateThru: ['', CommonValidatorDirective.required],
+            description: ['', CommonValidatorDirective.required]
         });
 
         this.biller = {};

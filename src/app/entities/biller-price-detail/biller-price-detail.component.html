@@ -63,15 +63,15 @@
             </mat-error>
         </mat-form-field>
         <mat-form-field class="form-full-width" style="margin-right: 10%">
-            <input matInput [matDatepicker]="picker" placeholder="{{ 'ottoAG.billerPriceDetail.dateStart' | translate }}" (dateInput)="addEvent('start', $event)" (click)="picker.open()" [formControl]="dateSCtrl" readonly required>
+            <input matInput [matDatepicker]="picker" placeholder="{{ 'ottoAG.billerPriceDetail.dateStart' | translate }}" (dateInput)="addEvent('start', $event)" (click)="picker.open()" [max]="dateTCtrl.value" [formControl]="dateSCtrl" readonly required>
             <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
             <mat-datepicker #picker></mat-datepicker>
             <mat-error *ngIf="submitted && form.dateStart.errors" class="invalid-feedback">
-                <div *ngIf="form.dateStart.errors.required"> {{form.dateStart.errors.message}}</div>
+                <div *ngIf="form.dateStart.errors.required"> {{form.dateStart.errors.message}}</div> 
             </mat-error>
         </mat-form-field>
         <mat-form-field class="form-full-width">
-            <input matInput [matDatepicker]="pickerT" placeholder="{{ 'ottoAG.billerPriceDetail.dateThru' | translate }}" (dateInput)="addEvent('thru', $event)" (click)="pickerT.open()" [formControl]="dateTCtrl" readonly required>
+            <input matInput [matDatepicker]="pickerT" placeholder="{{ 'ottoAG.billerPriceDetail.dateThru' | translate }}" (dateInput)="addEvent('thru', $event)" [min]="dateSCtrl.value" [formControl]="dateTCtrl" (click)="pickerT.open()" [formControl]="dateTCtrl" readonly required>
             <mat-datepicker-toggle matSuffix [for]="pickerT"></mat-datepicker-toggle>
             <mat-datepicker #pickerT></mat-datepicker>
             <mat-error *ngIf="submitted && form.dateThru.errors" class="invalid-feedback">

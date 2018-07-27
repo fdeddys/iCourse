@@ -106,7 +106,7 @@ export class GlobalSettingComponent implements OnInit {
       console.log('View action clicked', data);
       const dialogRef = this.dialog.open(GlobalSettingDialogComponent, {
         width: '60%',
-        data: { action: 'Edit', entity: 'Member Type', globalSetting: data }
+        data: { action: 'Edit', entity: 'Global Setting', globalSetting: data }
       });
 
       dialogRef.afterClosed().subscribe(result => {
