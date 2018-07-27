@@ -1,5 +1,5 @@
 <h1 mat-dialog-title>{{ "ottoAG.billerProduct.detail.title" | translate:{mode: modeTitle} }}</h1>
-<form name="globalSettingForm" (ngSubmit)="f.form.valid && onSubmit()" #f="ngForm" novalidate>
+<form name="productForm" (ngSubmit)="f.form.valid && onSubmit()" #f="ngForm" novalidate>
 <div mat-dialog-content> 
 		<mat-form-field class="form-full-width form-separator">
 			<input matInput placeholder="{{ 'ottoAG.billerProduct.name' | translate }}" [(ngModel)]="product.name" cdkFocusInitial name ="nm" [(ngModel)]="product.name" #name="ngModel" [ngClass]="{ 'is-invalid': f.submitted && name.invalid }" required maxlength="50">

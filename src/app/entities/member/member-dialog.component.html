@@ -1,5 +1,5 @@
-<h1 mat-dialog-title>
-    {{data.action}} Member
+<h1 mat-dialog-title translate="ottoAG.member.detail.title" [translateParams]="data">
+    <!-- {{data.action}} Member -->
 </h1>
 <form name="memberForm" (ngSubmit)="f.form.valid && onSubmit()" #f="ngForm" novalidate>
 <mat-dialog-content>
@@ -7,7 +7,7 @@
             <input matInput placeholder="Id" value="{{member.id}}" [disabled]="true"  >
         </mat-form-field> -->
         <mat-form-field class="container-half-width" style="margin-right: 10%">
-        <input matInput placeholder="Name " [(ngModel)]="member.name" cdkFocusInitial name ="nm" [(ngModel)]="member.name" #name="ngModel" [ngClass]="{ 'is-invalid': f.submitted && name.invalid }"  required maxlength="50">
+        <input matInput placeholder="{{ 'ottoAG.member.name' | translate }}" [(ngModel)]="member.name" cdkFocusInitial name ="nm" [(ngModel)]="member.name" #name="ngModel" [ngClass]="{ 'is-invalid': f.submitted && name.invalid }"  required maxlength="50">
         <!-- [disabled]="data.action === 'Edit'" -->
         <mat-error *ngIf="submitted && form.name.errors" class="invalid-feedback">
                 <div *ngIf="form.name.errors.required"> {{form.name.errors.message}}</div>
@@ -18,13 +18,13 @@
         </mat-form-field> -->
         <mat-form-field class="container-half-width">
             <!-- <input matInput placeholder="Description" [(ngModel)]="member.description" name ="description"> -->
-            <input matInput placeholder="Description " [(ngModel)]="member.description"  name ="descr" [(ngModel)]="member.description" #description="ngModel" [ngClass]="{ 'is-invalid': f.submitted && description.invalid }" required maxlength="255">
+            <input matInput placeholder="{{ 'ottoAG.member.description' | translate }}" [(ngModel)]="member.description"  name ="descr" [(ngModel)]="member.description" #description="ngModel" [ngClass]="{ 'is-invalid': f.submitted && description.invalid }" required maxlength="255">
             <mat-error *ngIf="submitted && form.description.errors" class="invalid-feedback">
                     <div *ngIf="form.description.errors.required"> {{form.description.errors.message}}</div>
             </mat-error> 
         </mat-form-field>
         <mat-form-field class="container-half-width">
-            <mat-select placeholder="Status" [(ngModel)]="member.active" name="stts">
+            <mat-select placeholder="{{ 'ottoAG.member.status' | translate }}" [(ngModel)]="member.active" name="stts">
                 <mat-option *ngFor="let status of statusList" [value]="status">
                   {{status}}
                 </mat-option>
@@ -32,8 +32,8 @@
         </mat-form-field>
     
     <mat-dialog-actions align="end">
-        <button mat-button mat-raised-button color='primary' (click)="validate()" style="margin-bottom: 10px;">Save</button>
-        <button mat-raised-button class="primary" type="button"  (click)="exportDetaiCSV('csv', member.id)" style="margin-bottom: 10px;">Export CSV</button>
+        <button mat-button mat-raised-button color='primary' (click)="validate()" style="margin-bottom: 10px;">{{ "entity.action.save" | translate }}</button>
+        <button mat-raised-button class="primary" type="button"  (click)="exportDetaiCSV('csv', member.id)" style="margin-bottom: 10px;">{{ "entity.action.exportCSV" | translate }}</button>
        
         <!-- <button mat-button mat-raised-button mat-dialog-close (click)="onNoClick()">Close</button> -->
     </mat-dialog-actions> 
@@ -41,7 +41,7 @@
 
     <fieldset style="border: 1px #ddd solid">
         <br>
-        <button type="button" mat-raised-button color='primary' (click)="openNewDialog()" style="margin-bottom: 10px;">Add New Bank Account</button>
+        <button type="button" mat-raised-button color='primary' (click)="openNewDialog()" style="margin-bottom: 10px;">{{ "ottoAG.member.detail.addDetail" | translate }}</button>
         <br>
         <ag-grid-angular 
             #agGrid

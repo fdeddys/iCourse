@@ -1,4 +1,5 @@
-<h2 mat-dialog-title>{{data.action}} - {{data.entity}}</h2>
+<!-- <h2 mat-dialog-title>{{data.action}} - {{data.entity}}</h2> -->
+<h2 mat-dialog-title translate="ottoAG.member.detail.subDetail.title" [translateParams]="data"></h2>
 <form name="memberBankForm" (ngSubmit)="f.form.valid && onSubmit()" #f="ngForm" novalidate>
 <mat-dialog-content> 
         <div *ngIf="member">
@@ -6,27 +7,27 @@
                 <input matInput placeholder="Id" value="{{member.id}}" [disabled]="true" >
             </mat-form-field> -->
             <mat-form-field class="container-full-width">
-                <input matInput placeholder="Name " [(ngModel)]="member.name" cdkFocusInitial name ="namee" [disabled]="true">
+                <input matInput placeholder="{{ 'ottoAG.member.detail.subDetail.name' | translate }}" [(ngModel)]="member.name" cdkFocusInitial name ="namee" [disabled]="true">
             </mat-form-field>
         <br><br>
         </div>
 
         <div *ngIf="memberBank">
             <mat-form-field class="container-full-width">
-                <mat-select placeholder="Bank" [(value)]="memberBank.globalSetting.id" name="bank" required>
+                <mat-select placeholder="{{ 'ottoAG.member.detail.subDetail.bank' | translate }}" [(value)]="memberBank.globalSetting.id" name="bank" required>
                     <mat-option *ngFor="let bank of globalSettings" [value]="bank.id">
                     {{bank.name}}
                     </mat-option>
                 </mat-select> 
             </mat-form-field>
             <mat-form-field class="container-full-width">
-                <input matInput placeholder="Account Number" [(ngModel)]="memberBank.accountNumber" name ="accountNumber" maxlength="30">  
+                <input matInput placeholder="{{ 'ottoAG.member.detail.subDetail.accountNumber' | translate }}" [(ngModel)]="memberBank.accountNumber" name ="accountNumber" maxlength="30">  
             </mat-form-field> 
         </div>
    
     
 </mat-dialog-content>
 <mat-dialog-actions> 
-  <button mat-button mat-raised-button color='primary' (click)="validate()" style="margin-bottom: 10px;">Save</button>
+  <button mat-button mat-raised-button color='primary' (click)="validate()" style="margin-bottom: 10px;">{{ "entity.action.save" | translate }}</button>
 </mat-dialog-actions>
 </form>

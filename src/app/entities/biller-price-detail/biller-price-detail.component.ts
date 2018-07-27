@@ -194,10 +194,19 @@ export class BillerPriceDetailComponent implements OnInit {
 
     addEvent(type: string, event: MatDatepickerInputEvent<Date>) {
         if (type === 'start') {
-            this.billerPriceDetail.dateStart = event.value.toDateString();
+            this.billerPriceDetail.dateStart = this.dateFormatter(event);
         } else if (type === 'thru') {
-            this.billerPriceDetail.dateThru = event.value.toDateString();
+            this.billerPriceDetail.dateThru =  this.dateFormatter(event);
         }
+    }
+
+    dateFormatter(params): string {
+        const dt  = new Date(params);
+        const year = dt.getFullYear();
+        const mth = dt.getMonth() + 1;
+        const day = dt.getDate();
+        // return dt.toLocaleString(['id']);
+        return year + '-' + (mth < 10 ? '0' + mth : mth) + '-' + (day < 10 ? '0' + day : day);
     }
 
     closed(): void {
@@ -235,8 +244,8 @@ export class BillerPriceDetailComponent implements OnInit {
 
     onSubmit(): void {
         console.log(this.billerPriceDetail);
-        this.billerPriceDetail.dateStart = this.dateSCtrl.value;
-        this.billerPriceDetail.dateThru = this.dateTCtrl.value;
+        this.billerPriceDetail.dateStart =  this.dateFormatter(this.dateSCtrl.value);
+        this.billerPriceDetail.dateThru =  this.dateFormatter(this.dateTCtrl.value);
         const varBack = {
             mode: this.data.mode,
             rowData: {}

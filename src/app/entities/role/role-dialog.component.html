@@ -1,25 +1,27 @@
-<h1 mat-dialog-title>{{data.action}} {{data.entity}}</h1>
+<h1 mat-dialog-title translate="ottoAG.role.detail.title" [translateParams]="data">
+    <!-- {{data.action}} {{data.entity}} -->
+</h1>
 <form name="roleForm" (ngSubmit)="f.form.valid && onSubmit()" #f="ngForm" novalidate>
     <mat-dialog-content style="width: 100%">
         <!-- <mat-form-field class="container-full-width">
             <input matInput placeholder="Id" value="{{memberType.id}}" [disabled]="true" >
         </mat-form-field> -->
         <mat-form-field class="container-full-width">  
-            <input matInput placeholder="Name " [(ngModel)]="role.name" cdkFocusInitial name ="nm" [(ngModel)]="role.name" #name="ngModel" [ngClass]="{ 'is-invalid': f.submitted && name.invalid }" required maxlength="50" [disabled]="data.action === 'Edit'">
+            <input matInput placeholder="{{ 'ottoAG.role.name' | translate }}" [(ngModel)]="role.name" cdkFocusInitial name ="nm" [(ngModel)]="role.name" #name="ngModel" [ngClass]="{ 'is-invalid': f.submitted && name.invalid }" required maxlength="50" [disabled]="data.action === 'Edit'">
             <mat-error *ngIf="submitted && form.name.errors" class="invalid-feedback">
                     <div *ngIf="form.name.errors.required"> {{form.name.errors.message}}</div>
             </mat-error> 
 
         </mat-form-field>
         <mat-form-field class="container-full-width"> 
-            <input matInput placeholder="Description " [(ngModel)]="role.description"  name ="descr" [(ngModel)]="role.description" #description="ngModel" [ngClass]="{ 'is-invalid': f.submitted && description.invalid }" required maxlength="255">
+            <input matInput placeholder="{{ 'ottoAG.role.description' | translate }}" [(ngModel)]="role.description"  name ="descr" [(ngModel)]="role.description" #description="ngModel" [ngClass]="{ 'is-invalid': f.submitted && description.invalid }" required maxlength="255">
             <mat-error *ngIf="submitted && form.description.errors" class="invalid-feedback">
                     <div *ngIf="form.description.errors.required"> {{form.description.errors.message}}</div> 
             </mat-error>  
         </mat-form-field>
 
         <div align="end">
-                <button mat-raised-button color="primary" (click)="validate()">Save</button>
+                <button mat-raised-button color="primary" (click)="validate()">{{ "entity.action.save" | translate }}</button>
         </div>
         <br>
 

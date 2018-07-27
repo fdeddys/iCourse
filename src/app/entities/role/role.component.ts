@@ -11,6 +11,7 @@ import { RoleConfirmDialogComponent } from './role-confirm-dialog.component';
 
 import { MainChild, eventSubscriber } from '../../layouts/main/main-child.interface';
 import { MainService } from '../../layouts/main/main.service';
+import { TranslateService } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-role',
@@ -69,9 +70,11 @@ export class RoleComponent implements MainChild, OnInit {
     return dt.toLocaleString(['id']);
   }
 
-  constructor(  private mainService: MainService,
+  constructor(  translate: TranslateService,
+                private mainService: MainService,
                 private dialog: MatDialog,
                 private roleService: RoleService) {
+                    translate.use('en');
                     this.resizeColumn = this.resizeColumn.bind(this);
                     eventSubscriber(mainService.subscription, this.resizeColumn);
                 }

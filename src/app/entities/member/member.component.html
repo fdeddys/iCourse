@@ -1,27 +1,27 @@
 <mat-card>
     <mat-card-header>
         <mat-card-title style="align-items: center">
-            <!-- <h2 style="color: rgb(226, 0, 0)" >Member Registration</h2>         -->
-            <h2 mat-dialog-title >Member Maintenance</h2>    
+            <!-- <h2 mat-dialog-title >Member Maintenance</h2> -->
+            <h2 mat-dialog-title translate="ottoAG.member.home.title"></h2>
         </mat-card-title>
     </mat-card-header>
     <mat-card-content>
         <div style="text-align: left">
-            <button mat-raised-button color="primary" (click)="openNewDialog()">Add Member</button>
-            <button mat-raised-button class="primary"  (click)="exportCSV('csv')">Export CSV</button>
+            <button mat-raised-button color="primary" (click)="openNewDialog()">{{ 'ottoAG.member.home.addLabelButton' | translate }}</button>
+            <button mat-raised-button class="primary"  (click)="exportCSV('csv')">{{ 'entity.action.exportCSV' | translate}}</button>
         </div>
         <br>
         <div>
             <mat-form-field class="container-half-width" >
-                <input matInput placeholder="Filter Name " [(ngModel)]="filter.name"  
+                <input matInput placeholder="{{ 'ottoAG.member.filter.name' | translate }}" [(ngModel)]="filter.name"  
                     name ="name"  >
             </mat-form-field>
             <mat-form-field class="container-half-width" >
-                <input matInput placeholder="Filter Description " [(ngModel)]="filter.description"  
+                <input matInput placeholder="{{ 'ottoAG.member.filter.description' | translate }}" [(ngModel)]="filter.description"  
                     name ="descr" >
             </mat-form-field>
             <mat-form-field class="container-half-width">
-                <mat-select placeholder="Filter Status" [(ngModel)]="filter.active" name="status">
+                <mat-select placeholder="{{ 'ottoAG.member.filter.status' | translate }}" [(ngModel)]="filter.active" name="status">
                     <mat-option *ngFor="let status of statusList" [value]="status">
                         <!-- {{ status === 'true' ? 'ACTIVE' : ( status === 'false' ? 'INACTIVE' : 'ALL' )   }} -->
                         {{status}}
