@@ -253,6 +253,11 @@ export class UserComponent implements OnInit {
         // link.remove();
 
         // window.URL.revokeObjectURL(url);
+        // console.log(this.filter);
+
+        if (this.filter.status === 'ALL') { alert('ALL');
+            this.filter.status = null;
+        }
         const blob = await this.userService.exportCSV({filter: this.filter }).then(
             (resp) => {
                 const url = window.URL.createObjectURL(resp.body);

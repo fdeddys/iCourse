@@ -1,7 +1,7 @@
 import { Component, OnInit, Inject } from '@angular/core';
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA, MatSnackBar } from '@angular/material';
 
-import { NO_DATA_GRID_MESSAGE } from '../../shared/constant/base-constant';
+import { GRID_THEME, NO_DATA_GRID_MESSAGE } from '../../shared/constant/base-constant';
 
 @Component({
     selector: 'app-biller-price-info-biller',
@@ -13,19 +13,22 @@ export class BillerPriceInfoBillerComponent implements OnInit {
     private gridApi;
     private gridColumnApi;
     messageNoData: string = NO_DATA_GRID_MESSAGE;
+    theme: String = GRID_THEME;
 
     gridOptions = {
         columnDefs: [
             // { headerName: 'Name', field: 'name', checkboxSelection: true, width: 250, pinned: 'left', editable: true },
-            { headerName: 'No', field: 'no', width: 100, pinned: 'left', editable: false },
-            { headerName: 'Name', field: 'billerHeader.description', width: 300, pinned: 'left', editable: false },
-            { headerName: 'Buy Price', field: 'buyPrice', width: 200 },
-            { headerName: 'Fee', field: 'fee', width: 200 },
-            { headerName: 'Sell Price', field: 'sellPrice', width: 200 },
+            { headerName: 'No', field: 'no', width: 70, pinned: 'left', editable: false },
+            { headerName: 'Name', field: 'billerHeader.member.name', width: 180, pinned: 'left', editable: false },
+            { headerName: 'Description', field: 'billerHeader.description', width: 200, pinned: 'left', editable: false },
+            { headerName: 'Buy Price', field: 'buyPrice', width: 80 },
+            { headerName: 'Fee', field: 'fee', width: 80 },
+            { headerName: 'Sell Price', field: 'sellPrice', width: 100 },
         ],
         enableSorting: true,
         enableFilter: true,
         // rowSelection: "multiple"
+        enableColResize: true,
         pagination: true,
         paginationPageSize: 10,
         localeText: {noRowsToShow: this.messageNoData},
