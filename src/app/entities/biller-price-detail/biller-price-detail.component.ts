@@ -233,7 +233,7 @@ export class BillerPriceDetailComponent implements OnInit {
         //     duration: 15000,
         // });
         this.dialog.open(BillerPriceInfoBillerComponent, {
-            width: '1000px',
+            width: '800px',
             data: this.dataListBill
         });
     }
