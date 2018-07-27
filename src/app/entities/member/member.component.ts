@@ -10,6 +10,7 @@ import { MatActionButtonComponent } from '../../shared/templates/mat-action-butt
 import { SharedService } from '../../shared/services/shared.service';
 import { IFilter } from 'ag-grid';
 import { Filter } from '../../shared/model/filter';
+import { TranslateService } from '@ngx-translate/core';
 
 @Component({
     selector: 'app-member',
@@ -74,9 +75,12 @@ export class MemberComponent implements OnInit {
   // boolFormatter(params): string {
   //   return params.value === true ? 'Active' : 'Inactive';
   // }
-  constructor(  private dialog: MatDialog,
+  constructor(  translate: TranslateService,
+                private dialog: MatDialog,
                 private memberService: MemberService,
-                private sharedService: SharedService) { }
+                private sharedService: SharedService) {
+                    translate.use('en');
+                }
 
   public onRowClicked(e) {
     if (e.event.target !== undefined) {

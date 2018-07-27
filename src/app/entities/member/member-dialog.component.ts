@@ -42,7 +42,7 @@ export class MemberDialogComponent implements OnInit {
         columnDefs: [
         //   { headerName: 'id', field: 'id', width: 50, pinned: 'left', editable: false },
           { headerName: 'Bank', field: 'globalSetting.name', width: 250, editable: false },
-          { headerName: 'accountNumber', field: 'accountNumber', width: 250, editable: false },
+          { headerName: 'Account Number', field: 'accountNumber', width: 250, editable: false },
         //   { headerName: 'Created at', field: 'createdAt', width: 250, valueFormatter: this.currencyFormatter },
         //   { headerName: 'Update at', field: 'updatedAt', width: 250, valueFormatter: this.currencyFormatter },
         //   { headerName: 'Created By', field: 'createdBy', width: 250 },
