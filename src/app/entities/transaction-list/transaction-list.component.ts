@@ -249,8 +249,8 @@ export class TransListComponent implements OnInit {
         if (page !== '') {
             this.curPage = page;
         }
-        this.filter.filDateFStart = (this.dateFStartCtrl.value === null ? null : this.dateFormatter(this.dateFStartCtrl.value));
-        this.filter.filDateTStart = (this.dateTStartCtrl.value === null ? null : this.dateFormatter(this.dateTStartCtrl.value));
+        this.filter.filDateFStart = (this.dateFStartCtrl.value === null ? null : this.dateFStartCtrl.value);
+        this.filter.filDateTStart = (this.dateTStartCtrl.value === null ? null : this.dateTStartCtrl.value);
         this.transListService.filter({
             page: this.curPage,
             count: this.totalRecord,
@@ -320,8 +320,8 @@ export class TransListComponent implements OnInit {
     }
 
     public async exportCSV(reportType): Promise<void> {
-        this.filter.filDateFStart = (this.dateFStartCtrl.value === null ? null : this.dateFormatter(this.dateFStartCtrl.value));
-        this.filter.filDateTStart = (this.dateTStartCtrl.value === null ? null : this.dateFormatter(this.dateTStartCtrl.value));
+        this.filter.filDateFStart = (this.dateFStartCtrl.value === null ? null : this.dateFStartCtrl.value);
+        this.filter.filDateTStart = (this.dateTStartCtrl.value === null ? null : this.dateTStartCtrl.value);
 
         const blob = await this.transListService.exportCSV({filter: this.filter }).then(
         (resp) => {
