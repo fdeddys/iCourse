@@ -2,7 +2,7 @@
 <mat-card>
     <mat-card-header>
         <mat-card-title style="align-items: center">
-			<h2 mat-dialog-title>Audit Trail</h2> 			               
+			<h2 mat-dialog-title>{{ 'ottoAG.auditTrail.home.title' | translate }}</h2> 			               
         </mat-card-title>
     </mat-card-header>
     <mat-card-content>
@@ -20,7 +20,7 @@
 				<mat-form-field>
 				<input 
 					matInput [matDatepicker]="pickerSt" 
-					placeholder="Date Start" 
+					placeholder="{{ 'ottoAG.auditTrail.filter.dateStart' | translate }}"
 					(dateInput)="addEvent('start', $event)" 
 					(click)="pickerSt.open()" 
 					[formControl]="dateStatCtrl" readonly>
@@ -35,7 +35,7 @@
 				<mat-form-field>
 				<input 
 					matInput [matDatepicker]="pickerTh" 
-					placeholder="Date Through" 
+					placeholder="{{ 'ottoAG.auditTrail.filter.dateThru' | translate }}"
 					(dateInput)="addEvent('thru', $event)" 
 					(click)="pickerTh.open()" 
 					[formControl]="dateThruCtrl" readonly>

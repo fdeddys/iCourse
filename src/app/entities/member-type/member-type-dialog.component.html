@@ -1,5 +1,5 @@
-<h1 mat-dialog-title>
-    {{data.action}} {{data.entity}}
+<h1 mat-dialog-title translate="ottoAG.memberType.detail.title" [translateParams]="data">
+    <!-- {{data.action}} {{data.entity}} -->
 </h1>
 <form name="memberTypeForm" (ngSubmit)="f.form.valid && onSubmit()" #f="ngForm" novalidate>
 <mat-dialog-content>
@@ -7,14 +7,14 @@
             <input matInput placeholder="Id" value="{{memberType.id}}" [disabled]="true" >
         </mat-form-field> -->
         <mat-form-field class="container-full-width">  
-            <input matInput placeholder="Name " [(ngModel)]="memberType.name" cdkFocusInitial name ="nm" [(ngModel)]="memberType.name" #name="ngModel" [ngClass]="{ 'is-invalid': f.submitted && name.invalid }" required maxlength="50">
+            <input matInput placeholder="{{ 'ottoAG.memberType.name' | translate }}" [(ngModel)]="memberType.name" cdkFocusInitial name ="nm" [(ngModel)]="memberType.name" #name="ngModel" [ngClass]="{ 'is-invalid': f.submitted && name.invalid }" required maxlength="50">
             <mat-error *ngIf="submitted && form.name.errors" class="invalid-feedback">
                     <div *ngIf="form.name.errors.required"> {{form.name.errors.message}}</div>
             </mat-error> 
 <!--  [disabled]="data.action === 'EDIT'" -->
         </mat-form-field>
         <mat-form-field class="container-full-width"> 
-            <input matInput placeholder="Description " [(ngModel)]="memberType.description"  name ="descr" [(ngModel)]="memberType.description" #description="ngModel" [ngClass]="{ 'is-invalid': f.submitted && description.invalid }" required maxlength="100">
+            <input matInput placeholder="{{ 'ottoAG.memberType.description' | translate }}" [(ngModel)]="memberType.description"  name ="descr" [(ngModel)]="memberType.description" #description="ngModel" [ngClass]="{ 'is-invalid': f.submitted && description.invalid }" required maxlength="100">
             <mat-error *ngIf="submitted && form.description.errors" class="invalid-feedback">
                     <div *ngIf="form.description.errors.required"> {{form.description.errors.message}}</div> 
             </mat-error>  
@@ -22,7 +22,7 @@
       <br><br> 
 </mat-dialog-content>
 <mat-dialog-actions align="end">
-  <button mat-button mat-raised-button color="primary" (click)="validate()" >Save</button>
+  <button mat-button mat-raised-button color="primary" (click)="validate()" >{{ "entity.action.save" | translate }}</button>
   <!-- <button mat-button mat-raised-button mat-dialog-close>Cancel</button> -->
 </mat-dialog-actions>
 </form>

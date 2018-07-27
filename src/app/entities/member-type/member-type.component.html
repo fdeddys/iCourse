@@ -2,22 +2,23 @@
     <mat-card-header>
         <mat-card-title style="align-items: center">
             <!-- <h2 style="color: rgb(226, 0, 0)" >Member Type</h2>         -->
-            <h2 mat-dialog-title>Member Type</h2>    
+            <!-- <h2 mat-dialog-title>Member Type</h2> -->
+            <h2 mat-dialog-title translate="ottoAG.memberType.home.title"></h2>
         </mat-card-title>
     </mat-card-header>
     <mat-card-content>
         <div style="text-align: left">
-            <button mat-raised-button color="primary"  (click)="openNewDialog()" style="margin-bottom: 10px;">Add Member Type</button>
-            <button mat-raised-button class="primary"  (click)="exportCSV('csv')" style="margin-bottom: 10px;">Export CSV</button>
+            <button mat-raised-button color="primary"  (click)="openNewDialog()" style="margin-bottom: 10px;">{{ 'ottoAG.memberType.home.addLabelButton' | translate }}</button>
+            <button mat-raised-button class="primary"  (click)="exportCSV('csv')" style="margin-bottom: 10px;">{{ 'entity.action.exportCSV' | translate}}</button>
         </div>
         <br>
         <div>
             <mat-form-field class="container-half-width" >
-                <input matInput placeholder="Filter Name " [(ngModel)]="filter.name"  
+                <input matInput placeholder="{{ 'ottoAG.memberType.filter.name' | translate }}" [(ngModel)]="filter.name"  
                     name ="name"  >
             </mat-form-field>
             <mat-form-field class="container-half-width">
-                <input matInput placeholder="Filter Description " [(ngModel)]="filter.description"  
+                <input matInput placeholder="{{ 'ottoAG.memberType.filter.description' | translate }}" [(ngModel)]="filter.description"  
                     name ="descr" >
             </mat-form-field>
             <button mat-raised-button color="primary" (click)="actionSearch()" >Filter</button>

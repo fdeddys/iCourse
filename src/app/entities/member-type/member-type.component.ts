@@ -8,6 +8,7 @@ import { HttpResponse, HttpErrorResponse } from '@angular/common/http';
 import { GRID_THEME, CSS_BUTTON, NO_DATA_GRID_MESSAGE, TOTAL_RECORD_PER_PAGE, REPORT_PATH } from '../../shared/constant/base-constant';
 import { MatActionButtonComponent } from '../../shared/templates/mat-action-button.component';
 import { Filter } from '../../shared/model/filter';
+import { TranslateService } from '@ngx-translate/core';
 
 @Component({
     selector: 'app-member-type',
@@ -61,8 +62,11 @@ export class MemberTypeComponent implements OnInit {
         }
     };
 
-    constructor(  private dialog: MatDialog,
-                  private memberTypeService: MemberTypeService) { }
+    constructor(  translate: TranslateService,
+                  private dialog: MatDialog,
+                  private memberTypeService: MemberTypeService) {
+                    translate.use('en');
+                  }
 
     public onRowClicked(e) {
         if (e.event.target !== undefined) {

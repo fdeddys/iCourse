@@ -29,12 +29,17 @@
             "home": {
                 "title": "Audit Trail"
             },
+            "filter": {
+                "dateStart": "Date Start",
+                "dateThru": "Date Through"
+            },
             "detail": {
-                "activity": "Activity",
-                "beforeValue": "Before value",
-                "insertDate": "Insert Date",
-                "afterValue": "After Value"
-            }
+                "title": "Audit Trail"
+            },
+            "activity": "Activity",
+            "beforeValue": "Before value",
+            "insertDate": "Insert Date",
+            "afterValue": "After Value"
         },
         "billerCompany": {
             "home": {
@@ -168,6 +173,21 @@
             "name": "Name",
             "description": "Description",
             "type": "Global Type"
+        },
+        "memberType": {
+            "home": {
+                "title": "Member Type",
+                "addLabelButton": "Add Member Type"
+            },
+            "filter": {
+                "name": "Filter Name",
+                "description": "Filter Description"
+            },
+            "detail": {
+                "title": "{{action}} {{entity}}"
+            },
+            "name": "Name",
+            "description": "Description"
         },
         "transactionList": {
             "home": {
