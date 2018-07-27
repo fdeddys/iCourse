@@ -675,18 +675,15 @@ export class BillerDialogComponent implements OnInit {
         // window.open(`${path}/${reportType}`);
 
         const membType = (this.biller.memberTypeId === 1 ? 'billerdetail' : 'billerpricedetail');
-        const blob = await this.billerService.exportDetailCSV(reportType, membType, this.data.rowData.id);
-        const url = window.URL.createObjectURL(blob);
-
-        const link = this.downloadLink.nativeElement;
-        // const link = document.createElement('a');
-        // document.body.appendChild(link);
-        // link.setAttribute('style', 'display: none');
-        link.href = url;
-        link.download = (this.biller.memberTypeId === 1 ? 'biller-product-list.' : 'biller-subscriber-product-list.') + reportType;
-        link.click();
-
-        window.URL.revokeObjectURL(url);
+        const blob = await this.billerService.exportDetailCSV(reportType, membType, this.data.rowData.id).then(
+        (resp) => {
+            const url = window.URL.createObjectURL(resp.body);
+            const link = this.downloadLink.nativeElement;
+            link.href = url;
+            link.download = resp.headers.get('File-Name');
+            link.click();
+            window.URL.revokeObjectURL(url);
+        });
     }
 
     public onPaginateChange($event): void {

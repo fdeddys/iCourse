@@ -135,10 +135,10 @@ private reportUrl = REPORT_PATH;
         return file;
     }
 
-    async exportDetailCSV(reportType: string, membType: string, idHdr: number): Promise<Blob> {
+    async exportDetailCSV(reportType: string, membType: string, idHdr: number): Promise<HttpResponse<Blob>> {
         const file =  await this.http.get<Blob>(
             `${this.reportUrl}${membType}/${idHdr}/${reportType}`,
-            {responseType: 'blob' as 'json'}
+            {responseType: 'blob' as 'json', observe: 'response'}
         ).toPromise();
         return file;
     }
