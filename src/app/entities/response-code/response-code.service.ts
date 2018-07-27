@@ -100,17 +100,33 @@ export class ResponseCodeService {
         return copy;
     }
 
-    async exportMemRespCdCSV(): Promise<Blob> {
-        const file =  await this.http.get<Blob>(
-            `${this.reportUrl}memberresponsecode/csv`,
-            {responseType: 'blob' as 'json'}
+    // async exportMemRespCdCSV(): Promise<Blob> {
+    //     const file =  await this.http.get<Blob>(
+    //         `${this.reportUrl}memberresponsecode/csv`,
+    //         {responseType: 'blob' as 'json'}
+    //     ).toPromise();
+    //     return file;
+    // }
+    // async exportIntlRespCdCSV(): Promise<Blob> {
+    //     const file =  await this.http.get<Blob>(
+    //         `${this.reportUrl}internalresponsecode/csv`,
+    //         {responseType: 'blob' as 'json'}
+    //     ).toPromise();
+    //     return file;
+    // }
+
+    async exportMemRespCdCSV(req?: any): Promise<HttpResponse<Blob>> {
+        const file =  await this.http.post<Blob>(
+            `${this.reportUrl}memberresponsecode/csv`, req['filter'],
+            {responseType: 'blob' as 'json', observe: 'response'}
         ).toPromise();
         return file;
     }
-    async exportIntlRespCdCSV(): Promise<Blob> {
-        const file =  await this.http.get<Blob>(
-            `${this.reportUrl}internalresponsecode/csv`,
-            {responseType: 'blob' as 'json'}
+
+    async exportCSV(req?: any): Promise<HttpResponse<Blob>> {
+        const file =  await this.http.post<Blob>(
+            `${this.reportUrl}internalresponsecode/csv`, req['filter'],
+            {responseType: 'blob' as 'json', observe: 'response'}
         ).toPromise();
         return file;
     }

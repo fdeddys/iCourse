@@ -2,7 +2,7 @@
 <fieldset style="border: 1px #ddd solid">       
     <ag-grid-angular 
         style="height: 350px;" 
-        class="ag-theme-material"
+        class="{{theme}}"
         [gridOptions]="gridOptions"
         (gridReady)="onGridReady($event)"
         >

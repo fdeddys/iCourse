@@ -173,12 +173,13 @@ export class ProductDialogComponent implements OnInit {
             denom: this.product.denom,
             // sellPrice: this.product.sellPrice,
             status: this.product.status,
-            billerCompanyId: (this.billCompanyCtrl.value === null ? null : this.billCompanyCtrl.value.id),
-            billerTypeId: (this.billTypeCtrl.value === null ? null : this.billTypeCtrl.value.id),
+            billerCompanyId: (this.billCompanyCtrl.value.id === undefined ? null : this.billCompanyCtrl.value.id),
+            billerTypeId: (this.billTypeCtrl.value.id === undefined ? null : this.billTypeCtrl.value.id),
             searchBy: this.product.searchBy,
-            searchByMemberId: (this.membCtrl.value === null ? null : this.membCtrl.value.id),
+            searchByMemberId: (this.membCtrl.value.id === undefined ? null : this.membCtrl.value.id),
         };
-        console.log('isi bill company ', this.billCompanyCtrl);
+        // console.log('aaaa', this.productSave);
+        // console.log('isi bill company ', this.billCompanyCtrl);
         console.log(this.productSave);
         if (this.productSave.id === undefined || this.productSave.id === null) {
             console.log('send to service ', this.productSave);

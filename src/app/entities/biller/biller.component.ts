@@ -79,7 +79,7 @@ export class BillerComponent implements OnInit {
             { headerName: 'Name', field: 'member.name', width: 300, pinned: 'left', editable: false },
             { headerName: 'Date Start', field: 'dateStart', width: 185, pinned: 'left', editable: false },
             { headerName: 'Date Through', field: 'dateThru', width: 185, pinned: 'left', editable: false },
-            { headerName: ' ', width: 150, cellRenderer: 'actionRenderer', pinned: 'left', editable: false}
+            { headerName: ' ', width: 80, cellRenderer: 'actionRenderer', pinned: 'left', editable: false}
         ],
         rowData: this.billers,
         enableSorting: true,
@@ -365,7 +365,7 @@ export class BillerComponent implements OnInit {
             datasend.rowData = data;
         }
         const dialogRef = this.dialog.open(BillerDialogComponent, {
-            width: '800px',
+            width: '900px',
             height: '610px',
             data: datasend
         });
