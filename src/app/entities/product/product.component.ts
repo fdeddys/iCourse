@@ -329,21 +329,27 @@ export class ProductComponent implements OnInit {
     }
 
     public async exportCSV(reportType): Promise<void> {
-        // const path = this.resourceUrl  + 'billProduct';
-        // window.open(`${path}/${reportType}`);
+        if (this.filter.status === 'ALL') {
+            this.filter.status = null;
+        }
+        const blob = await this.productService.exportCSV(reportType, this.filter).then(
+        (resp) => {
+            const url = window.URL.createObjectURL(resp.body);
+            const link = this.downloadLink.nativeElement;
+            link.href = url;
+            link.download = resp.headers.get('File-Name');
+            link.click();
+            window.URL.revokeObjectURL(url);
 
-        const blob = await this.productService.exportCSV(reportType);
-        const url = window.URL.createObjectURL(blob);
+            this.filter.status = 'ALL';
+        });
 
-        const link = this.downloadLink.nativeElement;
-        // const link = document.createElement('a');
-        // document.body.appendChild(link);
-        // link.setAttribute('style', 'display: none');
-        link.href = url;
-        link.download = 'product-list.' + reportType;
-        link.click();
-
-        window.URL.revokeObjectURL(url);
+        // const url = window.URL.createObjectURL(blob);
+        // const link = this.downloadLink.nativeElement;
+        // link.href = url;
+        // link.download = 'product-list.' + reportType;
+        // link.click();
+        // window.URL.revokeObjectURL(url);
     }
 
     public onPaginateChange($event): void {

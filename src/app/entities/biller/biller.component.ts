@@ -432,23 +432,23 @@ export class BillerComponent implements OnInit {
     }
 
     public async exportCSV(reportType): Promise<void> {
-        // const path = this.resourceUrl  + 'billerheader/' +
-        //             (this.memberTypeList.length === 1 && this.memberTypeList[0].id === 1 ? 1 : 0);
-        // window.open(`${path}/${reportType}`);
-
         const membType = (this.memberTypeList.length === 1 && this.memberTypeList[0].id === 1 ? 1 : 0);
-        const blob = await this.billerService.exportCSV(reportType, membType);
-        const url = window.URL.createObjectURL(blob);
+        const blob = await this.billerService.exportCSV(reportType, membType, this.filter).then(
+        (resp) => {
+            const url = window.URL.createObjectURL(resp.body);
+            const link = this.downloadLink.nativeElement;
+            link.href = url;
+            link.download = resp.headers.get('File-Name');
+            link.click();
+            window.URL.revokeObjectURL(url);
+        });
 
-        const link = this.downloadLink.nativeElement;
-        // const link = document.createElement('a');
-        // document.body.appendChild(link);
-        // link.setAttribute('style', 'display: none');
-        link.href = url;
-        link.download = (membType === 1 ? 'biller-list.' : 'biller-subscriber-list.') + reportType;
-        link.click();
-
-        window.URL.revokeObjectURL(url);
+        // const url = window.URL.createObjectURL(blob);
+        // const link = this.downloadLink.nativeElement;
+        // link.href = url;
+        // link.download = (membType === 1 ? 'biller-list.' : 'biller-subscriber-list.') + reportType;
+        // link.click();
+        // window.URL.revokeObjectURL(url);
     }
 
     public onPaginateChange($event): void {
