@@ -166,6 +166,11 @@ export class ProductDialogComponent implements OnInit {
     }
 
     onSubmit() {
+        let searchByMemberId = null;
+        if (this.product.searchBy === 'BY_BILLER') {
+            searchByMemberId = (this.membCtrl.value.id === undefined ? null : this.membCtrl.value.id);
+        }
+        // alert(searchByMemberId);
         this.productSave = {
             id: this.product.id,
             name: this.product.name,
@@ -176,7 +181,7 @@ export class ProductDialogComponent implements OnInit {
             billerCompanyId: (this.billCompanyCtrl.value.id === undefined ? null : this.billCompanyCtrl.value.id),
             billerTypeId: (this.billTypeCtrl.value.id === undefined ? null : this.billTypeCtrl.value.id),
             searchBy: this.product.searchBy,
-            searchByMemberId: (this.membCtrl.value.id === undefined ? null : this.membCtrl.value.id),
+            searchByMemberId: searchByMemberId,
         };
         // console.log('aaaa', this.productSave);
         // console.log('isi bill company ', this.billCompanyCtrl);
