@@ -127,10 +127,10 @@ private reportUrl = REPORT_PATH;
     //     .pipe(tap(csv => console.log('csv ', csv)));
     // }
 
-    async exportCSV(reportType: string, membType: number): Promise<Blob> {
-        const file =  await this.http.get<Blob>(
-            `${this.reportUrl}billerheader/${membType}/${reportType}`,
-            {responseType: 'blob' as 'json'}
+    async exportCSV(reportType: string, membType: number, filter?: any): Promise<HttpResponse<Blob>> {
+        const file =  await this.http.post<Blob>(
+            `${this.reportUrl}billerheader/${membType}/${reportType}`, filter,
+            {responseType: 'blob' as 'json', observe: 'response'}
         ).toPromise();
         return file;
     }
