@@ -262,6 +262,11 @@ export class MemberComponent implements OnInit {
     //    link.remove();
 
     //    window.URL.revokeObjectURL(url);
+    let statusAll = false;
+    if (this.filter.active === 'ALL') {
+        statusAll = true;
+        delete this.filter.active ;
+    }
 
     const blob = await this.memberService.exportCSV({filter: this.filter }).then(
         (resp) => {
@@ -274,6 +279,9 @@ export class MemberComponent implements OnInit {
             link.click();
             link.remove();
             window.URL.revokeObjectURL(url);
+            if (statusAll) {
+                this.filter.active = 'ALL';
+            }
         });
     }
 

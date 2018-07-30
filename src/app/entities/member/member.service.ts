@@ -161,10 +161,10 @@ export class MemberService {
         return file;
     }
 
-    async exportDetaiCSV(id): Promise<Blob> {
+    async exportDetaiCSV(id): Promise<HttpResponse<Blob>> {
         const file =  await this.http.get<Blob>(
             `${this.reportUrl}memberdetail/csv/${id}`,
-            {responseType: 'blob' as 'json'}
+            {responseType: 'blob' as 'json', observe: 'response'}
         ).toPromise();
         return file;
     }

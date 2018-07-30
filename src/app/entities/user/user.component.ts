@@ -242,21 +242,10 @@ export class UserComponent implements OnInit {
 
     public async exportCSV(reportType): Promise<void> {
 
-        // const blob = await this.userService.exportCSV();
-        // const url = window.URL.createObjectURL(blob);
-        // const link = document.createElement('a');
-        // document.body.appendChild(link);
-        // link.setAttribute('style', 'display: none');
-        // link.href = url;
-        // link.download = 'user.csv';
-        // link.click();
-        // link.remove();
-
-        // window.URL.revokeObjectURL(url);
-        // console.log(this.filter);
-
-        if (this.filter.status === 'ALL') { alert('ALL');
-            this.filter.status = null;
+        let statusAll = false;
+        if (this.filter.status === 'ALL') {
+            statusAll = true;
+            delete this.filter.status ;
         }
         const blob = await this.userService.exportCSV({filter: this.filter }).then(
             (resp) => {
@@ -269,6 +258,9 @@ export class UserComponent implements OnInit {
                 link.click();
                 link.remove();
                 window.URL.revokeObjectURL(url);
+                if (statusAll) {
+                    this.filter.status = 'ALL';
+                }
             });
     }
 

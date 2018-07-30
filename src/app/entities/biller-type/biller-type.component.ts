@@ -246,20 +246,30 @@ export class BillerTypeComponent implements OnInit {
         this.filterBtn('');
     }
 
-    public async exportCSV(reportType): Promise<void> {
 
-        // const membType = (this.memberTypeList.length === 1 && this.memberTypeList[0].id === 1 ? 1 : 0);
-         const blob = await this.billerTypeService.exportCSV();
-         const url = window.URL.createObjectURL(blob);
-         // const link = this.downloadZipLink.nativeElement;
-         const link = document.createElement('a');
-         document.body.appendChild(link);
-         link.setAttribute('style', 'display: none');
-         link.href = url;
-         link.download = 'billertype.csv';
-         link.click();
-         window.URL.revokeObjectURL(url);
-     }
+    public async exportCSV(reportType): Promise<void> {
+        let statusAll = false;
+        if (this.filter.billPayType === 'ALL') {
+            statusAll = true;
+            delete this.filter.billPayType ;
+        }
+        const blob = await this.billerTypeService.exportCSV({filter: this.filter }).then(
+            (resp) => {
+                const url = window.URL.createObjectURL(resp.body);
+                const link = document.createElement('a');
+                document.body.appendChild(link);
+                link.setAttribute('style', 'display: none');
+                link.href = url;
+                link.download = resp.headers.get('File-Name');
+                link.click();
+                link.remove();
+                window.URL.revokeObjectURL(url);
+                if (statusAll) {
+                    this.filter.billPayType = 'ALL';
+                }
+            });
+        }
+ 
 
     //  loadBillPayType(): void {
     //     this.sharedService.getBillPayType().subscribe(

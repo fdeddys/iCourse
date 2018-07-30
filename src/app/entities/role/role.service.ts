@@ -114,4 +114,12 @@ export class RoleService {
         return file;
     }
 
+    // async exportCSV(req?: any): Promise<HttpResponse<Blob>> {
+    //     const file =  await this.http.post<Blob>(
+    //         `${this.reportUrl}role/csv`, req['filter'],
+    //         {responseType: 'blob' as 'json', observe: 'response'}
+    //     ).toPromise();
+    //     return file;
+    // }
+
 }

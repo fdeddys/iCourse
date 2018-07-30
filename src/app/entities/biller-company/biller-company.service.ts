@@ -98,10 +98,18 @@ export class BillerCompanyService {
         return copy;
     }
 
-    async exportCSV(): Promise<Blob> {
-        const file =  await this.http.get<Blob>(
-            `${this.reportUrl}billercompany/csv`,
-            {responseType: 'blob' as 'json'}
+    // async exportCSV(): Promise<Blob> {
+    //     const file =  await this.http.get<Blob>(
+    //         `${this.reportUrl}billercompany/csv`,
+    //         {responseType: 'blob' as 'json'}
+    //     ).toPromise();
+    //     return file;
+    // }
+
+    async exportCSV(req?: any): Promise<HttpResponse<Blob>> {
+        const file =  await this.http.post<Blob>(
+            `${this.reportUrl}billercompany/csv`, req['filter'],
+            {responseType: 'blob' as 'json', observe : 'response'}
         ).toPromise();
         return file;
     }
