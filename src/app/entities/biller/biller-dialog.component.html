@@ -61,18 +61,8 @@
         <!-- <section class="example-section"> -->
             <mat-checkbox class="example-margin" matTooltip="{{ 'ottoAG.biller.manualCode' | translate }}" [color]="'primary'" [(ngModel)]="biller.manualCode" [ngModelOptions]="{standalone: true}" [disabled]="setMembCode" style="margin-right: 10px"></mat-checkbox>
         <!-- </section> -->
-        <mat-form-field class="form-half-width">
-                <!-- <section class="form-full-width" > -->
-                    <!-- <mat-grid-list cols='2' rowHeight='2:1'>
-                        <mat-grid-title><mat-checkbox class="example-margin" [color]="'primary'" [(ngModel)]="biller.manualCode" [ngModelOptions]="{standalone: true}" [disabled]="setMembCode">{{ 'ottoAG.biller.manualCode' | translate }}</mat-checkbox></mat-grid-title>
-                        <mat-grid-title><input matInput placeholder="{{ 'ottoAG.biller.memberCode' | translate }}" name="memberCode" [(ngModel)]="biller.memberCode" [disabled]="!biller.manualCode" maxlength="8"></mat-grid-title>
-                    </mat-grid-list> -->
-                        
-                    <!-- </section> -->
-                    
-                    
-                    <mat-checkbox class="example-margin" [color]="'primary'" [(ngModel)]="biller.manualCode" [ngModelOptions]="{standalone: true}" [disabled]="setMembCode">{{ 'ottoAG.biller.manualCode' | translate }}</mat-checkbox> 
-                    <input matInput placeholder="{{ 'ottoAG.biller.memberCode' | translate }}" name="memberCode" [(ngModel)]="biller.memberCode" [disabled]="!biller.manualCode" maxlength="8"> 
+        <mat-form-field class="form-half-width">            
+            <input matInput placeholder="{{ 'ottoAG.biller.memberCode' | translate }}" name="memberCode" [(ngModel)]="biller.memberCode" [disabled]="!biller.manualCode" maxlength="8"> 
         </mat-form-field>
         
         <!-- <button mat-raised-button color="primary" (click)="openBDDialog('create')" style="margin-top: 30px; margin-bottom: 10px; margin-right: 10px;" [disabled]="btnDisabled">{{ btnLabel }}</button> -->
