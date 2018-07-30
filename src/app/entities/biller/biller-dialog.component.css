@@ -27,13 +27,13 @@
 }
 
 .form-half-width {
-	width: 45%;
-	/* margin-right: 5%; */
+	width: 20%;
+	margin-right: 5%;
 }
 
 .form-full-width {
-	width: 100%;
-	/* margin-right: 5%; */
+	width: 45%;
+	margin-right: 5%;
 }
 
 ::ng-deep .mat-checkbox-label {

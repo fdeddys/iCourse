@@ -3,7 +3,7 @@
 <form name="billerForm" (ngSubmit)="f.form.valid && onSubmit()" #f="ngForm" novalidate>
 <div mat-dialog-content>
     <!-- <form class="form-container">	 -->
-        <mat-form-field class="form-half-width" style="margin-right: 10%">
+        <mat-form-field class="form-half-width">
             <!-- <input matInput placeholder="Biller" aria-label="Member" [matAutocomplete]="autoM" [formControl]="membCtrl">
             <mat-autocomplete #autoM="matAutocomplete" [displayWith]="displayFnMem">
                 <mat-option *ngFor="let member of filteredMemb | async" [value]="member">
@@ -36,7 +36,7 @@
                 <div *ngIf="form.memberType.errors.required"> {{form.memberType.errors.message}}</div>
             </mat-error>
         </mat-form-field>
-        <mat-form-field class="form-half-width" style="margin-right: 10%">
+        <mat-form-field class="form-half-width">
             <input matInput [matDatepicker]="picker" placeholder="{{ 'ottoAG.biller.dateStart' | translate }}" (dateInput)="addEvent('start', $event)" (click)="picker.open()" [max]="dateTCtrl.value" [formControl]="dateSCtrl" readonly required>
             <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
             <mat-datepicker #picker></mat-datepicker>
@@ -52,15 +52,15 @@
                 <div *ngIf="form.dateThru.errors.required"> {{form.dateThru.errors.message}}</div>
             </mat-error>
         </mat-form-field>
-        <mat-form-field class="form-full-width">
+        <mat-form-field class="form-half-width">
             <textarea maxlength="255" matInput placeholder="{{ 'ottoAG.biller.description' | translate }}" name="description" [(ngModel)]="biller.description" #desc required></textarea>
             <mat-error *ngIf="submitted && form.description.errors" class="invalid-feedback">
                 <div *ngIf="form.description.errors.required"> {{form.description.errors.message}}</div>
             </mat-error>
         </mat-form-field>        
-        <section class="example-section">
-            <mat-checkbox class="example-margin" [color]="'primary'" [(ngModel)]="biller.manualCode" [ngModelOptions]="{standalone: true}" [disabled]="setMembCode">{{ 'ottoAG.biller.manualCode' | translate }}</mat-checkbox>
-        </section>
+        <!-- <section class="example-section"> -->
+            <mat-checkbox class="example-margin" matTooltip="{{ 'ottoAG.biller.manualCode' | translate }}" [color]="'primary'" [(ngModel)]="biller.manualCode" [ngModelOptions]="{standalone: true}" [disabled]="setMembCode" style="margin-right: 10px"></mat-checkbox>
+        <!-- </section> -->
         <mat-form-field class="form-half-width">
 			<input matInput placeholder="{{ 'ottoAG.biller.memberCode' | translate }}" name="memberCode" [(ngModel)]="biller.memberCode" [disabled]="!biller.manualCode" maxlength="8">
         </mat-form-field>
@@ -68,18 +68,21 @@
         <!-- <button mat-raised-button color="primary" (click)="openBDDialog('create')" style="margin-top: 30px; margin-bottom: 10px; margin-right: 10px;" [disabled]="btnDisabled">{{ btnLabel }}</button> -->
         <!-- <button mat-raised-button color="primary" style="margin-top: 10px; margin-bottom: 10px; margin-right: 0px; margin-left: 75%" cdkFocusInitial (click)="save()">Save</button> -->
         <!-- <div align="end" style="margin-top: 10px; margin-bottom: 10px"> -->
-        <div style="margin-bottom: 10px; float: right;">
-            <button mat-raised-button color="primary" (click)="validate()">{{ "entity.action.save" | translate }}</button>
+        <div style="float: right; margin-top: 15px">
+            <button mat-button mat-raised-button type="button" (click)="exportCSV('csv')" style="margin-left: 10px;">{{ "entity.action.exportCSV" | translate }}</button>
+            <button mat-button mat-raised-button type="button" color="primary" (click)="openBDDialog('create', null)" style="margin-left: 10px;" [disabled]="btnDisabled" *ngIf="btnLabel === 'Biller'">{{ "ottoAG.billerDetail.detail.addDetail" | translate }}</button>
+            <button mat-button mat-raised-button type="button" color="primary" (click)="openBDDialog('create', null)" style="margin-left: 10px;" [disabled]="btnDisabled" *ngIf="btnLabel !== 'Biller'">{{ "ottoAG.billerPriceDetail.detail.addDetail" | translate }}</button>
+            <button mat-raised-button color="primary" (click)="validate()" style="margin-left: 10px;">{{ "entity.action.save" | translate }}</button>
         </div>        
         
-        <mat-divider></mat-divider>
-        <br>
-        <br>
+        <!-- <mat-divider></mat-divider>
+        <br> -->
+        <!-- <br>
         <h4 mat-dialog-title *ngIf="btnLabel === 'Biller'" translate="ottoAG.billerDetail.detail.gridTitle"></h4>
-        <h4 mat-dialog-title *ngIf="btnLabel !== 'Biller'" translate="ottoAG.billerPriceDetail.detail.gridTitle"></h4>
+        <h4 mat-dialog-title *ngIf="btnLabel !== 'Biller'" translate="ottoAG.billerPriceDetail.detail.gridTitle"></h4> -->
         <fieldset style="border: 1px #ddd solid">       
             <ag-grid-angular 
-                style="height: 250px;" 
+                style="height: 400px;" 
                 class="{{theme}}"
                 [gridOptions]="gridOptions"
                 (gridReady)="onGridReady($event)"
@@ -97,12 +100,10 @@
 		</div>   -->
 	<!-- </form> -->
 </div>
-<div mat-dialog-actions align="end">
+<!-- <div mat-dialog-actions align="end">
     <button mat-button mat-raised-button type="button" color="primary" (click)="openBDDialog('create', null)" style="margin-top: 30px; margin-bottom: 10px;" [disabled]="btnDisabled" *ngIf="btnLabel === 'Biller'">{{ "ottoAG.billerDetail.detail.addDetail" | translate }}</button>
     <button mat-button mat-raised-button type="button" color="primary" (click)="openBDDialog('create', null)" style="margin-top: 30px; margin-bottom: 10px;" [disabled]="btnDisabled" *ngIf="btnLabel !== 'Biller'">{{ "ottoAG.billerPriceDetail.detail.addDetail" | translate }}</button>
     <button mat-button mat-raised-button type="button" (click)="exportCSV('csv')" style="margin-top: 30px; margin-bottom: 10px;">{{ "entity.action.exportCSV" | translate }}</button>
-    <!-- <button mat-button mat-raised-button style="margin-top: 30px; margin-bottom: 10px;" (click)="onNoClick()">Close</button> -->
-    <!-- <button mat-raised-button color="primary" cdkFocusInitial (click)="save()">Save</button> -->
-</div>
+</div> -->
 </form>
 <a style="display: none" #downloadLink></a>
