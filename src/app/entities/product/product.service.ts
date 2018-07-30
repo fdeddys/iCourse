@@ -66,10 +66,10 @@ export class ProductService {
             .pipe(map((res: EntityResponseType) => this.convertResponse(res)));
     }
 
-    async exportCSV(reportType: string): Promise<Blob> {
-        const file =  await this.http.get<Blob>(
-            `${this.reportUrl}billerproduct/${reportType}`,
-            {responseType: 'blob' as 'json'}
+    async exportCSV(reportType: string, filter?: any): Promise<HttpResponse<Blob>> {
+        const file =  await this.http.post<Blob>(
+            `${this.reportUrl}billerproduct/${reportType}`, filter,
+            {responseType: 'blob' as 'json', observe: 'response'}
         ).toPromise();
         return file;
     }
