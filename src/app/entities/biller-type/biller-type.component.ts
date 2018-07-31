@@ -269,7 +269,6 @@ export class BillerTypeComponent implements OnInit {
                 }
             });
         }
- 
 
     //  loadBillPayType(): void {
     //     this.sharedService.getBillPayType().subscribe(

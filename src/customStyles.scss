@@ -36,3 +36,43 @@ $custom-typography: mat-typography-config(
     $input:         mat-typography-level(14px, 1.125, 400)
 );
 @include angular-material-typography($custom-typography);
+
+// $icons-path: "~ag-grid/src/styles/icons/";
+// // changes the border color
+// // $border-color: #FF0000;
+
+// // Changes the font size
+// $font-size: 11px;
+// $secondary-font-size: 11px;
+// // $header-icon-size: 11px;
+// $icon-size: 11px;
+
+// // Changes the font family
+// // $font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen-Sans, Ubuntu, Cantarell, "Helvetica Neue", sans-serif;
+
+// // changes the icon color
+// // $icon-color: red;
+
+// $header-height: 50px;
+// $row-height: 27px;
+
+// // Set every entity's rowHeight and headerHeight
+// // --- customStyles.scss :
+// // $body-1:  mat-typography-level(12px, 20px, 400), (set to 12px)
+// // $input:  mat-typography-level(12px, 1.125, 400) (set to 12px)
+// // 
+// // --- controller agGrid gridOption :
+// // rowHeight: 27,
+// // headerHeight: 45,
+// // 
+// // --- controller styleUrls :
+// // remove content.component.css
+// // 
+// // --- html :
+// // <ag-grid-angular style="height: 400px;" 
+// // 
+// // --- base-constant.ts
+// // change GRID_THEME to 'ag-theme-material 
+
+// @import '~ag-grid/src/styles/ag-grid.scss';
+// @import '~ag-grid/src/styles/ag-theme-material.scss';

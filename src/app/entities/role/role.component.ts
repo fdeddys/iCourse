@@ -202,22 +202,37 @@ export class RoleComponent implements MainChild, OnInit {
     }, 400);
   }
 
-  public async exportCSV(reportType): Promise<void> {
+//   public async exportCSV(reportType): Promise<void> {
 
-     const blob = await this.roleService.exportCSV();
-     const url = window.URL.createObjectURL(blob);
+//      const blob = await this.roleService.exportCSV();
+//      const url = window.URL.createObjectURL(blob);
 
-     // const link = this.downloadZipLink.nativeElement;
-     const link = document.createElement('a');
-     document.body.appendChild(link);
-     link.setAttribute('style', 'display: none');
-     link.href = url;
-     link.download = 'role.csv';
-     link.click();
-     link.remove();
+//      // const link = this.downloadZipLink.nativeElement;
+//      const link = document.createElement('a');
+//      document.body.appendChild(link);
+//      link.setAttribute('style', 'display: none');
+//      link.href = url;
+//      link.download = 'role.csv';
+//      link.click();
+//      link.remove();
 
-     window.URL.revokeObjectURL(url);
- }
+//      window.URL.revokeObjectURL(url);
+//  }
+
+ public async exportCSV(reportType): Promise<void> {
+  const blob = await this.roleService.exportCSV().then(
+      (resp) => {
+          const url = window.URL.createObjectURL(resp.body);
+          const link = document.createElement('a');
+          document.body.appendChild(link);
+          link.setAttribute('style', 'display: none');
+          link.href = url;
+          link.download = resp.headers.get('File-Name');
+          link.click();
+          link.remove();
+          window.URL.revokeObjectURL(url);
+      });
+  }
 
 
 
