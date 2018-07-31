@@ -357,12 +357,16 @@ export class BillerComponent implements OnInit {
                 // memberTypeId : (this.memberTypeList.length === 1 && this.memberTypeList[0].id === 1 ? 1 : null),
                 member : null,
                 memberType : (this.memberTypeList.length === 1 && this.memberTypeList[0].id === 1 ? this.memberTypeList[0] : null),
+                isRequireDeposit : 'NOT_REQUIRED',
+                isReqDep : false,
+                currBalance : 0,
             },
         };
         if (mode !== 'create') {
             datasend.mode = mode;
             datasend.modeTitle = (mode === 'view' ? 'View' : 'Edit');
             datasend.rowData = data;
+            datasend.rowData.isReqDep = (datasend.rowData.isRequireDeposit === 'NOT_REQUIRED' ? false : true);
         }
         const dialogRef = this.dialog.open(BillerDialogComponent, {
             width: '900px',

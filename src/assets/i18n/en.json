@@ -83,7 +83,9 @@
             "memberType": "Member Type",
             "member": "Biller",
             "manualCode": "Set Manual Code",
-            "memberCode": "Member Code"
+            "memberCode": "Member Code",
+            "isRequireDeposit": "Deposit",
+            "currBalance": "Current Balance"
         },
         "billerDetail": {
             "home": {
@@ -156,6 +158,16 @@
             "status": "Status",
             "searchBy": "Biller Selection Method",
             "searchByMember": "Biller"
+        },
+        "depositDebit": {
+            "home":{
+                "title": "Deposit Debit"
+            }
+        },
+        "depositCredit": {
+            "home":{
+                "title": "Deposit Credit"
+            }
         },
         "globalSettings":{
             "home": {

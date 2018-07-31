@@ -63,7 +63,7 @@ export class ProductComponent implements OnInit {
             { headerName: 'Product Code', field: 'productCode', width: 150, editable: false },
             { headerName: 'Denom', field: 'denom', width: 150, cellStyle: {textAlign: 'right'}, editable: false },
             { headerName: 'Sell Price', field: 'sellPrice', width: 150, cellStyle: {textAlign: 'right'} },
-            { headerName: 'Status', field: 'status', width: 150 },
+            { headerName: 'Status', field: 'status', width: 150, valueFormatter: this.statFormatter },
             // { headerName: 'Search By', field: 'searchBy', width: 250 },
             // { headerName: 'Search By Biller', field: 'searchByMemberId', width: 250 },
             { headerName: ' ', width: 80, minWidth: 80, maxWidth: 150, cellRenderer: 'actionRenderer'}
@@ -105,6 +105,10 @@ export class ProductComponent implements OnInit {
 
         this.resizeColumn = this.resizeColumn.bind(this);
         eventSubscriber(mainService.subscription, this.resizeColumn);
+    }
+
+    statFormatter(params) {
+        return (params.value === 'ACTIVE' ? 'AVAILABLE' : 'DISCONTINUED');
     }
 
     loadAll(page) {

@@ -12,6 +12,9 @@ export class Biller implements BaseEntity {
         public memberId?: number,
         public manualCode?: boolean,
         public memberCode?: string,
+        public isRequireDeposit?: string,
+        public isReqDep?: boolean,
+        public currBalance?: number,
         public no?: number,
         public errMsg?: any,
     ) {

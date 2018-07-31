@@ -61,9 +61,10 @@
         <!-- <section class="example-section"> -->
             <mat-checkbox class="example-margin" matTooltip="{{ 'ottoAG.biller.manualCode' | translate }}" [color]="'primary'" [(ngModel)]="biller.manualCode" [ngModelOptions]="{standalone: true}" [disabled]="setMembCode" style="margin-right: 10px"></mat-checkbox>
         <!-- </section> -->
-        <mat-form-field class="form-half-width">            
+        <mat-form-field style="width: 16.5%; margin-right: 5%;">            
             <input matInput placeholder="{{ 'ottoAG.biller.memberCode' | translate }}" name="memberCode" [(ngModel)]="biller.memberCode" [disabled]="!biller.manualCode" maxlength="8"> 
         </mat-form-field>
+        <mat-checkbox class="example-margin" [color]="'primary'" [(ngModel)]="biller.isReqDep" [ngModelOptions]="{standalone: true}">{{ 'ottoAG.biller.isRequireDeposit' | translate }}</mat-checkbox>
         
         <!-- <button mat-raised-button color="primary" (click)="openBDDialog('create')" style="margin-top: 30px; margin-bottom: 10px; margin-right: 10px;" [disabled]="btnDisabled">{{ btnLabel }}</button> -->
         <!-- <button mat-raised-button color="primary" style="margin-top: 10px; margin-bottom: 10px; margin-right: 0px; margin-left: 75%" cdkFocusInitial (click)="save()">Save</button> -->
