@@ -173,7 +173,7 @@ export class BillerCompanyComponent implements OnInit {
     openNewDialog(): void {
       const dialogRef = this.dialog.open(BillerCompanyDialogComponent, {
         width: '600px',
-        data: { action: 'Add', entity: 'Biller Company' }
+        data: { action: 'Add', entity: 'Bill Operator' }
       });
 
       dialogRef.afterClosed().subscribe(result => {
