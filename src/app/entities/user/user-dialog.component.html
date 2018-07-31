@@ -4,11 +4,8 @@
 </h1>
 <form name="userForm" (ngSubmit)="f.form.valid && onSubmit()" #f="ngForm" novalidate>   
 <mat-dialog-content>
-    <!-- <form class="container-form"> -->
-        <!-- <mat-form-field class="container-full-width">
-            <input matInput placeholder="Id" value="{{user.id}}" [disabled]="true" >
-        </mat-form-field> -->
-    <mat-form-field class="container-half-width" style="margin-right: 10%">
+
+    <mat-form-field class="container-half-width" style="margin-right: 3%; width: 30%">
             <!-- <input matInput placeholder="Name " [(ngModel)]="user.name"  cdkFocusInitial name ="namea" > -->
             <input matInput placeholder="{{ 'ottoAG.user.name' | translate }}" [(ngModel)]="user.name" cdkFocusInitial name ="nm" #name="ngModel" 
                 [ngClass]="{ 'is-invalid': f.submitted && name.invalid }" required maxlength="50"  [disabled]="data.action === 'Edit'">
@@ -16,25 +13,27 @@
                     <div *ngIf="form.name.errors.required"> {{form.name.errors.message}}</div>
             </mat-error> 
     </mat-form-field>
-
-    <!-- <mat-form-field class="container-half-width">
-        <input matInput placeholder="Email" [(ngModel)]="user.email" name="emaie"
-            [formControl]="emailFormControl" required maxlength="50"> 
-    </mat-form-field> -->
     
-    <mat-form-field class="container-half-width">
-        <!-- <input matInput placeholder="Email" [(ngModel)]="user.email" name="emaie"
-        [disabled]="data.action === 'Edit'" required maxlength="50"
-        > -->
+    <mat-form-field class="container-half-width" style="margin-right: 3%; width: 30%">
         <input matInput placeholder="{{ 'ottoAG.user.email' | translate }}" [(ngModel)]="user.email" cdkFocusInitial name ="emaie" #name="ngModel" 
             [ngClass]="{ 'is-invalid': f.submitted && name.invalid }" required maxlength="50"  [disabled]="data.action === 'Edit'" required maxlength="50">
         <mat-error *ngIf="submitted && form.name.errors" class="invalid-feedback">
             <div *ngIf="form.email.errors.required"> {{form.email.errors.message}}</div>
         </mat-error> 
-        <!-- [formControl]="emailFormControl"  -->
     </mat-form-field>
 
-    <mat-form-field class="container-half-width" style="margin-right: 10%">
+    <mat-form-field class="container-half-width" style="margin-right: 3%; width: 30%">
+        <mat-select placeholder="{{ 'ottoAG.user.status' | translate }}" [(ngModel)]="user.status" name="sttss">
+            <mat-option *ngFor="let status of statuses" [value]="status.value">
+                {{status.viewValue}}
+            </mat-option>
+        </mat-select>
+    </mat-form-field>
+        
+
+
+
+    <mat-form-field class="container-half-width" style="margin-right: 3%; width: 30%">
         <input matInput placeholder="{{ 'ottoAG.user.firstName' | translate }}" [(ngModel)]="user.firstName" name ="frnm" #name="ngModel" 
             [ngClass]="{ 'is-invalid': f.submitted && name.invalid }" 
             required maxlength="50"  >
@@ -43,7 +42,7 @@
         </mat-error> 
     </mat-form-field>
 
-    <mat-form-field class="container-half-width">
+    <mat-form-field class="container-half-width" style="margin-right: 3%; width: 30%">
         <input matInput placeholder="{{ 'ottoAG.user.lastName' | translate }}" [(ngModel)]="user.lastName"  name ="lsnm" #name="ngModel" 
         [ngClass]="{ 'is-invalid': f.submitted && name.invalid }" required maxlength="50"  >
         <mat-error *ngIf="submitted && form.lastName.errors" class="invalid-feedback">
@@ -51,17 +50,13 @@
         </mat-error> 
     </mat-form-field>
 
-    <mat-form-field class="container-half-width">
-        <mat-select placeholder="{{ 'ottoAG.user.status' | translate }}" [(ngModel)]="user.status" name="sttss">
-            <mat-option *ngFor="let status of statuses" [value]="status.value">
-                {{status.viewValue}}
-            </mat-option>
-        </mat-select>
+    <mat-form-field class="container-half-width" style="color: red; width: 30%" *ngIf="isReset" >
+        <!-- <div *ngIf="isReset"> -->
+
+            <input matInput placeholder="{{ 'ottoAG.user.passwordGenerated' | translate }}" [(ngModel)]="newpass.resetPass"  [readonly]="true"  name ="rstpass" #name="ngModel" > 
+        <!-- </div> -->
     </mat-form-field>
     
-    <mat-form-field class="container-half-width" style="padding-left: 95px; color: red" *ngIf="isReset" >
-        <input matInput placeholder="{{ 'ottoAG.user.passwordGenerated' | translate }}" [(ngModel)]="newpass.resetPass"  [readonly]="true"  name ="rstpass" #name="ngModel" > 
-    </mat-form-field>
 
     <br>
     <!-- {{data.action}} -->
@@ -87,7 +82,7 @@
                 <!-- {{data.action}} - {{enableAddRole}} -->
         <ag-grid-angular 
             #agGrid
-            style="height: 300px; width: 100%;" 
+            style="height: 200px; width: 100%;" 
             class="{{theme}}"
             [gridOptions]="gridOptions" 
             (gridReady)="onGridReady($event)"
