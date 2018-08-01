@@ -28,6 +28,7 @@ import { AppComponent } from './app.component';
 import { LoginComponent } from './shared/login/login.component';
 import { MatCheckboxComponent } from './shared/templates/mat-checkbox.component';
 import { MatActionButtonComponent } from './shared/templates/mat-action-button.component';
+import { MatActionDeleteButtonComponent } from './shared/templates/mat-action-delete-button.component';
 
 import { HttpClientModule, HttpClient } from '@angular/common/http';
 import { EntityModule } from './entities/entity.module';
@@ -49,7 +50,11 @@ export function HttpLoaderFactory(http: HttpClient) {
         LoginComponent,
         MatCheckboxComponent,
         MatActionButtonComponent,
+        MatActionDeleteButtonComponent,
         CommonValidatorDirective
+    ],
+    entryComponents: [
+        MatActionDeleteButtonComponent
     ],
     imports: [
         BrowserModule,
