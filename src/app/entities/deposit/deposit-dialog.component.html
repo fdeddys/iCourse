@@ -1,0 +1,55 @@
+<h1 mat-dialog-title *ngIf="!transTypeDisabled">{{ "ottoAG.deposit.detail.title" | translate:{mode: modeTitle} }}</h1>
+<h1 mat-dialog-title *ngIf="transTypeDisabled">{{ "ottoAG.manualDeposit.detail.title" | translate:{mode: modeTitle} }}</h1>
+<form name="depositForm" (ngSubmit)="f.form.valid && onSubmit()" #f="ngForm" novalidate>
+    <div mat-dialog-content> 
+        <mat-form-field class="form-half-width form-separator">
+            <mat-select placeholder="{{ 'ottoAG.deposit.memberType' | translate }}" [(ngModel)]="deposit.memberTypeId" name="searchBy" required>
+                <mat-option *ngFor="let memberType of memberTypeList" [value]="memberType.id">
+                    {{memberType.name}}
+                </mat-option>
+            </mat-select>
+            <mat-error *ngIf="submitted && form.memberType.errors" class="invalid-feedback">
+                <div *ngIf="form.memberType.errors.required"> {{form.memberType.errors.message}}</div>
+            </mat-error> 
+        </mat-form-field>
+		<mat-form-field class="form-half-width">
+			<mat-select placeholder="{{ 'ottoAG.deposit.transType' | translate }}" [(ngModel)]="deposit.transTypeId" name="transType" [disabled]="transTypeDisabled" required>
+				<mat-option *ngFor="let transType of transTypeList" [value]="transType.id">
+					{{transType.name}}
+				</mat-option>
+            </mat-select>
+            <mat-error *ngIf="submitted && form.transType.errors" class="invalid-feedback">
+                <div *ngIf="form.transType.errors.required"> {{form.transType.errors.message}}</div>
+            </mat-error> 
+		</mat-form-field>
+		<mat-form-field class="form-half-width form-separator">
+			<input type="number" min="0" matInput placeholder="{{ 'ottoAG.deposit.debit' | translate }}" name ="debit" [(ngModel)]="deposit.debit" (blur)="valCheck('debit')" required>
+			<mat-error *ngIf="submitted && form.debit.errors" class="invalid-feedback">
+				<div *ngIf="form.debit.errors.required"> {{form.debit.errors.message}}</div>
+			</mat-error> 
+		</mat-form-field>
+		<mat-form-field class="form-half-width">
+            <input type="number" min="0" matInput placeholder="{{ 'ottoAG.deposit.credit' | translate }}" name ="credit" [(ngModel)]="deposit.credit" (blur)="valCheck('credit')" required>
+            <mat-error *ngIf="submitted && form.credit.errors" class="invalid-feedback">
+                <div *ngIf="form.credit.errors.required"> {{form.credit.errors.message}}</div>
+            </mat-error> 
+        </mat-form-field>
+        <mat-form-field class="form-half-width">
+            <input matInput [matDatepicker]="picker" placeholder="{{ 'ottoAG.deposit.transDate' | translate }}" (dateInput)="addEvent($event)" (click)="picker.open()" [formControl]="dateCtrl" readonly required>
+            <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+            <mat-datepicker #picker></mat-datepicker>
+            <mat-error *ngIf="submitted && form.transDate.errors" class="invalid-feedback">
+                <div *ngIf="form.transDate.errors.required"> {{form.transDate.errors.message}}</div>
+            </mat-error>
+        </mat-form-field>
+		<mat-form-field class="form-full-width">
+            <textarea maxlength="255" matInput placeholder="{{ 'ottoAG.deposit.description' | translate }}" name="description" [(ngModel)]="deposit.description" #desc required></textarea>
+            <mat-error *ngIf="submitted && form.description.errors" class="invalid-feedback">
+                <div *ngIf="form.description.errors.required"> {{form.description.errors.message}}</div>
+            </mat-error>
+        </mat-form-field>
+    </div>
+    <div mat-dialog-actions align="end">
+        <button mat-raised-button color="primary" (click)="validate()">{{ "entity.action.save" | translate }}</button>
+    </div>
+</form>
