@@ -192,6 +192,11 @@
         "depositHistory": {
             "home":{
                 "title": "Deposit History"
+            },
+            "filter": {
+                "description": "Filter Description",
+                "dateStart": "Filter Transaction Date Start",
+                "dateThru": "Filter Transaction Date Thru"
             }
         },
         "globalSettings":{

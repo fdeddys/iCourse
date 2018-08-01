@@ -12,6 +12,7 @@ export class DepositHistory implements BaseEntity {
         public description?: string,
         public no?: any,
         public errMsg?: any,
+        public transTypeDesc?: any,
     ) {
     }
 }
