@@ -27,7 +27,8 @@ export class DepositHistoryComponent implements OnInit {
     private gridApi;
     private gridColumnApi;
     private resourceUrl = REPORT_PATH;
-
+    dateFStartCtrl: FormControl;
+    dateTStartCtrl: FormControl;
     depositHistories: DepositHistory[];
 
     messageNoData: string = NO_DATA_GRID_MESSAGE;
@@ -48,11 +49,13 @@ export class DepositHistoryComponent implements OnInit {
     gridOptions = {
         columnDefs: [
             // { headerName: 'Name', field: 'name', checkboxSelection: true, width: 250, pinned: 'left', editable: true },
-            { headerName: 'No', field: 'no', width: 100, pinned: 'left', editable: false },
-            { headerName: 'Member Code', field: 'memberCode', width: 150, pinned: 'left', editable: false },
-            { headerName: 'Name', field: 'member.name', width: 300, pinned: 'left', editable: false },
-            { headerName: 'Date Start', field: 'dateStart', width: 185, pinned: 'left', editable: false },
-            { headerName: 'Date Through', field: 'dateThru', width: 185, pinned: 'left', editable: false },
+            { headerName: 'No', field: 'no', width: 50, pinned: 'left', editable: false },
+            { headerName: 'Tx Date', field: 'transDate', width: 150, pinned: 'left', editable: false },
+            { headerName: 'Type', field: 'transTypeDesc', width: 100, pinned: 'left', editable: false },
+            { headerName: 'Desc', field: 'description', width: 200, pinned: 'left', editable: false },
+            { headerName: 'Debit', field: 'debit', width: 125, pinned: 'left', editable: false },
+            { headerName: 'Credit', field: 'credit', width: 125, pinned: 'left', editable: false },
+            { headerName: 'Balance', field: 'balance', width: 125, pinned: 'left', editable: false },
             { headerName: ' ', width: 80, cellRenderer: 'actionRenderer', pinned: 'left', editable: false}
         ],
         rowData: this.depositHistories,
@@ -76,6 +79,8 @@ export class DepositHistoryComponent implements OnInit {
         private route: ActivatedRoute,
     ) {
         translate.use('en');
+        this.dateFStartCtrl = new FormControl();
+        this.dateTStartCtrl = new FormControl();
     }
 
     ngOnInit() {
@@ -151,7 +156,8 @@ export class DepositHistoryComponent implements OnInit {
         if (page !== '') {
             this.curPage = page;
         }
-
+        this.filter.filDateFStart = (this.dateFStartCtrl.value === null ? null : this.dateFStartCtrl.value);
+        this.filter.filDateTStart = (this.dateTStartCtrl.value === null ? null : this.dateTStartCtrl.value);
         console.log('this.filter : ', this.filter);
         this.depositHistoryService.filter({
             page: this.curPage,
@@ -167,12 +173,17 @@ export class DepositHistoryComponent implements OnInit {
 
     private onSuccess(data, headers) {
         console.log('success..', data);
-        this.depositHistories = data.content;
-        for (let index = 0; index < this.depositHistories.length; index++) {
-            this.depositHistories[index].no = index + 1;
+        if (data === null ) {
+            this.totalData = 0;
+            this.depositHistories = [];
+        } else {
+            this.depositHistories = data.content;
+            for (let index = 0; index < this.depositHistories.length; index++) {
+                this.depositHistories[index].no = index + 1;
+            }
+            this.totalData = data.totalElements;
         }
         this.gridApi.setRowData(this.depositHistories);
-        this.totalData = data.totalElements;
     }
 
     private onError(error) {
