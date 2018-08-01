@@ -10,8 +10,9 @@ import { NO_DATA_GRID_MESSAGE, GRID_THEME, CSS_BUTTON, SNACKBAR_DURATION_IN_MILL
 import { RoleUserService } from '../role-user/role-user.service';
 import { RoleUserView } from '../role-user/role-user.model';
 import { CommonValidatorDirective } from '../../validators/common.validator';
-import { MatCheckboxComponent } from '../../shared/templates/mat-checkbox.component';
+import { MatActionDeleteButtonComponent } from '../../shared/templates/mat-action-delete-button.component';
 import { TranslateService } from '@ngx-translate/core';
+import { MatActionButtonComponent } from '../../shared/templates/mat-action-button.component';
 
 @Component({
     selector: 'app-user-dialog',
@@ -79,7 +80,7 @@ export class UserDialogComponent implements OnInit {
             //     Change
             //     </button>
             //     ` }
-            { headerName: 'Status', field: 'status', width: 150, cellRenderer: 'checkboxRenderer'}
+            { headerName: 'Status', field: 'status', width: 150, cellRenderer: 'actionRenderer'}
         ],
             rowData: this.roleRegisterd,
             enableSorting: true,
@@ -92,7 +93,7 @@ export class UserDialogComponent implements OnInit {
             maxBlocksInCache : 2,
             localeText: {noRowsToShow: this.messageNoData},
             frameworkComponents: {
-                checkboxRenderer: MatCheckboxComponent
+                actionRenderer: MatActionDeleteButtonComponent,
             }
         };
 
@@ -158,7 +159,7 @@ export class UserDialogComponent implements OnInit {
 
     onActionClick(data): void {
         console.log('role id' , this.user , '-Change-role id ', data);
-        this.userService.changeStatusRole(this.user.id, data.roleId )
+        this.userService.removeRole(this.user.id, data.roleId )
             .subscribe(
                 () => {
                     this.getRoleRegistered();
@@ -341,6 +342,8 @@ export class UserDialogComponent implements OnInit {
         if ( data.length > 0 ) {
             this.enableAddRole = false;
             console.log('data role leng ==> ', data.length);
+        } else {
+            this.enableAddRole = true;
         }
         // enableAddRole
         this.gridApi.setRowData(this.roleRegisterd);

@@ -122,6 +122,13 @@ export class UserService {
             );
     }
 
+    removeRole(userId: number, roleId: any): Observable<EntityResponseType> {
+        return this.http.put(`${this.resourceUrl}/${userId}/role/${roleId}/removeRole`, null, { observe : 'response'})
+            .pipe(
+                map((res: EntityResponseType) => this.convertResponse(res))
+            );
+    }
+
     private convertResponse(res: EntityResponseType): EntityResponseType {
         const body: User = this.convertItemFromServer(res.body);
         return res.clone({body});
