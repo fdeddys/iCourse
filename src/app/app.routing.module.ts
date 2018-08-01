@@ -18,6 +18,7 @@ import { AccessMatrixComponent } from './entities/access-matrix';
 import { ResponseCode, ResponseCodeComponent } from './entities/response-code';
 import { TransTypeComponent } from './entities/transaction-type';
 import { TransListComponent } from './entities/transaction-list';
+import { DepositHistoryComponent } from './entities/deposit-history';
 
 
 const routes: Routes = [
@@ -45,6 +46,7 @@ const routes: Routes = [
             {path: 'response-code', component: ResponseCodeComponent},
             {path: 'response-code-internal', component: ResponseCodeComponent},
             {path: 'transaction', component: TransListComponent},
+            {path: 'deposit-history', component: DepositHistoryComponent},
         ]
     },
     // {path: 'member', component: MemberComponent}

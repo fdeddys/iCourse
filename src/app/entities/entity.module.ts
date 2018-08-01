@@ -20,6 +20,7 @@ import { AccessMatrixModule } from './access-matrix/access-matrix.module';
 import { TransactionTypeModule } from './transaction-type/transaction-type.module';
 import { ResponseCodeModule} from './response-code/response-code.module';
 import { TransactionListModule } from './transaction-list/transaction-list.module';
+import { DepositHistoryModule } from './deposit-history/deposit-history.module';
 
 
 @NgModule({
@@ -44,6 +45,7 @@ import { TransactionListModule } from './transaction-list/transaction-list.modul
         TransactionTypeModule,
         ResponseCodeModule,
         TransactionListModule,
+        DepositHistoryModule
     ],
     entryComponents: [],
     providers: [],
