@@ -159,6 +159,36 @@
             "searchBy": "Biller Selection Method",
             "searchByMember": "Biller"
         },
+        "deposit": {
+            "home":{
+                "title": "Deposit",
+                "addLabelButton": "Add New Deposit"
+            },
+            "detail": {
+                "title": "{{mode}} Deposit"
+            },
+            "memberType": "Member Type",
+            "transType": "Transaction Type",
+            "debit": "Debit",
+            "credit": "Credit",
+            "transDate": "Transaction Date",
+            "description": "Description"
+        },
+        "manualDeposit": {
+            "home":{
+                "title": "Manual Deposit",
+                "addLabelButton": "Add New Manual Deposit"
+            },
+            "detail": {
+                "title": "{{mode}} Manual Deposit"
+            },
+            "memberType": "Member Type",
+            "transType": "Transaction Type",
+            "debit": "Debit",
+            "credit": "Credit",
+            "transDate": "Transaction Date",
+            "description": "Description"
+        },
         "depositHistory": {
             "home":{
                 "title": "Deposit History"
