@@ -50,13 +50,14 @@ export class DepositHistoryComponent implements OnInit {
         columnDefs: [
             // { headerName: 'Name', field: 'name', checkboxSelection: true, width: 250, pinned: 'left', editable: true },
             { headerName: 'No', field: 'no', width: 50, pinned: 'left', editable: false },
-            { headerName: 'Tx Date', field: 'transDate', width: 150, pinned: 'left', editable: false },
-            { headerName: 'Type', field: 'transTypeDesc', width: 100, pinned: 'left', editable: false },
-            { headerName: 'Desc', field: 'description', width: 200, pinned: 'left', editable: false },
-            { headerName: 'Debit', field: 'debit', width: 125, pinned: 'left', editable: false },
-            { headerName: 'Credit', field: 'credit', width: 125, pinned: 'left', editable: false },
-            { headerName: 'Balance', field: 'balance', width: 125, pinned: 'left', editable: false },
-            { headerName: ' ', width: 80, cellRenderer: 'actionRenderer', pinned: 'left', editable: false}
+            { headerName: 'Tx Date', field: 'transDate', width: 150, editable: false,  valueFormatter: this.dateFormatter2  },
+            { headerName: 'Type', field: 'transTypeDesc', width: 125, editable: false },
+            { headerName: 'Member', field: 'memberName', width: 150, editable: false },
+            { headerName: 'Desc', field: 'description', width: 200, editable: false },
+            { headerName: 'Debit', field: 'debit', width: 125,  editable: false },
+            { headerName: 'Credit', field: 'credit', width: 125,  editable: false },
+            { headerName: 'Balance', field: 'balance', width: 125, editable: false },
+            // { headerName: ' ', width: 80, cellRenderer: 'actionRenderer', pinned: 'left', editable: false}
         ],
         rowData: this.depositHistories,
         enableSorting: true,
@@ -99,7 +100,18 @@ export class DepositHistoryComponent implements OnInit {
     }
 
     dateFormatter(params): string {
+        // console.log('isi param ', params.value);
         const dt  = new Date(params);
+        const year = dt.getFullYear();
+        const mth = dt.getMonth() + 1;
+        const day = dt.getDate();
+        // return dt.toLocaleString(['id']);
+        return year + '-' + (mth < 10 ? '0' + mth : mth) + '-' + (day < 10 ? '0' + day : day);
+    }
+
+    dateFormatter2(params): string {
+        // console.log('isi param ', params.value);
+        const dt  = new Date(params.value);
         const year = dt.getFullYear();
         const mth = dt.getMonth() + 1;
         const day = dt.getDate();
@@ -156,8 +168,8 @@ export class DepositHistoryComponent implements OnInit {
         if (page !== '') {
             this.curPage = page;
         }
-        this.filter.filDateFStart = (this.dateFStartCtrl.value === null ? null : this.dateFStartCtrl.value);
-        this.filter.filDateTStart = (this.dateTStartCtrl.value === null ? null : this.dateTStartCtrl.value);
+        this.filter.filDateFStart = (this.dateFStartCtrl.value === null ? null : this.dateFormatter(this.dateFStartCtrl.value));
+        this.filter.filDateTStart = (this.dateTStartCtrl.value === null ? null : this.dateFormatter(this.dateTStartCtrl.value));
         console.log('this.filter : ', this.filter);
         this.depositHistoryService.filter({
             page: this.curPage,

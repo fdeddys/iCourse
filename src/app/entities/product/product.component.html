@@ -50,8 +50,8 @@
             <mat-form-field class="form-full-width" style="margin-left: 30px">
                 <mat-select placeholder="{{ 'ottoAG.billerProduct.filter.status' | translate }}" [(ngModel)]="filter.status" name="status">
                     <mat-option *ngFor="let status of filterStatusList" [value]="status">
-                        <!-- {{ status === 'true' ? 'ACTIVE' : ( status === 'false' ? 'INACTIVE' : 'ALL' )   }} -->
-                        {{status}}
+                        {{ status === 'ACTIVE' ? 'AVAILABE' : ( status === 'INACTIVE' ? 'DISCONTINUED' : 'ALL' )   }}
+                        <!-- {{status}} -->
                     </mat-option>
                 </mat-select>
 			</mat-form-field>
