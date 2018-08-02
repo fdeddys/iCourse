@@ -199,8 +199,8 @@
             },
             "filter": {
                 "description": "Filter Description",
-                "dateStart": "Filter Transaction Date Start",
-                "dateThru": "Filter Transaction Date Thru"
+                "dateStart": "Filter Date Start",
+                "dateThru": "Filter Date Thru"
             }
         },
         "globalSettings":{
