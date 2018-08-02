@@ -52,6 +52,7 @@
                 <div *ngIf="form.dateThru.errors.required"> {{form.dateThru.errors.message}}</div>
             </mat-error>
         </mat-form-field>
+        
         <mat-form-field class="form-half-width">
             <textarea maxlength="255" matInput placeholder="{{ 'ottoAG.biller.description' | translate }}" name="description" [(ngModel)]="biller.description" #desc required></textarea>
             <mat-error *ngIf="submitted && form.description.errors" class="invalid-feedback">
