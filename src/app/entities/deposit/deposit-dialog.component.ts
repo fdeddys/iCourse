@@ -21,7 +21,7 @@ export class DepositDialogComponent implements OnInit {
     depositSave: Deposit;
     deposits: Deposit[];
 
-    memberTypeList = [];
+    billerList = [];
     transTypeList = [];
     depositForm: FormGroup;
     submitted = false;
@@ -30,6 +30,7 @@ export class DepositDialogComponent implements OnInit {
 
     dateCtrl: FormControl;
     transTypeDisabled = false;
+    manualDepo = false;
 
     constructor(
         private formBuilder: FormBuilder,
@@ -48,9 +49,8 @@ export class DepositDialogComponent implements OnInit {
         // });
 
         this.depositForm = this.formBuilder.group({
-            memberType: ['', CommonValidatorDirective.required],
-            debit: ['', CommonValidatorDirective.required],
-            credit: ['', CommonValidatorDirective.required],
+            biller: ['', CommonValidatorDirective.required],
+            amount: ['', CommonValidatorDirective.required],
             transType: ['', CommonValidatorDirective.required],
             transDate: ['', CommonValidatorDirective.required],
             description: ['', CommonValidatorDirective.required]
@@ -64,11 +64,14 @@ export class DepositDialogComponent implements OnInit {
             // search
             this.dateCtrl.setValue(this.data.rowData.transDate);
         }
-        this.memberTypeList = this.data.memberTypeData;
+        this.billerList = this.data.billerData;
         this.transTypeList = this.data.transTypeData;
-        if (this.transTypeList.length === 1 && this.transTypeList[0].id === 8) {
+        if (this.transTypeList.length === 1 && (this.transTypeList[0].id === 8 || this.transTypeList[0].id === 7)) {
             this.transTypeDisabled = true;
             this.deposit.transTypeId = this.transTypeList[0].id;
+        }
+        if (this.transTypeList[0].id === 8) {
+            this.manualDepo = true;
         }
     }
 
@@ -112,8 +115,7 @@ export class DepositDialogComponent implements OnInit {
         // alert(searchByMemberId);
         this.depositSave = {
             memberTypeId: this.deposit.memberTypeId,
-            debit: this.deposit.debit,
-            credit: this.deposit.credit,
+            amount: this.deposit.amount,
             transTypeId: this.deposit.transTypeId,
             description: this.deposit.description,
             transDate: this.dateFormatter(this.dateCtrl),

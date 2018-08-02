@@ -110,6 +110,13 @@ private reportUrl = REPORT_PATH;
             );
     }
 
+    findIsDeposit(): Observable<HttpResponse<Biller[]>> {
+        return this.http.get<Biller[]>(`${this.resourceUrl}/find/biller/deposit`, { observe: 'response'})
+        .pipe(
+            tap(biller => console.log('raw ', biller ))
+        );
+    }
+
     create(biller: Biller): Observable<EntityResponseType> {
         const copy = this.convert(biller);
         return this.http.post<Biller>(`${this.resourceUrl}`, copy, { observe: 'response'})

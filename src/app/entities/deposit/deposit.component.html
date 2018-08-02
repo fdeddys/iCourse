@@ -1,13 +1,13 @@
 <mat-card>
     <mat-card-header>
         <mat-card-title style="align-items: center">
-			<h2 *ngIf="menuName === 'Deposit'" mat-dialog-title translate="ottoAG.deposit.home.title"></h2>
+			<h2 *ngIf="menuName === 'Manual Refund'" mat-dialog-title translate="ottoAG.manualRefund.home.title"></h2>
 			<h2 *ngIf="menuName === 'Manual Deposit'" mat-dialog-title translate="ottoAG.manualDeposit.home.title"></h2>
         </mat-card-title>
     </mat-card-header>
     <mat-card-content>
         <!-- <div style="text-align: right"> -->
-			<button mat-raised-button *ngIf="menuName === 'Deposit'" color="primary" (click)="openDialog('create', null)" style="margin-bottom: 10px;">{{ "ottoAG.deposit.home.addLabelButton" | translate }}</button>
+			<button mat-raised-button *ngIf="menuName === 'Manual Refund'" color="primary" (click)="openDialog('create', null)" style="margin-bottom: 10px;">{{ "ottoAG.manualRefund.home.addLabelButton" | translate }}</button>
 			<button mat-raised-button *ngIf="menuName === 'Manual Deposit'" color="primary" (click)="openDialog('create', null)" style="margin-bottom: 10px;">{{ "ottoAG.manualDeposit.home.addLabelButton" | translate }}</button>
 			<button mat-raised-button (click)="exportCSV('csv')" style="margin-bottom: 10px;">{{ "entity.action.exportCSV" | translate }}</button>
 		<!-- </div> -->

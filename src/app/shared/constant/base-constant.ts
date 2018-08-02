@@ -4,10 +4,10 @@ export const GRID_THEME = 'ag-theme-balham';
 // export const SERVER = 'https://localhost:8080/ottoagbe/';
 
 // develop
-// export const SERVER = 'http://localhost:8080/';
+export const SERVER = 'http://localhost:8080/';
 
 // deploy
-export const SERVER = '/ottoagbe/';
+// export const SERVER = '/ottoagbe/';
 export const SERVER_PATH = SERVER + 'api/';
 export const AUTH_PATH = SERVER + 'token/';
 export const REPORT_PATH = SERVER + 'report/';

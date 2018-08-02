@@ -11,8 +11,8 @@ import { DepositHistory } from '../deposit-history/deposit-history.model';
 import { DepositHistoryService } from '../deposit-history/deposit-history.service';
 import { TransType } from '../transaction-type/transaction-type.model';
 import { TransTypeService } from '../transaction-type/transaction-type.service';
-import { MemberType } from '../member-type/member-type.model';
-import { MemberTypeService } from '../member-type/member-type.service';
+import { Biller } from '../biller/biller.model';
+import { BillerService } from '../biller/biller.service';
 import { TranslateService } from '@ngx-translate/core';
 
 import { FormControl } from '@angular/forms';
@@ -36,7 +36,7 @@ export class DepositComponent implements OnInit {
     private resourceUrl = REPORT_PATH;
 
     deposits: Deposit[];
-    memberTypeList = [];
+    billerList = [];
     transTypeList = [];
 
     messageNoData: string = NO_DATA_GRID_MESSAGE;
@@ -50,7 +50,8 @@ export class DepositComponent implements OnInit {
         memberTypeId: null,
         transTypeId: null,
         transDate: null,
-        // amount: null,
+        amount: null,
+        description: '',
         // filDateFStart: null,
         // filDateTStart: null,
     };
@@ -84,7 +85,7 @@ export class DepositComponent implements OnInit {
         translate: TranslateService,
         private depositService: DepositService,
         private depositHistoryService: DepositHistoryService,
-        private memberTypeService: MemberTypeService,
+        private billerService: BillerService,
         private transTypeService: TransTypeService,
         private dialog: MatDialog,
         private route: ActivatedRoute,
@@ -97,8 +98,9 @@ export class DepositComponent implements OnInit {
         if (this.route.snapshot.routeConfig.path === 'manual-deposit') {
             this.menuName = 'Manual Deposit';
             this.filter.transTypeId = 8;
-        } else if (this.route.snapshot.routeConfig.path === 'deposit') {
-            this.menuName = 'Deposit';
+        } else if (this.route.snapshot.routeConfig.path === 'manual-refund') {
+            this.menuName = 'Manual Refund';
+            this.filter.transTypeId = 7;
         }
 
         this.transTypeService.query({
@@ -111,12 +113,9 @@ export class DepositComponent implements OnInit {
             () => { console.log('finally'); }
         );
 
-        this.memberTypeService.query({
-            page: 1,
-            count: 10000,
-        })
+        this.billerService.findIsDeposit()
         .subscribe(
-                (res: HttpResponse<MemberType[]>) => this.onSuccessMembType(res.body, res.headers),
+                (res: HttpResponse<Biller[]>) => this.onSuccessBiller(res.body, res.headers),
                 (res: HttpErrorResponse) => this.onError(res.message),
                 () => { console.log('finally'); }
         );
@@ -163,13 +162,10 @@ export class DepositComponent implements OnInit {
             mode : 'create',
             modeTitle : 'Add',
             transTypeData : this.transTypeList,
-            memberTypeData : this.memberTypeList,
+            billerData : this.billerList,
             rowData : {
                 memberTypeId: null,
                 amount: null,
-                debit: null,
-                credit: null,
-                balance: null,
                 transTypeId: null,
                 transDate: null,
                 description: null
@@ -222,14 +218,14 @@ export class DepositComponent implements OnInit {
         // this.transTypeList = data.content;
         if (this.route.snapshot.routeConfig.path === 'manual-deposit') {
             this.transTypeList = _.filter(data.content, function(o) { return o.id === 8; });
-        } else if (this.route.snapshot.routeConfig.path === 'deposit') {
-            this.transTypeList = _.filter(data.content, function(o) { return o.id !== 8; });
+        } else if (this.route.snapshot.routeConfig.path === 'manual-refund') {
+            this.transTypeList = _.filter(data.content, function(o) { return o.id === 7; });
         }
     }
 
-    private onSuccessMembType(data, headers) {
-        console.log('data.content member type : ', data.content);
-        this.memberTypeList = data.content;
+    private onSuccessBiller(data, headers) {
+        console.log('data.content member type : ', data);
+        this.billerList = data;
     }
 
     private onSuccess(data, headers) {
@@ -269,7 +265,8 @@ export interface DepositFilter {
     memberTypeId?: number;
     transTypeId?: number;
     transDate?: string;
-    // amount?: number;
+    amount?: number;
+    description?: string;
     // filDateFStart?: string;
     // filDateTStart?: string;
 }

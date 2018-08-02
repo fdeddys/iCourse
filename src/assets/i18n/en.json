@@ -159,18 +159,17 @@
             "searchBy": "Biller Selection Method",
             "searchByMember": "Biller"
         },
-        "deposit": {
+        "manualRefund": {
             "home":{
-                "title": "Deposit",
-                "addLabelButton": "Add New Deposit"
+                "title": "Manual Refund",
+                "addLabelButton": "Add New Manual Refund"
             },
             "detail": {
-                "title": "{{mode}} Deposit"
+                "title": "{{mode}} Manual Refund"
             },
-            "memberType": "Member Type",
+            "biller": "Biller",
             "transType": "Transaction Type",
-            "debit": "Debit",
-            "credit": "Credit",
+            "amount": "Amount",
             "transDate": "Transaction Date",
             "description": "Description"
         },
@@ -182,10 +181,9 @@
             "detail": {
                 "title": "{{mode}} Manual Deposit"
             },
-            "memberType": "Member Type",
+            "biller": "Biller",
             "transType": "Transaction Type",
-            "debit": "Debit",
-            "credit": "Credit",
+            "amount": "Amount",
             "transDate": "Transaction Date",
             "description": "Description"
         },
