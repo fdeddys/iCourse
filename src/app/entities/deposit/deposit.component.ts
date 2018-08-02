@@ -34,6 +34,8 @@ export class DepositComponent implements OnInit {
     private gridApi;
     private gridColumnApi;
     private resourceUrl = REPORT_PATH;
+    dateFStartCtrl: FormControl;
+    dateTStartCtrl: FormControl;
 
     deposits: Deposit[];
     billerList = [];
@@ -52,8 +54,8 @@ export class DepositComponent implements OnInit {
         transDate: null,
         amount: null,
         description: '',
-        // filDateFStart: null,
-        // filDateTStart: null,
+        filDateFStart: null,
+        filDateTStart: null,
     };
 
     gridOptions = {
@@ -91,6 +93,8 @@ export class DepositComponent implements OnInit {
         private route: ActivatedRoute,
     ) {
         translate.use('en');
+        this.dateFStartCtrl = new FormControl();
+        this.dateTStartCtrl = new FormControl();
     }
 
     ngOnInit() {
@@ -200,8 +204,10 @@ export class DepositComponent implements OnInit {
             this.curPage = page;
         }
 
+        this.filter.filDateFStart = (this.dateFStartCtrl.value === null ? null : this.dateFormatter(this.dateFStartCtrl.value));
+        this.filter.filDateTStart = (this.dateTStartCtrl.value === null ? null : this.dateFormatter(this.dateTStartCtrl.value));
         console.log('this.filter : ', this.filter);
-        this.depositHistoryService.filter({
+        this.depositService.filter({
             page: this.curPage,
             count: this.totalRecord,
             filter: this.filter,
@@ -267,7 +273,7 @@ export interface DepositFilter {
     transDate?: string;
     amount?: number;
     description?: string;
-    // filDateFStart?: string;
-    // filDateTStart?: string;
+    filDateFStart?: string;
+    filDateTStart?: string;
 }
 
