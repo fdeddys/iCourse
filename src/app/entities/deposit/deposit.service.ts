@@ -122,6 +122,9 @@ export class DepositService {
         });
 
         newresourceUrl = this.resourceUrl + `/filter/page/${pageNumber}/count/${pageCount}`;
+        if (req['filter'].transTypeId === 7) {
+            newresourceUrl = SERVER_PATH + 'manualrefund' + `/filter/page/${pageNumber}/count/${pageCount}`;
+        }
         return this.http.post<Deposit[]>(newresourceUrl, req['filter'], {  observe: 'response' })
             .pipe(
                 // map((res: HttpResponse<Member[]>) => this.convertArrayResponse(res))
