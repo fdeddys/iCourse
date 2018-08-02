@@ -207,7 +207,7 @@ export class DepositComponent implements OnInit {
         this.filter.filDateFStart = (this.dateFStartCtrl.value === null ? null : this.dateFormatter(this.dateFStartCtrl.value));
         this.filter.filDateTStart = (this.dateTStartCtrl.value === null ? null : this.dateFormatter(this.dateTStartCtrl.value));
         console.log('this.filter : ', this.filter);
-        this.depositHistoryService.filter({
+        this.depositService.filter({
             page: this.curPage,
             count: this.totalRecord,
             filter: this.filter,
