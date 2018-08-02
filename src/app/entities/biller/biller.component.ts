@@ -369,7 +369,7 @@ export class BillerComponent implements OnInit {
             datasend.rowData.isReqDep = (datasend.rowData.isRequireDeposit === 'NOT_REQUIRED' ? false : true);
         }
         const dialogRef = this.dialog.open(BillerDialogComponent, {
-            width: '900px',
+            width: '950px',
             height: '610px',
             data: datasend
         });

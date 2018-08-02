@@ -16,6 +16,12 @@
         }
     },
     "ottoAG": {
+        "accessMatrix": {
+            "home": {
+                "title": "Change Password"
+            },
+            "roleName": "Role Name"
+        },
         "changePassword": {
             "home": {
                 "title": "Change Password"

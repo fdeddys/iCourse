@@ -44,6 +44,7 @@ export class DepositHistoryComponent implements OnInit {
         amount: null,
         filDateFStart: null,
         filDateTStart: null,
+        description: null
     };
 
     gridOptions = {
@@ -227,4 +228,5 @@ export interface DepositHistoryFilter {
     amount?: number;
     filDateFStart?: string;
     filDateTStart?: string;
+    description?: string;
 }

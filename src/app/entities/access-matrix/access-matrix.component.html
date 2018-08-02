@@ -2,12 +2,12 @@
     <mat-card-header>
         <mat-card-title style="align-items: center">
             <!-- <h2 style="color: rgb(158, 158, 158)" >{{ menuName }} Registration</h2>  -->
-            <h2 mat-dialog-title>User Matrix</h2> 			               
+            <h2 mat-dialog-title translate="ottoAG.accessMatrix.home.title">User Matrix</h2> 			               
         </mat-card-title>
     </mat-card-header>
     <mat-card-content>
         <mat-form-field style="width: 30%">
-            <mat-select placeholder="Role" [(ngModel)]="filter.roleId" (selectionChange)="searchByRole()">
+            <mat-select placeholder="Role Name" [(ngModel)]="filter.roleId" (selectionChange)="searchByRole()">
                 <mat-option *ngFor="let role of roles" [value]="role.id">
                 {{ role.name }}
                 </mat-option>
