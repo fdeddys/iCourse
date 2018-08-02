@@ -49,7 +49,7 @@ const routes: Routes = [
             {path: 'transaction', component: TransListComponent},
             {path: 'deposit-history', component: DepositHistoryComponent},
             {path: 'manual-deposit', component: DepositComponent},
-            {path: 'deposit', component: DepositComponent},
+            {path: 'manual-refund', component: DepositComponent},
         ]
     },
     // {path: 'member', component: MemberComponent}

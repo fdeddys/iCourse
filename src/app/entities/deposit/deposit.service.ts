@@ -56,6 +56,9 @@ export class DepositService {
 
     create(deposit: Deposit): Observable<EntityResponseType> {
         const copy = this.convert(deposit);
+        if (copy.transTypeId === 7) {
+            this.resourceUrl = SERVER_PATH + 'manualrefund';
+        }
         return this.http.post<Deposit>(`${this.resourceUrl}`, copy, { observe: 'response'})
             .pipe(map((res: EntityResponseType) => this.convertResponse(res)));
     }
