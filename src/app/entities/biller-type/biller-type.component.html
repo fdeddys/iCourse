@@ -16,7 +16,7 @@
                 <input matInput placeholder="{{ 'ottoAG.billerType.filter.name' | translate }}" [(ngModel)]="filter.name"  
                     name ="name"  >
             </mat-form-field> 
-            <mat-form-field class="form-full-width">
+            <mat-form-field class="container-half-width">
                 <mat-select placeholder="{{ 'ottoAG.billerType.filter.billPayType' | translate }}" [(ngModel)]="filter.billPayType" name="billPayType">
                     <!-- <mat-option [value]= 'ALL'>ALL</mat-option> -->
                     <mat-option *ngFor="let billPayType of billPayTypeList" [value]="billPayType">
