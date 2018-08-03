@@ -12,6 +12,8 @@ import { FormControl } from '@angular/forms';
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA, MatPaginator } from '@angular/material';
 import { GRID_THEME, NO_DATA_GRID_MESSAGE, TOTAL_RECORD_PER_PAGE, REPORT_PATH } from '../../shared/constant/base-constant';
 import { MatActionButtonComponent } from '../../shared/templates/mat-action-button.component';
+import { BillerService, Biller } from '../biller';
+import { Member } from '../member';
 
 @Component({
     selector: 'app-deposit-history',
@@ -30,7 +32,8 @@ export class DepositHistoryComponent implements OnInit {
     dateFStartCtrl: FormControl;
     dateTStartCtrl: FormControl;
     depositHistories: DepositHistory[];
-
+    billerList = [];
+    billerSelected;
     messageNoData: string = NO_DATA_GRID_MESSAGE;
     curPage = 1;
     totalData = 0;
@@ -45,6 +48,22 @@ export class DepositHistoryComponent implements OnInit {
         filDateFStart: null,
         filDateTStart: null,
         description: null
+    };
+
+    allBiller: Biller = {
+        id: 0,
+        memberCode: 'ALL',
+        dateStart: null,
+        dateThru: null,
+        member:  {
+            id : 0,
+            name: 'ALL',
+            description: 'ALL',
+        }
+    };
+    filChkBox = {
+        start: false,
+        through: false
     };
 
     gridOptions = {
@@ -76,6 +95,7 @@ export class DepositHistoryComponent implements OnInit {
 
     constructor(
         translate: TranslateService,
+        private billerService: BillerService,
         private depositHistoryService: DepositHistoryService,
         private dialog: MatDialog,
         private route: ActivatedRoute,
@@ -87,6 +107,7 @@ export class DepositHistoryComponent implements OnInit {
 
     ngOnInit() {
         console.log('this.route : ', this.route);
+        this.findBiller();
     }
 
     onGridReady(params) {
@@ -118,6 +139,19 @@ export class DepositHistoryComponent implements OnInit {
         const day = dt.getDate();
         // return dt.toLocaleString(['id']);
         return year + '-' + (mth < 10 ? '0' + mth : mth) + '-' + (day < 10 ? '0' + day : day);
+    }
+
+    chkBoxChgS(evt) {
+        console.log('chkBoxChgT(evt) : ', evt);
+        if (evt.checked) {
+            this.dateFStartCtrl.enable();
+            this.dateTStartCtrl.enable();
+        } else {
+            this.dateFStartCtrl.disable();
+            this.dateTStartCtrl.disable();
+            this.dateFStartCtrl.setValue(null);
+            this.dateTStartCtrl.setValue(null);
+        }
     }
 
     onRowClicked(e) {
@@ -166,6 +200,13 @@ export class DepositHistoryComponent implements OnInit {
     }
 
     filterBtn(page): void {
+
+        let allData = false;
+        if (  this.filter.memberTypeId === 0 ) {
+            delete this.filter.memberTypeId;
+            allData = true;
+        }
+
         if (page !== '') {
             this.curPage = page;
         }
@@ -182,6 +223,28 @@ export class DepositHistoryComponent implements OnInit {
             (res: HttpErrorResponse) => this.onError(res.message),
             () => { console.log('finally'); }
         );
+        if ( allData ) {
+            this.filter.memberTypeId = this.allBiller.id;
+        }
+    }
+
+    private findBiller() {
+
+        this.billerService.findIsDeposit()
+        .subscribe(
+                (res: HttpResponse<Biller[]>) => this.onSuccessBiller(res.body, res.headers),
+                (res: HttpErrorResponse) => this.onError(res.message),
+                () => { console.log('finally'); }
+        );
+
+    }
+
+    private onSuccessBiller(data, headers) {
+        console.log('data.content member type : ', data);
+        this.billerList = data;
+        this.billerList.push(this.allBiller);
+        this.filter.memberTypeId = this.allBiller.id;
+        // this.billerSelected = this.allBiller;
     }
 
     private onSuccess(data, headers) {

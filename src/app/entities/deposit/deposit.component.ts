@@ -162,6 +162,7 @@ export class DepositComponent implements OnInit {
     }
 
     openDialog(mode, data): void {
+        console.log('isi trans type list ======> ', this.transTypeList);
         const datasend = {
             mode : 'create',
             modeTitle : 'Add',
@@ -223,9 +224,9 @@ export class DepositComponent implements OnInit {
         console.log('data.content trans type : ', data.content);
         // this.transTypeList = data.content;
         if (this.route.snapshot.routeConfig.path === 'manual-deposit') {
-            this.transTypeList = _.filter(data.content, function(o) { return o.id === 8; });
+            this.transTypeList = _.filter(data.content, function(o) { return o.code === '8'; });
         } else if (this.route.snapshot.routeConfig.path === 'manual-refund') {
-            this.transTypeList = _.filter(data.content, function(o) { return o.id === 7; });
+            this.transTypeList = _.filter(data.content, function(o) { return o.code === '7'; });
         }
     }
 

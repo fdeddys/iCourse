@@ -6,7 +6,7 @@ export const GRID_THEME = 'ag-theme-balham';
 // develop
 export const SERVER = 'http://localhost:8080/';
 
-// deploy
+// deploy build --prod
 // export const SERVER = '/ottoagbe/';
 export const SERVER_PATH = SERVER + 'api/';
 export const AUTH_PATH = SERVER + 'token/';

@@ -66,11 +66,13 @@ export class DepositDialogComponent implements OnInit {
         }
         this.billerList = this.data.billerData;
         this.transTypeList = this.data.transTypeData;
-        if (this.transTypeList.length === 1 && (this.transTypeList[0].id === 8 || this.transTypeList[0].id === 7)) {
+        console.log('Isi trans type list ======> ', this.transTypeList);
+        if (this.transTypeList.length === 1 && (this.transTypeList[0].code === '8' || this.transTypeList[0].code === '7')) {
             this.transTypeDisabled = true;
             this.deposit.transTypeId = this.transTypeList[0].id;
+            this.deposit.code = this.transTypeList[0].code;
         }
-        if (this.transTypeList[0].id === 8) {
+        if (this.transTypeList[0].code === '8') {
             this.manualDepo = true;
         }
     }
@@ -117,6 +119,7 @@ export class DepositDialogComponent implements OnInit {
             memberTypeId: this.deposit.memberTypeId,
             amount: this.deposit.amount,
             transTypeId: this.deposit.transTypeId,
+            code: this.deposit.code,
             description: this.deposit.description,
             transDate: this.dateFormatter(this.dateCtrl),
         };

@@ -593,6 +593,7 @@ export class BillerDialogComponent implements OnInit {
             manualCode: (this.biller.manualCode === undefined ? false : this.biller.manualCode),
             memberCode: (this.biller.memberCode === undefined ? '' : this.biller.memberCode),
             isRequireDeposit: (this.biller.isReqDep ? 'REQUIRED' : 'NOT_REQUIRED'),
+            status: this.biller.status,
             currBalance : 0,
         };
         console.log(this.billerSave);

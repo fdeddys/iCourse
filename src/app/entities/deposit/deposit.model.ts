@@ -10,6 +10,7 @@ export class Deposit implements BaseEntity {
         public transDate?: string,
         public no?: any,
         public errMsg?: any,
+        public code?: any,
     ) {
     }
 }

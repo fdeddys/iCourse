@@ -9,6 +9,9 @@
 			<input matInput placeholder="{{ 'ottoAG.depositHistory.filter.description' | translate }}" [(ngModel)]="filter.description"  
 				name ="name"  >
 		</mat-form-field>
+		
+		<mat-checkbox class="example-margin" [color]="'primary'" [(ngModel)]="filChkBox.start" [ngModelOptions]="{standalone: true}" (change)="chkBoxChgS($event)" style="margin-right: 10px"></mat-checkbox>
+			
 		<mat-form-field class="form-half-width" style="margin-right: 3%; ">
 			<input matInput [matDatepicker]="pickerFStart" placeholder="{{ 'ottoAG.depositHistory.filter.dateStart' | translate }}" (click)="pickerFStart.open()" [max]="dateTStartCtrl.value" [formControl]="dateFStartCtrl" readonly>
 			<mat-datepicker-toggle matSuffix [for]="pickerFStart"></mat-datepicker-toggle>
@@ -19,6 +22,13 @@
 			<mat-datepicker-toggle matSuffix [for]="pickerTStart"></mat-datepicker-toggle>
 			<mat-datepicker #pickerTStart></mat-datepicker>
 		</mat-form-field>
+		<mat-form-field class="form-half-width form-separator">
+            <mat-select placeholder="{{ 'ottoAG.manualDeposit.biller' | translate }}" [(ngModel)]="filter.memberTypeId" name="biller" required>
+                <mat-option *ngFor="let biller of billerList" [value]="biller.id">
+                    {{biller.member.name + ' (' + biller.memberCode + ')'}}
+                </mat-option>
+            </mat-select>
+        </mat-form-field>
 <!-- 		
 		<mat-form-field class="form-full-width">
 			<mat-select placeholder="{{ 'ottoAG.user.filter.status' | translate }}" [(ngModel)]="filter.status" name="status">

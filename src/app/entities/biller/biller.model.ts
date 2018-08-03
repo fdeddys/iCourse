@@ -17,6 +17,8 @@ export class Biller implements BaseEntity {
         public currBalance?: number,
         public no?: number,
         public errMsg?: any,
+        public status?: any,
+        public member?: any,
     ) {
     }
 }

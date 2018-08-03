@@ -336,7 +336,7 @@ export class BillerComponent implements OnInit {
         if (mode !== 'create') {
             this.memberList.push(data.member);
         }
-
+        console.log('isi data sebelum panggil ===> ', data);
         const datasend = {
             mode : 'create',
             modeTitle : 'Add',
@@ -360,6 +360,7 @@ export class BillerComponent implements OnInit {
                 isRequireDeposit : 'NOT_REQUIRED',
                 isReqDep : false,
                 currBalance : 0,
+                status: data.status,
             },
         };
         if (mode !== 'create') {

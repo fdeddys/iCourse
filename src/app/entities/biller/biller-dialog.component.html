@@ -3,7 +3,7 @@
 <form name="billerForm" (ngSubmit)="f.form.valid && onSubmit()" #f="ngForm" novalidate>
 <div mat-dialog-content>
     <!-- <form class="form-container">	 -->
-        <mat-form-field class="form-half-width">
+        <mat-form-field class="form-half-width" style="width: 20%; margin-right: 3%">
             <!-- <input matInput placeholder="Biller" aria-label="Member" [matAutocomplete]="autoM" [formControl]="membCtrl">
             <mat-autocomplete #autoM="matAutocomplete" [displayWith]="displayFnMem">
                 <mat-option *ngFor="let member of filteredMemb | async" [value]="member">
@@ -20,7 +20,7 @@
                 <div *ngIf="form.member.errors.required"> {{form.member.errors.message}}</div>
             </mat-error>
         </mat-form-field>	
-		<mat-form-field class="form-half-width" style="width: 20%; margin-right: 5%">
+		<mat-form-field class="form-half-width" style="width: 20%; margin-right: 3%">
 			<!-- <input matInput placeholder="Member Type" aria-label="Member Type" [matAutocomplete]="autoMType" [formControl]="membTypeCtrl">
             <mat-autocomplete #autoMType="matAutocomplete" [displayWith]="displayFnMemType">
 				<mat-option *ngFor="let memberType of filteredMembType | async" [value]="memberType">
@@ -36,7 +36,7 @@
                 <div *ngIf="form.memberType.errors.required"> {{form.memberType.errors.message}}</div>
             </mat-error>
         </mat-form-field>
-        <mat-form-field class="form-half-width">
+        <mat-form-field class="form-half-width"  style="width: 15%; margin-right: 3%">
             <input matInput [matDatepicker]="picker" placeholder="{{ 'ottoAG.biller.dateStart' | translate }}" (dateInput)="addEvent('start', $event)" (click)="picker.open()" [max]="dateTCtrl.value" [formControl]="dateSCtrl" readonly required>
             <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
             <mat-datepicker #picker></mat-datepicker>
@@ -44,7 +44,7 @@
                 <div *ngIf="form.dateStart.errors.required"> {{form.dateStart.errors.message}}</div>
             </mat-error>
         </mat-form-field>
-        <mat-form-field class="form-half-width" style="width: 20%; margin-right: 5%">
+        <mat-form-field class="form-half-width" style="width: 15%; margin-right: 3%">
             <input matInput [matDatepicker]="pickerT" placeholder="{{ 'ottoAG.biller.dateThru' | translate }}" (dateInput)="addEvent('thru', $event)" (click)="pickerT.open()" [min]="dateSCtrl.value" [formControl]="dateTCtrl" readonly required>
             <mat-datepicker-toggle matSuffix [for]="pickerT"></mat-datepicker-toggle>
             <mat-datepicker #pickerT></mat-datepicker>
@@ -52,8 +52,16 @@
                 <div *ngIf="form.dateThru.errors.required"> {{form.dateThru.errors.message}}</div>
             </mat-error>
         </mat-form-field>
+
+        <mat-form-field class="form-full-width" style="width: 12%">
+			<mat-select placeholder="{{ 'ottoAG.biller.status' | translate }}" [(ngModel)]="biller.status" name="status" required>
+				<mat-option *ngFor="let status of statusList" [value]="status">
+					{{status}}
+				</mat-option>
+			</mat-select>
+		</mat-form-field>
         
-        <mat-form-field class="form-half-width">
+        <mat-form-field class="form-half-width" style="width: 20%; margin-right: 3%">
             <textarea maxlength="255" matInput placeholder="{{ 'ottoAG.biller.description' | translate }}" name="description" [(ngModel)]="biller.description" #desc required></textarea>
             <mat-error *ngIf="submitted && form.description.errors" class="invalid-feedback">
                 <div *ngIf="form.description.errors.required"> {{form.description.errors.message}}</div>
@@ -62,7 +70,7 @@
         <!-- <section class="example-section"> -->
             <mat-checkbox class="example-margin" matTooltip="{{ 'ottoAG.biller.manualCode' | translate }}" [color]="'primary'" [(ngModel)]="biller.manualCode" [ngModelOptions]="{standalone: true}" [disabled]="setMembCode" style="margin-right: 10px"></mat-checkbox>
         <!-- </section> -->
-        <mat-form-field style="width: 16.5%; margin-right: 5%;">            
+        <mat-form-field style="width: 16.5%; margin-right: 3%;">            
             <input matInput placeholder="{{ 'ottoAG.biller.memberCode' | translate }}" name="memberCode" [(ngModel)]="biller.memberCode" [disabled]="!biller.manualCode" maxlength="8"> 
         </mat-form-field>
         <mat-checkbox class="example-margin" [color]="'primary'" [(ngModel)]="biller.isReqDep" [ngModelOptions]="{standalone: true}">{{ 'ottoAG.biller.isRequireDeposit' | translate }}</mat-checkbox>
