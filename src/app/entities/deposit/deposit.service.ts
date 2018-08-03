@@ -110,7 +110,7 @@ export class DepositService {
         }
 
         const file =  await this.http.post<Blob>(
-            `${newresourceUrl}manualdeposit/csv`, req['filter'],
+            `${newresourceUrl}/csv`, req['filter'],
             {responseType: 'blob' as 'json', observe : 'response'}
         ).toPromise();
         return file;
