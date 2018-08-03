@@ -5,7 +5,7 @@ export class Deposit implements BaseEntity {
         public id?: number,
         public memberTypeId?: number,
         public amount?: number,
-        public transTypeId?: number,
+        public transTypeCode?: string,
         public description?: string,
         public transDate?: string,
         public no?: any,

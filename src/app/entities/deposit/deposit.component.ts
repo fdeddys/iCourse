@@ -50,7 +50,7 @@ export class DepositComponent implements OnInit {
 
     filter: DepositFilter = {
         memberTypeId: null,
-        transTypeId: null,
+        transTypeCode: null,
         transDate: null,
         amount: null,
         description: '',
@@ -101,10 +101,10 @@ export class DepositComponent implements OnInit {
         console.log('this.route : ', this.route);
         if (this.route.snapshot.routeConfig.path === 'manual-deposit') {
             this.menuName = 'Manual Deposit';
-            this.filter.transTypeId = 8;
+            this.filter.transTypeCode = '8';
         } else if (this.route.snapshot.routeConfig.path === 'manual-refund') {
             this.menuName = 'Manual Refund';
-            this.filter.transTypeId = 7;
+            this.filter.transTypeCode = '7';
         }
 
         this.transTypeService.query({
@@ -270,7 +270,7 @@ export class DepositComponent implements OnInit {
 
 export interface DepositFilter {
     memberTypeId?: number;
-    transTypeId?: number;
+    transTypeCode?: string;
     transDate?: string;
     amount?: number;
     description?: string;

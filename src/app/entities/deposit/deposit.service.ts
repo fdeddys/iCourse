@@ -58,7 +58,7 @@ export class DepositService {
         const copy = this.convert(deposit);
         let newresourceUrl = null;
 
-        if (copy.code === '7') {
+        if (copy.transTypeCode === '7') {
             newresourceUrl = SERVER_PATH + 'manualrefund';
         } else {
             newresourceUrl = this.resourceUrl;
@@ -126,7 +126,7 @@ export class DepositService {
         });
 
         newresourceUrl = this.resourceUrl + `/filter/page/${pageNumber}/count/${pageCount}`;
-        if (req['filter'].transTypeId === 7) {
+        if (req['filter'].transTypeCode === '7') {
             newresourceUrl = SERVER_PATH + 'manualrefund' + `/filter/page/${pageNumber}/count/${pageCount}`;
         }
         return this.http.post<Deposit[]>(newresourceUrl, req['filter'], {  observe: 'response' })
