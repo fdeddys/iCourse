@@ -13,8 +13,8 @@
             </mat-error> 
         </mat-form-field>
 		<mat-form-field class="form-half-width">
-			<mat-select placeholder="{{ 'ottoAG.manualDeposit.transType' | translate }}" [(ngModel)]="deposit.transTypeId" name="transType" [disabled]="transTypeDisabled" required>
-				<mat-option *ngFor="let transType of transTypeList" [value]="transType.id">
+			<mat-select placeholder="{{ 'ottoAG.manualDeposit.transType' | translate }}" [(ngModel)]="deposit.transTypeCode" name="transType" [disabled]="transTypeDisabled" required>
+				<mat-option *ngFor="let transType of transTypeList" [value]="transType.code">
 					{{transType.name}}
 				</mat-option>
             </mat-select>

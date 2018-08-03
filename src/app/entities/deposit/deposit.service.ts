@@ -59,7 +59,7 @@ export class DepositService {
         let newresourceUrl = null;
         newresourceUrl = this.resourceUrl;
 
-        if (copy.transTypeId === 7) {
+        if (copy.transTypeCode === '7') {
             newresourceUrl = SERVER_PATH + 'manualrefund';
         }
         return this.http.post<Deposit>(newresourceUrl, copy, { observe: 'response'})
@@ -122,7 +122,7 @@ export class DepositService {
         });
 
         newresourceUrl = this.resourceUrl + `/filter/page/${pageNumber}/count/${pageCount}`;
-        if (req['filter'].transTypeId === 7) {
+        if (req['filter'].transTypeCode === '7') {
             newresourceUrl = SERVER_PATH + 'manualrefund' + `/filter/page/${pageNumber}/count/${pageCount}`;
         }
         return this.http.post<Deposit[]>(newresourceUrl, req['filter'], {  observe: 'response' })
