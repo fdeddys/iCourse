@@ -58,6 +58,11 @@ export class DepositComponent implements OnInit {
         filDateTStart: null,
     };
 
+    filChkBox = {
+        start: false,
+        through: false
+    };
+
     gridOptions = {
         columnDefs: [
             { headerName: 'No', field: 'no', width: 100, pinned: 'left', editable: false },
@@ -250,21 +255,38 @@ export class DepositComponent implements OnInit {
     }
 
     public async exportCSV(reportType): Promise<void> {
-        const blob = await this.depositHistoryService.exportCSV(reportType, this.filter).then(
-        (resp) => {
-            const url = window.URL.createObjectURL(resp.body);
-            const link = this.downloadLink.nativeElement;
-            link.href = url;
-            link.download = resp.headers.get('File-Name');
-            link.click();
-            window.URL.revokeObjectURL(url);
-        });
-    }
+
+        const blob = await this.depositService.exportCSV({filter: this.filter }).then(
+            (resp) => {
+                const url = window.URL.createObjectURL(resp.body);
+                const link = document.createElement('a');
+                document.body.appendChild(link);
+                link.setAttribute('style', 'display: none');
+                link.href = url;
+                link.download = resp.headers.get('File-Name');
+                link.click();
+                link.remove();
+                window.URL.revokeObjectURL(url);
+            });
+        }
 
     public onPaginateChange($event): void {
         this.curPage = $event.pageIndex + 1;
         // this.loadAll(this.curPage);
         this.filterBtn('');
+    }
+
+    chkBoxChgS(evt) {
+        console.log('chkBoxChgT(evt) : ', evt);
+        if (evt.checked) {
+            this.dateFStartCtrl.enable();
+            this.dateTStartCtrl.enable();
+        } else {
+            this.dateFStartCtrl.disable();
+            this.dateTStartCtrl.disable();
+            this.dateFStartCtrl.setValue(null);
+            this.dateTStartCtrl.setValue(null);
+        }
     }
 }
 

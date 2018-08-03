@@ -100,10 +100,10 @@ export class DepositService {
         return copy;
     }
 
-    async exportCSV(reportType: string, filter?: any): Promise<HttpResponse<Blob>> {
+    async exportCSV(req?: any): Promise<HttpResponse<Blob>> {
         const file =  await this.http.post<Blob>(
-            `${this.reportUrl}billerheader/${reportType}`, filter,
-            {responseType: 'blob' as 'json', observe: 'response'}
+            `${this.reportUrl}manualdeposit/csv`, req['filter'],
+            {responseType: 'blob' as 'json', observe : 'response'}
         ).toPromise();
         return file;
     }
