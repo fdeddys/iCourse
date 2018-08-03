@@ -70,8 +70,8 @@ export class DepositHistoryComponent implements OnInit {
         columnDefs: [
             // { headerName: 'Name', field: 'name', checkboxSelection: true, width: 250, pinned: 'left', editable: true },
             { headerName: 'No', field: 'no', width: 50, pinned: 'left', editable: false },
-            { headerName: 'Tx Date', field: 'transDate', width: 150, editable: false,  valueFormatter: this.dateFormatter2  },
-            { headerName: 'Type', field: 'transTypeDesc', width: 125, editable: false },
+            { headerName: 'Tx Date', field: 'transDate', width: 125, editable: false,  valueFormatter: this.dateFormatter2  },
+            { headerName: 'Type', field: 'transTypeDesc', width: 150, editable: false },
             { headerName: 'Member', field: 'memberName', width: 150, editable: false },
             { headerName: 'Desc', field: 'description', width: 200, editable: false },
             { headerName: 'Debit', field: 'debit', width: 125,  editable: false },
@@ -266,16 +266,30 @@ export class DepositHistoryComponent implements OnInit {
         console.log('error..');
     }
 
+
     public async exportCSV(reportType): Promise<void> {
-        const blob = await this.depositHistoryService.exportCSV(reportType, this.filter).then(
-        (resp) => {
-            const url = window.URL.createObjectURL(resp.body);
-            const link = this.downloadLink.nativeElement;
-            link.href = url;
-            link.download = resp.headers.get('File-Name');
-            link.click();
-            window.URL.revokeObjectURL(url);
-        });
+
+        let allData = false;
+        if (  this.filter.memberTypeId === 0 ) {
+            delete this.filter.memberTypeId;
+            allData = true;
+        }
+
+        const blob = await this.depositHistoryService.exportCSV({filter: this.filter }).then(
+            (resp) => {
+                const url = window.URL.createObjectURL(resp.body);
+                const link = document.createElement('a');
+                document.body.appendChild(link);
+                link.setAttribute('style', 'display: none');
+                link.href = url;
+                link.download = resp.headers.get('File-Name');
+                link.click();
+                link.remove();
+                window.URL.revokeObjectURL(url);
+            });
+        if ( allData ) {
+                this.filter.memberTypeId = this.allBiller.id;
+            }
     }
 
     public onPaginateChange($event): void {

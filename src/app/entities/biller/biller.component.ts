@@ -333,8 +333,12 @@ export class BillerComponent implements OnInit {
 
     openDialog(mode, data): void {
 
+        let statusData: any;
         if (mode !== 'create') {
             this.memberList.push(data.member);
+            statusData = data.status;
+        } else {
+            statusData = 'ACTIVE';
         }
         console.log('isi data sebelum panggil ===> ', data);
         const datasend = {
@@ -360,7 +364,7 @@ export class BillerComponent implements OnInit {
                 isRequireDeposit : 'NOT_REQUIRED',
                 isReqDep : false,
                 currBalance : 0,
-                status: data.status,
+                status: statusData,
             },
         };
         if (mode !== 'create') {

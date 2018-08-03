@@ -17,6 +17,9 @@
 				<input matInput placeholder="{{ 'ottoAG.depositHistory.filter.description' | translate }}" [(ngModel)]="filter.description"  
 					name ="name"  >
 			</mat-form-field>
+		
+			<mat-checkbox class="example-margin" [color]="'primary'" [(ngModel)]="filChkBox.start" [ngModelOptions]="{standalone: true}" (change)="chkBoxChgS($event)" style="margin-right: 10px"></mat-checkbox>
+		
 			<mat-form-field class="form-half-width" style="margin-right: 3%; ">
 				<input matInput [matDatepicker]="pickerFStart" placeholder="{{ 'ottoAG.depositHistory.filter.dateStart' | translate }}" (click)="pickerFStart.open()" [max]="dateTStartCtrl.value" [formControl]="dateFStartCtrl" readonly>
 				<mat-datepicker-toggle matSuffix [for]="pickerFStart"></mat-datepicker-toggle>
