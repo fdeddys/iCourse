@@ -256,6 +256,13 @@ export class DepositComponent implements OnInit {
 
     public async exportCSV(reportType): Promise<void> {
 
+        if (this.route.snapshot.routeConfig.path === 'manual-deposit') {
+            this.menuName = 'Manual Deposit';
+            this.filter.transTypeCode = '8';
+        } else if (this.route.snapshot.routeConfig.path === 'manual-refund') {
+            this.menuName = 'Manual Refund';
+            this.filter.transTypeCode = '7';
+        }
         const blob = await this.depositService.exportCSV({filter: this.filter }).then(
             (resp) => {
                 const url = window.URL.createObjectURL(resp.body);

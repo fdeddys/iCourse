@@ -100,9 +100,17 @@ export class DepositService {
         return copy;
     }
 
-    async exportCSV(req?: any): Promise<HttpResponse<Blob>> {
+    async exportCSV(req?: any, transType?: any): Promise<HttpResponse<Blob>> {
+
+        let newresourceUrl = null;
+        if (transType === '7') {
+            newresourceUrl = SERVER_PATH + 'manualrefund';
+        } else {
+            newresourceUrl = SERVER_PATH + 'manualdeposit';
+        }
+
         const file =  await this.http.post<Blob>(
-            `${this.reportUrl}manualdeposit/csv`, req['filter'],
+            `${newresourceUrl}manualdeposit/csv`, req['filter'],
             {responseType: 'blob' as 'json', observe : 'response'}
         ).toPromise();
         return file;

@@ -269,6 +269,12 @@ export class DepositHistoryComponent implements OnInit {
 
     public async exportCSV(reportType): Promise<void> {
 
+        let allData = false;
+        if (  this.filter.memberTypeId === 0 ) {
+            delete this.filter.memberTypeId;
+            allData = true;
+        }
+
         const blob = await this.depositHistoryService.exportCSV({filter: this.filter }).then(
             (resp) => {
                 const url = window.URL.createObjectURL(resp.body);
@@ -281,6 +287,9 @@ export class DepositHistoryComponent implements OnInit {
                 link.remove();
                 window.URL.revokeObjectURL(url);
             });
+        if ( allData ) {
+                this.filter.memberTypeId = this.allBiller.id;
+            }
     }
 
     public onPaginateChange($event): void {
