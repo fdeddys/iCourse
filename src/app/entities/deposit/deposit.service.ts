@@ -104,9 +104,9 @@ export class DepositService {
 
         let newresourceUrl = null;
         if (transType === '7') {
-            newresourceUrl = SERVER_PATH + 'manualrefund';
+            newresourceUrl = this.reportUrl + 'manualrefund';
         } else {
-            newresourceUrl = SERVER_PATH + 'manualdeposit';
+            newresourceUrl = this.reportUrl + 'manualdeposit';
         }
 
         const file =  await this.http.post<Blob>(
