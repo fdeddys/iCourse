@@ -26,6 +26,7 @@ import { AppComponent } from './app.component';
 // import { MainComponent } from './layouts/main/main.component';
 // import { SidebarComponent } from './layouts/sidebar/sidebar.component';
 import { LoginComponent } from './shared/login/login.component';
+import { Error404Component } from './shared/404/404.component';
 import { MatCheckboxComponent } from './shared/templates/mat-checkbox.component';
 import { MatActionButtonComponent } from './shared/templates/mat-action-button.component';
 import { MatActionDeleteButtonComponent } from './shared/templates/mat-action-delete-button.component';
@@ -48,6 +49,7 @@ export function HttpLoaderFactory(http: HttpClient) {
         // MainComponent,
         // SidebarComponent,
         LoginComponent,
+        Error404Component,
         MatCheckboxComponent,
         MatActionButtonComponent,
         MatActionDeleteButtonComponent,

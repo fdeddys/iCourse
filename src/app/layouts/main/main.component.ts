@@ -6,6 +6,8 @@ import { MainService } from './main.service';
 
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
 import { UserUpdatePasswordComponent } from '../../entities/user/user-update-password.component';
+
+import { LocalStorageService, SessionStorageService } from 'ngx-webstorage';
 // import { Observable } from 'rxjs';
 
 @Component({
@@ -24,8 +26,15 @@ export class MainComponent implements OnInit {
         private mainService: MainService,
         private dialog: MatDialog,
         private loginService: LoginService,
-        private router: Router
-    ) { }
+        private router: Router,
+        private localStorage: LocalStorageService,
+        private sessionStorage: SessionStorageService
+    ) {
+        const token = this.localStorage.retrieve('token_id') || this.sessionStorage.retrieve('token_id');
+        if (!token) {
+            this.router.navigate(['']);
+        }
+    }
 
     onChangeMenu(name: string) {
         this.menuTitle = name;

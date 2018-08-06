@@ -3,6 +3,7 @@ import { RouterModule, Routes } from '@angular/router';
 
 import { MainComponent } from './layouts/main/main.component';
 import { LoginComponent } from './shared/login/login.component';
+import { Error404Component } from './shared/404/404.component';
 import { MemberComponent } from './entities/member/member.component';
 import { BillerComponent } from './entities/biller/biller.component';
 import { ProductComponent } from './entities/product/product.component';
@@ -25,10 +26,12 @@ import { DepositComponent } from './entities/deposit';
 const routes: Routes = [
     { path : '', component : LoginComponent },
     { path: 'login', component: LoginComponent },
+    { path: '404', component: Error404Component },
     {
         path: 'main',
         component: MainComponent,
         children: [
+            {path: '404', component: Error404Component},
             {path: 'member', component: MemberComponent},
             {path: 'biller', component: BillerComponent},
             {path: 'non-biller', component: BillerComponent},
@@ -52,12 +55,13 @@ const routes: Routes = [
             {path: 'manual-refund', component: DepositComponent},
         ]
     },
-    // {path: 'member', component: MemberComponent}
+    { path: '**', redirectTo: '/main/404', pathMatch: 'full' }
 ];
 
 @NgModule({
     imports: [
-        RouterModule.forRoot(routes)
+        RouterModule.forRoot(routes, {useHash: true})
+        // RouterModule.forRoot(routes)
     ],
     exports: [
         RouterModule
