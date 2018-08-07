@@ -38,27 +38,43 @@
             </mat-form-field>
             <br>
             <mat-form-field class="form-half-width">
-                <mat-select placeholder="{{ 'ottoAG.transactionList.filter.requestor' | translate }}" [(ngModel)]="filter.requestorId" name="requestor">
+                <!-- <mat-select placeholder="{{ 'ottoAG.transactionList.filter.requestor' | translate }}" [(ngModel)]="filter.requestorId" name="requestor">
                     <mat-option *ngFor="let requestor of requestorList" [value]="requestor.id">
-                        <!-- {{requestor.member.name}} -->
                         {{requestor.member.name + ' (' + requestor.memberCode + ')'}}
                     </mat-option>
-                </mat-select>
+                </mat-select> -->
+                <input matInput placeholder="{{ 'ottoAG.transactionList.filter.requestor' | translate }}" aria-label="Requestor" [matAutocomplete]="auto" [formControl]="requestorCtrl">
+                <mat-autocomplete #auto="matAutocomplete" [displayWith]="displayFnReq">
+                    <mat-option *ngFor="let requestor of filteredReq | async" [value]="requestor">
+                        <span>{{requestor.member.name + ' (' + requestor.memberCode + ')'}}</span>
+                    </mat-option>
+                </mat-autocomplete>
             </mat-form-field>
             <mat-form-field class="form-half-width">
-                <mat-select placeholder="{{ 'ottoAG.transactionList.filter.responder' | translate }}" [(ngModel)]="filter.responderId" name="responder">
+                <!-- <mat-select placeholder="{{ 'ottoAG.transactionList.filter.responder' | translate }}" [(ngModel)]="filter.responderId" name="responder">
                     <mat-option *ngFor="let responder of responderList" [value]="responder.id">
-                        <!-- {{responder.member.name}} -->
                         {{responder.member.name + ' (' + responder.memberCode + ')'}}
                     </mat-option>
-                </mat-select>
+                </mat-select> -->
+                <input matInput placeholder="{{ 'ottoAG.transactionList.filter.responder' | translate }}" aria-label="Responder" [matAutocomplete]="autoRes" [formControl]="responderCtrl">
+                <mat-autocomplete #autoRes="matAutocomplete" [displayWith]="displayFnRes">
+                    <mat-option *ngFor="let responder of filteredRes | async" [value]="responder">
+                        <span>{{responder.member.name + ' (' + responder.memberCode + ')'}}</span>
+                    </mat-option>
+                </mat-autocomplete>
             </mat-form-field>
             <mat-form-field class="form-half-width">
-                <mat-select placeholder="{{ 'ottoAG.transactionList.filter.product' | translate }}" [(ngModel)]="filter.productId" name="product">
+                <!-- <mat-select placeholder="{{ 'ottoAG.transactionList.filter.product' | translate }}" [(ngModel)]="filter.productId" name="product">
                     <mat-option *ngFor="let product of productList" [value]="product.id">
                         {{product.name}}
                     </mat-option>
-                </mat-select>
+                </mat-select> -->
+                <input matInput placeholder="{{ 'ottoAG.transactionList.filter.product' | translate }}" aria-label="Product" [matAutocomplete]="autoPrd" [formControl]="productCtrl">
+                <mat-autocomplete #autoPrd="matAutocomplete" [displayWith]="displayFnPrd">
+                    <mat-option *ngFor="let product of filteredProduct | async" [value]="product">
+                        <span>{{ product.name }}</span>
+                    </mat-option>
+                </mat-autocomplete>
             </mat-form-field>
             <button mat-raised-button color="primary" (click)="actionfilter()" style="margin-left: 30px">Filter</button>
         </div>

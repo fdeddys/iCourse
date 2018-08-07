@@ -5,6 +5,9 @@ import { TransList } from './transaction-list.model';
 import { TransListService } from './transaction-list.service';
 import { TransListDialogComponent } from './transaction-list-dialog.component';
 
+import { Observable } from 'rxjs';
+import { map, startWith } from 'rxjs/operators';
+
 import { FormControl } from '@angular/forms';
 import { MatDialog, MatPaginator } from '@angular/material';
 import { MatActionButtonComponent } from '../../shared/templates/mat-action-button.component';
@@ -60,6 +63,13 @@ export class TransListComponent implements OnInit {
     dateFStartCtrl: FormControl;
     dateTStartCtrl: FormControl;
 
+    requestorCtrl: FormControl;
+    filteredReq: Observable<any[]>;
+    responderCtrl: FormControl;
+    filteredRes: Observable<any[]>;
+    productCtrl: FormControl;
+    filteredProduct: Observable<any[]>;
+
     gridOptions = {
         columnDefs: [
             { headerName: 'No', field: 'no', width: 70, minWidth: 70, maxWidth: 70, pinned: 'left', editable: false },
@@ -100,6 +110,36 @@ export class TransListComponent implements OnInit {
         translate.use('en');
         this.dateFStartCtrl = new FormControl();
         this.dateTStartCtrl = new FormControl();
+        this.requestorCtrl = new FormControl();
+        this.responderCtrl = new FormControl();
+        this.productCtrl = new FormControl();
+    }
+
+    filterRequestor(name: string) {
+        return this.requestorList.filter(requestor =>
+        requestor.member.name.toLowerCase().indexOf(name.toLowerCase()) === 0);
+    }
+
+    filterResponder(name: string) {
+        return this.responderList.filter(responder =>
+        responder.member.name.toLowerCase().indexOf(name.toLowerCase()) === 0);
+    }
+
+    filterProduct(name: string) {
+        return this.productList.filter(product =>
+        product.name.toLowerCase().indexOf(name.toLowerCase()) === 0);
+    }
+
+    displayFnReq(biller?: Biller): string | undefined {
+        return biller ? biller.member.name + ' (' + biller.memberCode + ')' : undefined;
+    }
+
+    displayFnRes(biller?: Biller): string | undefined {
+        return biller ? biller.member.name + ' (' + biller.memberCode + ')' : undefined;
+    }
+
+    displayFnPrd(product?: Product): string | undefined {
+        return product ? product.name : undefined;
     }
 
     ngOnInit() {
@@ -292,10 +332,15 @@ export class TransListComponent implements OnInit {
         }
         this.filter.filDateFStart = (this.dateFStartCtrl.value === null ? null : this.dateFormatter(this.dateFStartCtrl.value));
         this.filter.filDateTStart = (this.dateTStartCtrl.value === null ? null : this.dateFormatter(this.dateTStartCtrl.value));
+        this.filter.requestorId = (this.requestorCtrl.value === null ? null : this.requestorCtrl.value.id);
+        this.filter.responderId = (this.responderCtrl.value === null ? null : this.responderCtrl.value.id);
+        this.filter.productId = (this.productCtrl.value === null ? null : this.productCtrl.value.id);
         if (this.route.snapshot.routeConfig.path === 'transaction-adjust') {
             this.filter.rcInternal = '25';
             this.filter.mode = 2;
         }
+        console.log(this.filter);
+
         this.transListService.filter({
             page: this.curPage,
             count: this.totalRecord,
@@ -353,16 +398,34 @@ export class TransListComponent implements OnInit {
     private onSuccessBill(data, headers) {
         console.log('isi response responder ==> ', data);
         this.responderList = data.content;
+        this.filteredRes = this.responderCtrl.valueChanges
+        .pipe(
+            startWith<string | Biller>(''),
+            map(value => typeof value === 'string' ? value : value.member.name),
+            map(name => name ? this.filterResponder(name) : this.responderList.slice())
+        );
     }
 
     private onSuccessBillNon(data, headers) {
         console.log('isi response requestor ==> ', data);
         this.requestorList = data.content;
+        this.filteredReq = this.requestorCtrl.valueChanges
+        .pipe(
+            startWith<string | Biller>(''),
+            map(value => typeof value === 'string' ? value : value.member.name),
+            map(name => name ? this.filterRequestor(name) : this.requestorList.slice())
+        );
     }
 
     private onSuccessProduct(data, headers) {
         console.log('isi response product ==> ', data);
         this.productList = data.content;
+        this.filteredProduct = this.productCtrl.valueChanges
+        .pipe(
+            startWith<string | Product>(''),
+            map(value => typeof value === 'string' ? value : value.name),
+            map(name => name ? this.filterProduct(name) : this.productList.slice())
+        );
     }
 
     // private onSuccessRespCdInternal(data, headers) {
