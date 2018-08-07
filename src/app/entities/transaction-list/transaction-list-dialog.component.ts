@@ -19,8 +19,10 @@ export class TransListDialogComponent implements OnInit {
     TOTAL_RECORD_GRID_DETIL = 4;
     transList: TransList;
     transGridDetils: TransList[];
+    respCodeInternalList: any[];
     transListForm: FormGroup;
     submitted = false;
+    rcIntDisabled = true;
     modeTitle: any;
     duration = SNACKBAR_DURATION_IN_MILLISECOND;
     fromTable: String;
@@ -68,7 +70,16 @@ export class TransListDialogComponent implements OnInit {
         this.transList = {};
         if (this.data.mode !== 'create') {
             // search
+            console.log('this.data.mode : ', this.data.mode);
             this.transList = this.data.rowData;
+            this.respCodeInternalList = [
+                {responseCode: '00', description: 'Approved'},
+                {responseCode: '25', description: 'Pending'},
+                {responseCode: '36', description: 'Failed'}
+            ];
+            if (this.data.mode === 'edit') {
+                this.rcIntDisabled = false;
+            }
             switch (this.transList.sellPriceFromTable) {
                 case 1: this.fromTable = 'Biller ';
                     break;
@@ -136,6 +147,19 @@ export class TransListDialogComponent implements OnInit {
         for (const transL of transList) {
             transL.no = i++;
         }
+    }
+
+    onSubmit(): void {
+        console.log('send to service ', this.transList);
+        // this.transListService.update(this.transList.id, this.transList).subscribe((res: HttpResponse<TransList>) => {
+        //     if (res.body.errMsg === null || res.body.errMsg === '') {
+        //         this.dialogRef.close('refresh');
+        //     } else {
+        //         this.snackBar.open('Error !' + res.body.errMsg , 'Close', {
+        //             duration: this.duration,
+        //         });
+        //     }
+        // });
     }
 
 }

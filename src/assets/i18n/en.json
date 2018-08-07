@@ -271,6 +271,14 @@
             "name": "Name",
             "description": "Description"
         },
+        "transactionAdjust": {
+            "home": {
+                "title": "Transactions Adjustment"
+            },
+            "detail": {
+                "title": "Detail Transaction"
+            }
+        },
         "transactionList": {
             "home": {
                 "title": "Transactions History"
@@ -280,6 +288,7 @@
                 "startDateTo": "Transaction Date To :",
                 "transType": "Filter Transaction Type",
                 "product": "Filter Product",
+                "rcInternal": "Filter Status",
                 "requestor": "Filter Requestor",
                 "responder": "Filter Responder"
             },

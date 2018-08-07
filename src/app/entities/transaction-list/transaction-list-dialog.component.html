@@ -47,12 +47,20 @@
     <mat-form-field class="form-full-width">
         <input matInput placeholder="{{ 'ottoAG.transactionList.rcRequestor' | translate }}" name="rcRequestor" [(ngModel)]="transList.rcRequestor" disabled>
     </mat-form-field>
-    <mat-form-field class="form-full-width">
+    <!-- <mat-form-field class="form-full-width">
         <input matInput placeholder="{{ 'ottoAG.transactionList.rcInternal' | translate }}" name="rcInternal" [(ngModel)]="transList.rcInternal" disabled>
+    </mat-form-field> -->
+    <mat-form-field class="form-full-width">
+        <mat-select placeholder="{{ 'ottoAG.transactionList.rcInternal' | translate }}" [(ngModel)]="transList.rcInternal" [ngModelOptions]="{standalone: true}" [disabled]="rcIntDisabled">
+            <mat-option *ngFor="let rcInt of respCodeInternalList" [value]="rcInt.responseCode">
+            {{ rcInt.description }}
+            </mat-option>
+        </mat-select>
     </mat-form-field>
     <mat-form-field style="width: 25%;">
         <input matInput placeholder="{{ 'ottoAG.transactionList.rcResponder' | translate }}" name="rcResponder" [(ngModel)]="transList.rcResponder" disabled>
     </mat-form-field>
+    <button *ngIf="!rcIntDisabled" style="margin-left: 20px" mat-raised-button color="primary" (click)="onSubmit()">{{ "entity.action.save" | translate  }}</button>
     <ag-grid-angular 
         #agGrid
         style="height: 200px;" 
@@ -62,7 +70,4 @@
         >
     </ag-grid-angular>
 </div>
-<!-- <div mat-dialog-actions align="end">
-    <button mat-raised-button color="primary" cdkFocusInitial (click)="validate()">{{ "entity.action.save" | translate }}</button>
-</div>
-</form> -->
+<!-- </form> -->

@@ -1,7 +1,8 @@
 <mat-card>
     <mat-card-header>
         <mat-card-title style="align-items: center">
-            <h2 mat-dialog-title translate="ottoAG.transactionList.home.title"></h2>
+            <h2 *ngIf="entityName === 'Trans'" mat-dialog-title translate="ottoAG.transactionList.home.title"></h2>
+            <h2 *ngIf="entityName === 'TransAdjust'" mat-dialog-title translate="ottoAG.transactionAdjust.home.title"></h2>
         </mat-card-title>
     </mat-card-header>
     <mat-card-content>
@@ -28,6 +29,14 @@
                     </mat-option>
                 </mat-select>
             </mat-form-field>
+            <mat-form-field class="form-half-width" *ngIf="entityName === 'Trans'">
+                <mat-select placeholder="{{ 'ottoAG.transactionList.filter.rcInternal' | translate }}" [(ngModel)]="filter.rcInternal">
+                    <mat-option *ngFor="let rcInt of respCodeInternalList" [value]="rcInt.responseCode">
+                    {{ rcInt.description }}
+                    </mat-option>
+                </mat-select>
+            </mat-form-field>
+            <br>
             <mat-form-field class="form-half-width">
                 <mat-select placeholder="{{ 'ottoAG.transactionList.filter.requestor' | translate }}" [(ngModel)]="filter.requestorId" name="requestor">
                     <mat-option *ngFor="let requestor of requestorList" [value]="requestor.id">
