@@ -40,14 +40,16 @@
             <mat-form-field class="form-half-width">
                 <mat-select placeholder="{{ 'ottoAG.transactionList.filter.requestor' | translate }}" [(ngModel)]="filter.requestorId" name="requestor">
                     <mat-option *ngFor="let requestor of requestorList" [value]="requestor.id">
-                        {{requestor.name}}
+                        <!-- {{requestor.member.name}} -->
+                        {{requestor.member.name + ' (' + requestor.memberCode + ')'}}
                     </mat-option>
                 </mat-select>
             </mat-form-field>
             <mat-form-field class="form-half-width">
                 <mat-select placeholder="{{ 'ottoAG.transactionList.filter.responder' | translate }}" [(ngModel)]="filter.responderId" name="responder">
                     <mat-option *ngFor="let responder of responderList" [value]="responder.id">
-                        {{responder.name}}
+                        <!-- {{responder.member.name}} -->
+                        {{responder.member.name + ' (' + responder.memberCode + ')'}}
                     </mat-option>
                 </mat-select>
             </mat-form-field>
