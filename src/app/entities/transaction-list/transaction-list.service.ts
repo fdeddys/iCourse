@@ -118,7 +118,7 @@ export class TransListService {
 
     }
 
-    update(id: number, transList: TransList): Observable<EntityResponseType> {
+    update(id: number, transList: object): Observable<EntityResponseType> {
         const copy = this.convert(transList);
         // return this.http.put<TransList>(`${this.resourceUrl}/${id}`, copy, { observe: 'response'})
         return this.http.put<TransList>(`${this.resourceUrl}/updateRcInternal`, copy, { observe: 'response'})

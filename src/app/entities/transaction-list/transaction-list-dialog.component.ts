@@ -151,15 +151,19 @@ export class TransListDialogComponent implements OnInit {
 
     onSubmit(): void {
         console.log('send to service ', this.transList);
-        // this.transListService.update(this.transList.id, this.transList).subscribe((res: HttpResponse<TransList>) => {
-        //     if (res.body.errMsg === null || res.body.errMsg === '') {
-        //         this.dialogRef.close('refresh');
-        //     } else {
-        //         this.snackBar.open('Error !' + res.body.errMsg , 'Close', {
-        //             duration: this.duration,
-        //         });
-        //     }
-        // });
+        const obj = {
+            'id': this.transList.id,
+            'rcInternal': this.transList.rcInternal,
+        };
+        this.transListService.update(this.transList.id, obj).subscribe((res: HttpResponse<TransList>) => {
+            if (res.body.errMsg === null || res.body.errMsg === '') {
+                this.dialogRef.close('refresh');
+            } else {
+                this.snackBar.open('Error !' + res.body.errMsg , 'Close', {
+                    duration: this.duration,
+                });
+            }
+        });
     }
 
 }
