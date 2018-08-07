@@ -290,8 +290,8 @@ export class TransListComponent implements OnInit {
         if (page !== '') {
             this.curPage = page;
         }
-        this.filter.filDateFStart = (this.dateFStartCtrl.value === null ? null : this.dateFStartCtrl.value);
-        this.filter.filDateTStart = (this.dateTStartCtrl.value === null ? null : this.dateTStartCtrl.value);
+        this.filter.filDateFStart = (this.dateFStartCtrl.value === null ? null : this.dateFormatter(this.dateFStartCtrl.value));
+        this.filter.filDateTStart = (this.dateTStartCtrl.value === null ? null : this.dateFormatter(this.dateTStartCtrl.value));
         if (this.route.snapshot.routeConfig.path === 'transaction-adjust') {
             this.filter.rcInternal = '25';
             this.filter.mode = 2;
