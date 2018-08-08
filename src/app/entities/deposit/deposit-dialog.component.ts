@@ -113,6 +113,9 @@ export class DepositDialogComponent implements OnInit {
 
     onSubmit() {
         // alert(searchByMemberId);
+        if (this.dateCtrl === null) {
+            return;
+        }
         this.depositSave = {
             memberTypeId: this.deposit.memberTypeId,
             amount: this.deposit.amount,
@@ -126,7 +129,7 @@ export class DepositDialogComponent implements OnInit {
                 if (res.body.errMsg === null || res.body.errMsg === '') {
                     this.dialogRef.close('refresh');
                 } else {
-                    this.snackBar.open('Error !' + res.body.errMsg , 'Close', {
+                    this.snackBar.open('Error ! ' + res.body.errMsg , 'Close', {
                         duration: this.duration,
                     });
                 }

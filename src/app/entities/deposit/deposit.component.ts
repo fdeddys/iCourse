@@ -112,6 +112,9 @@ export class DepositComponent implements OnInit {
             this.filter.transTypeCode = '7';
         }
 
+        this.dateFStartCtrl.disable();
+        this.dateTStartCtrl.disable();
+
         this.transTypeService.query({
             page: 1,
             count: 100,

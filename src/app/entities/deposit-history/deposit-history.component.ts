@@ -69,7 +69,7 @@ export class DepositHistoryComponent implements OnInit {
     gridOptions = {
         columnDefs: [
             // { headerName: 'Name', field: 'name', checkboxSelection: true, width: 250, pinned: 'left', editable: true },
-            { headerName: 'No', field: 'no', width: 50, pinned: 'left', editable: false },
+            { headerName: 'No', field: 'no', width: 60, pinned: 'left', editable: false },
             { headerName: 'Tx Date', field: 'transDate', width: 125, editable: false,  valueFormatter: this.dateFormatter2  },
             { headerName: 'Type', field: 'transTypeDesc', width: 150, editable: false },
             { headerName: 'Member', field: 'memberName', width: 150, editable: false },
@@ -108,6 +108,9 @@ export class DepositHistoryComponent implements OnInit {
     ngOnInit() {
         console.log('this.route : ', this.route);
         this.findBiller();
+
+        this.dateFStartCtrl.disable();
+        this.dateTStartCtrl.disable();
     }
 
     onGridReady(params) {
