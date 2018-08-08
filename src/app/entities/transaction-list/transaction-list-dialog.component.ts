@@ -137,6 +137,11 @@ export class TransListDialogComponent implements OnInit {
     }
 
     private onSuccess(data, headers) {
+        if (data === null ) {
+            this.transGridDetils = [];
+            this.gridApi.setRowData(this.transGridDetils);
+            return ;
+        }
         console.log('isi response product ==> ', data.content);
         this.transGridDetils = data.content;
         if  ( this.transGridDetils.length > 0 ) {

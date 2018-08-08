@@ -78,9 +78,9 @@ export class TransListComponent implements OnInit {
             { headerName: 'Responder', field: 'responder.member.name', width: 120 },
             { headerName: 'Transaction Type', field: 'transType.name', width: 150 },
             { headerName: 'Product', field: 'product.name', width: 200 },
-            { headerName: 'Buy Price', field: 'buyPrice', width: 100 },
-            { headerName: 'Sell Price', field: 'sellPrice', width: 100 },
-            { headerName: 'RC Internal', field: 'rcInternalPrev', width: 120 },
+            // { headerName: 'Buy Price', field: 'buyPrice', width: 100 },
+            { headerName: 'Amount', field: 'amount', width: 100 },
+            { headerName: 'Status', field: 'rcInternal', width: 150,  valueFormatter: this.statusFormat  },
             { headerName: ' ', width: 150, minWidth: 150, maxWidth: 150, cellRenderer: 'actionRenderer'}
         ],
         rowData: this.transList,
@@ -113,6 +113,18 @@ export class TransListComponent implements OnInit {
         this.requestorCtrl = new FormControl();
         this.responderCtrl = new FormControl();
         this.productCtrl = new FormControl();
+    }
+
+    statusFormat(params) {
+        console.log('aaaaaaaa', params);
+        switch (params.value) {
+            case '00': return 'Approved';
+            case 'SS': return 'Approved';
+            case 'PP': return 'Pending';
+            default :
+                return 'Failed / Declined';
+        }
+        // return (params.value === 'ACTIVE' ? 'AVAILABLE' : 'DISCONTINUED');
     }
 
     filterRequestor(name: string) {
