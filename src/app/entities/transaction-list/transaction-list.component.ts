@@ -51,7 +51,7 @@ export class TransListComponent implements OnInit {
         filDateTStart: null,
         requestorId: null,
         responderId: null,
-        transTypeId: null,
+        transTypeCode: null,
         productId: null,
         rcInternal: null,
         mode: 1
@@ -166,7 +166,13 @@ export class TransListComponent implements OnInit {
             allData: 1,
             page: this.curPage,
             count: this.totalRecord,
-            filter: this.filter,
+            filter: {
+                memberName: '',
+                filDateFStart: null,
+                filDateTStart: null,
+                filDateFThru: null,
+                filDateTThru: null
+            },
         })
         .subscribe(
             (res: HttpResponse<Biller[]>) => this.onSuccessBill(res.body, res.headers),
@@ -178,7 +184,13 @@ export class TransListComponent implements OnInit {
             allData: 0,
             page: this.curPage,
             count: this.totalRecord,
-            filter: this.filter,
+            filter: {
+                memberName: '',
+                filDateFStart: null,
+                filDateTStart: null,
+                filDateFThru: null,
+                filDateTThru: null
+            },
         })
         .subscribe(
             (res: HttpResponse<Biller[]>) => this.onSuccessBillNon(res.body, res.headers),
@@ -215,9 +227,9 @@ export class TransListComponent implements OnInit {
         // );
 
         this.respCodeInternalList = [
-            {responseCode: '00', description: 'Approved'},
-            {responseCode: '25', description: 'Pending'},
-            {responseCode: '36', description: 'Failed'}
+            {responseCode: 'SS', description: 'Approved'},
+            {responseCode: 'PP', description: 'Pending'},
+            {responseCode: 'FF', description: 'Failed'}
         ];
     }
 
@@ -336,7 +348,7 @@ export class TransListComponent implements OnInit {
         this.filter.responderId = (this.responderCtrl.value === null ? null : this.responderCtrl.value.id);
         this.filter.productId = (this.productCtrl.value === null ? null : this.productCtrl.value.id);
         if (this.route.snapshot.routeConfig.path === 'transaction-adjust') {
-            this.filter.rcInternal = '25';
+            this.filter.rcInternal = 'PP';
             this.filter.mode = 2;
         }
         console.log(this.filter);
@@ -373,13 +385,13 @@ export class TransListComponent implements OnInit {
             transL.no = i++;
             // transL.rcInternalPrev = (transL.rcInternal.includes('00') ? 'Approve' : 'Decline');
             switch (transL.rcInternal) {
-                case '00':
+                case 'SS':
                     transL.rcInternalPrev = 'Approve';
                     break;
-                case '25':
+                case 'PP':
                     transL.rcInternalPrev = 'Pending';
                     break;
-                case '36':
+                case 'FF':
                     transL.rcInternalPrev = 'Failed';
                     break;
             }
@@ -468,7 +480,7 @@ export interface TransListFilter  {
     filDateTStart: any;
     requestorId?: any;
     responderId?: any;
-    transTypeId?: number;
+    transTypeCode?: string;
     productId?: number;
     rcInternal?: string;
     mode?: number;

@@ -12,19 +12,19 @@
         </div>
         <br>
         <div>
-            <mat-form-field class="form-half-width">
+            <mat-form-field class="form-half-width" *ngIf="entityName === 'Trans'">
 				<input matInput [matDatepicker]="pickerFStart" placeholder="{{ 'ottoAG.transactionList.filter.startDateFrom' | translate }}" (click)="pickerFStart.open()" [max]="dateTStartCtrl.value" [formControl]="dateFStartCtrl" readonly>
 				<mat-datepicker-toggle matSuffix [for]="pickerFStart"></mat-datepicker-toggle>
 				<mat-datepicker #pickerFStart></mat-datepicker>
 			</mat-form-field>
-			<mat-form-field class="form-half-width">
+			<mat-form-field class="form-half-width" *ngIf="entityName === 'Trans'">
 				<input matInput [matDatepicker]="pickerTStart" placeholder="{{ 'ottoAG.transactionList.filter.startDateTo' | translate }}" (click)="pickerTStart.open()" [min]="dateFStartCtrl.value" [formControl]="dateTStartCtrl" readonly>
 				<mat-datepicker-toggle matSuffix [for]="pickerTStart"></mat-datepicker-toggle>
 				<mat-datepicker #pickerTStart></mat-datepicker>
             </mat-form-field>
             <mat-form-field class="form-half-width">
-                <mat-select placeholder="{{ 'ottoAG.transactionList.filter.transType' | translate }}" [(ngModel)]="filter.transTypeId" name="transType">
-                    <mat-option *ngFor="let transType of transTypeList" [value]="transType.id">
+                <mat-select placeholder="{{ 'ottoAG.transactionList.filter.transType' | translate }}" [(ngModel)]="filter.transTypeCode" name="transType">
+                    <mat-option *ngFor="let transType of transTypeList" [value]="transType.code">
                         {{transType.name}}
                     </mat-option>
                 </mat-select>
@@ -36,7 +36,7 @@
                     </mat-option>
                 </mat-select>
             </mat-form-field>
-            <br>
+            <br *ngIf="entityName === 'Trans'">
             <mat-form-field class="form-half-width">
                 <!-- <mat-select placeholder="{{ 'ottoAG.transactionList.filter.requestor' | translate }}" [(ngModel)]="filter.requestorId" name="requestor">
                     <mat-option *ngFor="let requestor of requestorList" [value]="requestor.id">
@@ -50,6 +50,7 @@
                     </mat-option>
                 </mat-autocomplete>
             </mat-form-field>
+            <br *ngIf="entityName === 'TransAdjust'">
             <mat-form-field class="form-half-width">
                 <!-- <mat-select placeholder="{{ 'ottoAG.transactionList.filter.responder' | translate }}" [(ngModel)]="filter.responderId" name="responder">
                     <mat-option *ngFor="let responder of responderList" [value]="responder.id">

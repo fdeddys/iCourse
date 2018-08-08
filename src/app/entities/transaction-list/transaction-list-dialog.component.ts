@@ -73,9 +73,9 @@ export class TransListDialogComponent implements OnInit {
             console.log('this.data.mode : ', this.data.mode);
             this.transList = this.data.rowData;
             this.respCodeInternalList = [
-                {responseCode: '00', description: 'Approved'},
-                {responseCode: '25', description: 'Pending'},
-                {responseCode: '36', description: 'Failed'}
+                {responseCode: 'SS', description: 'Approved'},
+                {responseCode: 'PP', description: 'Pending'},
+                {responseCode: 'FF', description: 'Failed'}
             ];
             if (this.data.mode === 'edit') {
                 this.rcIntDisabled = false;
