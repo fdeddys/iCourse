@@ -111,9 +111,10 @@ export class TransListDialogComponent implements OnInit {
             page: this.curPage,
             count: this.TOTAL_RECORD_GRID_DETIL,
             filter: {
-                rrnRequestor: this.transList.rrnRequestor
-            },
-        })
+                rrnRequestor: this.transList.rrnRequestor,
+                rrn: this.transList.rrn,
+            }
+            }, true)
         .subscribe(
             (res: HttpResponse<TransList[]>) => this.onSuccess(res.body, res.headers),
             (res: HttpErrorResponse) => this.onError(res.message),

@@ -92,7 +92,7 @@ export class TransListService {
         return file;
     }
 
-    filter(req?: any): Observable<HttpResponse<TransList[]>> {
+    filter(req?: any, detail?: any): Observable<HttpResponse<TransList[]>> {
         console.log('Filter  ', req);
 
         const options = createRequestOption(req);
@@ -109,7 +109,11 @@ export class TransListService {
             }
         });
 
-        newresourceUrl = this.resourceUrl + `/filter/page/${pageNumber}/count/${pageCount}`;
+        if  (detail === true ) {
+            newresourceUrl = this.resourceUrl + `/filterDetail/page/${pageNumber}/count/${pageCount}`;
+        } else {
+            newresourceUrl = this.resourceUrl + `/filter/page/${pageNumber}/count/${pageCount}`;
+        }
         return this.http.post<TransList[]>(newresourceUrl, req['filter'], {  observe: 'response' })
             .pipe(
                 // map((res: HttpResponse<Member[]>) => this.convertArrayResponse(res))
@@ -117,6 +121,8 @@ export class TransListService {
             );
 
     }
+
+    // filterDetail
 
     update(id: number, transList: object): Observable<EntityResponseType> {
         const copy = this.convert(transList);

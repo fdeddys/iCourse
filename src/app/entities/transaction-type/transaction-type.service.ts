@@ -114,7 +114,7 @@ export class TransTypeService {
         return file;
     }
 
-    filter(req?: any): Observable<HttpResponse<TransType[]>> {
+    filter(req?: any, forTrx?: any): Observable<HttpResponse<TransType[]>> {
         console.log('Filter  ', req);
 
         const options = createRequestOption(req);
@@ -131,7 +131,12 @@ export class TransTypeService {
             }
         });
 
-        newresourceUrl = this.resourceUrl + `/filter/page/${pageNumber}/count/${pageCount}`;
+        if (forTrx === true ) {
+            newresourceUrl = this.resourceUrl + `/transForTrx`;
+        } else {
+            newresourceUrl = this.resourceUrl + `/filter/page/${pageNumber}/count/${pageCount}`;
+        }
+
         return this.http.post<TransType[]>(newresourceUrl, req['filter'], {  observe: 'response' })
             .pipe(
                 // map((res: HttpResponse<Member[]>) => this.convertArrayResponse(res))

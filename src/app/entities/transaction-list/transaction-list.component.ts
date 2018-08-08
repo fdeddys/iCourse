@@ -155,7 +155,7 @@ export class TransListComponent implements OnInit {
             filter: {
                 'name': ''
             },
-        })
+        }, true)
         .subscribe(
             (res: HttpResponse<TransType[]>) => this.onSuccessTransType(res.body, res.headers),
             (res: HttpErrorResponse) => this.onError(res.message),
@@ -404,7 +404,7 @@ export class TransListComponent implements OnInit {
 
     private onSuccessTransType(data, headers) {
         console.log('isi response trans type ==> ', data);
-        this.transTypeList = data.content;
+        this.transTypeList = data;
     }
 
     private onSuccessBill(data, headers) {
