@@ -247,8 +247,6 @@ export class TransListComponent implements OnInit {
             {responseCode: 'PP', description: 'Pending'},
             {responseCode: 'FF', description: 'Failed'}
         ];
-        this.dateFStartCtrl.disable();
-        this.dateTStartCtrl.disable();
     }
 
     onGridReady(params) {
@@ -423,7 +421,7 @@ export class TransListComponent implements OnInit {
     private onSuccessTransType(data, headers) {
         console.log('isi response trans type ==> ', data);
         this.transTypeList = data;
-        this.transTypeList.push (new TransType(0, 'ALL', 'ALL', ''));
+        // this.transTypeList.push (new TransType(0, 'ALL', 'ALL', ''));
     }
 
     private onSuccessBill(data, headers) {

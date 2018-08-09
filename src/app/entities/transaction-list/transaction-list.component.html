@@ -12,31 +12,43 @@
         </div>
         <br> -->
         <div>
-            <mat-checkbox *ngIf="entityName === 'Trans'" class="example-margin" [color]="'primary'" [(ngModel)]="filChkBox.start" [ngModelOptions]="{standalone: true}" (change)="chkBoxChgS($event)" style="margin-right: 10px"></mat-checkbox>
-		
-            <mat-form-field class="form-half-width" *ngIf="entityName === 'Trans'" style="width: 18%"   >
+            <mat-form-field class="form-half-width" *ngIf="entityName === 'Trans'">
 				<input matInput [matDatepicker]="pickerFStart" placeholder="{{ 'ottoAG.transactionList.filter.startDateFrom' | translate }}" (click)="pickerFStart.open()" [max]="dateTStartCtrl.value" [formControl]="dateFStartCtrl" readonly>
-				<mat-datepicker-toggle matSuffix [for]="pickerFStart"></mat-datepicker-toggle>
+                <mat-datepicker-toggle matSuffix *ngIf="dateFStartCtrl.value === null" [for]="pickerFStart"></mat-datepicker-toggle>
+                <button mat-button matSuffix mat-icon-button aria-label="Clear" *ngIf="dateFStartCtrl.value !== null" (click)="dateFStartCtrl.setValue(null)">
+                    <mat-icon>close</mat-icon>
+                </button>
 				<mat-datepicker #pickerFStart></mat-datepicker>
 			</mat-form-field>
-			<mat-form-field class="form-half-width" *ngIf="entityName === 'Trans'" >
+			<mat-form-field class="form-half-width" *ngIf="entityName === 'Trans'">
 				<input matInput [matDatepicker]="pickerTStart" placeholder="{{ 'ottoAG.transactionList.filter.startDateTo' | translate }}" (click)="pickerTStart.open()" [min]="dateFStartCtrl.value" [formControl]="dateTStartCtrl" readonly>
-				<mat-datepicker-toggle matSuffix [for]="pickerTStart"></mat-datepicker-toggle>
+                <mat-datepicker-toggle matSuffix *ngIf="dateTStartCtrl.value === null" [for]="pickerTStart"></mat-datepicker-toggle>
+                <button mat-button matSuffix mat-icon-button aria-label="Clear" *ngIf="dateTStartCtrl.value !== null" (click)="dateTStartCtrl.setValue(null)">
+                    <mat-icon>close</mat-icon>
+                </button>
 				<mat-datepicker #pickerTStart></mat-datepicker>
             </mat-form-field>
             <mat-form-field class="form-half-width">
                 <mat-select placeholder="{{ 'ottoAG.transactionList.filter.transType' | translate }}" [(ngModel)]="filter.transTypeCode" name="transType">
+                    <!-- <mat-option [value]="'ALL'">ALL</mat-option> -->
                     <mat-option *ngFor="let transType of transTypeList" [value]="transType.code">
                         {{transType.name}}
-                    </mat-option>
+                    </mat-option>                    
                 </mat-select>
+                <button mat-button matSuffix mat-icon-button aria-label="Clear" *ngIf="filter.transTypeCode !== null" (click)="$event.stopPropagation();filter.transTypeCode = null">
+                    <mat-icon>close</mat-icon>
+                </button>
             </mat-form-field>
             <mat-form-field class="form-half-width" *ngIf="entityName === 'Trans'">
                 <mat-select placeholder="{{ 'ottoAG.transactionList.filter.rcInternal' | translate }}" [(ngModel)]="filter.rcInternal">
+                    <!-- <mat-option [value]="'ALL'">ALL</mat-option> -->
                     <mat-option *ngFor="let rcInt of respCodeInternalList" [value]="rcInt.responseCode">
-                    {{ rcInt.description }}
+                        {{ rcInt.description }}
                     </mat-option>
                 </mat-select>
+                <button mat-button matSuffix mat-icon-button aria-label="Clear" *ngIf="filter.rcInternal !== null" (click)="$event.stopPropagation();filter.rcInternal = null">
+                    <mat-icon>close</mat-icon>
+                </button>
             </mat-form-field>
             <br *ngIf="entityName === 'Trans'">
             <mat-form-field class="form-half-width">
