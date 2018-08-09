@@ -32,6 +32,7 @@ export class TransListDialogComponent implements OnInit {
     gridApi;
     gridColumnApi;
     theme: String = GRID_THEME;
+    rcInternalPrev = '';
     constructor(
         translate: TranslateService,
         public snackBar: MatSnackBar,
@@ -72,6 +73,7 @@ export class TransListDialogComponent implements OnInit {
             // search
             console.log('this.data.mode : ', this.data.mode);
             this.transList = this.data.rowData;
+            this.rcInternalPrev = this.transList.rcInternal;
             this.respCodeInternalList = [
                 {responseCode: 'SS', description: 'Approved'},
                 {responseCode: 'PP', description: 'Pending'},
@@ -171,6 +173,9 @@ export class TransListDialogComponent implements OnInit {
 
     onSubmit(): void {
         console.log('send to service ', this.transList);
+        if (this.transList.rcInternal === 'PP') {
+            return;
+        }
         const obj = {
             'id': this.transList.id,
             'rcInternal': this.transList.rcInternal,
