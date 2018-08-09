@@ -246,9 +246,15 @@ export class DepositComponent implements OnInit {
     private onSuccess(data, headers) {
         console.log('success..', data);
         this.deposits = data.content;
-        for (let index = 0; index < this.deposits.length; index++) {
-            this.deposits[index].no = index + 1;
+        let urut = data.pageable.offset + 1;
+
+        for (const deposit of this.deposits) {
+            deposit.no = urut++;
         }
+
+        // for (let index = 0; index < this.deposits.length; index++) {
+        //     this.deposits[index].no = index + 1;
+        // }
         this.gridApi.setRowData(this.deposits);
         this.totalData = data.totalElements;
     }

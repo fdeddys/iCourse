@@ -230,7 +230,7 @@ export class MemberComponent implements OnInit {
           return ;
       }
       this.members = data.content;
-      let urut = 1;
+      let urut = data.pageable.offset + 1;
       for (const member of this.members) {
           member.nourut = urut++;
       }

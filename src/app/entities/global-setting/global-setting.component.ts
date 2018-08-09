@@ -199,7 +199,7 @@ export class GlobalSettingComponent implements OnInit {
         // return ;
       } else {
         this.memberTipes = data.content;
-        let urut = 1;
+        let urut = data.pageable.offset + 1;
         for (const memberType of this.memberTipes) {
             memberType.nourut = urut++;
         }

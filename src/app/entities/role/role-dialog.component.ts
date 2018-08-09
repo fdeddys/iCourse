@@ -242,7 +242,7 @@ export class RoleDialogComponent implements OnInit {
         // if ( data.content === undefined ) {
         //     return ;
         // }
-        let urut = 1;
+        let urut = data.pageable.offset + 1;
         console.log('on success ' , data);
         this.menuRegistered = data;
         for (const menu of this.menuRegistered) {

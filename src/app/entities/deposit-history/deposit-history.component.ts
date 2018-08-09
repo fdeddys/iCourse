@@ -258,7 +258,7 @@ export class DepositHistoryComponent implements OnInit {
         } else {
             this.depositHistories = data.content;
             for (let index = 0; index < this.depositHistories.length; index++) {
-                this.depositHistories[index].no = index + 1;
+                this.depositHistories[index].no = index + data.pageable.offset + 1;
             }
             this.totalData = data.totalElements;
         }

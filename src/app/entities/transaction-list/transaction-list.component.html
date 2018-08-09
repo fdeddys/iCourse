@@ -8,7 +8,7 @@
     <mat-card-content>
         <div style="text-align: left">
             <!-- <button mat-raised-button color="primary"  (click)="openNewDialog()" style="margin-bottom: 10px;">{{ 'ottoAG.transactionType.home.addLabelButton' | translate }}</button> -->
-            <button mat-raised-button class="primary"  (click)="exportCSV('csv')" style="margin-bottom: 10px;">{{ 'entity.action.exportCSV' | translate}}</button>
+            <!-- <button mat-raised-button class="primary"  (click)="exportCSV('csv')" style="margin-bottom: 10px;">{{ 'entity.action.exportCSV' | translate}}</button> -->
         </div>
         <br>
         <div>
@@ -78,6 +78,7 @@
                 </mat-autocomplete>
             </mat-form-field>
             <button mat-raised-button color="primary" (click)="actionfilter()" style="margin-left: 30px">Filter</button>
+            <button mat-raised-button class="primary"  (click)="exportCSV('csv')" style="margin-bottom: 10px;">{{ 'entity.action.exportCSV' | translate}}</button>
         </div>
         <br>
         <ag-grid-angular 

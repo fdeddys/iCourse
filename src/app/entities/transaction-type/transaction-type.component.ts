@@ -109,7 +109,7 @@ export class TransTypeComponent implements OnInit {
             return;
         }
         this.transTypes = data.content;
-        let i = 1;
+        let i = data.pageable.offset + 1;
         for (const transType of this.transTypes) {
             transType.no = i++;
         }

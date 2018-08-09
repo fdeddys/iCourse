@@ -134,9 +134,13 @@ export class AuditTrailComponent implements OnInit {
             this.totalData = 0;
         } else {
             this.auditTrails = data.content;
-            for (let index = 0; index < this.auditTrails.length; index++) {
-                this.auditTrails[index].nourut = index + 1;
+            let urut = data.pageable.offset + 1;
+            for (const auditTrail of this.auditTrails) {
+                auditTrail.nourut = urut++;
             }
+            // for (let index = 0; index < this.auditTrails.length; index++) {
+            //     this.auditTrails[index].nourut = index + 1;
+            // }
             this.totalData = data.totalElements;
         }
         this.gridApi.setRowData(this.auditTrails);

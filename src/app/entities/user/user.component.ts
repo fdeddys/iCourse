@@ -222,7 +222,7 @@ export class UserComponent implements OnInit {
             return ;
         }
         this.user = data.content;
-        let urut = 1;
+        let urut = data.pageable.offset + 1;
         for (const usr of this.user) {
             usr.nourut = urut++;
         }

@@ -283,7 +283,7 @@ export class ResponseCodeComponent implements OnInit {
         }
 
         this.responseCodes = data.content;
-        let urut = 1;
+        let urut = data.pageable.offset + 1;
         for (const responseCode of this.responseCodes) {
             responseCode.nourut = urut++;
         }
