@@ -6,11 +6,11 @@
         </mat-card-title>
     </mat-card-header>
     <mat-card-content>
-        <div style="text-align: left">
-            <!-- <button mat-raised-button color="primary"  (click)="openNewDialog()" style="margin-bottom: 10px;">{{ 'ottoAG.transactionType.home.addLabelButton' | translate }}</button> -->
-            <!-- <button mat-raised-button class="primary"  (click)="exportCSV('csv')" style="margin-bottom: 10px;">{{ 'entity.action.exportCSV' | translate}}</button> -->
+        <!-- <div style="text-align: left">
+            <button mat-raised-button color="primary"  (click)="openNewDialog()" style="margin-bottom: 10px;">{{ 'ottoAG.transactionType.home.addLabelButton' | translate }}</button> 
+             <button mat-raised-button class="primary"  (click)="exportCSV('csv')" style="margin-bottom: 10px;">{{ 'entity.action.exportCSV' | translate}}</button>
         </div>
-        <br>
+        <br> -->
         <div>
             <mat-checkbox *ngIf="entityName === 'Trans'" class="example-margin" [color]="'primary'" [(ngModel)]="filChkBox.start" [ngModelOptions]="{standalone: true}" (change)="chkBoxChgS($event)" style="margin-right: 10px"></mat-checkbox>
 		
