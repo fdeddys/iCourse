@@ -104,6 +104,19 @@ export class TransListDialogComponent implements OnInit {
     }
 
     filterData(page): void {
+
+        // 1 = payment =>  Advice, Reversal => transtype = 2
+        // 2 = Booking => Commit            => transtype = 5
+        console.log('liatttttttt=>', this.transList.transType);
+        let reqDetailType = null;
+        if (this.transList.transType.code === '2') {
+            reqDetailType = 1;
+        }
+
+        if (this.transList.transType.code === '5') {
+            reqDetailType = 2;
+        }
+
         if (page !== '') {
             this.curPage = page;
         }
@@ -113,6 +126,7 @@ export class TransListDialogComponent implements OnInit {
             filter: {
                 rrnRequestor: this.transList.rrnRequestor,
                 rrn: this.transList.rrn,
+                reqDetailType: reqDetailType,
             }
             }, true)
         .subscribe(
@@ -123,6 +137,11 @@ export class TransListDialogComponent implements OnInit {
     }
 
     private onSuccess(data, headers) {
+        if (data === null ) {
+            this.transGridDetils = [];
+            this.gridApi.setRowData(this.transGridDetils);
+            return ;
+        }
         console.log('isi response product ==> ', data.content);
         this.transGridDetils = data.content;
         if  ( this.transGridDetils.length > 0 ) {
