@@ -191,7 +191,7 @@ export class BillerCompanyComponent implements OnInit {
         }
 
         this.billerCompanies = data.content;
-        let urut = 1;
+        let urut = data.pageable.offset + 1;
         for (const billerCompany of this.billerCompanies) {
           billerCompany.nourut = urut++;
         }

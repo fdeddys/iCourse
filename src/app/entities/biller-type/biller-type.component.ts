@@ -220,9 +220,9 @@ export class BillerTypeComponent implements OnInit {
         if ( data.content.length < 0 ) {
             return ;
         }
-
+// alert(data.pageable.offset);
         this.billerTipes = data.content;
-        let urut = 1;
+        let urut = data.pageable.offset + 1;
         for (const billerType of this.billerTipes) {
             billerType.nourut = urut++;
         }

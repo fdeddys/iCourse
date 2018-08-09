@@ -398,9 +398,9 @@ export class TransListComponent implements OnInit {
             return;
         }
         this.transList = data.content;
-        let i = 1;
+        let urut = data.pageable.offset + 1;
         for (const transL of this.transList) {
-            transL.no = i++;
+            transL.no = urut++;
             // transL.rcInternalPrev = (transL.rcInternal.includes('00') ? 'Approve' : 'Decline');
             switch (transL.rcInternal) {
                 case 'SS':

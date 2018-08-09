@@ -151,7 +151,7 @@ export class MemberTypeComponent implements OnInit {
         }
 
         this.memberTipes = data.content;
-        let urut = 1;
+        let urut = data.pageable.offset + 1;
         for (const memberType of this.memberTipes) {
             memberType.nourut = urut++;
         }

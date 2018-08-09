@@ -155,7 +155,7 @@ export class MenuComponent implements OnInit {
       }
 
       this.menu = data.content;
-      let urut = 1;
+      let urut = data.pageable.offset + 1;
       for (const mnu of this.menu) {
         mnu.nourut = urut++;
       }

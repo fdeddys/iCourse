@@ -316,7 +316,7 @@ export class ProductComponent implements OnInit {
         console.log('success..', data);
         this.products = data.content;
         for (let index = 0; index < this.products.length; index++) {
-            this.products[index].no = index + 1;
+            this.products[index].no = index + data.pageable.offset + 1;
         }
         this.gridApi.setRowData(this.products);
         this.totalData = data.totalElements;

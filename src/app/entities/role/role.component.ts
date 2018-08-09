@@ -177,7 +177,7 @@ export class RoleComponent implements MainChild, OnInit {
     }
 
     this.role = data.content;
-    let urut = 1;
+    let urut = data.pageable.offset + 1;
       for (const role of this.role) {
         role.nourut = urut++;
       }

@@ -428,7 +428,7 @@ export class BillerComponent implements OnInit {
         console.log('success..', data);
         this.billers = data.content;
         for (let index = 0; index < this.billers.length; index++) {
-            this.billers[index].no = index + 1;
+            this.billers[index].no = index + data.pageable.offset + 1;
             this.billers[index].dateStart = this.billers[index].dateStartLocDt;
             this.billers[index].dateThru = this.billers[index].dateThruLocDt;
         }
