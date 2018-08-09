@@ -12,12 +12,14 @@
         </div>
         <br>
         <div>
-            <mat-form-field class="form-half-width" *ngIf="entityName === 'Trans'">
+            <mat-checkbox *ngIf="entityName === 'Trans'" class="example-margin" [color]="'primary'" [(ngModel)]="filChkBox.start" [ngModelOptions]="{standalone: true}" (change)="chkBoxChgS($event)" style="margin-right: 10px"></mat-checkbox>
+		
+            <mat-form-field class="form-half-width" *ngIf="entityName === 'Trans'" style="width: 18%"   >
 				<input matInput [matDatepicker]="pickerFStart" placeholder="{{ 'ottoAG.transactionList.filter.startDateFrom' | translate }}" (click)="pickerFStart.open()" [max]="dateTStartCtrl.value" [formControl]="dateFStartCtrl" readonly>
 				<mat-datepicker-toggle matSuffix [for]="pickerFStart"></mat-datepicker-toggle>
 				<mat-datepicker #pickerFStart></mat-datepicker>
 			</mat-form-field>
-			<mat-form-field class="form-half-width" *ngIf="entityName === 'Trans'">
+			<mat-form-field class="form-half-width" *ngIf="entityName === 'Trans'" >
 				<input matInput [matDatepicker]="pickerTStart" placeholder="{{ 'ottoAG.transactionList.filter.startDateTo' | translate }}" (click)="pickerTStart.open()" [min]="dateFStartCtrl.value" [formControl]="dateTStartCtrl" readonly>
 				<mat-datepicker-toggle matSuffix [for]="pickerTStart"></mat-datepicker-toggle>
 				<mat-datepicker #pickerTStart></mat-datepicker>

@@ -56,6 +56,10 @@ export class TransListComponent implements OnInit {
         rcInternal: null,
         mode: 1
     };
+    filChkBox = {
+        start: false,
+        through: false
+    };
     curPage = 1;
     totalData = 0;
     totalRecord = TOTAL_RECORD_PER_PAGE;
@@ -243,6 +247,8 @@ export class TransListComponent implements OnInit {
             {responseCode: 'PP', description: 'Pending'},
             {responseCode: 'FF', description: 'Failed'}
         ];
+        this.dateFStartCtrl.disable();
+        this.dateTStartCtrl.disable();
     }
 
     onGridReady(params) {
@@ -417,6 +423,7 @@ export class TransListComponent implements OnInit {
     private onSuccessTransType(data, headers) {
         console.log('isi response trans type ==> ', data);
         this.transTypeList = data;
+        this.transTypeList.push (new TransType(0, 'ALL', 'ALL', ''));
     }
 
     private onSuccessBill(data, headers) {
@@ -484,6 +491,19 @@ export class TransListComponent implements OnInit {
             link.remove();
             window.URL.revokeObjectURL(url);
         });
+    }
+
+    chkBoxChgS(evt) {
+        console.log('chkBoxChgT(evt) : ', evt);
+        if (evt.checked) {
+            this.dateFStartCtrl.enable();
+            this.dateTStartCtrl.enable();
+        } else {
+            this.dateFStartCtrl.disable();
+            this.dateTStartCtrl.disable();
+            this.dateFStartCtrl.setValue(null);
+            this.dateTStartCtrl.setValue(null);
+        }
     }
 }
 
