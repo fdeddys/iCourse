@@ -73,7 +73,18 @@ export class TransListDialogComponent implements OnInit {
             // search
             console.log('this.data.mode : ', this.data.mode);
             this.transList = this.data.rowData;
-            this.rcInternalPrev = this.transList.rcInternal;
+            // this.rcInternalPrev = this.transList.rcInternal;
+            switch (this.transList.rcInternal) {
+                case 'SS':
+                    this.rcInternalPrev = this.transList.rcInternal + ' (Approve)';
+                    break;
+                case 'PP':
+                    this.rcInternalPrev = this.transList.rcInternal + ' (Pending)';
+                    break;
+                case 'FF':
+                    this.rcInternalPrev = this.transList.rcInternal + ' (Failed)';
+                    break;
+            }
             this.respCodeInternalList = [
                 {responseCode: 'SS', description: 'Approved'},
                 {responseCode: 'PP', description: 'Pending'},

@@ -421,6 +421,8 @@ export class TransListComponent implements OnInit {
             }
             // transL.transmissionDateTime = this.dateFormatter(transL.transmissionDateTime);
             transL.transmissionDateTime = new Date(transL.transmissionDateTime).toLocaleString('id');
+            transL.rcRequestor = transL.rcRequestor + ' (' + transL.rcRequestorDesc + ')';
+            transL.rcResponder = transL.rcResponder + ' (' + transL.rcResponderDesc + ')';
         }
         this.gridApi.setRowData(this.transList);
         this.totalData = data.totalElements;
