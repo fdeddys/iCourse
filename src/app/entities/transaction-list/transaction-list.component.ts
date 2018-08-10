@@ -302,6 +302,8 @@ export class TransListComponent implements OnInit {
                 stan: null,
                 rrn: null,
                 rrn_requestor: null,
+                rrn_responder: null,
+                approval_code: null,
                 rc_internal: null,
                 rc_requestor: null,
                 rc_responder: null,
@@ -360,6 +362,12 @@ export class TransListComponent implements OnInit {
         }
         this.filter.filDateFStart = (this.dateFStartCtrl.value === null ? null : this.dateFormatter(this.dateFStartCtrl.value));
         this.filter.filDateTStart = (this.dateTStartCtrl.value === null ? null : this.dateFormatter(this.dateTStartCtrl.value));
+
+        if (this.filter.filDateFStart !== null && this.filter.filDateTStart !== null) {
+            this.filter.filDateFStart = this.filter.filDateFStart + ' 00:00';
+            this.filter.filDateTStart = this.filter.filDateTStart + ' 23:59';
+        }
+
         this.filter.requestorId = (this.requestorCtrl.value === null ? null : this.requestorCtrl.value.id);
         this.filter.responderId = (this.responderCtrl.value === null ? null : this.responderCtrl.value.id);
         this.filter.productId = (this.productCtrl.value === null ? null : this.productCtrl.value.id);

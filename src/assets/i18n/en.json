@@ -309,6 +309,9 @@
             "transmission": "Transaction Date",
             "stan": "STAN",
             "rrn": "RRN",
+            "rrnRequestor": "RRN Requestor",
+            "rrnResponder": "RRN Responder",
+            "approvalCode": "Approval Code",
             "rcInternal": "RC Internal",
             "rcRequestor": "RC Requestor",
             "rcResponder": "RC Responder"

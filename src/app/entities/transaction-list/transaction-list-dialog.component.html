@@ -13,6 +13,7 @@
     <mat-form-field style="width: 20%; margin-right: 5%">
         <input matInput placeholder="{{ 'ottoAG.transactionList.responder' | translate }}" name="responder" [(ngModel)]="transList.responder.member.name" disabled>
     </mat-form-field>
+    <!-- change row -->
     <mat-form-field style="width: 20%; margin-right: 5%">
         <input matInput placeholder="{{ 'ottoAG.transactionList.transmission' | translate }}" name="transmission" [(ngModel)]="transList.transmissionDateTime" disabled>
     </mat-form-field>
@@ -24,7 +25,8 @@
     </mat-form-field>
     <mat-form-field style="width: 20%; margin-right: 5%">
         <input matInput placeholder="{{ 'ottoAG.transactionList.rrn' | translate }}" name="rrn" [(ngModel)]="transList.rrn" disabled>
-    </mat-form-field>		
+    </mat-form-field>	
+    <!-- change row -->	
     <mat-form-field style="width: 20%; margin-right: 5%">
         <input type="number" matInput placeholder="{{ 'ottoAG.transactionList.buyPrice' | translate }}" name="buyPrice" [(ngModel)]="transList.buyPrice" disabled>
     </mat-form-field>
@@ -34,7 +36,10 @@
     <mat-form-field style="width: 20%; margin-right: 5%">
         <input type="number" matInput placeholder="{{ 'ottoAG.transactionList.profit' | translate }}" name="profit" [(ngModel)]="transList.profitRtsm" disabled>
     </mat-form-field>
-    <br>		
+    <mat-form-field style="width: 20%; margin-right: 5%">
+        <input matInput placeholder="{{ 'ottoAG.transactionList.rrnRequestor' | translate }}" name="rrnRequestor" [(ngModel)]="transList.rrnRequestor" disabled>
+    </mat-form-field>
+    <!-- change row -->
     <mat-form-field style="width: 20%; margin-right: 5%">
         <input type="number" matInput placeholder="{{ 'ottoAG.transactionList.sellPrice' | translate }}" name="sellPrice" [(ngModel)]="transList.sellPrice" disabled>
     </mat-form-field>
@@ -47,14 +52,9 @@
     <mat-form-field style="width: 20%; margin-right: 5%">
         <input matInput placeholder="{{ 'ottoAG.transactionList.promotion' | translate }}" name="promotion" [(ngModel)]="transList.promotionId" disabled>
     </mat-form-field>
-    <mat-form-field style="width: 20%; margin-right: 5%" *ngIf="!rcIntDisabled">
-        <mat-select placeholder="{{ 'ottoAG.transactionList.rcInternal' | translate }}" [(ngModel)]="transList.rcInternal" [ngModelOptions]="{standalone: true}" [disabled]="rcIntDisabled">
-            <mat-option *ngFor="let rcInt of respCodeInternalList" [value]="rcInt.responseCode">
-            {{ rcInt.description }}
-            </mat-option>
-        </mat-select>
+    <mat-form-field style="width: 20%; margin-right: 5%">
+        <input matInput placeholder="{{ 'ottoAG.transactionList.rrnResponder' | translate }}" name="rrnResponder" [(ngModel)]="transList.rrnResponder" disabled>
     </mat-form-field>
-    <br>
     <mat-form-field style="width: 20%; margin-right: 5%">
         <input matInput placeholder="{{ 'ottoAG.transactionList.rcRequestor' | translate }}" name="rcRequestor" [(ngModel)]="transList.rcRequestor" disabled>
     </mat-form-field>
@@ -63,6 +63,16 @@
     </mat-form-field>
     <mat-form-field style="width: 20%; margin-right: 5%">
         <input matInput placeholder="{{ 'ottoAG.transactionList.rcResponder' | translate }}" name="rcResponder" [(ngModel)]="transList.rcResponder" disabled>
+    </mat-form-field>
+    <mat-form-field style="width: 20%; margin-right: 5%">
+        <input matInput placeholder="{{ 'ottoAG.transactionList.approvalCode' | translate }}" name="approvalCode" [(ngModel)]="transList.approvalCode" disabled>
+    </mat-form-field>
+    <mat-form-field style="width: 20%; margin-right: 5%" *ngIf="!rcIntDisabled">
+        <mat-select placeholder="{{ 'ottoAG.transactionList.rcInternal' | translate }}" [(ngModel)]="transList.rcInternal" [ngModelOptions]="{standalone: true}" [disabled]="rcIntDisabled">
+            <mat-option *ngFor="let rcInt of respCodeInternalList" [value]="rcInt.responseCode">
+            {{ rcInt.description }}
+            </mat-option>
+        </mat-select>
     </mat-form-field>
     <button *ngIf="!rcIntDisabled" mat-raised-button color="primary" (click)="onSubmit()">{{ "entity.action.save" | translate  }}</button>
     <ag-grid-angular 

@@ -18,6 +18,8 @@ export class TransList implements BaseEntity {
         public stan?: number,
         public rrn?: string,
         public rrnRequestor?: string,
+        public rrnResponder?: string,
+        public approvalCode?: string,
         public rcInternal?: string,
         public rcRequestor?: string,
         public rcResponder?: string,
