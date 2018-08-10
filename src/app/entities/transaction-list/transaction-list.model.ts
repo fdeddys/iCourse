@@ -35,6 +35,8 @@ export class TransList implements BaseEntity {
         public rcInternalPrev?: string,
         public errMsg?: any,
         public reqDetailType?: any,
+        public rcResponderDesc?: any,
+        public rcRequestorDesc?: any,
     ) {
     }
 }
