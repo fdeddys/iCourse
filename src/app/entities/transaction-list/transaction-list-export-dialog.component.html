@@ -1,0 +1,8 @@
+<h1 mat-dialog-title>Warning</h1>
+<mat-dialog-content class="mat-typography">
+    <p>Jumlah record yang mau didownload lebih dari 100.000 record, akan memakan waktu cukup lama. Yakin mau download?</p>
+</mat-dialog-content>
+<div mat-dialog-actions>
+    <button mat-raised-button (click)="onNoClick()">Cancel</button>
+    <button mat-raised-button color="primary" [mat-dialog-close]="true">Ok</button>
+</div>

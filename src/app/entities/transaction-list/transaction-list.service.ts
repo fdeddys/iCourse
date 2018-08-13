@@ -84,6 +84,31 @@ export class TransListService {
         return copy;
     }
 
+    getTotalRec(req?: any): Observable<HttpResponse<TransList[]>> {
+        console.log('Filter  ', req);
+
+        const options = createRequestOption(req);
+        let pageNumber = null;
+        let pageCount = null;
+        let newresourceUrl = null;
+
+        Object.keys(req).forEach((key) => {
+            if (key === 'page') {
+                pageNumber = req[key];
+            }
+            if (key === 'count') {
+                pageCount = req[key];
+            }
+        });
+
+        newresourceUrl = `${this.reportUrl}trans/totalRec`;
+        return this.http.post<any>(newresourceUrl, req['filter'], {  observe: 'response' })
+            .pipe(
+                // map((res: HttpResponse<Member[]>) => this.convertArrayResponse(res))
+                tap(results => console.log('raw ', results ) )
+            );
+    }
+
     async exportCSV(req?: any): Promise<HttpResponse<Blob>> {
         const file =  await this.http.post<Blob>(
             `${this.reportUrl}trans/csv`, req['filter'],

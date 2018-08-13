@@ -11,7 +11,8 @@ import { HttpClientModule, HttpClient } from '@angular/common/http';
 import {
     TransListService,
     TransListComponent,
-    TransListDialogComponent
+    TransListDialogComponent,
+    TransListExportDialogComponent
 } from './';
 
 // AoT requires an exported function for factories
@@ -35,11 +36,13 @@ export function HttpLoaderFactory(http: HttpClient) {
     ],
     declarations: [
         TransListComponent,
-        TransListDialogComponent
+        TransListDialogComponent,
+        TransListExportDialogComponent
     ],
     entryComponents: [
         TransListComponent,
-        TransListDialogComponent
+        TransListDialogComponent,
+        TransListExportDialogComponent
     ],
     providers: [
         TransListService

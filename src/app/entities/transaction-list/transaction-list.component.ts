@@ -4,6 +4,7 @@ import { HttpResponse, HttpErrorResponse } from '@angular/common/http';
 import { TransList } from './transaction-list.model';
 import { TransListService } from './transaction-list.service';
 import { TransListDialogComponent } from './transaction-list-dialog.component';
+import { TransListExportDialogComponent } from './transaction-list-export-dialog.component';
 
 import { Observable } from 'rxjs';
 import { map, startWith } from 'rxjs/operators';
@@ -187,7 +188,8 @@ export class TransListComponent implements OnInit {
                 filDateFStart: null,
                 filDateTStart: null,
                 filDateFThru: null,
-                filDateTThru: null
+                filDateTThru: null,
+                dateActive: true
             },
         })
         .subscribe(
@@ -205,7 +207,8 @@ export class TransListComponent implements OnInit {
                 filDateFStart: null,
                 filDateTStart: null,
                 filDateFThru: null,
-                filDateTThru: null
+                filDateTThru: null,
+                dateActive: true
             },
         })
         .subscribe(
@@ -472,6 +475,23 @@ export class TransListComponent implements OnInit {
     //     console.log('this.respCodeInternalList : ', this.respCodeInternalList);
     // }
 
+    private onSuccessTotalRec(data, headers) {
+        console.log(data);
+        // if (data.content) {
+        //     const dialogRef = this.dialog.open(TransListExportDialogComponent, {
+        //         width: '500px',
+        //         data: {}
+        //     });
+        //     dialogRef.afterClosed().subscribe(result => {
+        //         console.log('The dialog was closed');
+        //         if (result) {
+        //             console.log(result);
+        //             this.exportCSV('csv');
+        //         }
+        //     });
+        // }
+    }
+
     private onError(error) {
         console.log('error..');
     }
@@ -480,6 +500,17 @@ export class TransListComponent implements OnInit {
         this.curPage = $event.pageIndex + 1;
         // this.loadAll(this.curPage);
         this.filterData('');
+    }
+
+    validateExport(): void {
+        this.transListService.getTotalRec({
+            filter: this.filter,
+        })
+        .subscribe(
+            (res: HttpResponse<any>) => this.onSuccessTotalRec(res.body, res.headers),
+            (res: HttpErrorResponse) => this.onError(res.message),
+            () => { console.log('finally'); }
+        );
     }
 
     public async exportCSV(reportType): Promise<void> {
