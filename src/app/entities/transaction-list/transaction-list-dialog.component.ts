@@ -75,7 +75,7 @@ export class TransListDialogComponent implements OnInit {
             this.transList = this.data.rowData;
             // this.rcInternalPrev = this.transList.rcInternal;
             switch (this.transList.rcInternal) {
-                case 'SS':
+                case '00':
                     this.rcInternalPrev = this.transList.rcInternal + ' (Approve)';
                     break;
                 case 'PP':
@@ -88,7 +88,7 @@ export class TransListDialogComponent implements OnInit {
                     this.rcInternalPrev = this.transList.rcInternalDesc;
             }
             this.respCodeInternalList = [
-                {responseCode: 'SS', description: 'Approved'},
+                {responseCode: '00', description: 'Approved'},
                 {responseCode: 'PP', description: 'Pending'},
                 {responseCode: 'FF', description: 'Failed'}
             ];
