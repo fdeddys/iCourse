@@ -113,7 +113,7 @@ export class DepositDialogComponent implements OnInit {
 
     onSubmit() {
         // alert(searchByMemberId);
-        if (this.dateCtrl === null) {
+        if (this.dateCtrl.value === null) {
             return;
         }
         this.depositSave = {
