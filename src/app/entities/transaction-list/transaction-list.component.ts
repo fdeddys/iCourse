@@ -123,7 +123,6 @@ export class TransListComponent implements OnInit {
         console.log('aaaaaaaa', params);
         switch (params.value) {
             case '00': return 'Approved';
-            case 'SS': return 'Approved';
             case 'PP': return 'Pending';
             default :
                 return 'Failed / Declined';
@@ -243,7 +242,7 @@ export class TransListComponent implements OnInit {
         // );
 
         this.respCodeInternalList = [
-            {responseCode: 'SS', description: 'Approved'},
+            {responseCode: '00', description: 'Approved'},
             {responseCode: 'PP', description: 'Pending'},
             {responseCode: 'FF', description: 'Failed'}
         ];
