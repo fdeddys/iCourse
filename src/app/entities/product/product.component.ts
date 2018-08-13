@@ -166,13 +166,14 @@ export class ProductComponent implements OnInit {
         this.billerService.filter({
             allData: 1,
             page: this.curPage,
-            count: this.totalRecord,
+            count: 10000,
             filter: {
                 memberName: '',
                 filDateFStart: null,
                 filDateTStart: null,
                 filDateFThru: null,
-                filDateTThru: null
+                filDateTThru: null,
+                dateActive: false
             },
         })
         .subscribe(

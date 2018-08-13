@@ -84,6 +84,8 @@ export class TransListDialogComponent implements OnInit {
                 case 'FF':
                     this.rcInternalPrev = this.transList.rcInternal + ' (Failed)';
                     break;
+                default :
+                    this.rcInternalPrev = this.transList.rcInternalDesc;
             }
             this.respCodeInternalList = [
                 {responseCode: 'SS', description: 'Approved'},

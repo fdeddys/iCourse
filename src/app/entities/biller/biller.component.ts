@@ -63,7 +63,8 @@ export class BillerComponent implements OnInit {
         filDateFStart: null,
         filDateTStart: null,
         filDateFThru: null,
-        filDateTThru: null
+        filDateTThru: null,
+        dateActive: true
     };
 
     filChkBox = {
@@ -475,4 +476,5 @@ export interface BillerFilter {
     filDateTStart?: string;
     filDateFThru?: string;
     filDateTThru?: string;
+    dateActive?: boolean;
 }
