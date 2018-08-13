@@ -4,9 +4,12 @@ import { Product } from './product.model';
 import { ProductService } from './product.service';
 import { TranslateService } from '@ngx-translate/core';
 
-import { BillerCompany, BillerCompanyService } from '../biller-company';
-import { BillerType, BillerTypeService } from '../biller-type';
-import { Member, MemberService } from '../member';
+import { BillerCompany } from '../biller-company/biller-company.model';
+import { BillerType } from '../biller-type/biller-type.model';
+import { Biller } from '../biller/biller.model';
+import { BillerCompanyService } from '../biller-company/biller-company.service';
+import { BillerTypeService } from '../biller-type/biller-type.service';
+import { BillerService } from '../biller/biller.service';
 
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA, MatPaginator } from '@angular/material';
 import { GRID_THEME, CSS_BUTTON, NO_DATA_GRID_MESSAGE, TOTAL_RECORD_PER_PAGE, REPORT_PATH } from '../../shared/constant/base-constant';
@@ -37,7 +40,7 @@ export class ProductComponent implements OnInit {
     product: Product;
     billerTypeList = [];
     billerCompanyList = [];
-    memberList = [];
+    billerList = [];
     searchByList = [];
     statusList = [];
     filterStatusList = [];
@@ -62,7 +65,7 @@ export class ProductComponent implements OnInit {
             { headerName: 'Name', field: 'name', width: 300, pinned: 'left', editable: false },
             { headerName: 'Product Code', field: 'productCode', width: 150, editable: false },
             { headerName: 'Denom', field: 'denom', width: 150, cellStyle: {textAlign: 'right'}, editable: false },
-            { headerName: 'Sell Price', field: 'sellPrice', width: 150, cellStyle: {textAlign: 'right'} },
+            // { headerName: 'Sell Price', field: 'sellPrice', width: 150, cellStyle: {textAlign: 'right'} },
             { headerName: 'Status', field: 'status', width: 150, valueFormatter: this.statFormatter },
             // { headerName: 'Search By', field: 'searchBy', width: 250 },
             // { headerName: 'Search By Biller', field: 'searchByMemberId', width: 250 },
@@ -97,7 +100,7 @@ export class ProductComponent implements OnInit {
         private dialog: MatDialog,
         private billerCompanyService: BillerCompanyService,
         private billerTypeService: BillerTypeService,
-        private memberService: MemberService,
+        private billerService: BillerService,
         private productService: ProductService
     ) {
         translate.setDefaultLang('en');
@@ -160,14 +163,22 @@ export class ProductComponent implements OnInit {
                 () => { console.log('finally'); }
         );
 
-        this.memberService.query({
-            page: 1,
-            count: 10000,
+        this.billerService.filter({
+            allData: 1,
+            page: this.curPage,
+            count: this.totalRecord,
+            filter: {
+                memberName: '',
+                filDateFStart: null,
+                filDateTStart: null,
+                filDateFThru: null,
+                filDateTThru: null
+            },
         })
         .subscribe(
-                (res: HttpResponse<Member[]>) => this.onSuccessMemb(res.body, res.headers),
-                (res: HttpErrorResponse) => this.onError(res.message),
-                () => { console.log('finally'); }
+            (res: HttpResponse<Biller[]>) => this.onSuccessBill(res.body, res.headers),
+            (res: HttpErrorResponse) => this.onError(res.message),
+            () => { console.log('finally'); }
         );
 
         this.productService.getSearchBy()
@@ -219,7 +230,7 @@ export class ProductComponent implements OnInit {
             filter: this.filter,
         })
         .subscribe(
-            (res: HttpResponse<Member[]>) => this.onSuccess(res.body, res.headers),
+            (res: HttpResponse<Biller[]>) => this.onSuccess(res.body, res.headers),
             (res: HttpErrorResponse) => this.onError(res.message),
             () => { console.log('finally');
                     if ( statusAll ) {
@@ -272,7 +283,7 @@ export class ProductComponent implements OnInit {
             billerTypeData : this.billerTypeList,
             searchByData : this.searchByList,
             statusData : this.statusList,
-            memberData : this.memberList,
+            billerData : this.billerList,
             rowData : {
                 billerCompany : {id: null, name: null},
                 billerType : {id: null, ispostpaid: null, name: null},
@@ -280,7 +291,7 @@ export class ProductComponent implements OnInit {
                 name : null,
                 productCode : null,
                 searchBy : null,
-                searchByMemberId : null,
+                searchByBillerId : null,
                 // sellPrice : null,
                 status : 'ACTIVE'
             },
@@ -308,8 +319,8 @@ export class ProductComponent implements OnInit {
         this.billerTypeList = data.content;
     }
 
-    private onSuccessMemb(data, headers) {
-        this.memberList = data.content;
+    private onSuccessBill(data, headers) {
+        this.billerList = data.content;
     }
 
     private onSuccess(data, headers) {

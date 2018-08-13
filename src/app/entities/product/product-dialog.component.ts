@@ -12,7 +12,7 @@ import { FormBuilder, FormGroup, Validators , FormControl} from '@angular/forms'
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA, MatSnackBar } from '@angular/material';
 import { BillerType } from '../biller-type';
 import { BillerCompany } from '../biller-company';
-import { Member } from '../member';
+import { Biller } from '../biller';
 import { CommonValidatorDirective } from '../../validators/common.validator';
 import { SNACKBAR_DURATION_IN_MILLISECOND } from '../../shared/constant/base-constant';
 
@@ -27,14 +27,14 @@ export class ProductDialogComponent implements OnInit {
     filteredBillType: Observable<any[]>;
     billCompanyCtrl: FormControl;
     filteredBillCompany: Observable<any[]>;
-    membCtrl: FormControl;
-    filteredMemb: Observable<any[]>;
+    billCtrl: FormControl;
+    filteredBill: Observable<any[]>;
 
     product: Product;
     productSave: Product;
     billerTypeList = [];
     billerCompanyList = [];
-    memberList = [];
+    billerList = [];
     searchByList = [];
     statusList = [];
 
@@ -74,12 +74,12 @@ export class ProductDialogComponent implements OnInit {
             map(name => name ? this.filterBillCompany(name) : this.billerCompanyList.slice())
         );
 
-        this.membCtrl = new FormControl();
-        this.filteredMemb = this.membCtrl.valueChanges
+        this.billCtrl = new FormControl();
+        this.filteredBill = this.billCtrl.valueChanges
         .pipe(
-            startWith<string | Member>(''),
-            map(value => typeof value === 'string' ? value : value.name),
-            map(name => name ? this.filterMemb(name) : this.memberList.slice())
+            startWith<string | Biller>(''),
+            map(value => typeof value === 'string' ? value : value.member.name),
+            map(name => name ? this.filterBill(name) : this.billerList.slice())
         );
     }
 
@@ -93,9 +93,9 @@ export class ProductDialogComponent implements OnInit {
         billerCompany.name.toLowerCase().indexOf(name.toLowerCase()) === 0);
     }
 
-    filterMemb(name: string) {
-        return this.memberList.filter(member =>
-        member.name.toLowerCase().indexOf(name.toLowerCase()) === 0);
+    filterBill(name: string) {
+        return this.billerList.filter(biller =>
+        biller.member.name.toLowerCase().indexOf(name.toLowerCase()) === 0);
     }
 
     displayFnBil(billerType?: BillerType): string | undefined {
@@ -106,18 +106,18 @@ export class ProductDialogComponent implements OnInit {
         return billerCompany ? billerCompany.name : undefined;
     }
 
-    displayFnMem(member?: Member): string | undefined {
-        return member ? member.name : undefined;
+    displayFnBill(biller?: Biller): string | undefined {
+        return biller ? biller.member.name : undefined;
     }
 
     searchByChg() {
         console.log(this.product.searchBy);
         // ---- change search by if manual set member selection disabled
-        this.membCtrl.setValue('');
+        this.billCtrl.setValue('');
         if (this.product.searchBy === 'BY_BILLER') {
-            this.membCtrl.enable();
+            this.billCtrl.enable();
         } else {
-            this.membCtrl.disable();
+            this.billCtrl.disable();
         }
     }
 
@@ -136,7 +136,7 @@ export class ProductDialogComponent implements OnInit {
         this.product = {};
         this.modeTitle = this.data.modeTitle;
 
-        this.membCtrl.disable();
+        this.billCtrl.disable();
         if (this.data.mode !== 'create') {
             // console.log('edit mode..');
             this.billCompanyCtrl.setValue(this.data.rowData.billerCompany);
@@ -144,9 +144,9 @@ export class ProductDialogComponent implements OnInit {
 
             console.log('this.data.rowData : ', this.data.rowData);
             if (this.data.rowData.searchBy === 'BY_BILLER') {
-                this.membCtrl.enable();
-                const idMbr = this.data.rowData.searchByMemberId;
-                this.membCtrl.setValue(_.find(this.data.memberData, function(o) { return o.id === idMbr; }));
+                this.billCtrl.enable();
+                const idMbr = this.data.rowData.searchByBillerId;
+                this.billCtrl.setValue(_.find(this.data.billerData, function(o) { return o.id === idMbr; }));
             }
         }
         this.product = this.data.rowData;
@@ -154,7 +154,7 @@ export class ProductDialogComponent implements OnInit {
         this.billerTypeList = this.data.billerTypeData;
         this.searchByList = this.data.searchByData;
         this.statusList = this.data.statusData;
-        this.memberList = this.data.memberData;
+        this.billerList = this.data.billerData;
     }
 
     private onError(error) {
@@ -166,9 +166,9 @@ export class ProductDialogComponent implements OnInit {
     }
 
     onSubmit() {
-        let searchByMemberId = null;
+        let searchByBillerId = null;
         if (this.product.searchBy === 'BY_BILLER') {
-            searchByMemberId = (this.membCtrl.value.id === undefined ? null : this.membCtrl.value.id);
+            searchByBillerId = (this.billCtrl.value.id === undefined ? null : this.billCtrl.value.id);
         }
         // alert(searchByMemberId);
         this.productSave = {
@@ -181,7 +181,7 @@ export class ProductDialogComponent implements OnInit {
             billerCompanyId: (this.billCompanyCtrl.value.id === undefined ? null : this.billCompanyCtrl.value.id),
             billerTypeId: (this.billTypeCtrl.value.id === undefined ? null : this.billTypeCtrl.value.id),
             searchBy: this.product.searchBy,
-            searchByMemberId: searchByMemberId,
+            searchByBillerId: searchByBillerId,
         };
         // console.log('aaaa', this.productSave);
         // console.log('isi bill company ', this.billCompanyCtrl);
@@ -192,7 +192,7 @@ export class ProductDialogComponent implements OnInit {
                 if (res.body.errMsg === null || res.body.errMsg === '') {
                     this.dialogRef.close('refresh');
                 } else {
-                    this.snackBar.open('Error !' + res.body.errMsg , 'Close', {
+                    this.snackBar.open('Error! ' + res.body.errMsg , 'Close', {
                         duration: this.duration,
                     });
                 }
@@ -203,7 +203,7 @@ export class ProductDialogComponent implements OnInit {
                 if (res.body.errMsg === null || res.body.errMsg === '') {
                     this.dialogRef.close('refresh');
                 } else {
-                    this.snackBar.open('Error !' + res.body.errMsg , 'Close', {
+                    this.snackBar.open('Error! ' + res.body.errMsg , 'Close', {
                         duration: this.duration,
                     });
                 }

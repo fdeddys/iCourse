@@ -66,10 +66,10 @@
 			</mat-error> 
 		</mat-form-field>
 		<mat-form-field class="form-full-width form-separator">
-			<input matInput placeholder="{{ 'ottoAG.billerProduct.searchByMember' | translate }}" aria-label="Biller" [matAutocomplete]="autoM" [formControl]="membCtrl">
-			<mat-autocomplete #autoM="matAutocomplete" [displayWith]="displayFnMem">
-				<mat-option *ngFor="let member of filteredMemb | async" [value]="member">
-					<span>{{ member.name }}</span>
+			<input matInput placeholder="{{ 'ottoAG.billerProduct.searchByMember' | translate }}" aria-label="Biller" [matAutocomplete]="autoM" [formControl]="billCtrl">
+			<mat-autocomplete #autoM="matAutocomplete" [displayWith]="displayFnBill">
+				<mat-option *ngFor="let biller of filteredBill | async" [value]="biller">
+					<span>{{biller.member.name + ' (' + biller.memberCode + ')'}}</span>
 				</mat-option>
 			</mat-autocomplete>
 		</mat-form-field>
