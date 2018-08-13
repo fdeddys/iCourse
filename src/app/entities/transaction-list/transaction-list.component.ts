@@ -12,7 +12,7 @@ import { map, startWith } from 'rxjs/operators';
 import { FormControl } from '@angular/forms';
 import { MatDialog, MatPaginator } from '@angular/material';
 import { MatActionButtonComponent } from '../../shared/templates/mat-action-button.component';
-import { GRID_THEME, CSS_BUTTON, NO_DATA_GRID_MESSAGE, TOTAL_RECORD_PER_PAGE } from '../../shared/constant/base-constant';
+import { GRID_THEME, CSS_BUTTON, NO_DATA_GRID_MESSAGE, TOTAL_RECORD_PER_PAGE, MAX_EXPORT_DATA } from '../../shared/constant/base-constant';
 import { REPORT_PATH } from '../../shared/constant/base-constant';
 import { TranslateService } from '@ngx-translate/core';
 
@@ -65,6 +65,7 @@ export class TransListComponent implements OnInit {
     totalData = 0;
     totalRecord = TOTAL_RECORD_PER_PAGE;
     messageNoData: string = NO_DATA_GRID_MESSAGE;
+    maxCSVData = MAX_EXPORT_DATA;
     dateFStartCtrl: FormControl;
     dateTStartCtrl: FormControl;
 
@@ -476,19 +477,21 @@ export class TransListComponent implements OnInit {
 
     private onSuccessTotalRec(data, headers) {
         console.log(data);
-        // if (data.content) {
-        //     const dialogRef = this.dialog.open(TransListExportDialogComponent, {
-        //         width: '500px',
-        //         data: {}
-        //     });
-        //     dialogRef.afterClosed().subscribe(result => {
-        //         console.log('The dialog was closed');
-        //         if (result) {
-        //             console.log(result);
-        //             this.exportCSV('csv');
-        //         }
-        //     });
-        // }
+        if (data > this.maxCSVData) {
+            const dialogRef = this.dialog.open(TransListExportDialogComponent, {
+                width: '500px',
+                data: {}
+            });
+            dialogRef.afterClosed().subscribe(result => {
+                console.log('The dialog was closed');
+                if (result) {
+                    console.log(result);
+                    this.exportCSV('csv');
+                }
+            });
+        } else {
+            this.exportCSV('csv');
+        }
     }
 
     private onError(error) {
