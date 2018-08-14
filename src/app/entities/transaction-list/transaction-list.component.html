@@ -91,6 +91,20 @@
                     </mat-option>
                 </mat-autocomplete>
             </mat-form-field>
+            <br *ngIf="entityName === 'Trans'">
+            <mat-form-field class="form-half-width" *ngIf="entityName === 'Trans'">
+                <mat-select placeholder="{{ 'ottoAG.transactionList.filter.rrnType' | translate }}" [(ngModel)]="filter.rrnType" name="rrnType">
+                    <mat-option *ngFor="let rrn of rrnList" [value]="rrn.id">
+                        {{ rrn.name }}
+                    </mat-option>
+                </mat-select>
+                <button mat-button matSuffix mat-icon-button aria-label="Clear" *ngIf="filter.rrnType !== null" (click)="$event.stopPropagation(); filter.rrnType = null; filter.rrnVal = null">
+                    <mat-icon>close</mat-icon>
+                </button>
+            </mat-form-field>
+            <mat-form-field class="form-full-width" *ngIf="entityName === 'Trans'">
+                <input matInput placeholder="{{ 'ottoAG.transactionList.filter.rrnVal' | translate }}" [(ngModel)]="filter.rrnVal" name ="rrnVal" [disabled]="filter.rrnType === null">
+            </mat-form-field>
             <button mat-raised-button color="primary" (click)="actionfilter()" style="margin-left: 30px">Filter</button>
             &nbsp;
             <button mat-raised-button class="primary"  (click)="validateExport()" style="margin-bottom: 10px;">{{ 'entity.action.exportCSV' | translate}}</button>

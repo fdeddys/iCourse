@@ -290,7 +290,9 @@
                 "product": "Filter Product",
                 "rcInternal": "Filter Status",
                 "requestor": "Filter Requestor",
-                "responder": "Filter Responder"
+                "responder": "Filter Responder",
+                "rrnType": "RRN Type",
+                "rrnVal": "RRN"
             },
             "detail": {
                 "title": "Detail Transaction"

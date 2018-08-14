@@ -44,6 +44,11 @@ export class TransListComponent implements OnInit {
     requestorList: Biller[];
     responderList: Biller[];
     respCodeInternalList: any[];
+    rrnList = [
+        {id: 'RRN_INT', name: 'Internal'},
+        {id: 'RRN_REQ', name: 'Requestor'},
+        {id: 'RRN_RES', name: 'Responder'}
+    ];
 
     cssButton = CSS_BUTTON;
     theme: String = GRID_THEME;
@@ -55,6 +60,11 @@ export class TransListComponent implements OnInit {
         transTypeCode: null,
         productId: null,
         rcInternal: null,
+        rrnType: null,
+        rrnVal: null,
+        // rrnInternal: null,
+        // rrnRequestor: null,
+        // rrnResponder: null,
         mode: 1
     };
     filChkBox = {
@@ -563,5 +573,10 @@ export interface TransListFilter  {
     transTypeCode?: string;
     productId?: number;
     rcInternal?: string;
+    rrnType?: any;
+    rrnVal?: any;
+    // rrnInternal?: string;
+    // rrnRequestor?: string;
+    // rrnResponder?: string;
     mode?: number;
 }
