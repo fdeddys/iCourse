@@ -67,8 +67,8 @@ export class DepositComponent implements OnInit {
         columnDefs: [
             { headerName: 'No', field: 'no', width: 100, pinned: 'left', editable: false },
             { headerName: 'Member Type', field: 'memberName', width: 150, editable: false },
-            { headerName: 'Debit', field: 'debit', width: 150, editable: false },
-            { headerName: 'Credit', field: 'credit', width: 150, editable: false },
+            { headerName: 'Debit', field: 'debit', width: 150, editable: false, valueFormatter: this.currencyFormatter },
+            { headerName: 'Credit', field: 'credit', width: 150, editable: false, valueFormatter: this.currencyFormatter },
             { headerName: 'Transaction Type', field: 'transTypeDesc', width: 150, editable: false },
             { headerName: 'Transaction Date', field: 'transDate', width: 150, editable: false },
             { headerName: 'Description', field: 'description', width: 300, editable: false },
@@ -100,6 +100,13 @@ export class DepositComponent implements OnInit {
         translate.use('en');
         this.dateFStartCtrl = new FormControl();
         this.dateTStartCtrl = new FormControl();
+    }
+
+    currencyFormatter(params) {
+        const val = params.value;
+        if (val !== null) {
+            return 'Rp ' + (parseFloat(val)).toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,');
+        }
     }
 
     ngOnInit() {

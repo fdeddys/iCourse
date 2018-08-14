@@ -155,7 +155,7 @@ export class BillerPriceDetailComponent implements OnInit {
         this.dataListBill = data;
         // if (this.dataListBill.length > 1) {
             for (let index = 0; index < this.dataListBill.length; index++) {
-                this.dataListBill[index].no = index + data.pageable.offset + 1;
+                this.dataListBill[index].no = index + 1;
             }
         // }
     }

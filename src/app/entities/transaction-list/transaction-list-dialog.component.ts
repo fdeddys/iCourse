@@ -33,6 +33,11 @@ export class TransListDialogComponent implements OnInit {
     gridColumnApi;
     theme: String = GRID_THEME;
     rcInternalPrev = '';
+    amountPrev = '';
+    buyPricePrev = '';
+    feePrev = '';
+    profitRtsmPrev = '';
+    sellPricePrev = '';
     constructor(
         translate: TranslateService,
         public snackBar: MatSnackBar,
@@ -87,6 +92,11 @@ export class TransListDialogComponent implements OnInit {
                 default :
                     this.rcInternalPrev = this.transList.rcInternalDesc;
             }
+            this.amountPrev = this.currencyFormatter(this.transList.amount);
+            this.buyPricePrev = this.currencyFormatter(this.transList.buyPrice);
+            this.feePrev = this.currencyFormatter(this.transList.fee);
+            this.profitRtsmPrev = this.currencyFormatter(this.transList.profitRtsm);
+            this.sellPricePrev = this.currencyFormatter(this.transList.sellPrice);
             this.respCodeInternalList = [
                 {responseCode: '00', description: 'Approved'},
                 {responseCode: 'PP', description: 'Pending'},
@@ -104,6 +114,12 @@ export class TransListDialogComponent implements OnInit {
                     break;
             }
         }
+    }
+
+    currencyFormatter(val) {
+        if (val !== null) {
+            return 'Rp ' + (parseFloat(val)).toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,');
+        } else { return ''; }
     }
 
     onGridReady(params) {

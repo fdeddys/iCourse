@@ -18,7 +18,7 @@
         <input matInput placeholder="{{ 'ottoAG.transactionList.transmission' | translate }}" name="transmission" [(ngModel)]="transList.transmissionDateTime" disabled>
     </mat-form-field>
     <mat-form-field style="width: 20%; margin-right: 5%">
-        <input matInput placeholder="{{ 'ottoAG.transactionList.amount' | translate }}" name="amount" [(ngModel)]="transList.amount" disabled>
+        <input matInput placeholder="{{ 'ottoAG.transactionList.amount' | translate }}" name="amount" [(ngModel)]="amountPrev" disabled>
     </mat-form-field>
     <mat-form-field style="width: 20%; margin-right: 5%">
         <input matInput placeholder="{{ 'ottoAG.transactionList.stan' | translate }}" name="stan" [(ngModel)]="transList.stan" disabled>
@@ -28,20 +28,20 @@
     </mat-form-field>	
     <!-- change row -->	
     <mat-form-field style="width: 20%; margin-right: 5%">
-        <input type="number" matInput placeholder="{{ 'ottoAG.transactionList.buyPrice' | translate }}" name="buyPrice" [(ngModel)]="transList.buyPrice" disabled>
+        <input matInput placeholder="{{ 'ottoAG.transactionList.buyPrice' | translate }}" name="buyPrice" [(ngModel)]="buyPricePrev" disabled>
     </mat-form-field>
     <mat-form-field style="width: 20%; margin-right: 5%">
-        <input type="number" matInput placeholder="{{ 'ottoAG.transactionList.fee' | translate }}" name="fee" [(ngModel)]="transList.fee" disabled>
+        <input matInput placeholder="{{ 'ottoAG.transactionList.fee' | translate }}" name="fee" [(ngModel)]="feePrev" disabled>
     </mat-form-field>
     <mat-form-field style="width: 20%; margin-right: 5%">
-        <input type="number" matInput placeholder="{{ 'ottoAG.transactionList.profit' | translate }}" name="profit" [(ngModel)]="transList.profitRtsm" disabled>
+        <input matInput placeholder="{{ 'ottoAG.transactionList.profit' | translate }}" name="profit" [(ngModel)]="profitRtsmPrev" disabled>
     </mat-form-field>
     <mat-form-field style="width: 20%; margin-right: 5%">
         <input matInput placeholder="{{ 'ottoAG.transactionList.rrnRequestor' | translate }}" name="rrnRequestor" [(ngModel)]="transList.rrnRequestor" disabled>
     </mat-form-field>
     <!-- change row -->
     <mat-form-field style="width: 20%; margin-right: 5%">
-        <input type="number" matInput placeholder="{{ 'ottoAG.transactionList.sellPrice' | translate }}" name="sellPrice" [(ngModel)]="transList.sellPrice" disabled>
+        <input matInput placeholder="{{ 'ottoAG.transactionList.sellPrice' | translate }}" name="sellPrice" [(ngModel)]="sellPricePrev" disabled>
     </mat-form-field>
     <!-- <mat-form-field class="form-full-width"> -->
     <mat-form-field style="width: 20%; margin-right: 5%">
