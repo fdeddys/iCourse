@@ -136,7 +136,7 @@
             "billerCompany": "Product Company",
             "denom": "Denom",
             "sellPrice": "Sell Price",
-            "profit": "Profit Merchant",
+            "profit": "Profit Subscriber",
             "profitDistributorPks": "Profit Distributor",
             "profitMemberPks": "Profit Member",
             "dateStart": "Date Start",

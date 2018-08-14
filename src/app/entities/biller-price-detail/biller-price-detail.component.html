@@ -45,7 +45,7 @@
         </mat-form-field>
         <mat-form-field class="form-full-width">
             <input type="number" matInput placeholder="{{ 'ottoAG.billerPriceDetail.profit' | translate }}" name="profitMerchant" [(ngModel)]="billerPriceDetail.profit" min="0" (blur)="valCheck('profit')" required>
-            <mat-icon matSuffix matTooltip="Profit Merchant akan&#13;ditambahkan ke sell price">help</mat-icon>
+            <mat-icon matSuffix matTooltip="Profit Subscriber akan&#13;ditambahkan ke sell price">help</mat-icon>
             <mat-error *ngIf="submitted && form.profitMerc.errors" class="invalid-feedback">
                 <div *ngIf="form.profitMerc.errors.required"> {{form.profitMerc.errors.message}}</div>
             </mat-error>

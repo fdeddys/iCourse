@@ -310,6 +310,8 @@ export class UserDialogComponent implements OnInit {
     getRoleRegistered(): void {
         if  (this.user.id === undefined) {
             console.log('User id not found');
+            this.roleRegisterd = [];
+            this.gridApi.setRowData(this.roleRegisterd);
             return null;
         }
 
