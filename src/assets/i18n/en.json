@@ -292,7 +292,8 @@
                 "requestor": "Filter Requestor",
                 "responder": "Filter Responder",
                 "rrnType": "RRN Type",
-                "rrnVal": "RRN"
+                "rrnVal": "RRN",
+                "approvalCode": "Approval Code"
             },
             "detail": {
                 "title": "Detail Transaction"

@@ -62,6 +62,7 @@ export class TransListComponent implements OnInit {
         rcInternal: null,
         rrnType: null,
         rrnVal: null,
+        approvalCode: null,
         // rrnInternal: null,
         // rrnRequestor: null,
         // rrnResponder: null,
@@ -395,6 +396,9 @@ export class TransListComponent implements OnInit {
             this.filter.rcInternal = 'PP';
             this.filter.mode = 2;
         }
+        if (this.filter.approvalCode === '') {
+            this.filter.approvalCode = null;
+        }
         console.log(this.filter);
 
         this.transListService.filter({
@@ -575,6 +579,7 @@ export interface TransListFilter  {
     rcInternal?: string;
     rrnType?: any;
     rrnVal?: any;
+    approvalCode?: string;
     // rrnInternal?: string;
     // rrnRequestor?: string;
     // rrnResponder?: string;
