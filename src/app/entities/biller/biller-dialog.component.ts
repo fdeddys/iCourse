@@ -87,7 +87,7 @@ export class BillerDialogComponent implements OnInit {
         { headerName: 'Product Type', field: 'billerProduct.billerType.name', width: 150 },
         { headerName: 'Product Company', field: 'billerProduct.billerCompany.name', width: 175 },
         { headerName: 'Denom', field: 'billerProduct.denom', width: 150 },
-        { headerName: 'Buy Price', field: 'buyPrice', width: 125 },
+        { headerName: 'Buy Price', field: 'buyPrice', width: 125, valueFormatter: this.currencyFormatter },
         { headerName: 'Ext Code', field: 'externalCode', width: 125 },
         // { headerName: 'Fee', field: 'fee', width: 125 },
         // { headerName: 'Profit', field: 'profit', width: 125 },
@@ -111,8 +111,8 @@ export class BillerDialogComponent implements OnInit {
         // { headerName: 'Name', field: 'name', checkboxSelection: true, width: 250, pinned: 'left', editable: true },
         { headerName: 'No', field: 'no', width: 60, pinned: 'left', editable: false },
         { headerName: 'Product Name', field: 'billerProduct.name', width: 240 },
-        { headerName: 'Sell Price', field: 'salesPrice', width: 100 },
-        { headerName: 'Profit', field: 'profit', width: 100 },
+        { headerName: 'Sell Price', field: 'salesPrice', width: 100, valueFormatter: this.currencyFormatter },
+        { headerName: 'Profit', field: 'profit', width: 100, valueFormatter: this.currencyFormatter },
         { headerName: 'Date Start', field: 'dateStart', width: 100 },
         { headerName: 'Date Through', field: 'dateThru', width: 100 },
         { headerName: 'Status', field: 'status', width: 100},
@@ -207,6 +207,13 @@ export class BillerDialogComponent implements OnInit {
     //     return memberType ? memberType.name : undefined;
     // }
     //
+
+    currencyFormatter(params) {
+        const val = params.value;
+        if (val !== null) {
+            return 'Rp ' + (parseFloat(val)).toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,');
+        }
+    }
 
     ngOnInit() {
         console.log('ngOnInit..');

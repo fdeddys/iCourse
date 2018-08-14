@@ -85,7 +85,7 @@ export class TransListComponent implements OnInit {
             { headerName: 'Transaction Type', field: 'transType.name', width: 150 },
             { headerName: 'Product', field: 'product.name', width: 200 },
             // { headerName: 'Buy Price', field: 'buyPrice', width: 100 },
-            { headerName: 'Amount', field: 'amount', width: 100 },
+            { headerName: 'Amount', field: 'amount', width: 100, valueFormatter: this.currencyFormatter },
             { headerName: 'Status', field: 'rcInternal', width: 150,  valueFormatter: this.statusFormat  },
             { headerName: ' ', width: 150, minWidth: 150, maxWidth: 150, cellRenderer: 'actionRenderer'}
         ],
@@ -130,6 +130,13 @@ export class TransListComponent implements OnInit {
                 return 'Failed / Declined';
         }
         // return (params.value === 'ACTIVE' ? 'AVAILABLE' : 'DISCONTINUED');
+    }
+
+    currencyFormatter(params) {
+        const val = params.value;
+        if (val !== null) {
+            return 'Rp ' + (parseFloat(val)).toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,');
+        }
     }
 
     filterRequestor(name: string) {
