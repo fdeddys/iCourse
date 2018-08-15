@@ -10,9 +10,10 @@ import { Observable } from 'rxjs';
 import { map, startWith } from 'rxjs/operators';
 
 import { FormControl } from '@angular/forms';
-import { MatDialog, MatPaginator } from '@angular/material';
+import { MatDialog, MatPaginator, MatSnackBar } from '@angular/material';
 import { MatActionButtonComponent } from '../../shared/templates/mat-action-button.component';
-import { GRID_THEME, CSS_BUTTON, NO_DATA_GRID_MESSAGE, TOTAL_RECORD_PER_PAGE, MAX_EXPORT_DATA } from '../../shared/constant/base-constant';
+import { GRID_THEME, CSS_BUTTON, NO_DATA_GRID_MESSAGE, TOTAL_RECORD_PER_PAGE, MAX_EXPORT_DATA,
+         SNACKBAR_DURATION_IN_MILLISECOND } from '../../shared/constant/base-constant';
 import { REPORT_PATH } from '../../shared/constant/base-constant';
 import { TranslateService } from '@ngx-translate/core';
 
@@ -44,6 +45,7 @@ export class TransListComponent implements OnInit {
     requestorList: Biller[];
     responderList: Biller[];
     respCodeInternalList: any[];
+    duration = SNACKBAR_DURATION_IN_MILLISECOND;
     rrnList = [
         {id: 'RRN_INT', name: 'Internal'},
         {id: 'RRN_REQ', name: 'Requestor'},
@@ -123,6 +125,7 @@ export class TransListComponent implements OnInit {
         private responseCodeService: ResponseCodeService,
         private dialog: MatDialog,
         private route: ActivatedRoute,
+        public snackBar: MatSnackBar,
     ) {
         translate.use('en');
         this.dateFStartCtrl = new FormControl();
@@ -361,6 +364,57 @@ export class TransListComponent implements OnInit {
     }
 
     actionfilter(): void {
+
+        if ( this.requestorCtrl.value !== null ) {
+            if (this.requestorCtrl.value === '') {
+                // data kotor tidak null lagi
+            } else {
+                if (this.requestorCtrl.value.id === undefined) {
+                    this.snackBar.open('Invalid Filter Requestor !', 'ok', {
+                        duration: this.duration,
+                        });
+                        return ;
+                }
+            }
+        }
+
+        if ( this.responderCtrl.value !== null ) {
+            if (this.responderCtrl.value === '') {
+                // data kotor tidak null lagi
+            } else {
+                if (this.responderCtrl.value.id === undefined) {
+                    this.snackBar.open('Invalid Filter Responder !', 'ok', {
+                        duration: this.duration,
+                        });
+                        return ;
+                }
+            }
+        }
+
+        if ( this.productCtrl.value !== null ) {
+            if (this.productCtrl.value === '') {
+                // data kotor tidak null lagi
+            } else {
+                if (this.productCtrl.value.id === undefined) {
+                    this.snackBar.open('Invalid Filter Product !', 'ok', {
+                        duration: this.duration,
+                        });
+                        return ;
+                }
+            }
+        }
+        // if ( this.responderCtrl.value !== ''  && this.responderCtrl.value.id === undefined ) {
+        //     this.snackBar.open('filter Responder invalid  !', 'Close', {
+        //         duration: this.duration,
+        //         });
+        //     return ;
+        // }
+        // if ( this.productCtrl.value !== ''  && this.productCtrl.value.id === undefined ) {
+        //     this.snackBar.open('filter Product invalid  !', 'Close', {
+        //         duration: this.duration,
+        //         });
+        //     return ;
+        // }
         this.paginator._pageIndex = 0;
         this.filterData(1);
     }
