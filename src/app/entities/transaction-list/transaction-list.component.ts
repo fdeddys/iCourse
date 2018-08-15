@@ -187,7 +187,7 @@ export class TransListComponent implements OnInit {
 
         this.transTypeService.filter({
             page: this.curPage,
-            count: this.totalRecord,
+            count: 10000,
             filter: {
                 'name': ''
             },
@@ -201,7 +201,7 @@ export class TransListComponent implements OnInit {
         this.billerService.filter({
             allData: 1,
             page: this.curPage,
-            count: this.totalRecord,
+            count: 10000,
             filter: {
                 memberName: '',
                 filDateFStart: null,
@@ -220,7 +220,7 @@ export class TransListComponent implements OnInit {
         this.billerService.filter({
             allData: 0,
             page: this.curPage,
-            count: this.totalRecord,
+            count: 10000,
             filter: {
                 memberName: '',
                 filDateFStart: null,
@@ -238,7 +238,7 @@ export class TransListComponent implements OnInit {
 
         this.productService.filter({
             page: this.curPage,
-            count: this.totalRecord,
+            count: 10000,
             filter: {
                 name: null,
                 productCode: null
