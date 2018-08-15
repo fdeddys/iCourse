@@ -370,7 +370,7 @@ export class TransListComponent implements OnInit {
                 // data kotor tidak null lagi
             } else {
                 if (this.requestorCtrl.value.id === undefined) {
-                    this.snackBar.open('Invalid Filter Requestor !', 'ok', {
+                    this.snackBar.open('Select the requestor from the list !', 'ok', {
                         duration: this.duration,
                         });
                         return ;
@@ -383,7 +383,7 @@ export class TransListComponent implements OnInit {
                 // data kotor tidak null lagi
             } else {
                 if (this.responderCtrl.value.id === undefined) {
-                    this.snackBar.open('Invalid Filter Responder !', 'ok', {
+                    this.snackBar.open('Select the responder from the list !', 'ok', {
                         duration: this.duration,
                         });
                         return ;
@@ -396,7 +396,7 @@ export class TransListComponent implements OnInit {
                 // data kotor tidak null lagi
             } else {
                 if (this.productCtrl.value.id === undefined) {
-                    this.snackBar.open('Invalid Filter Product !', 'ok', {
+                    this.snackBar.open('Select the product from the list !', 'ok', {
                         duration: this.duration,
                         });
                         return ;
