@@ -79,19 +79,20 @@ export class TransListDialogComponent implements OnInit {
             console.log('this.data.mode : ', this.data.mode);
             this.transList = this.data.rowData;
             // this.rcInternalPrev = this.transList.rcInternal;
-            switch (this.transList.rcInternal) {
-                case '00':
-                    this.rcInternalPrev = this.transList.rcInternal + ' (Approve)';
-                    break;
-                case 'PP':
-                    this.rcInternalPrev = this.transList.rcInternal + ' (Pending)';
-                    break;
-                case 'FF':
-                    this.rcInternalPrev = this.transList.rcInternal + ' (Failed)';
-                    break;
-                default :
-                    this.rcInternalPrev = this.transList.rcInternalDesc;
-            }
+            // switch (this.transList.rcInternal) {
+            //     case '00':
+            //         this.rcInternalPrev = this.transList.rcInternal + ' (Approve)';
+            //         break;
+            //     case 'PP':
+            //         this.rcInternalPrev = this.transList.rcInternal + ' (Pending)';
+            //         break;
+            //     case 'FF':
+            //         this.rcInternalPrev = this.transList.rcInternal + ' (Failed)';
+            //         break;
+            //     default :
+            //         this.rcInternalPrev = this.transList.rcInternalDesc;
+            // }
+            this.rcInternalPrev = this.transList.rcInternal + ' (' + this.transList.rcInternalDesc + ')';
             this.amountPrev = this.currencyFormatter(this.transList.amount);
             this.buyPricePrev = this.currencyFormatter(this.transList.buyPrice);
             this.feePrev = this.currencyFormatter(this.transList.fee);
