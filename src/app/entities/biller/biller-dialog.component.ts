@@ -211,7 +211,8 @@ export class BillerDialogComponent implements OnInit {
     currencyFormatter(params) {
         const val = params.value;
         if (val !== null) {
-            return 'Rp ' + (parseFloat(val)).toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,');
+            const temp = 'Rp ' + (parseFloat(val)).toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&.');
+            return temp.substring(0, (temp.length - 3));
         }
     }
 

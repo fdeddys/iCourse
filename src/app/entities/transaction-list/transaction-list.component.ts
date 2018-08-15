@@ -149,7 +149,8 @@ export class TransListComponent implements OnInit {
     currencyFormatter(params) {
         const val = params.value;
         if (val !== null) {
-            return 'Rp ' + (parseFloat(val)).toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,');
+            const temp = 'Rp ' + (parseFloat(val)).toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&.');
+            return temp.substring(0, (temp.length - 3));
         }
     }
 
@@ -189,7 +190,7 @@ export class TransListComponent implements OnInit {
 
         this.transTypeService.filter({
             page: this.curPage,
-            count: this.totalRecord,
+            count: 10000,
             filter: {
                 'name': ''
             },
@@ -203,7 +204,7 @@ export class TransListComponent implements OnInit {
         this.billerService.filter({
             allData: 1,
             page: this.curPage,
-            count: this.totalRecord,
+            count: 10000,
             filter: {
                 memberName: '',
                 filDateFStart: null,
@@ -222,7 +223,7 @@ export class TransListComponent implements OnInit {
         this.billerService.filter({
             allData: 0,
             page: this.curPage,
-            count: this.totalRecord,
+            count: 10000,
             filter: {
                 memberName: '',
                 filDateFStart: null,
@@ -240,7 +241,7 @@ export class TransListComponent implements OnInit {
 
         this.productService.filter({
             page: this.curPage,
-            count: this.totalRecord,
+            count: 10000,
             filter: {
                 name: null,
                 productCode: null
