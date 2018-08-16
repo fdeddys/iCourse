@@ -455,6 +455,9 @@ export class TransListComponent implements OnInit {
         if (this.filter.approvalCode === '') {
             this.filter.approvalCode = null;
         }
+        if (this.filter.customerId === '') {
+            this.filter.customerId = null;
+        }
         console.log(this.filter);
 
         this.transListService.filter({
