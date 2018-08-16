@@ -74,9 +74,9 @@ export class DepositHistoryComponent implements OnInit {
             { headerName: 'Type', field: 'transTypeDesc', width: 150, editable: false },
             { headerName: 'Member', field: 'memberName', width: 150, editable: false },
             { headerName: 'Desc', field: 'description', width: 200, editable: false },
-            { headerName: 'Debit', field: 'debit', width: 125,  editable: false },
-            { headerName: 'Credit', field: 'credit', width: 125,  editable: false },
-            { headerName: 'Balance', field: 'balance', width: 125, editable: false },
+            { headerName: 'Debit', field: 'debit', width: 125,  editable: false, valueFormatter: this.currencyFormatter },
+            { headerName: 'Credit', field: 'credit', width: 125,  editable: false, valueFormatter: this.currencyFormatter },
+            { headerName: 'Balance', field: 'balance', width: 125, editable: false, valueFormatter: this.currencyFormatter },
             // { headerName: ' ', width: 80, cellRenderer: 'actionRenderer', pinned: 'left', editable: false}
         ],
         rowData: this.depositHistories,
@@ -103,6 +103,14 @@ export class DepositHistoryComponent implements OnInit {
         translate.use('en');
         this.dateFStartCtrl = new FormControl();
         this.dateTStartCtrl = new FormControl();
+    }
+
+    currencyFormatter(params) {
+        const val = params.value;
+        if (val !== null) {
+            const temp = (parseFloat(val)).toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&.');
+            return temp.substring(0, (temp.length - 3));
+        }
     }
 
     ngOnInit() {
