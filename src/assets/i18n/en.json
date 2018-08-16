@@ -100,7 +100,7 @@
                 "addLabelButton": "Add Biller Supplier"
             },
             "detail": {
-                "title": "{{mode}} Biller",
+                "title": "{{mode}} Biller Supplier",
                 "gridTitle": "Biller Products",
                 "addDetail": "Add Biller Product",
                 "subDetail": {
