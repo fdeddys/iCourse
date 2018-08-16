@@ -21,9 +21,9 @@ export class BillerPriceInfoBillerComponent implements OnInit {
             { headerName: 'No', field: 'no', width: 70, pinned: 'left', editable: false },
             { headerName: 'Name', field: 'billerHeader.member.name', width: 180, pinned: 'left', editable: false },
             { headerName: 'Description', field: 'billerHeader.description', width: 200, pinned: 'left', editable: false },
-            { headerName: 'Buy Price', field: 'buyPrice', width: 80 },
-            { headerName: 'Fee', field: 'fee', width: 80 },
-            { headerName: 'Sell Price', field: 'sellPrice', width: 100 },
+            { headerName: 'Buy Price', field: 'buyPrice', width: 80, valueFormatter: this.currencyFormatter },
+            { headerName: 'Fee', field: 'fee', width: 80, valueFormatter: this.currencyFormatter },
+            { headerName: 'Sell Price', field: 'sellPrice', width: 100, valueFormatter: this.currencyFormatter },
         ],
         enableSorting: true,
         enableFilter: true,
@@ -42,6 +42,14 @@ export class BillerPriceInfoBillerComponent implements OnInit {
 
     ngOnInit() {
 
+    }
+
+    currencyFormatter(params) {
+        const val = params.value;
+        if (val !== null) {
+            const temp = (parseFloat(val)).toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&.');
+            return temp.substring(0, (temp.length - 3));
+        }
     }
 
     onGridReady(params) {
