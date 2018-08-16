@@ -65,6 +65,7 @@ export class TransListComponent implements OnInit {
         rrnType: null,
         rrnVal: null,
         approvalCode: null,
+        customerId: null,
         // rrnInternal: null,
         // rrnRequestor: null,
         // rrnResponder: null,
@@ -635,6 +636,7 @@ export interface TransListFilter  {
     rrnType?: any;
     rrnVal?: any;
     approvalCode?: string;
+    customerId?: string;
     // rrnInternal?: string;
     // rrnRequestor?: string;
     // rrnResponder?: string;

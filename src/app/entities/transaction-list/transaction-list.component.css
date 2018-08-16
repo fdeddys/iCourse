@@ -1,7 +1,12 @@
 .form-half-width {
+	width: 23%;
+	margin-right: 2%;
+}
+
+/* .form-half-width {
 	width: 20%;
 	margin-right: 5%;
-}
+} */
 
 .form-full-width {
 	width: 45%;

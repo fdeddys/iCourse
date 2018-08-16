@@ -105,10 +105,13 @@
                     <mat-icon>close</mat-icon>
                 </button>
             </mat-form-field>
-            <mat-form-field class="form-full-width" *ngIf="entityName === 'Trans'">
+            <mat-form-field class="form-half-width" *ngIf="entityName === 'Trans'">
                 <input matInput placeholder="{{ 'ottoAG.transactionList.filter.rrnVal' | translate }}" [(ngModel)]="filter.rrnVal" name ="rrnVal" [disabled]="filter.rrnType === null" maxlength="32">
             </mat-form-field>
-            <button mat-raised-button color="primary" (click)="actionfilter()" style="margin-left: 30px">Filter</button>
+            <mat-form-field class="form-half-width" *ngIf="entityName === 'Trans'">
+                <input matInput placeholder="{{ 'ottoAG.transactionList.filter.customerId' | translate }}" [(ngModel)]="filter.customerId" name ="customerId" maxlength="32">
+            </mat-form-field>
+            <button mat-raised-button color="primary" (click)="actionfilter()" style="margin-left: 30px;">Filter</button>
             &nbsp;
             <button mat-raised-button class="primary"  (click)="validateExport()" style="margin-bottom: 10px;">{{ 'entity.action.exportCSV' | translate}}</button>
         </div>

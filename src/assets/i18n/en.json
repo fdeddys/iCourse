@@ -293,7 +293,8 @@
                 "responder": "Filter Responder",
                 "rrnType": "RRN Type",
                 "rrnVal": "RRN",
-                "approvalCode": "Approval Code"
+                "approvalCode": "Approval Code",
+                "customerId": "Customer Id"
             },
             "detail": {
                 "title": "Detail Transaction"
@@ -317,7 +318,8 @@
             "approvalCode": "Approval Code",
             "rcInternal": "RC Internal",
             "rcRequestor": "RC Requestor",
-            "rcResponder": "RC Responder"
+            "rcResponder": "RC Responder",
+            "customerId": "Customer Id"
         },
         "transactionType": {
             "home": {
