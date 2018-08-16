@@ -53,7 +53,7 @@
                 "addLabelButton": "Add Bill Operator"
             },
             "filter": {
-                "name": "Filter Name"
+                "name": "Name"
             },
             "detail": {
                 "title": "{{action}} {{entity}}"
@@ -66,8 +66,8 @@
                 "addLabelButton": "Add Biller Type"
             },
             "filter": {
-                "name": "Filter Name",
-                "billPayType": "Filter type"
+                "name": "Name",
+                "billPayType": "type"
             },
             "detail": {
                 "title": "{{action}} {{entity}}"
@@ -96,11 +96,11 @@
         },
         "billerDetail": {
             "home": {
-                "title": "Biller",
-                "addLabelButton": "Add Biller"
+                "title": "Biller Supplier",
+                "addLabelButton": "Add Biller Supplier"
             },
             "detail": {
-                "title": "{{mode}} Biller",
+                "title": "{{mode}} Biller Supplier",
                 "gridTitle": "Biller Products",
                 "addDetail": "Add Biller Product",
                 "subDetail": {
@@ -146,12 +146,12 @@
         "billerProduct": {
             "home": {
                 "title": "Bill Product",
-                "addLabelButton": "Add New Product"
+                "addLabelButton": "Add Product"
             },
             "filter": {
-                "name": "Filter Name",
-                "productCode": "Filter Product Code",
-                "status": "Filter Status"
+                "name": "Name",
+                "productCode": "Product Code",
+                "status": "Status"
             },
             "detail": {
                 "title": "{{mode}} Bill Product"
@@ -169,7 +169,7 @@
         "manualRefund": {
             "home":{
                 "title": "Manual Refund",
-                "addLabelButton": "Add New Manual Refund"
+                "addLabelButton": "Add Manual Refund"
             },
             "detail": {
                 "title": "{{mode}} Manual Refund"
@@ -183,7 +183,7 @@
         "manualDeposit": {
             "home":{
                 "title": "Manual Deposit",
-                "addLabelButton": "Add New Manual Deposit"
+                "addLabelButton": "Add Manual Deposit"
             },
             "detail": {
                 "title": "{{mode}} Manual Deposit"
@@ -199,9 +199,9 @@
                 "title": "Deposit History"
             },
             "filter": {
-                "description": "Filter Description",
-                "dateStart": "Filter Date Start",
-                "dateThru": "Filter Date Thru"
+                "description": "Description",
+                "dateStart": "Date Start",
+                "dateThru": "Date Thru"
             }
         },
         "globalSettings":{
@@ -210,9 +210,9 @@
                 "addLabelButton": "Add Global Settings"
             },
             "filter": {
-                "name": "Filter Name",
-                "description": "Filter Description",
-                "type": "Filter Type"
+                "name": "Name",
+                "description": "Description",
+                "type": "Type"
             },
             "detail": {
                 "title": "{{action}} {{entity}}"
@@ -223,17 +223,17 @@
         },
         "member": {
             "home":{
-                "title": "Member Maintenance",
+                "title": "Member",
                 "addLabelButton": "Add Member"
             },
             "filter": {
-                "name": "Filter Name",
-                "description": "Filter Description",
-                "status": "Filter Status"
+                "name": "Name",
+                "description": "Description",
+                "status": "Status"
             },
             "detail": {
                 "title": "{{action}} Member",
-                "addDetail": "Add New Bank Account",
+                "addDetail": "Add Bank Account",
                 "subDetail": {
                     "title": "{{action}} - {{entity}}",
                     "name": "Name",
@@ -251,8 +251,8 @@
                 "addLabelButton": "Add Member Type"
             },
             "filter": {
-                "name": "Filter Name",
-                "description": "Filter Description"
+                "name": "Name",
+                "description": "Description"
             },
             "detail": {
                 "title": "{{action}} {{entity}}"
@@ -263,7 +263,7 @@
         "role": {
             "home": {
                 "title": "Role",
-                "addLabelButton": "Add New Role"
+                "addLabelButton": "Add Role"
             },
             "detail": {
                 "title": "{{action}} {{entity}}"
@@ -286,11 +286,11 @@
             "filter": {
                 "startDateFrom": "Transaction Date From :",
                 "startDateTo": "Transaction Date To :",
-                "transType": "Filter Transaction Type",
-                "product": "Filter Product",
-                "rcInternal": "Filter Status",
-                "requestor": "Filter Requestor",
-                "responder": "Filter Responder",
+                "transType": "Transaction Type",
+                "product": "Product",
+                "rcInternal": "Status",
+                "requestor": "Requestor",
+                "responder": "Responder",
                 "rrnType": "RRN Type",
                 "rrnVal": "RRN",
                 "approvalCode": "Approval Code",
@@ -341,11 +341,11 @@
                 "addLabelButton": "Add User"
             },
             "filter": {
-                "name": "Filter Username",
-                "firstName": "Filter First Name",
-                "lastName": "Filter Last Name",
-                "email": "Filter Email",
-                "status": "Filter Type"
+                "name": "Username",
+                "firstName": "First Name",
+                "lastName": "Last Name",
+                "email": "Email",
+                "status": "Type"
             },
             "detail": {
                 "title": "{{action}} {{entity}}",
@@ -365,10 +365,10 @@
                 "addLabelButton": "Add Response Code"
             },
             "filter": {
-                "responseCode": "Filter Response Code",
-                "description": "Filter Description",
-                "member": "Filter Member",
-                "memberType": "Filter Member Type"
+                "responseCode": "Response Code",
+                "description": "Description",
+                "member": "Member",
+                "memberType": "Member Type"
             },
             "detail": {
                 "title": "{{action}} {{entity}}",
@@ -386,8 +386,8 @@
                 "addLabelButton": "Add Response Code Internal"
             },
             "filter": {
-                "responseCode": "Filter Response Code Internal",
-                "description": "Filter Description"
+                "responseCode": "Response Code Internal",
+                "description": "Description"
             },
             "detail": {
                 "title": "{{action}} {{entity}}",

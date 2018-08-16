@@ -92,16 +92,16 @@ export class TransListComponent implements OnInit {
 
     gridOptions = {
         columnDefs: [
-            { headerName: 'No', field: 'no', width: 70, minWidth: 70, maxWidth: 70, pinned: 'left', editable: false },
-            { headerName: 'Transaction Date', field: 'transmissionDateTime', width: 150, pinned: 'left', editable: false },
-            { headerName: 'Requestor', field: 'requestor.member.name', width: 100 },
-            { headerName: 'Responder', field: 'responder.member.name', width: 100 },
-            { headerName: 'Trans Type', field: 'transType.name', width: 120 },
+            { headerName: 'No', field: 'no', width: 56, minWidth: 56, maxWidth: 70, pinned: 'left', editable: false },
+            { headerName: 'Transaction Date', field: 'transmissionDateTime', width: 140, pinned: 'left', editable: false },
+            { headerName: 'Requestor', field: 'requestor.member.name', width: 125 },
+            { headerName: 'Responder', field: 'responder.member.name', width: 125 },
+            { headerName: 'Trans Type', field: 'transType.name', width: 130 },
             { headerName: 'Product', field: 'product.name', width: 150 },
             { headerName: 'Customer ID', field: 'customerId', width: 170 },
             // { headerName: 'Buy Price', field: 'buyPrice', width: 100 },
             { headerName: 'Amount', field: 'amount', width: 100, valueFormatter: this.currencyFormatter },
-            { headerName: 'Status', field: 'rcInternal', width: 110,  valueFormatter: this.statusFormat  },
+            { headerName: 'Status', field: 'rcInternal', width: 120,  valueFormatter: this.statusFormat  },
             { headerName: ' ', width: 50, minWidth: 50, maxWidth: 50, cellRenderer: 'actionRenderer'}
         ],
         rowData: this.transList,
