@@ -52,10 +52,11 @@ export class TransListDialogComponent implements OnInit {
     gridOptions = {
         columnDefs: [
             { headerName: 'No', field: 'no', width: 70, minWidth: 70, maxWidth: 70, pinned: 'left', editable: false },
-            { headerName: 'Transaction Date', field: 'transmissionDateTime', width: 200, pinned: 'left', editable: false },
+            { headerName: 'Transaction Date', field: 'transmissionDateTime', width: 200, pinned: 'left',
+             editable: false , valueFormatter: this.dateFormatterId },
             { headerName: 'Type', field: 'transType.code', width: 120 },
             { headerName: 'Desc', field: 'transType.name', width: 250 },
-            { headerName: 'Updated', field: 'updatedAt', width: 200 },
+            { headerName: 'Updated', field: 'updatedAt', width: 200 ,  valueFormatter: this.dateFormatterId},
         ],
         rowData: this.transGridDetils,
         enableSorting: true,
@@ -114,6 +115,10 @@ export class TransListDialogComponent implements OnInit {
                     break;
             }
         }
+    }
+
+    dateFormatterId(params): string {
+        return new Date(params.value).toLocaleString('id');
     }
 
     currencyFormatter(val) {

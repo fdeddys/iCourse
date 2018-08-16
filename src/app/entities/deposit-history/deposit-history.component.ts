@@ -70,7 +70,7 @@ export class DepositHistoryComponent implements OnInit {
         columnDefs: [
             // { headerName: 'Name', field: 'name', checkboxSelection: true, width: 250, pinned: 'left', editable: true },
             { headerName: 'No', field: 'no', width: 60, pinned: 'left', editable: false },
-            { headerName: 'Tx Date', field: 'transDate', width: 125, editable: false,  valueFormatter: this.dateFormatter2  },
+            { headerName: 'Transaction Date', field: 'transDate', width: 150, editable: false,  valueFormatter: this.dateFormatter2  },
             { headerName: 'Type', field: 'transTypeDesc', width: 150, editable: false },
             { headerName: 'Member', field: 'memberName', width: 150, editable: false },
             { headerName: 'Desc', field: 'description', width: 200, editable: false },
@@ -136,12 +136,7 @@ export class DepositHistoryComponent implements OnInit {
 
     dateFormatter2(params): string {
         // console.log('isi param ', params.value);
-        const dt  = new Date(params.value);
-        const year = dt.getFullYear();
-        const mth = dt.getMonth() + 1;
-        const day = dt.getDate();
-        // return dt.toLocaleString(['id']);
-        return year + '-' + (mth < 10 ? '0' + mth : mth) + '-' + (day < 10 ? '0' + day : day);
+        return new Date(params.value).toLocaleString('id');
     }
 
     chkBoxChgS(evt) {

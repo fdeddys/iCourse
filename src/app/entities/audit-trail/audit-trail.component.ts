@@ -41,7 +41,7 @@ export class AuditTrailComponent implements OnInit {
             // { headerName: 'Name', field: 'name', checkboxSelection: true, width: 250, pinned: 'left', editable: true },
             { headerName: 'No', field: 'nourut', width: 80, pinned: 'left', editable: false },
             { headerName: 'Activity', field: 'activity', width: 125,  editable: false },
-            { headerName: 'Insert', field: 'insertDate', width: 200 },
+            { headerName: 'Insert', field: 'insertDate', width: 200 , valueFormatter: this.dateFormatterId},
             { headerName: 'Value', field: 'afterValue', width: 500 },
             { headerName: 'User', field: 'userInput', width: 100 },
             { headerName: ' ', width: 50, cellRenderer: 'actionRenderer'}
@@ -103,6 +103,10 @@ export class AuditTrailComponent implements OnInit {
                     return this.onActionEditClick(data);
             }
         }
+    }
+
+    dateFormatterId(params): string {
+        return new Date(params.value).toLocaleString('id');
     }
 
     public onActionEditClick(data: any) {

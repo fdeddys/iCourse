@@ -78,8 +78,10 @@ export class BillerComponent implements OnInit {
             { headerName: 'No', field: 'no', width: 100, pinned: 'left', editable: false },
             { headerName: 'Member Code', field: 'memberCode', width: 150, pinned: 'left', editable: false },
             { headerName: 'Name', field: 'member.name', width: 300, pinned: 'left', editable: false },
-            { headerName: 'Date Start', field: 'dateStart', width: 185, pinned: 'left', editable: false },
-            { headerName: 'Date Through', field: 'dateThru', width: 185, pinned: 'left', editable: false },
+            { headerName: 'Date Start', field: 'dateStart', width: 185, pinned: 'left',
+            editable: false, valueFormatter: this.dateFormatterId },
+            { headerName: 'Date Through', field: 'dateThru', width: 185, pinned: 'left',
+             editable: false , valueFormatter: this.dateFormatterId },
             { headerName: ' ', width: 80, cellRenderer: 'actionRenderer', pinned: 'left', editable: false}
         ],
         rowData: this.billers,
@@ -131,6 +133,10 @@ export class BillerComponent implements OnInit {
                 (res: HttpErrorResponse) => this.onError(res.message),
                 () => { console.log('finally'); }
         );
+    }
+
+    dateFormatterId(params): string {
+        return new Date(params.value).toLocaleDateString('id');
     }
 
     load(id) {

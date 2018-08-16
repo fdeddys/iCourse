@@ -113,8 +113,8 @@ export class BillerDialogComponent implements OnInit {
         { headerName: 'Product Name', field: 'billerProduct.name', width: 240 },
         { headerName: 'Sell Price', field: 'salesPrice', width: 100, valueFormatter: this.currencyFormatter },
         { headerName: 'Profit', field: 'profit', width: 100, valueFormatter: this.currencyFormatter },
-        { headerName: 'Date Start', field: 'dateStart', width: 100 },
-        { headerName: 'Date Through', field: 'dateThru', width: 100 },
+        { headerName: 'Date Start', field: 'dateStart', width: 100, valueFormatter: this.dateFormatterId },
+        { headerName: 'Date Through', field: 'dateThru', width: 100, valueFormatter: this.dateFormatterId },
         { headerName: 'Status', field: 'status', width: 100},
         { headerName: ' ', width: 80, cellRenderer: 'actionRenderer'}
         // { headerName: ' ', suppressMenu: true,
@@ -208,6 +208,9 @@ export class BillerDialogComponent implements OnInit {
     // }
     //
 
+    dateFormatterId(params): string {
+        return new Date(params.value).toLocaleDateString('id');
+    }
     currencyFormatter(params) {
         const val = params.value;
         if (val !== null) {

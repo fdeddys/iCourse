@@ -70,7 +70,7 @@ export class DepositComponent implements OnInit {
             { headerName: 'Debit', field: 'debit', width: 150, editable: false, valueFormatter: this.currencyFormatter },
             { headerName: 'Credit', field: 'credit', width: 150, editable: false, valueFormatter: this.currencyFormatter },
             { headerName: 'Transaction Type', field: 'transTypeDesc', width: 150, editable: false },
-            { headerName: 'Transaction Date', field: 'transDate', width: 150, editable: false },
+            { headerName: 'Transaction Date', field: 'transDate', width: 150, editable: false ,  valueFormatter: this.dateFormatterId},
             { headerName: 'Description', field: 'description', width: 300, editable: false },
             // { headerName: ' ', width: 80, cellRenderer: 'actionRenderer', editable: false}
         ],
@@ -265,6 +265,10 @@ export class DepositComponent implements OnInit {
         // }
         this.gridApi.setRowData(this.deposits);
         this.totalData = data.totalElements;
+    }
+
+    dateFormatterId(params): string {
+        return new Date(params.value).toLocaleString('id');
     }
 
     private onError(error) {
