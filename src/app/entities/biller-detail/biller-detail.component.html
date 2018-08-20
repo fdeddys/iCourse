@@ -55,7 +55,7 @@
             </mat-error>
         </mat-form-field>
         <mat-form-field style="width: 30%">
-            <input matInput placeholder="{{ 'ottoAG.billerDetail.sellPrice' | translate }}" name="sellPrice" value="{{ billerDetail.buyPrice + billerDetail.fee | currency:'Rp'}}" disabled>            
+            <input matInput placeholder="{{ 'ottoAG.billerDetail.sellPrice' | translate }}" name="sellPrice" value="{{ (billerDetail.buyPrice + billerDetail.fee).toLocaleString( 'id-ID' )}}" disabled>            
         </mat-form-field>        
         <mat-form-field class="form-full-width" style="margin-right: 10%">
             <!-- <input type="number" matInput placeholder="{{ 'ottoAG.billerDetail.profit' | translate }}" name="profit" [(ngModel)]="billerDetail.profit" min="0" max="billerDetail.fee" (blur)="valCheck('profit')" required> -->
