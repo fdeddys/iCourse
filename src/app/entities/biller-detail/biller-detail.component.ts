@@ -94,6 +94,8 @@ export class BillerDetailComponent implements OnInit {
         });
         this.billerDetail = {};
         this.billerDetail.billerHeaderId = this.data.rowData.billerHeaderId;
+        this.billerDetail.buyPrice = 0;
+        this.billerDetail.fee = 0;
         if (this.data.mode !== 'create') {
             console.log(this.data.rowData);
             this.mode = 'Edit';
