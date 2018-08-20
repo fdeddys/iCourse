@@ -55,6 +55,11 @@ export class BillerPriceDetailComponent implements OnInit {
     billerPDetForm: FormGroup;
     submitted = false;
 
+    salesPriceVal = '';
+    profitVal = '';
+    profitDistributorPksVal = '';
+    profitMemberPksVal = '';
+
     constructor(
         translate: TranslateService,
         private formBuilder: FormBuilder,
@@ -126,6 +131,11 @@ export class BillerPriceDetailComponent implements OnInit {
             this.billCompanyCtrl.setValue(this.data.rowData.billerProduct.billerCompany);
             this.dateSCtrl.setValue(this.data.rowData.dateStart);
             this.dateTCtrl.setValue(this.data.rowData.dateThru);
+
+            this.salesPriceVal = this.data.rowData.salesPrice.toLocaleString( 'id-ID' );
+            this.profitVal = this.data.rowData.profit.toLocaleString( 'id-ID' );
+            this.profitDistributorPksVal = this.data.rowData.profitDistributorPks.toLocaleString( 'id-ID' );
+            this.profitMemberPksVal = this.data.rowData.profitMemberPks.toLocaleString( 'id-ID' );
 
             this.billTypeCtrl.disable();
             this.billCompanyCtrl.disable();
@@ -240,6 +250,21 @@ export class BillerPriceDetailComponent implements OnInit {
 
     onNoClick(): void {
         this.dialogRef.close();
+    }
+
+    currencyFormat(event, field) {
+        // When user select text in the document, also abort.
+        // When the arrow keys are pressed, abort.
+        if (_.find([38, 40, 37, 39], function(o) { return o === event.keyCode; })) {
+            return;
+        }
+
+        // event.target.value = event.target.value.replace(/[\D\s\._\-]+/g, '');
+        let temp = event.target.value.replace(/[\D\s\._\-]+/g, '');
+        temp = temp ? parseInt( temp, 10 ) : 0;
+
+        this.billerPriceDetail[field] = temp;
+        event.target.value = (( temp === 0 ) ? '' : temp.toLocaleString( 'id-ID' ));
     }
 
     onSubmit(): void {

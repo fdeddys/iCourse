@@ -45,6 +45,10 @@ export class BillerDetailComponent implements OnInit {
     buyPriceDisabled = false;
     submitted = false;
 
+    buyPriceVal = '';
+    feeVal = '';
+    profitVal = '';
+
     constructor(
         translate: TranslateService,
         private formBuilder: FormBuilder,
@@ -113,6 +117,10 @@ export class BillerDetailComponent implements OnInit {
             this.billCompanyCtrl.setValue(this.data.rowData.billerProduct.billerCompany);
             this.extCodeDisabled = true;
             this.buyPriceDisabled = (this.data.rowData.billPayType === 'POSTPAID' ? true : false);
+
+            this.buyPriceVal = (this.data.rowData.billPayType === 'POSTPAID' ? '0' : this.data.rowData.buyPrice.toLocaleString( 'id-ID' ));
+            this.feeVal = this.data.rowData.fee.toLocaleString( 'id-ID' );
+            this.profitVal = this.data.rowData.profit.toLocaleString( 'id-ID' );
         }
         this.billerCompanyList = this.data.billerCompanyData;
         this.billerTypeList = this.data.billerTypeData;
@@ -165,6 +173,14 @@ export class BillerDetailComponent implements OnInit {
             this.productList = _.filter(this.data.productData, function(o) { return o.billerType.id === idT; });
             this.productList = _.filter(this.productList, function(o) { return o.billerCompany.id === idC; });
         }
+
+        if (this.billTypeCtrl.value !== null) {
+            if (this.billTypeCtrl.value.billPayType === 'POSTPAID') {
+                this.buyPriceVal = '0';
+                this.billerDetail.buyPrice = 0;
+                this.buyPriceDisabled = true;
+            }
+        }
         console.log(this.productList);
     }
 
@@ -172,9 +188,30 @@ export class BillerDetailComponent implements OnInit {
         this.dialogRef.close();
     }
 
+    currencyFormat(event, field) {
+        // When user select text in the document, also abort.
+        // When the arrow keys are pressed, abort.
+        if (_.find([38, 40, 37, 39], function(o) { return o === event.keyCode; })) {
+            return;
+        }
+
+        // event.target.value = event.target.value.replace(/[\D\s\._\-]+/g, '');
+        let temp = event.target.value.replace(/[\D\s\._\-]+/g, '');
+        temp = temp ? parseInt( temp, 10 ) : 0;
+
+        if (field === 'profit') {
+            if (this.billerDetail.fee !== null) {
+                temp = temp > this.billerDetail.fee ? this.billerDetail.fee : temp;
+            }
+        }
+        this.billerDetail[field] = temp;
+        event.target.value = (( temp === 0 ) ? '' : temp.toLocaleString( 'id-ID' ));
+    }
+
     onSubmit(): void {
         console.log(this.billerDetail);
         // this.billerDetail.status = (this.statusData ? 'ACTIVE' : 'INACTIVE');
+        this.billerDetail.billPayType = this.billTypeCtrl.value.billPayType;
         this.billerDetail.sellPrice = this.billerDetail.buyPrice + this.billerDetail.fee;
         // this.billerDetail.externalCode = '';
        // this.billerDetail.postPaid = 1;

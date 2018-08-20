@@ -1,4 +1,5 @@
 import { Component, OnInit, Inject } from '@angular/core';
+import * as _ from 'lodash';
 
 import { FormControl, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA, MatSnackBar } from '@angular/material';
@@ -31,6 +32,7 @@ export class DepositDialogComponent implements OnInit {
     dateCtrl: FormControl;
     transTypeDisabled = false;
     manualDepo = false;
+    amountVal = 0;
 
     constructor(
         private formBuilder: FormBuilder,
@@ -103,6 +105,21 @@ export class DepositDialogComponent implements OnInit {
         return year + '-' + (mth < 10 ? '0' + mth : mth) + '-' + (day < 10 ? '0' + day : day);
     }
 
+    currencyFormat(event) {
+        // When user select text in the document, also abort.
+        // When the arrow keys are pressed, abort.
+        if (_.find([38, 40, 37, 39], function(o) { return o === event.keyCode; })) {
+            return;
+        }
+
+        // event.target.value = event.target.value.replace(/[\D\s\._\-]+/g, '');
+        let temp = event.target.value.replace(/[\D\s\._\-]+/g, '');
+        temp = temp ? parseInt( temp, 10 ) : 0;
+
+        this.amountVal = temp;
+        event.target.value = (( temp === 0 ) ? '' : temp.toLocaleString( 'id-ID' ));
+    }
+
     validate(): void {
         this.submitted = true;
         // stop here if form is invalid
@@ -118,7 +135,8 @@ export class DepositDialogComponent implements OnInit {
         }
         this.depositSave = {
             memberTypeId: this.deposit.memberTypeId,
-            amount: this.deposit.amount,
+            // amount: this.deposit.amount,
+            amount: this.amountVal,
             transTypeCode: this.deposit.transTypeCode,
             description: this.deposit.description,
             transDate: this.dateFormatter(this.dateCtrl),

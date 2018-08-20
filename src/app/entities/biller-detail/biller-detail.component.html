@@ -40,14 +40,16 @@
             <input matInput placeholder="External Code" name="externalCode" [(ngModel)]="billerDetail.externalCode">
         </mat-form-field> -->
         <mat-form-field style="width: 30%; margin-right: 5%">
-            <input type="number" matInput placeholder="{{ 'ottoAG.billerDetail.buyPrice' | translate }}" name="buyPrice" [(ngModel)]="billerDetail.buyPrice" [disabled]="buyPriceDisabled" min="0" (blur)="valCheck('buyPrice')" required>
+            <!-- <input type="number" matInput placeholder="{{ 'ottoAG.billerDetail.buyPrice' | translate }}" name="buyPrice" [(ngModel)]="billerDetail.buyPrice" [disabled]="buyPriceDisabled" min="0" (blur)="valCheck('buyPrice')" required> -->
+            <input matInput placeholder="{{ 'ottoAG.billerDetail.buyPrice' | translate }}" name="buyPrice" [(ngModel)]="buyPriceVal" [disabled]="buyPriceDisabled" (keyup)="currencyFormat($event, 'buyPrice')" required>
             <mat-icon matSuffix matTooltip="Harga beli harus 0 bila Postpaid&#13;Harga beli dapat diinput bila Prepaid">help</mat-icon>
             <mat-error *ngIf="submitted && form.buyPrice.errors" class="invalid-feedback">
                 <div *ngIf="form.buyPrice.errors.required"> {{form.buyPrice.errors.message}}</div>
             </mat-error>
         </mat-form-field>
         <mat-form-field style="width: 30%; margin-right: 5%">
-            <input type="number" matInput placeholder="{{ 'ottoAG.billerDetail.fee' | translate }}" name="fee" [(ngModel)]="billerDetail.fee" min="0" (blur)="valCheck('fee')" required>
+            <!-- <input type="number" matInput placeholder="{{ 'ottoAG.billerDetail.fee' | translate }}" name="fee" [(ngModel)]="billerDetail.fee" min="0" (blur)="valCheck('fee')" required> -->
+            <input matInput placeholder="{{ 'ottoAG.billerDetail.fee' | translate }}" name="fee" [(ngModel)]="feeVal" (keyup)="currencyFormat($event, 'fee')" required>
             <mat-error *ngIf="submitted && form.fee.errors" class="invalid-feedback">
                 <div *ngIf="form.fee.errors.required"> {{form.fee.errors.message}}</div>
             </mat-error>
@@ -56,7 +58,8 @@
             <input matInput placeholder="{{ 'ottoAG.billerDetail.sellPrice' | translate }}" name="sellPrice" value="{{ billerDetail.buyPrice + billerDetail.fee | currency:'Rp'}}" disabled>            
         </mat-form-field>        
         <mat-form-field class="form-full-width" style="margin-right: 10%">
-            <input type="number" matInput placeholder="{{ 'ottoAG.billerDetail.profit' | translate }}" name="profit" [(ngModel)]="billerDetail.profit" min="0" max="billerDetail.fee" (blur)="valCheck('profit')" required>
+            <!-- <input type="number" matInput placeholder="{{ 'ottoAG.billerDetail.profit' | translate }}" name="profit" [(ngModel)]="billerDetail.profit" min="0" max="billerDetail.fee" (blur)="valCheck('profit')" required> -->
+            <input matInput placeholder="{{ 'ottoAG.billerDetail.profit' | translate }}" name="profit" [(ngModel)]="profitVal" max="billerDetail.fee" (keyup)="currencyFormat($event, 'profit')" required>
             <mat-error *ngIf="submitted && form.profit.errors" class="invalid-feedback">
                 <div *ngIf="form.profit.errors.required"> {{form.profit.errors.message}}</div>
             </mat-error>

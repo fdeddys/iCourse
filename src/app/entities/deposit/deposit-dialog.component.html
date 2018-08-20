@@ -23,7 +23,8 @@
             </mat-error> 
 		</mat-form-field>
 		<mat-form-field class="form-half-width form-separator">
-			<input type="number" min="0" matInput placeholder="{{ 'ottoAG.manualDeposit.amount' | translate }}" name ="amount" [(ngModel)]="deposit.amount" (blur)="valCheck('amount')" required>
+            <!-- <input type="number" min="0" matInput placeholder="{{ 'ottoAG.manualDeposit.amount' | translate }}" name ="amount" [(ngModel)]="deposit.amount" (blur)="valCheck('amount')" required> -->
+            <input type="text" matInput placeholder="{{ 'ottoAG.manualDeposit.amount' | translate }}" name ="amount" (keyup)="currencyFormat($event)" required>
 			<mat-error *ngIf="submitted && form.amount.errors" class="invalid-feedback">
 				<div *ngIf="form.amount.errors.required"> {{form.amount.errors.message}}</div>
 			</mat-error> 

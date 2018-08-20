@@ -37,27 +37,31 @@
             </mat-error>
         </mat-form-field> 
         <mat-form-field class="form-full-width" style="margin-right: 10%">
-            <input type="number" matInput placeholder="{{ 'ottoAG.billerPriceDetail.sellPrice' | translate }}" name="salesPrice" [(ngModel)]="billerPriceDetail.salesPrice" min="0" (blur)="valCheck('salesPrice')" required>
+            <!-- <input type="number" matInput placeholder="{{ 'ottoAG.billerPriceDetail.sellPrice' | translate }}" name="salesPrice" [(ngModel)]="billerPriceDetail.salesPrice" min="0" (blur)="valCheck('salesPrice')" required> -->
+            <input matInput placeholder="{{ 'ottoAG.billerPriceDetail.sellPrice' | translate }}" name="salesPrice" [(ngModel)]="salesPriceVal" (keyup)="currencyFormat($event, 'salesPrice')" required>
             <mat-icon matSuffix (click)="showHelp()">help</mat-icon>
             <mat-error *ngIf="submitted && form.sellPrice.errors" class="invalid-feedback">
                 <div *ngIf="form.sellPrice.errors.required"> {{form.sellPrice.errors.message}}</div>
             </mat-error>
         </mat-form-field>
         <mat-form-field class="form-full-width">
-            <input type="number" matInput placeholder="{{ 'ottoAG.billerPriceDetail.profit' | translate }}" name="profitMerchant" [(ngModel)]="billerPriceDetail.profit" min="0" (blur)="valCheck('profit')" required>
+            <!-- <input type="number" matInput placeholder="{{ 'ottoAG.billerPriceDetail.profit' | translate }}" name="profitMerchant" [(ngModel)]="billerPriceDetail.profit" min="0" (blur)="valCheck('profit')" required> -->
+            <input matInput placeholder="{{ 'ottoAG.billerPriceDetail.profit' | translate }}" name="profitMerchant" [(ngModel)]="profitVal" (keyup)="currencyFormat($event, 'profit')" required>
             <mat-icon matSuffix matTooltip="Profit Subscriber akan&#13;ditambahkan ke sell price">help</mat-icon>
             <mat-error *ngIf="submitted && form.profitMerc.errors" class="invalid-feedback">
                 <div *ngIf="form.profitMerc.errors.required"> {{form.profitMerc.errors.message}}</div>
             </mat-error>
         </mat-form-field>
         <mat-form-field class="form-full-width" style="margin-right: 10%">
-            <input type="number" matInput placeholder="{{ 'ottoAG.billerPriceDetail.profitDistributorPks' | translate }}" name="profitDistributor" [(ngModel)]="billerPriceDetail.profitDistributorPks" min="0" (blur)="valCheck('profitDistributorPks')" required>
+            <!-- <input type="number" matInput placeholder="{{ 'ottoAG.billerPriceDetail.profitDistributorPks' | translate }}" name="profitDistributor" [(ngModel)]="billerPriceDetail.profitDistributorPks" min="0" (blur)="valCheck('profitDistributorPks')" required> -->
+            <input matInput placeholder="{{ 'ottoAG.billerPriceDetail.profitDistributorPks' | translate }}" name="profitDistributor" [(ngModel)]="profitDistributorPksVal" (keyup)="currencyFormat($event, 'profitDistributorPks')" required>
             <mat-error *ngIf="submitted && form.profitDist.errors" class="invalid-feedback">
                 <div *ngIf="form.profitDist.errors.required"> {{form.profitDist.errors.message}}</div>
             </mat-error>
         </mat-form-field>
         <mat-form-field class="form-full-width">
-            <input type="number" matInput placeholder="{{ 'ottoAG.billerPriceDetail.profitMemberPks' | translate }}" name="profitMember" [(ngModel)]="billerPriceDetail.profitMemberPks" min="0" (blur)="valCheck('profitMemberPks')" required>
+            <!-- <input type="number" matInput placeholder="{{ 'ottoAG.billerPriceDetail.profitMemberPks' | translate }}" name="profitMember" [(ngModel)]="billerPriceDetail.profitMemberPks" min="0" (blur)="valCheck('profitMemberPks')" required> -->
+            <input matInput placeholder="{{ 'ottoAG.billerPriceDetail.profitMemberPks' | translate }}" name="profitMember" [(ngModel)]="profitMemberPksVal" (keyup)="currencyFormat($event, 'profitMemberPks')" required>
             <mat-error *ngIf="submitted && form.profitMemb.errors" class="invalid-feedback">
                 <div *ngIf="form.profitMemb.errors.required"> {{form.profitMemb.errors.message}}</div>
             </mat-error>
