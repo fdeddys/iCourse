@@ -70,7 +70,7 @@
         <mat-form-field class="form-full-width">
 			<mat-select placeholder="{{ 'ottoAG.billerDetail.status' | translate }}" [(ngModel)]="billerDetail.status" name="status" required>
 				<mat-option *ngFor="let status of statusList" [value]="status">
-					{{status === 'ACTIVE' ? 'AVAILABLE' : 'DISCONTINUED'}}
+					{{status }} 
 				</mat-option>
             </mat-select>
             <mat-error *ngIf="submitted && form.status.errors" class="invalid-feedback">

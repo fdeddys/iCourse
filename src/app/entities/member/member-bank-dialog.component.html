@@ -21,7 +21,7 @@
                 </mat-select> 
             </mat-form-field>
             <mat-form-field class="container-full-width">
-                <input matInput placeholder="{{ 'ottoAG.member.detail.subDetail.accountNumber' | translate }}" [(ngModel)]="memberBank.accountNumber" name ="accountNumber" maxlength="30" onkeypress='return event.charCode >= 48 && event.charCode <= 57'>  
+                <input matInput placeholder="{{ 'ottoAG.member.detail.subDetail.accountNumber' | translate }}" [(ngModel)]="memberBank.accountNumber" name ="accountNumber" maxlength="30" onkeypress='return ((event.charCode == 0 ) || ( event.charCode >= 48 && event.charCode <= 57))'>  
             </mat-form-field> 
         </div>
    
