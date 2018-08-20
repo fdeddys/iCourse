@@ -100,7 +100,7 @@ export class TransListComponent implements OnInit {
             { headerName: 'Product', field: 'product.name', width: 150 },
             { headerName: 'Customer ID', field: 'customerId', width: 170 },
             // { headerName: 'Buy Price', field: 'buyPrice', width: 100 },
-            { headerName: 'Amount', field: 'amount', width: 100, valueFormatter: this.currencyFormatter },
+            { headerName: 'Amount', field: 'amount', width: 100, cellStyle: {textAlign: 'right'}, valueFormatter: this.currencyFormatter },
             { headerName: 'Status', field: 'rcInternal', width: 120,  valueFormatter: this.statusFormat  },
             { headerName: ' ', width: 50, minWidth: 50, maxWidth: 50, cellRenderer: 'actionRenderer'}
         ],

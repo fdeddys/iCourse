@@ -67,8 +67,10 @@ export class DepositComponent implements OnInit {
         columnDefs: [
             { headerName: 'No', field: 'no', width: 100, pinned: 'left', editable: false },
             { headerName: 'Member Type', field: 'memberName', width: 150, editable: false },
-            { headerName: 'Debit', field: 'debit', width: 150, editable: false, valueFormatter: this.currencyFormatter },
-            { headerName: 'Credit', field: 'credit', width: 150, editable: false, valueFormatter: this.currencyFormatter },
+            { headerName: 'Debit', field: 'debit', width: 150, cellStyle: {textAlign: 'right'},
+            editable: false, valueFormatter: this.currencyFormatter },
+            { headerName: 'Credit', field: 'credit', width: 150, cellStyle: {textAlign: 'right'},
+            editable: false, valueFormatter: this.currencyFormatter },
             { headerName: 'Transaction Type', field: 'transTypeDesc', width: 150, editable: false },
             { headerName: 'Transaction Date', field: 'transDate', width: 150, editable: false ,  valueFormatter: this.dateFormatterId},
             { headerName: 'Description', field: 'description', width: 300, editable: false },
