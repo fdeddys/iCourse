@@ -597,8 +597,14 @@ export class TransListComponent implements OnInit {
     }
 
     public async exportCSV(reportType): Promise<void> {
-        this.filter.filDateFStart = (this.dateFStartCtrl.value === null ? null : this.dateFStartCtrl.value);
-        this.filter.filDateTStart = (this.dateTStartCtrl.value === null ? null : this.dateTStartCtrl.value);
+        this.filter.filDateFStart = (this.dateFStartCtrl.value === null ? null : this.dateFormatter(this.dateFStartCtrl.value));
+        this.filter.filDateTStart = (this.dateTStartCtrl.value === null ? null : this.dateFormatter(this.dateTStartCtrl.value));
+
+        if (this.filter.filDateFStart !== null && this.filter.filDateTStart !== null) {
+            this.filter.filDateFStart = this.filter.filDateFStart + ' 00:00';
+            this.filter.filDateTStart = this.filter.filDateTStart + ' 23:59';
+        }
+
 
         const blob = await this.transListService.exportCSV({filter: this.filter }).then(
         (resp) => {
