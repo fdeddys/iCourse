@@ -22,6 +22,7 @@ import { ResponseCodeModule} from './response-code/response-code.module';
 import { TransactionListModule } from './transaction-list/transaction-list.module';
 import { DepositHistoryModule } from './deposit-history/deposit-history.module';
 import { DepositModule } from './deposit/deposit.module';
+import { PromotionModule } from './promotion/promotion.module';
 
 
 @NgModule({
@@ -47,7 +48,8 @@ import { DepositModule } from './deposit/deposit.module';
         ResponseCodeModule,
         TransactionListModule,
         DepositHistoryModule,
-        DepositModule
+        DepositModule,
+        PromotionModule
     ],
     entryComponents: [],
     providers: [],

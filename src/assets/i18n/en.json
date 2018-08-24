@@ -260,6 +260,31 @@
             "name": "Name",
             "description": "Description"
         },
+        "promotion": {
+            "home": {
+                "title": "Promotion",
+                "addLabelButton": "Add Promotion"
+            },
+            "detail": {
+                "title": "{{mode}} Promotion"
+            },
+            "name": "Promotion Name",
+            "dateStart": "Date Start",
+            "dateThru": "Date Through",
+            "budget": "Budget",
+            "balance": "Balance",
+            "maxPromoAmount": "Max. Promo Amount",
+            "minTransAmount": "Min. Transaction Amount",
+            "applyTo": "Category",
+            "applyToTypeId": "Sub-Category",
+            "applyToCompanyId": "Sub-Category",
+            "applyToProductId": "Sub-Category",
+            "applyToMemberTypeId": "Bill Subscriber",
+            "onBehalfId": "On Behalf",
+            "type": "Promotion Type",
+            "value": "Value",
+            "status": "Status"
+        },
         "role": {
             "home": {
                 "title": "Role",
