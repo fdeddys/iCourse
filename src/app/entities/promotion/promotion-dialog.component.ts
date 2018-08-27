@@ -158,7 +158,9 @@ export class PromotionDialogComponent implements OnInit {
             this.memberCtrl.setValue(this.data.rowData.onBehalfMember);
             this.billTypeCtrl.setValue(this.data.rowData.applyToType);
             this.billCompanyCtrl.setValue(this.data.rowData.applyToCompany);
-            this.promotion.applyToProductId = this.data.rowData.applyToProduct.id;
+            if (this.data.rowData.applyToProduct !== null) {
+                this.promotion.applyToProductId = this.data.rowData.applyToProduct.id;
+            }
             this.billTypeCtrl.enable();
             this.billCompanyCtrl.enable();
         }
