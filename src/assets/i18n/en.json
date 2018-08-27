@@ -283,6 +283,7 @@
             "onBehalfId": "On Behalf",
             "type": "Promotion Type",
             "value": "Value",
+            "budgetRequired": "Budget Required",
             "status": "Status"
         },
         "role": {

@@ -316,7 +316,8 @@ export class PromotionComponent implements OnInit {
                 onBehalfMemberId: null,
                 isActive: null,
                 dateStart: null,
-                dateThrough: null
+                dateThrough: null,
+                budgetRequired: 0,
             },
         };
         if (mode !== 'create') {

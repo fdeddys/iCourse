@@ -125,6 +125,9 @@
                 <div *ngIf="form.onBehalfId.errors.required"> {{form.onBehalfId.errors.message}}</div>
             </mat-error>
         </mat-form-field>
+        <div class="form-half-width form-separator" style="display: inline-block;">
+            <mat-checkbox [color]="'primary'" [(ngModel)]="promotion.budgetRequired" [ngModelOptions]="{standalone: true}" style="margin-right: 10px">{{ 'ottoAG.promotion.budgetRequired' | translate }}</mat-checkbox>
+        </div>
 		<mat-form-field class="form-half-width">
 			<mat-select placeholder="{{ 'ottoAG.promotion.status' | translate }}" [(ngModel)]="promotion.active" name="status">
 				<mat-option *ngFor="let status of statusList" [value]="status">

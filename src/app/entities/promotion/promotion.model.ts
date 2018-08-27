@@ -7,6 +7,7 @@ export class Promotion implements BaseEntity {
         public type?: number,
         public value?: number,
         public budget?: number,
+        public budgetRequired?: number,
         public balance?: number,
         public maxPromoAmount?: number,
         public minTransAmount?: number,

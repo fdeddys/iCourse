@@ -300,6 +300,7 @@ export class PromotionDialogComponent implements OnInit {
             applyToProductId: (this.promotion.applyTo === 3 ? this.promotion.applyToProductId : null),
             applyToMemberTypeId: this.billSubsCtrl.value.id,
             onBehalfMemberId: this.memberCtrl.value.id,
+            budgetRequired: (this.promotion.budgetRequired ? 1 : 0),
             active: this.promotion.active,
             // dateStart: this.dateFormatter(this.dateSCtrl),
             // dateThrough: this.dateFormatter(this.dateTCtrl),
