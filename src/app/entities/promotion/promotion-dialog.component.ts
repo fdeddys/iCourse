@@ -53,6 +53,8 @@ export class PromotionDialogComponent implements OnInit {
     valueVal = '0';
     budgetVal = '0';
     balanceVal = '0';
+    maxPromoAmountVal = '0';
+    minTransAmountVal = '0';
     mode = 'Add';
     submitted = false;
 
@@ -144,8 +146,12 @@ export class PromotionDialogComponent implements OnInit {
             this.promotion = this.data.rowData;
             console.log('this.promotion : ', this.promotion);
 
+            this.valueVal = this.currencyFormatter(this.data.rowData.value);
             this.budgetVal = this.currencyFormatter(this.data.rowData.budget);
             this.balanceVal = this.currencyFormatter(this.data.rowData.balance);
+            this.maxPromoAmountVal = this.currencyFormatter(this.data.rowData.maxPromoAmount);
+            this.minTransAmountVal = this.currencyFormatter(this.data.rowData.minTransAmount);
+
             this.dateSCtrl.setValue(this.data.rowData.dateStart);
             this.dateTCtrl.setValue(this.data.rowData.dateThrough);
             this.billSubsCtrl.setValue(this.data.rowData.applyToMemberType);
@@ -289,9 +295,9 @@ export class PromotionDialogComponent implements OnInit {
             maxPromoAmount: this.promotion.maxPromoAmount,
             minTransAmount: this.promotion.minTransAmount,
             applyTo: this.promotion.applyTo,
-            applyToTypeId: (this.billTypeCtrl.value.id === null ? 0 : this.billTypeCtrl.value.id),
-            applyToCompanyId: (this.billCompanyCtrl.value.id === null ? 0 : this.billCompanyCtrl.value.id),
-            applyToProductId: (this.promotion.applyToProductId === null ? 0 : this.promotion.applyToProductId),
+            applyToTypeId: (this.promotion.applyTo === 1 ? this.billTypeCtrl.value.id : null),
+            applyToCompanyId: (this.promotion.applyTo === 2 ? this.billCompanyCtrl.value.id : null),
+            applyToProductId: (this.promotion.applyTo === 3 ? this.promotion.applyToProductId : null),
             applyToMemberTypeId: this.billSubsCtrl.value.id,
             onBehalfMemberId: this.memberCtrl.value.id,
             active: this.promotion.active,

@@ -3,6 +3,7 @@ import { HttpResponse, HttpErrorResponse } from '@angular/common/http';
 import { Promotion } from './promotion.model';
 import { PromotionService } from './promotion.service';
 import { TranslateService } from '@ngx-translate/core';
+import * as _ from 'lodash';
 
 import { BillerCompany, BillerCompanyService } from '../biller-company';
 import { BillerType, BillerTypeService } from '../biller-type';
@@ -68,13 +69,13 @@ export class PromotionComponent implements OnInit {
             { headerName: 'Biller Subscriber', field: 'applyToMemberType', width: 250, pinned: 'left', editable: false,
             valueFormatter: this.billerFormatter },
             { headerName: 'Name', field: 'name', width: 300, editable: false },
-            { headerName: 'Type', field: 'type', width: 150 },
-            { headerName: 'Value', field: 'value', width: 150 },
-            { headerName: 'Category', field: 'applyTo', width: 150 },
-            { headerName: 'Sub Category', field: 'applyToId', width: 150 },
+            { headerName: 'Type', field: 'type', width: 150, valueFormatter: this.typeFormatter },
+            { headerName: 'Value', field: 'value', width: 150, valueFormatter: this.valFormatter },
+            { headerName: 'Category', field: 'category', width: 150 },
+            { headerName: 'Sub Category', field: 'subCategory', width: 150 },
             { headerName: 'Date Start', field: 'dateStart', width: 185, editable: false, valueFormatter: this.dateFormatterId },
             { headerName: 'Date Through', field: 'dateThrough', width: 185, editable: false , valueFormatter: this.dateFormatterId },
-            { headerName: 'Status', field: 'status', width: 150 },
+            { headerName: 'Status', field: 'active', width: 150 },
             { headerName: ' ', width: 80, minWidth: 80, maxWidth: 150, cellRenderer: 'actionRenderer'}
         ],
         rowData: [],
@@ -91,6 +92,28 @@ export class PromotionComponent implements OnInit {
             actionRenderer: MatActionButtonComponent
         }
     };
+
+    typeFormatter(params): string {
+        const promotionTypeList = [
+            {id: 1, value: 'Discount %'},
+            {id: 2, value: 'Discount Fixed Amount'},
+            {id: 3, value: 'Cashback %'},
+            {id: 4, value: 'Cashback Fixed Amount'}
+        ];
+        const temp = _.find(promotionTypeList, function(o) { return o.id === params.value; });
+        if (temp === undefined) {
+            return '';
+        }
+        return temp.value;
+    }
+
+    valFormatter(params): string {
+        if (params.data.type === 1 || params.data.type === 3) {
+            return params.value + '%';
+        }
+        const temp = (parseFloat(params.value)).toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&.');
+        return temp.substring(0, (temp.length - 3));
+    }
 
     billerFormatter(params): string {
         return params.value.member.name + ' (' + params.value.memberCode + ')';
