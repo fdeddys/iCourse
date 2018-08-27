@@ -1,9 +1,13 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
 import { HttpResponse, HttpErrorResponse } from '@angular/common/http';
 import { Promotion } from './promotion.model';
 import { PromotionService } from './promotion.service';
 import { TranslateService } from '@ngx-translate/core';
 import * as _ from 'lodash';
+
+import { Observable } from 'rxjs';
+import { map, startWith } from 'rxjs/operators';
+import { FormControl } from '@angular/forms';
 
 import { BillerCompany, BillerCompanyService } from '../biller-company';
 import { BillerType, BillerTypeService } from '../biller-type';
@@ -24,6 +28,12 @@ import { PromotionDialogComponent } from './promotion-dialog.component';
     styleUrls: ['./promotion.component.css']
 })
 export class PromotionComponent implements OnInit {
+    @ViewChild('downloadLink') private downloadLink: ElementRef;
+    memberCtrl: FormControl;
+    filteredMember: Observable<any[]>;
+    billSubsCtrl: FormControl;
+    filteredBillSubs: Observable<any[]>;
+
     private gridApi;
     private gridColumnApi;
     promotions: Promotion[];
@@ -54,6 +64,7 @@ export class PromotionComponent implements OnInit {
     curPage = 1;
     totalData = 0;
     totalRecord = TOTAL_RECORD_PER_PAGE;
+    @ViewChild(MatPaginator) paginator: MatPaginator;
 
     filter: PromotionFilter = {
         name: '',
@@ -135,6 +146,9 @@ export class PromotionComponent implements OnInit {
     ) {
         translate.setDefaultLang('en');
         translate.use('en');
+
+        this.memberCtrl = new FormControl();
+        this.billSubsCtrl = new FormControl();
     }
 
     ngOnInit() {
@@ -206,13 +220,43 @@ export class PromotionComponent implements OnInit {
         );
     }
 
+    filterMember(name: string) {
+        return this.memberList.filter(member =>
+        member.name.toLowerCase().indexOf(name.toLowerCase()) === 0);
+    }
+
+    filterBillSubs(name: string) {
+        return this.billSubsList.filter(billSubs =>
+        billSubs.member.name.toLowerCase().indexOf(name.toLowerCase()) === 0);
+    }
+
+    displayFnMem(member?: Member): string | undefined {
+        return member ? member.name : undefined;
+    }
+
+    displayFnBillSubs(biller?: Biller): string | undefined {
+        return biller ? biller.member.name + ' (' + biller.memberCode + ')' : undefined;
+    }
+
     private onSuccessMem(data, headers) {
         this.memberList = data.content;
+        this.filteredMember = this.memberCtrl.valueChanges
+        .pipe(
+            startWith<string | Member>(''),
+            map(value => typeof value === 'string' ? value : value.name),
+            map(name => name ? this.filterMember(name) : this.memberList.slice())
+        );
     }
 
     private onSuccessBillNon(data, headers) {
         console.log('isi response requestor ==> ', data);
         this.billSubsList = data.content;
+        this.filteredBillSubs = this.billSubsCtrl.valueChanges
+        .pipe(
+            startWith<string | Biller>(''),
+            map(value => typeof value === 'string' ? value : value.member.name),
+            map(name => name ? this.filterBillSubs(name) : this.billSubsList.slice())
+        );
     }
 
     private onSuccessBillType(data, headers) {
@@ -237,10 +281,19 @@ export class PromotionComponent implements OnInit {
         console.log('error..');
     }
 
+    actionfilter(): void {
+        this.paginator._pageIndex = 0;
+        this.filterData(1);
+    }
+
     filterData(page): void {
         if (page !== '') {
             this.curPage = page;
         }
+
+        this.filter.applyToMemberTypeId = (this.billSubsCtrl.value !== null ? this.billSubsCtrl.value.id : null);
+        this.filter.onBehalfMemberId = (this.memberCtrl.value !== null ? this.memberCtrl.value.id : null);
+
         this.promotionService.filter({
             page: this.curPage,
             count: this.totalRecord,
@@ -336,6 +389,30 @@ export class PromotionComponent implements OnInit {
             // this.loadAll(this.curPage);
             this.filterData('');
         });
+    }
+
+    public async exportCSV(reportType): Promise<void> {
+        // if (this.filter.status === 'ALL') {
+        //     this.filter.status = null;
+        // }
+        const blob = await this.promotionService.exportCSV(reportType, this.filter).then(
+        (resp) => {
+            const url = window.URL.createObjectURL(resp.body);
+            const link = this.downloadLink.nativeElement;
+            link.href = url;
+            link.download = resp.headers.get('File-Name');
+            link.click();
+            window.URL.revokeObjectURL(url);
+
+            // this.filter.status = 'ALL';
+        });
+    }
+
+    public onPaginateChange($event): void {
+        // console.log('events ', $event);
+        this.curPage = $event.pageIndex + 1;
+        // this.loadAll(this.curPage);
+        this.filterData('');
     }
 }
 

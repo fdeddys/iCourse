@@ -265,6 +265,13 @@
                 "title": "Promotion",
                 "addLabelButton": "Add Promotion"
             },
+            "filter": {
+                "name": "Name",
+                "applyToMemberTypeId": "Bill Subscriber",
+                "applyTo": "Category",
+                "onBehalfId": "On Behalf",
+                "type": "Promotion Type"
+            },
             "detail": {
                 "title": "{{mode}} Promotion"
             },

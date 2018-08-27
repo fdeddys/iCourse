@@ -11,8 +11,50 @@
             <button mat-raised-button color="primary" (click)="openDialog('create', null)" style="margin-bottom: 10px;">{{ "ottoAG.promotion.home.addLabelButton" | translate }}</button>
             <button mat-raised-button class="primary"  (click)="exportCSV('csv')" style="margin-bottom: 10px;">{{ "entity.action.exportCSV" | translate }}</button>
         </div> 
-        <br>
-		
+		<br>
+		<div>
+            <mat-form-field class="container-half-width">
+                <input matInput placeholder="{{ 'ottoAG.promotion.filter.name' | translate }}" [(ngModel)]="filter.name" name ="name">
+			</mat-form-field>
+			<mat-form-field class="container-half-width">
+				<mat-select placeholder="{{ 'ottoAG.promotion.filter.type' | translate }}" [(ngModel)]="filter.type" name="type">
+					<mat-option *ngFor="let type of promotionTypeList" [value]="type.id">
+						{{type.value}}
+					</mat-option>
+				</mat-select>
+				<button mat-button matSuffix mat-icon-button aria-label="Clear" *ngIf="filter.type !== null" (click)="$event.stopPropagation(); filter.type = null;">
+                    <mat-icon>close</mat-icon>
+                </button>
+			</mat-form-field>
+			<mat-form-field class="container-half-width">
+				<mat-select placeholder="{{ 'ottoAG.promotion.filter.applyTo' | translate }}" [(ngModel)]="filter.applyTo" name="applyTo">
+					<mat-option *ngFor="let applyTo of categoryList" [value]="applyTo.id">
+						{{applyTo.value}}
+					</mat-option>
+				</mat-select>
+				<button mat-button matSuffix mat-icon-button aria-label="Clear" *ngIf="filter.applyTo !== null" (click)="$event.stopPropagation(); filter.applyTo = null;">
+                    <mat-icon>close</mat-icon>
+                </button>
+			</mat-form-field>
+			<mat-form-field class="container-half-width">
+				<input matInput placeholder="{{ 'ottoAG.promotion.applyToMemberTypeId' | translate }}" aria-label="Member Type" [matAutocomplete]="auto" [formControl]="billSubsCtrl">
+				<mat-autocomplete #auto="matAutocomplete" [displayWith]="displayFnBillSubs">
+					<mat-option *ngFor="let billSubs of filteredBillSubs | async" [value]="billSubs">
+						<span>{{billSubs.member.name + ' (' + billSubs.memberCode + ')'}}</span>
+					</mat-option>
+				</mat-autocomplete>
+			</mat-form-field>
+			<mat-form-field class="container-half-width">
+				<input matInput placeholder="{{ 'ottoAG.promotion.onBehalfId' | translate }}" aria-label="On Behalf" [matAutocomplete]="autoComp" [formControl]="memberCtrl">
+				<mat-autocomplete #autoComp="matAutocomplete" [displayWith]="displayFnMem">
+					<mat-option *ngFor="let member of filteredMember | async" [value]="member">
+						<span>{{ member.name }}</span>
+					</mat-option>
+				</mat-autocomplete>
+			</mat-form-field>
+			<button mat-raised-button color="primary" (click)="actionfilter()" style="margin-left: 30px">Filter</button>
+        </div>
+		<br>
         <ag-grid-angular 
 			style="height: 314px;" 
 			class="{{theme}}"
