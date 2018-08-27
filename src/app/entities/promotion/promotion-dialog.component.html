@@ -88,17 +88,11 @@
             </mat-error>
         </mat-form-field>
         <!--  -->
-        <mat-form-field class="form-half-width form-separator">
-            <input matInput placeholder="{{ 'ottoAG.promotion.budget' | translate }}" name="budget" [(ngModel)]="budgetVal" (keyup)="currencyFormat($event, 'budget')" required>
-            <mat-error *ngIf="submitted && form.budget.errors" class="invalid-feedback">
-                <div *ngIf="form.budget.errors.required"> {{form.budget.errors.message}}</div>
-            </mat-error>
+        <mat-form-field class="form-half-width form-separator" *ngIf="mode === 'Edit'">
+            <input matInput placeholder="{{ 'ottoAG.promotion.budget' | translate }}" name="budget" [(ngModel)]="budgetVal" disabled>
         </mat-form-field>
-        <mat-form-field class="form-half-width">
-            <input matInput placeholder="{{ 'ottoAG.promotion.balance' | translate }}" name="balance" [(ngModel)]="balanceVal" (keyup)="currencyFormat($event, 'balance')" required>
-            <mat-error *ngIf="submitted && form.balance.errors" class="invalid-feedback">
-                <div *ngIf="form.balance.errors.required"> {{form.balance.errors.message}}</div>
-            </mat-error>
+        <mat-form-field class="form-half-width" *ngIf="mode === 'Edit'">
+            <input matInput placeholder="{{ 'ottoAG.promotion.balance' | translate }}" name="balance" [(ngModel)]="balanceVal" disabled>
         </mat-form-field>
         <mat-form-field class="form-half-width form-separator">
             <input matInput placeholder="{{ 'ottoAG.promotion.maxPromoAmount' | translate }}" name="maxPromoAmount" [(ngModel)]="maxPromoAmountVal" (keyup)="currencyFormat($event, 'maxPromoAmount')" required>
@@ -134,7 +128,8 @@
 		<mat-form-field class="form-half-width">
 			<mat-select placeholder="{{ 'ottoAG.promotion.status' | translate }}" [(ngModel)]="promotion.active" name="status">
 				<mat-option *ngFor="let status of statusList" [value]="status">
-					{{status === 'ACTIVE' ? 'AVAILABLE' : 'DISCONTINUED'}}
+                    <!-- {{status === 'ACTIVE' ? 'AVAILABLE' : 'DISCONTINUED'}} -->
+                    {{status}}
 				</mat-option>
 			</mat-select>
 		</mat-form-field>

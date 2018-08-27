@@ -65,14 +65,15 @@ export class PromotionComponent implements OnInit {
     gridOptions = {
         columnDefs: [
             { headerName: 'No', field: 'no', width: 100, minWidth: 100, maxWidth: 100, pinned: 'left', editable: false },
-            { headerName: 'Biller Subscriber', field: 'memberType', width: 250, pinned: 'left', editable: false },
+            { headerName: 'Biller Subscriber', field: 'applyToMemberType', width: 250, pinned: 'left', editable: false,
+            valueFormatter: this.billerFormatter },
             { headerName: 'Name', field: 'name', width: 300, editable: false },
             { headerName: 'Type', field: 'type', width: 150 },
             { headerName: 'Value', field: 'value', width: 150 },
             { headerName: 'Category', field: 'applyTo', width: 150 },
             { headerName: 'Sub Category', field: 'applyToId', width: 150 },
             { headerName: 'Date Start', field: 'dateStart', width: 185, editable: false, valueFormatter: this.dateFormatterId },
-            { headerName: 'Date Through', field: 'dateThru', width: 185, editable: false , valueFormatter: this.dateFormatterId },
+            { headerName: 'Date Through', field: 'dateThrough', width: 185, editable: false , valueFormatter: this.dateFormatterId },
             { headerName: 'Status', field: 'status', width: 150 },
             { headerName: ' ', width: 80, minWidth: 80, maxWidth: 150, cellRenderer: 'actionRenderer'}
         ],
@@ -90,6 +91,10 @@ export class PromotionComponent implements OnInit {
             actionRenderer: MatActionButtonComponent
         }
     };
+
+    billerFormatter(params): string {
+        return params.value.member.name + ' (' + params.value.memberCode + ')';
+    }
 
     dateFormatterId(params): string {
         return new Date(params.value).toLocaleDateString('id');
@@ -242,6 +247,22 @@ export class PromotionComponent implements OnInit {
 
         // this.loadAll(this.curPage);
         this.filterData('');
+    }
+
+    onRowClicked(e) {
+        if (e.event.target !== undefined) {
+            const data = e.data;
+            const actionType = e.event.target.getAttribute('data-action-type');
+
+            switch (actionType) {
+                case 'view':
+                    // console.log('Data row : ', data);
+                    return this.openDialog('view', data);
+                case 'edit':
+                    // console.log('Data row : ', data);
+                    return this.openDialog('edit', data);
+            }
+        }
     }
 
     openDialog(mode, data): void {

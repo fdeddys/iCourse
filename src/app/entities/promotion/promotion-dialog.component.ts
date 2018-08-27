@@ -51,6 +51,8 @@ export class PromotionDialogComponent implements OnInit {
     // statusData = true;
     promotionForm: FormGroup;
     valueVal = '0';
+    budgetVal = '0';
+    balanceVal = '0';
     mode = 'Add';
     submitted = false;
 
@@ -110,8 +112,8 @@ export class PromotionDialogComponent implements OnInit {
             name: ['', [CommonValidatorDirective.required]],
             dateStart: ['', [CommonValidatorDirective.required]],
             dateThru: ['', [CommonValidatorDirective.required]],
-            budget: ['', [CommonValidatorDirective.required]],
-            balance: ['', [CommonValidatorDirective.required]],
+            // budget: ['', [CommonValidatorDirective.required]],
+            // balance: ['', [CommonValidatorDirective.required]],
             maxPromoAmount: ['', [CommonValidatorDirective.required]],
             minTransAmount: ['', [CommonValidatorDirective.required]],
             applyTo: ['', [CommonValidatorDirective.required]],
@@ -140,6 +142,14 @@ export class PromotionDialogComponent implements OnInit {
         if (this.data.mode !== 'create') {
             this.mode = 'Edit';
             this.promotion = this.data.rowData;
+            console.log('this.promotion : ', this.promotion);
+
+            this.budgetVal = this.currencyFormatter(this.data.rowData.budget);
+            this.balanceVal = this.currencyFormatter(this.data.rowData.balance);
+            this.dateSCtrl.setValue(this.data.rowData.dateStart);
+            this.dateTCtrl.setValue(this.data.rowData.dateThrough);
+            this.billSubsCtrl.setValue(this.data.rowData.applyToMemberType);
+            this.memberCtrl.setValue(this.data.rowData.onBehalfMember);
             this.billTypeCtrl.setValue(this.data.rowData.applyToType);
             this.billCompanyCtrl.setValue(this.data.rowData.applyToCompany);
             this.billTypeCtrl.enable();
@@ -193,6 +203,13 @@ export class PromotionDialogComponent implements OnInit {
 
     displayFnBillSubs(biller?: Biller): string | undefined {
         return biller ? biller.member.name + ' (' + biller.memberCode + ')' : undefined;
+    }
+
+    currencyFormatter(val) {
+        if (val !== null) {
+            const temp = (parseFloat(val)).toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&.');
+            return temp.substring(0, (temp.length - 3));
+        } else { return ''; }
     }
 
     currencyFormat(event, field) {
