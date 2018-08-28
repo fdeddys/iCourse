@@ -94,7 +94,7 @@ export class PromotionTransComponent implements OnInit {
 
     ngOnInit() {
         this.transTypeService.filter({
-            page: this.curPage,
+            page: 1,
             count: 10000,
             filter: {
                 'name': ''

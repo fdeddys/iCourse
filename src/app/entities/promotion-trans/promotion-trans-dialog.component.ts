@@ -4,6 +4,7 @@ import { HttpResponse, HttpErrorResponse } from '@angular/common/http';
 
 import { Promotion } from '../promotion/promotion.model';
 import { PromotionTrans } from './promotion-trans.model';
+import { PromotionTransService } from './promotion-trans.service';
 import { TranslateService } from '@ngx-translate/core';
 
 import { Observable } from 'rxjs';
@@ -21,6 +22,7 @@ import { SNACKBAR_DURATION_IN_MILLISECOND } from '../../shared/constant/base-con
 })
 export class PromotionTransDialogComponent implements OnInit {
     promotionTrans: PromotionTrans;
+    promotionTransSave: PromotionTrans;
     modeTitle = '';
     transTypeList = [];
     promotionList = [];
@@ -40,7 +42,7 @@ export class PromotionTransDialogComponent implements OnInit {
     constructor(
         translate: TranslateService,
         private formBuilder: FormBuilder,
-        // public promotionTransService: PromotionTransService,
+        public promotionTransService: PromotionTransService,
         public dialogRef: MatDialogRef<PromotionTransDialogComponent>,
         public snackBar: MatSnackBar,
         @Inject(MAT_DIALOG_DATA) public data: any
@@ -63,7 +65,9 @@ export class PromotionTransDialogComponent implements OnInit {
             transType: ['', [CommonValidatorDirective.required]],
             promotionId: ['', [CommonValidatorDirective.required]],
             transDate: ['', [CommonValidatorDirective.required]],
-            budget: ['', [CommonValidatorDirective.required]],
+            rrn: ['', [CommonValidatorDirective.required]],
+            credit: ['', [CommonValidatorDirective.required]],
+            debit: ['', [CommonValidatorDirective.required]],
             balance: ['', [CommonValidatorDirective.required]]
         });
 
@@ -112,5 +116,50 @@ export class PromotionTransDialogComponent implements OnInit {
 
         this.promotionTrans[field] = temp;
         event.target.value = (( temp === 0 ) ? '' : temp.toLocaleString( 'id-ID' ));
+    }
+
+    validate(): void {
+        this.submitted = true;
+        // stop here if form is invalid
+        if (this.promotionTransForm.invalid) {
+            return;
+        }
+    }
+
+    onSubmit() {
+        this.promotionTransSave = {
+            id: this.promotionTrans.id,
+            transType: this.promotionTrans.transType,
+            promotionId: this.promotionCtrl.value.id,
+            debit: this.promotionTrans.debit,
+            credit: this.promotionTrans.credit,
+            balance: this.promotionTrans.balance,
+            rrn: this.promotionTrans.rrn,
+            transDate: this.transDateCtrl.value,
+        };
+        console.log(this.promotionTransSave);
+
+        // if (this.promotionTransSave.id === undefined || this.promotionTransSave.id === null) {
+        //     this.promotionTransService.create(this.promotionTransSave).subscribe((res: HttpResponse<Promotion>) => {
+        //         if (res.body.errMsg === null || res.body.errMsg === '') {
+        //             this.dialogRef.close('refresh');
+        //         } else {
+        //             this.snackBar.open('Error! ' + res.body.errMsg , 'Close', {
+        //                 duration: this.duration,
+        //             });
+        //         }
+        //     });
+        // } else {
+        //     this.promotionTransService.update(this.promotionTransSave.id, this.promotionTransSave)
+        //     .subscribe((res: HttpResponse<Promotion>) => {
+        //         if (res.body.errMsg === null || res.body.errMsg === '') {
+        //             this.dialogRef.close('refresh');
+        //         } else {
+        //             this.snackBar.open('Error! ' + res.body.errMsg , 'Close', {
+        //                 duration: this.duration,
+        //             });
+        //         }
+        //     });
+        // }
     }
 }
