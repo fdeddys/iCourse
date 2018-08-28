@@ -97,9 +97,9 @@ export class PromotionTransComponent implements OnInit {
             page: 1,
             count: 10000,
             filter: {
-                'name': ''
+                'name': 'Manual Promotion Budget'
             },
-        }, true)
+        }, false)
         .subscribe(
             (res: HttpResponse<TransType[]>) => this.onSuccessTransType(res.body, res.headers),
             (res: HttpErrorResponse) => this.onError(res.message),
@@ -153,7 +153,7 @@ export class PromotionTransComponent implements OnInit {
 
     private onSuccessTransType(data, headers) {
         console.log('isi response trans type ==> ', data);
-        this.transTypeList = data;
+        this.transTypeList = data.content;
     }
 
     private onSuccessPromotion(data, headers) {

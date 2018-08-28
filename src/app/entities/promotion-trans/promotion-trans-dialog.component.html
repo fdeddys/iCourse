@@ -2,9 +2,9 @@
 <form name="promotionTransForm" (ngSubmit)="f.form.valid && onSubmit()" #f="ngForm" novalidate>
     <div mat-dialog-content> 
 		<mat-form-field class="form-half-width form-separator">
-            <mat-select placeholder="{{ 'ottoAG.promotionTrans.transType' | translate }}" [(ngModel)]="promotionTrans.transType" name="transType">
+            <mat-select placeholder="{{ 'ottoAG.promotionTrans.transType' | translate }}" [(ngModel)]="promotionTrans.transType" name="transType" [disabled]="transTypeList.length === 1">
                 <!-- <mat-option [value]="'ALL'">ALL</mat-option> -->
-                <mat-option *ngFor="let transType of transTypeList" [value]="transType.code">
+                <mat-option *ngFor="let transType of transTypeList" [value]="transType.id">
                     {{transType.name}}
                 </mat-option>                    
             </mat-select>

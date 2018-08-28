@@ -82,6 +82,9 @@ export class PromotionTransDialogComponent implements OnInit {
         }
         this.modeTitle = this.data.modeTitle;
         this.transTypeList = this.data.transTypeData;
+        if (this.transTypeList.length === 1) {
+            this.promotionTrans.transType = this.transTypeList[0].id;
+        }
         this.promotionList = this.data.promotionData;
     }
 
