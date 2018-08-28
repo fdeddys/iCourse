@@ -293,6 +293,22 @@
             "budgetRequired": "Budget Required",
             "status": "Status"
         },
+        "promotionTrans": {
+            "home": {
+                "title": "Promotion",
+                "addLabelButton": "Add Promotion"
+            },
+            "detail": {
+                "title": "{{mode}} Promotion"
+            },
+            "transType": "Transaction Type",
+            "promotionId": "Promotion",
+            "rrn": "RRN",
+            "transDate": "Transaction Date",
+            "debit": "Debit",
+            "credit": "Credit",
+            "balance": "Balance"
+        },
         "role": {
             "home": {
                 "title": "Role",

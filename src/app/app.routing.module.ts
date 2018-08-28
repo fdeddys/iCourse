@@ -22,6 +22,7 @@ import { TransListComponent } from './entities/transaction-list';
 import { DepositHistoryComponent } from './entities/deposit-history';
 import { DepositComponent } from './entities/deposit';
 import { PromotionComponent } from './entities/promotion';
+import { PromotionTransComponent } from './entities/promotion-trans';
 
 
 const routes: Routes = [
@@ -56,6 +57,7 @@ const routes: Routes = [
             {path: 'manual-deposit', component: DepositComponent},
             {path: 'manual-refund', component: DepositComponent},
             {path: 'promotion', component: PromotionComponent},
+            {path: 'promotion-trans', component: PromotionTransComponent},
         ]
     },
     { path: '**', redirectTo: '/main/404', pathMatch: 'full' }

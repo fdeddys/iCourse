@@ -1,0 +1,63 @@
+<h1 mat-dialog-title>{{ "ottoAG.promotionTrans.detail.title" | translate:{mode: modeTitle} }}</h1>
+<form name="promotionTransForm" (ngSubmit)="f.form.valid && onSubmit()" #f="ngForm" novalidate>
+    <div mat-dialog-content> 
+		<mat-form-field class="form-half-width form-separator">
+            <mat-select placeholder="{{ 'ottoAG.promotionTrans.transType' | translate }}" [(ngModel)]="promotionTrans.transType" name="transType">
+                <!-- <mat-option [value]="'ALL'">ALL</mat-option> -->
+                <mat-option *ngFor="let transType of transTypeList" [value]="transType.code">
+                    {{transType.name}}
+                </mat-option>                    
+            </mat-select>
+            <mat-error *ngIf="submitted && form.transType.errors" class="invalid-feedback">
+                <div *ngIf="form.transType.errors.required"> {{form.transType.errors.message}}</div>
+            </mat-error>
+        </mat-form-field>
+        <mat-form-field class="form-half-width">
+            <input matInput placeholder="{{ 'ottoAG.promotionTrans.promotionId' | translate }}" aria-label="Promotion" [matAutocomplete]="auto" [formControl]="promotionCtrl" required>
+            <mat-autocomplete #auto="matAutocomplete" [displayWith]="displayFnProm">
+                <mat-option *ngFor="let promotion of filteredPromotion | async" [value]="promotion">
+                    <span>{{ promotion.name }}</span>
+                </mat-option>
+            </mat-autocomplete>
+            <mat-error *ngIf="submitted && form.promotionId.errors" class="invalid-feedback">
+                <div *ngIf="form.promotionId.errors.required"> {{form.promotionId.errors.message}}</div>
+            </mat-error>
+        </mat-form-field>
+        <mat-form-field class="form-half-width form-separator">
+            <input matInput placeholder="{{ 'ottoAG.promotionTrans.rrn' | translate }}" name="rrn" [(ngModel)]="promotionTrans.rrn" required>
+            <mat-error *ngIf="submitted && form.rrn.errors" class="invalid-feedback">
+                <div *ngIf="form.rrn.errors.required"> {{form.rrn.errors.message}}</div>
+            </mat-error> 
+        </mat-form-field>
+        <mat-form-field class="form-half-width">
+            <input matInput [matDatepicker]="picker" placeholder="{{ 'ottoAG.promotionTrans.transDate' | translate }}" (click)="picker.open()" [formControl]="transDateCtrl" readonly required>
+            <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+            <mat-datepicker #picker></mat-datepicker>
+            <mat-error *ngIf="submitted && form.transDate.errors" class="invalid-feedback">
+                <div *ngIf="form.transDate.errors.required"> {{form.transDate.errors.message}}</div>
+            </mat-error>
+        </mat-form-field>
+        <mat-form-field style="width: 30%; margin-right: 5%">
+            <input matInput placeholder="{{ 'ottoAG.promotionTrans.debit' | translate }}" name="debit" [(ngModel)]="debitVal" (keyup)="currencyFormat($event, 'debit')" required>
+            <mat-error *ngIf="submitted && form.debit.errors" class="invalid-feedback">
+                <div *ngIf="form.debit.errors.required"> {{form.debit.errors.message}}</div>
+            </mat-error> 
+        </mat-form-field>
+        <mat-form-field style="width: 30%; margin-right: 5%">
+            <input matInput placeholder="{{ 'ottoAG.promotionTrans.credit' | translate }}" name="credit" [(ngModel)]="creditVal" (keyup)="currencyFormat($event, 'credit')" required>
+            <mat-error *ngIf="submitted && form.credit.errors" class="invalid-feedback">
+                <div *ngIf="form.credit.errors.required"> {{form.credit.errors.message}}</div>
+            </mat-error> 
+        </mat-form-field>
+        <mat-form-field style="width: 30%;">
+            <input matInput placeholder="{{ 'ottoAG.promotionTrans.balance' | translate }}" name="balance" [(ngModel)]="balanceVal" (keyup)="currencyFormat($event, 'balance')" required>
+            <mat-error *ngIf="submitted && form.balance.errors" class="invalid-feedback">
+                <div *ngIf="form.balance.errors.required"> {{form.balance.errors.message}}</div>
+            </mat-error> 
+        </mat-form-field>
+    </div>
+    <div mat-dialog-actions align="end">
+        <!-- <button mat-raised-button (click)="onNoClick()">Cancel</button> -->
+        <button mat-raised-button color="primary" cdkFocusInitial (click)="validate()">{{ "entity.action.save" | translate }}</button>
+    </div>
+</form>

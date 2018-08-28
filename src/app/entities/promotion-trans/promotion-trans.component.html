@@ -1,0 +1,34 @@
+<mat-card>
+    <mat-card-header>
+        <mat-card-title style="align-items: center">
+			<!-- <h2 style="color: rgb(158, 158, 158)" >Product</h2>   -->
+			<h2 mat-dialog-title translate="ottoAG.promotionTrans.home.title"></h2>              
+        </mat-card-title>
+    </mat-card-header>
+ 
+    <mat-card-content> 
+		<div style="text-align: left">
+            <button mat-raised-button color="primary" (click)="openDialog('create', null)" style="margin-bottom: 10px;">{{ "ottoAG.promotionTrans.home.addLabelButton" | translate }}</button>
+            <button mat-raised-button class="primary"  (click)="exportCSV('csv')" style="margin-bottom: 10px;">{{ "entity.action.exportCSV" | translate }}</button>
+        </div> 
+		<br>
+        <ag-grid-angular 
+			style="height: 314px;" 
+			class="{{theme}}"
+			[gridOptions]="gridOptions"
+			(gridReady)="onGridReady($event)"
+			(rowClicked)="onRowClicked($event)"
+			>
+		</ag-grid-angular>
+
+		<div >
+			<mat-paginator 
+				[length]="totalData"
+				[pageSize]="totalRecord"
+				[pageSizeOptions]="[totalRecord]"
+				(page)="onPaginateChange($event)">
+			</mat-paginator>
+		</div> 
+		<a style="display: none" #downloadLink></a>
+    </mat-card-content>
+</mat-card>

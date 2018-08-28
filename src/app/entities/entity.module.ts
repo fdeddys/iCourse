@@ -23,6 +23,7 @@ import { TransactionListModule } from './transaction-list/transaction-list.modul
 import { DepositHistoryModule } from './deposit-history/deposit-history.module';
 import { DepositModule } from './deposit/deposit.module';
 import { PromotionModule } from './promotion/promotion.module';
+import { PromotionTransModule } from './promotion-trans/promotion-trans.module';
 
 
 @NgModule({
@@ -49,7 +50,8 @@ import { PromotionModule } from './promotion/promotion.module';
         TransactionListModule,
         DepositHistoryModule,
         DepositModule,
-        PromotionModule
+        PromotionModule,
+        PromotionTransModule
     ],
     entryComponents: [],
     providers: [],
