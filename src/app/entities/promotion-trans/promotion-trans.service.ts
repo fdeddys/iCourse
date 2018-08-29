@@ -13,7 +13,7 @@ export type EntityResponseType = HttpResponse<PromotionTrans>;
 @Injectable()
 export class PromotionTransService {
 
-    private resourceUrl =  SERVER_PATH + 'promotiontrans';
+    private resourceUrl =  SERVER_PATH + 'transpromotion';
     private reportUrl = REPORT_PATH;
 
     constructor(private http: HttpClient) { }

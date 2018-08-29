@@ -35,13 +35,11 @@ export class PromotionTransComponent implements OnInit {
     cssButton = CSS_BUTTON;
     theme: String = GRID_THEME;
     filter: PromotionTransFilter = {
-        transType: null,
+        transTypeId: null,
         promotionId: null,
         rrn: null,
-        transDate: null,
-        debit: null,
-        credit: null,
-        balance: null,
+        startTransDate: null,
+        endTransDate: null,
     };
     messageNoData: string = NO_DATA_GRID_MESSAGE;
     curPage = 1;
@@ -52,12 +50,12 @@ export class PromotionTransComponent implements OnInit {
     gridOptions = {
         columnDefs: [
             { headerName: 'No', field: 'no', width: 100, minWidth: 100, maxWidth: 100, pinned: 'left', editable: false },
-            { headerName: 'Transaction Type', field: 'transType', width: 250, pinned: 'left', editable: false },
-            { headerName: 'Promotion', field: 'promotion', width: 300, editable: false },
+            { headerName: 'Transaction Type', field: 'transType.name', width: 250, pinned: 'left', editable: false },
+            { headerName: 'Promotion', field: 'promotion.name', width: 300, editable: false },
             { headerName: 'RRN', field: 'rrn', width: 150 },
-            { headerName: 'Debit', field: 'debit', width: 150 },
+            // { headerName: 'Debit', field: 'debit', width: 150 },
             { headerName: 'Credit', field: 'credit', width: 150 },
-            { headerName: 'Balance', field: 'balance', width: 150 },
+            // { headerName: 'Balance', field: 'balance', width: 150 },
             { headerName: 'Transaction Date', field: 'transDate', width: 185, editable: false,
             valueFormatter: this.dateFormatterId },
             { headerName: ' ', width: 80, minWidth: 80, maxWidth: 150, cellRenderer: 'actionRenderer'}
@@ -179,7 +177,7 @@ export class PromotionTransComponent implements OnInit {
             this.gridApi.sizeColumnsToFit();
         };
 
-        // this.filterData('');
+        this.filterData('');
     }
 
     openDialog(mode, data): void {
@@ -211,7 +209,7 @@ export class PromotionTransComponent implements OnInit {
 
         dialogRef.afterClosed().subscribe(result => {
             console.log('The dialog was closed');
-            // this.filterData('');
+            this.filterData('');
         });
     }
 
@@ -229,16 +227,14 @@ export class PromotionTransComponent implements OnInit {
 
     public onPaginateChange($event): void {
         this.curPage = $event.pageIndex + 1;
-        // this.filterData('');
+        this.filterData('');
     }
 }
 
 export interface PromotionTransFilter  {
-    transType?: number;
+    transTypeId?: number;
     promotionId?: number;
-    rrn?: number;
-    transDate?: string;
-    debit?: number;
-    credit?: number;
-    balance?: number;
+    rrn?: string;
+    startTransDate?: any;
+    endTransDate?: any;
 }

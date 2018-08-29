@@ -3,7 +3,7 @@ import { BaseEntity } from './../../shared/model/base-entity';
 export class PromotionTrans implements BaseEntity {
     constructor(
         public id?: number,
-        public transType?: number,
+        public transTypeId?: number,
         public promotionId?: number,
         public rrn?: string,
         public transDate?: string,

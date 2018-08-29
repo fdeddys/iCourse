@@ -301,7 +301,7 @@
             "detail": {
                 "title": "{{mode}} Promotion"
             },
-            "transType": "Transaction Type",
+            "transTypeId": "Transaction Type",
             "promotionId": "Promotion",
             "rrn": "RRN",
             "transDate": "Transaction Date",

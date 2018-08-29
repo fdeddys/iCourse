@@ -62,7 +62,7 @@ export class PromotionTransDialogComponent implements OnInit {
 
     ngOnInit() {
         this.promotionTransForm = this.formBuilder.group({
-            transType: ['', [CommonValidatorDirective.required]],
+            transTypeId: ['', [CommonValidatorDirective.required]],
             promotionId: ['', [CommonValidatorDirective.required]],
             transDate: ['', [CommonValidatorDirective.required]],
             rrn: ['', [CommonValidatorDirective.required]],
@@ -83,7 +83,7 @@ export class PromotionTransDialogComponent implements OnInit {
         this.modeTitle = this.data.modeTitle;
         this.transTypeList = this.data.transTypeData;
         if (this.transTypeList.length === 1) {
-            this.promotionTrans.transType = this.transTypeList[0].id;
+            this.promotionTrans.transTypeId = this.transTypeList[0].id;
         }
         this.promotionList = this.data.promotionData;
     }
@@ -132,7 +132,7 @@ export class PromotionTransDialogComponent implements OnInit {
     onSubmit() {
         this.promotionTransSave = {
             id: this.promotionTrans.id,
-            transType: this.promotionTrans.transType,
+            transTypeId: this.promotionTrans.transTypeId,
             promotionId: this.promotionCtrl.value.id,
             debit: this.promotionTrans.debit,
             credit: this.promotionTrans.credit,
@@ -142,27 +142,27 @@ export class PromotionTransDialogComponent implements OnInit {
         };
         console.log(this.promotionTransSave);
 
-        // if (this.promotionTransSave.id === undefined || this.promotionTransSave.id === null) {
-        //     this.promotionTransService.create(this.promotionTransSave).subscribe((res: HttpResponse<Promotion>) => {
-        //         if (res.body.errMsg === null || res.body.errMsg === '') {
-        //             this.dialogRef.close('refresh');
-        //         } else {
-        //             this.snackBar.open('Error! ' + res.body.errMsg , 'Close', {
-        //                 duration: this.duration,
-        //             });
-        //         }
-        //     });
-        // } else {
-        //     this.promotionTransService.update(this.promotionTransSave.id, this.promotionTransSave)
-        //     .subscribe((res: HttpResponse<Promotion>) => {
-        //         if (res.body.errMsg === null || res.body.errMsg === '') {
-        //             this.dialogRef.close('refresh');
-        //         } else {
-        //             this.snackBar.open('Error! ' + res.body.errMsg , 'Close', {
-        //                 duration: this.duration,
-        //             });
-        //         }
-        //     });
-        // }
+        if (this.promotionTransSave.id === undefined || this.promotionTransSave.id === null) {
+            this.promotionTransService.create(this.promotionTransSave).subscribe((res: HttpResponse<Promotion>) => {
+                if (res.body.errMsg === null || res.body.errMsg === '') {
+                    this.dialogRef.close('refresh');
+                } else {
+                    this.snackBar.open('Error! ' + res.body.errMsg , 'Close', {
+                        duration: this.duration,
+                    });
+                }
+            });
+        } else {
+            this.promotionTransService.update(this.promotionTransSave.id, this.promotionTransSave)
+            .subscribe((res: HttpResponse<Promotion>) => {
+                if (res.body.errMsg === null || res.body.errMsg === '') {
+                    this.dialogRef.close('refresh');
+                } else {
+                    this.snackBar.open('Error! ' + res.body.errMsg , 'Close', {
+                        duration: this.duration,
+                    });
+                }
+            });
+        }
     }
 }

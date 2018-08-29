@@ -2,14 +2,14 @@
 <form name="promotionTransForm" (ngSubmit)="f.form.valid && onSubmit()" #f="ngForm" novalidate>
     <div mat-dialog-content> 
 		<mat-form-field class="form-half-width form-separator">
-            <mat-select placeholder="{{ 'ottoAG.promotionTrans.transType' | translate }}" [(ngModel)]="promotionTrans.transType" name="transType" [disabled]="transTypeList.length === 1">
+            <mat-select placeholder="{{ 'ottoAG.promotionTrans.transTypeId' | translate }}" [(ngModel)]="promotionTrans.transTypeId" name="transType" [disabled]="transTypeList.length === 1">
                 <!-- <mat-option [value]="'ALL'">ALL</mat-option> -->
                 <mat-option *ngFor="let transType of transTypeList" [value]="transType.id">
                     {{transType.name}}
                 </mat-option>                    
             </mat-select>
-            <mat-error *ngIf="submitted && form.transType.errors" class="invalid-feedback">
-                <div *ngIf="form.transType.errors.required"> {{form.transType.errors.message}}</div>
+            <mat-error *ngIf="submitted && form.transTypeId.errors" class="invalid-feedback">
+                <div *ngIf="form.transTypeId.errors.required"> {{form.transTypeId.errors.message}}</div>
             </mat-error>
         </mat-form-field>
         <mat-form-field class="form-half-width">
@@ -37,24 +37,25 @@
                 <div *ngIf="form.transDate.errors.required"> {{form.transDate.errors.message}}</div>
             </mat-error>
         </mat-form-field>
-        <mat-form-field style="width: 30%; margin-right: 5%">
+        <!-- <mat-form-field style="width: 30%; margin-right: 5%">
             <input matInput placeholder="{{ 'ottoAG.promotionTrans.debit' | translate }}" name="debit" [(ngModel)]="debitVal" (keyup)="currencyFormat($event, 'debit')" required>
             <mat-error *ngIf="submitted && form.debit.errors" class="invalid-feedback">
                 <div *ngIf="form.debit.errors.required"> {{form.debit.errors.message}}</div>
             </mat-error> 
-        </mat-form-field>
-        <mat-form-field style="width: 30%; margin-right: 5%">
+        </mat-form-field> -->
+        <!-- <mat-form-field style="width: 30%; margin-right: 5%"> -->
+        <mat-form-field class="form-half-width">
             <input matInput placeholder="{{ 'ottoAG.promotionTrans.credit' | translate }}" name="credit" [(ngModel)]="creditVal" (keyup)="currencyFormat($event, 'credit')" required>
             <mat-error *ngIf="submitted && form.credit.errors" class="invalid-feedback">
                 <div *ngIf="form.credit.errors.required"> {{form.credit.errors.message}}</div>
             </mat-error> 
         </mat-form-field>
-        <mat-form-field style="width: 30%;">
+        <!-- <mat-form-field style="width: 30%;">
             <input matInput placeholder="{{ 'ottoAG.promotionTrans.balance' | translate }}" name="balance" [(ngModel)]="balanceVal" (keyup)="currencyFormat($event, 'balance')" required>
             <mat-error *ngIf="submitted && form.balance.errors" class="invalid-feedback">
                 <div *ngIf="form.balance.errors.required"> {{form.balance.errors.message}}</div>
             </mat-error> 
-        </mat-form-field>
+        </mat-form-field> -->
     </div>
     <div mat-dialog-actions align="end">
         <!-- <button mat-raised-button (click)="onNoClick()">Cancel</button> -->
