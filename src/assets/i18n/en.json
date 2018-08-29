@@ -298,6 +298,13 @@
                 "title": "Promotion",
                 "addLabelButton": "Add Promotion"
             },
+            "filter": {
+                "startDateFrom": "Transaction Date From :",
+                "startDateTo": "Transaction Date To :",
+                "transTypeId": "Transaction Type",
+                "promotionId": "Promotion",
+                "rrn": "RRN"
+            },
             "detail": {
                 "title": "{{mode}} Promotion"
             },

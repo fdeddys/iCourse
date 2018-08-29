@@ -5,6 +5,10 @@ import { PromotionTransService } from './promotion-trans.service';
 import { TranslateService } from '@ngx-translate/core';
 import * as _ from 'lodash';
 
+import { Observable } from 'rxjs';
+import { map, startWith } from 'rxjs/operators';
+
+import { FormControl } from '@angular/forms';
 import { TransType } from '../transaction-type/transaction-type.model';
 import { TransTypeService } from '../transaction-type/transaction-type.service';
 import { Promotion } from '../promotion/promotion.model';
@@ -47,6 +51,11 @@ export class PromotionTransComponent implements OnInit {
     totalRecord = TOTAL_RECORD_PER_PAGE;
     @ViewChild(MatPaginator) paginator: MatPaginator;
 
+    dateFStartCtrl: FormControl;
+    dateTStartCtrl: FormControl;
+    promotionCtrl: FormControl;
+    filteredPromotion: Observable<any[]>;
+
     gridOptions = {
         columnDefs: [
             { headerName: 'No', field: 'no', width: 100, minWidth: 100, maxWidth: 100, pinned: 'left', editable: false },
@@ -88,6 +97,10 @@ export class PromotionTransComponent implements OnInit {
     ) {
         translate.setDefaultLang('en');
         translate.use('en');
+
+        this.dateFStartCtrl = new FormControl();
+        this.dateTStartCtrl = new FormControl();
+        this.promotionCtrl = new FormControl();
     }
 
     ngOnInit() {
@@ -122,9 +135,43 @@ export class PromotionTransComponent implements OnInit {
         );
     }
 
+    filterPromotion(name: string) {
+        return this.promotionList.filter(promotion =>
+        promotion.name.toLowerCase().indexOf(name.toLowerCase()) === 0);
+    }
+
+    displayFnProm(promotion?: Promotion): string | undefined {
+        return promotion ? promotion.name : undefined;
+    }
+
+    dateFormatter(params): string {
+        const dt  = new Date(params);
+        const year = dt.getFullYear();
+        const mth = dt.getMonth() + 1;
+        const day = dt.getDate();
+        // return dt.toLocaleString(['id']);
+        return year + '-' + (mth < 10 ? '0' + mth : mth) + '-' + (day < 10 ? '0' + day : day);
+    }
+
+    actionfilter(): void {
+        this.paginator._pageIndex = 0;
+        this.filterData(1);
+    }
+
     filterData(page): void {
         if (page !== '') {
             this.curPage = page;
+        }
+        this.filter.promotionId = (this.promotionCtrl.value === null ? null : this.promotionCtrl.value.id);
+        this.filter.startTransDate = (this.dateFStartCtrl.value === null ? null : this.dateFormatter(this.dateFStartCtrl.value));
+        this.filter.endTransDate = (this.dateTStartCtrl.value === null ? null : this.dateFormatter(this.dateTStartCtrl.value));
+
+        if (this.filter.startTransDate !== null && this.filter.endTransDate !== null) {
+            this.filter.startTransDate = this.filter.startTransDate + ' 00:00';
+            this.filter.endTransDate = this.filter.endTransDate + ' 23:59';
+        }
+        if (this.transTypeList.length === 1) {
+            this.filter.transTypeId = this.transTypeList[0].id;
         }
         console.log(this.filter);
 
@@ -156,6 +203,12 @@ export class PromotionTransComponent implements OnInit {
 
     private onSuccessPromotion(data, headers) {
         this.promotionList = data.content;
+        this.filteredPromotion = this.promotionCtrl.valueChanges
+        .pipe(
+            startWith<string | Promotion>(''),
+            map(value => typeof value === 'string' ? value : value.name),
+            map(name => name ? this.filterPromotion(name) : this.promotionList.slice())
+        );
     }
 
     private onError(error) {
@@ -178,6 +231,22 @@ export class PromotionTransComponent implements OnInit {
         };
 
         this.filterData('');
+    }
+
+    onRowClicked(e) {
+        if (e.event.target !== undefined) {
+            const data = e.data;
+            const actionType = e.event.target.getAttribute('data-action-type');
+
+            switch (actionType) {
+                case 'view':
+                    // console.log('Data row : ', data);
+                    return this.openDialog('view', data);
+                case 'edit':
+                    // console.log('Data row : ', data);
+                    return this.openDialog('edit', data);
+            }
+        }
     }
 
     openDialog(mode, data): void {

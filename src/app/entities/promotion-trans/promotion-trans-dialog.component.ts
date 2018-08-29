@@ -75,6 +75,9 @@ export class PromotionTransDialogComponent implements OnInit {
         if (this.data.mode !== 'create') {
             this.mode = 'Edit';
             this.promotionTrans = this.data.rowData;
+            console.log(this.data.rowData);
+            this.promotionCtrl.setValue(this.data.rowData.promotion);
+            this.transDateCtrl.setValue(new Date(this.data.rowData.transDate));
 
             this.debitVal = this.currencyFormatter(this.data.rowData.debit);
             this.creditVal = this.currencyFormatter(this.data.rowData.credit);
