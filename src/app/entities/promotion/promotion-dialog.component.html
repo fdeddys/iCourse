@@ -94,13 +94,13 @@
         <mat-form-field class="form-half-width" *ngIf="mode === 'Edit'">
             <input matInput placeholder="{{ 'ottoAG.promotion.balance' | translate }}" name="balance" [(ngModel)]="balanceVal" disabled>
         </mat-form-field>
-        <mat-form-field class="form-half-width form-separator">
+        <mat-form-field class="form-half-width form-separator" *ngIf="promotion.type === 2 || promotion.type === 4">
             <input matInput placeholder="{{ 'ottoAG.promotion.maxPromoAmount' | translate }}" name="maxPromoAmount" [(ngModel)]="maxPromoAmountVal" (keyup)="currencyFormat($event, 'maxPromoAmount')" required>
             <mat-error *ngIf="submitted && form.maxPromoAmount.errors" class="invalid-feedback">
                 <div *ngIf="form.maxPromoAmount.errors.required"> {{form.maxPromoAmount.errors.message}}</div>
             </mat-error>
         </mat-form-field>
-        <mat-form-field class="form-half-width">
+        <mat-form-field class="form-half-width" *ngIf="promotion.type === 2 || promotion.type === 4">
             <input matInput placeholder="{{ 'ottoAG.promotion.minTransAmount' | translate }}" name="minTransAmount" [(ngModel)]="minTransAmountVal" (keyup)="currencyFormat($event, 'minTransAmount')" required>
             <mat-error *ngIf="submitted && form.minTransAmount.errors" class="invalid-feedback">
                 <div *ngIf="form.minTransAmount.errors.required"> {{form.minTransAmount.errors.message}}</div>
