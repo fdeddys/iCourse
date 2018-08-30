@@ -131,6 +131,8 @@ export class PromotionTransComponent implements OnInit {
             (res: HttpErrorResponse) => this.onError(res.message),
             () => { console.log('finally'); }
         );
+
+        this.transTypeList = [];
     }
 
     filterPromotion(name: string) {
