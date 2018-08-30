@@ -295,8 +295,8 @@
         },
         "promotionTrans": {
             "home": {
-                "title": "Promotion",
-                "addLabelButton": "Add Promotion"
+                "title": "Promotion Transaction",
+                "addLabelButton": "Add Promotion Transaction"
             },
             "filter": {
                 "startDateFrom": "Transaction Date From :",
@@ -306,7 +306,7 @@
                 "rrn": "RRN"
             },
             "detail": {
-                "title": "{{mode}} Promotion"
+                "title": "{{mode}} Promotion Transaction"
             },
             "transTypeId": "Transaction Type",
             "promotionId": "Promotion",
