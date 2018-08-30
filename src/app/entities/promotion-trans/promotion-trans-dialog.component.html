@@ -23,13 +23,13 @@
                 <div *ngIf="form.promotionId.errors.required"> {{form.promotionId.errors.message}}</div>
             </mat-error>
         </mat-form-field>
-        <mat-form-field class="form-half-width form-separator">
+        <!-- <mat-form-field class="form-half-width form-separator">
             <input matInput placeholder="{{ 'ottoAG.promotionTrans.rrn' | translate }}" name="rrn" [(ngModel)]="promotionTrans.rrn" required>
             <mat-error *ngIf="submitted && form.rrn.errors" class="invalid-feedback">
                 <div *ngIf="form.rrn.errors.required"> {{form.rrn.errors.message}}</div>
             </mat-error> 
-        </mat-form-field>
-        <mat-form-field class="form-half-width">
+        </mat-form-field> -->
+        <mat-form-field class="form-half-width form-separator">
             <input matInput [matDatepicker]="picker" placeholder="{{ 'ottoAG.promotionTrans.transDate' | translate }}" (click)="picker.open()" [formControl]="transDateCtrl" readonly required>
             <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
             <mat-datepicker #picker></mat-datepicker>
