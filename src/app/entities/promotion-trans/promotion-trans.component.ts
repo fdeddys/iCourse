@@ -62,12 +62,12 @@ export class PromotionTransComponent implements OnInit {
             { headerName: 'Transaction Type', field: 'transType.name', width: 250, pinned: 'left', editable: false },
             { headerName: 'Promotion', field: 'promotion.name', width: 300, editable: false },
             { headerName: 'RRN', field: 'rrn', width: 150 },
-            // { headerName: 'Debit', field: 'debit', width: 150 },
-            { headerName: 'Credit', field: 'credit', width: 150 },
+            { headerName: 'Debit', field: 'debit', width: 150, valueFormatter: this.valFormatter },
+            { headerName: 'Credit', field: 'credit', width: 150, valueFormatter: this.valFormatter },
             // { headerName: 'Balance', field: 'balance', width: 150 },
             { headerName: 'Transaction Date', field: 'transDate', width: 185, editable: false,
             valueFormatter: this.dateFormatterId },
-            { headerName: ' ', width: 80, minWidth: 80, maxWidth: 150, cellRenderer: 'actionRenderer'}
+            // { headerName: ' ', width: 80, minWidth: 80, maxWidth: 150, cellRenderer: 'actionRenderer'}
         ],
         rowData: [],
         enableSorting: true,
@@ -86,6 +86,11 @@ export class PromotionTransComponent implements OnInit {
 
     dateFormatterId(params): string {
         return new Date(params.value).toLocaleDateString('id');
+    }
+
+    valFormatter(params): string {
+        const temp = (parseFloat(params.value)).toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&.');
+        return temp.substring(0, (temp.length - 3));
     }
 
     constructor(
