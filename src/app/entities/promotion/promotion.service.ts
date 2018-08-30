@@ -127,4 +127,14 @@ export class PromotionService {
                 );
 
     }
+
+    budgetRequired(val: number): Observable<HttpResponse<Promotion[]>> {
+        let newresourceUrl = null;
+
+        newresourceUrl = this.resourceUrl + `/budgetrequired/${val}`;
+        return this.http.get<Promotion[]>(newresourceUrl, { observe: 'response' })
+        .pipe(
+            tap(promotion => console.log('raw ', promotion ))
+        );
+    }
 }

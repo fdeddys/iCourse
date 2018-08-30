@@ -117,17 +117,7 @@ export class PromotionTransComponent implements OnInit {
             () => { console.log('finally'); }
         );
 
-        this.promotionService.filter({
-            page: 1,
-            count: 10000,
-            filter: {
-                name: '',
-                type: null,
-                applyToMemberTypeId: null,
-                onBehalfMemberId: null,
-                applyTo: null
-            },
-        })
+        this.promotionService.budgetRequired(1)
         .subscribe(
             (res: HttpResponse<Promotion[]>) => this.onSuccessPromotion(res.body, res.headers),
             (res: HttpErrorResponse) => this.onError(res.message),
@@ -202,7 +192,7 @@ export class PromotionTransComponent implements OnInit {
     }
 
     private onSuccessPromotion(data, headers) {
-        this.promotionList = data.content;
+        this.promotionList = data;
         this.filteredPromotion = this.promotionCtrl.valueChanges
         .pipe(
             startWith<string | Promotion>(''),
