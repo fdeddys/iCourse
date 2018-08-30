@@ -65,7 +65,7 @@ export class PromotionTransService {
 
     async exportCSV(reportType: string, filter?: any): Promise<HttpResponse<Blob>> {
         const file =  await this.http.post<Blob>(
-            `${this.reportUrl}promotionTrans/${reportType}`, filter,
+            `${this.reportUrl}promotiontrans/${reportType}`, filter,
             {responseType: 'blob' as 'json', observe: 'response'}
         ).toPromise();
         return file;
