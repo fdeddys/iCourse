@@ -117,7 +117,10 @@ export class PromotionTransComponent implements OnInit {
             () => { console.log('finally'); }
         );
 
-        this.promotionService.budgetRequired(1)
+        this.promotionService.budgetRequired({
+            'isBudgetRequired': 1,
+            'isActive': 1
+        })
         .subscribe(
             (res: HttpResponse<Promotion[]>) => this.onSuccessPromotion(res.body, res.headers),
             (res: HttpErrorResponse) => this.onError(res.message),

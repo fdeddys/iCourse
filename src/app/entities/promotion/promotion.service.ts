@@ -128,10 +128,22 @@ export class PromotionService {
 
     }
 
-    budgetRequired(val: number): Observable<HttpResponse<Promotion[]>> {
+    budgetRequired(obj?: any): Observable<HttpResponse<Promotion[]>> {
+        console.log('obj : ', obj);
         let newresourceUrl = null;
+        let isBudgetRequired = 0;
+        let isActive = 0;
 
-        newresourceUrl = this.resourceUrl + `/budgetrequired/${val}`;
+        Object.keys(obj).forEach((key) => {
+            if (key === 'isBudgetRequired') {
+                isBudgetRequired = obj[key];
+            }
+            if (key === 'isActive') {
+                isActive = obj[key];
+            }
+        });
+
+        newresourceUrl = this.resourceUrl + `/isbudgetrequired/${isBudgetRequired}/isactive/${isActive}`;
         return this.http.get<Promotion[]>(newresourceUrl, { observe: 'response' })
         .pipe(
             tap(promotion => console.log('raw ', promotion ))
