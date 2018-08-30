@@ -55,7 +55,7 @@
 			</mat-select>
         </mat-form-field>
         <!-- APPLY TO TYPE, OPERATOR OR PRODUCT -->
-        <mat-form-field class="form-half-width" *ngIf="promotion.applyTo === 1 || promotion.applyTo === 4">
+        <mat-form-field class="form-half-width" *ngIf="promotion.applyTo === 1">
             <input matInput placeholder="{{ 'ottoAG.promotion.applyToTypeId' | translate }}" aria-label="Biller Type" [matAutocomplete]="auto" [formControl]="billTypeCtrl" required>
             <mat-autocomplete #auto="matAutocomplete" [displayWith]="displayFnBil">
                 <mat-option *ngFor="let billerType of filteredBillType | async" [value]="billerType">
@@ -77,7 +77,7 @@
                 <div *ngIf="form.applyToCompanyId.errors.required"> {{form.applyToCompanyId.errors.message}}</div>
             </mat-error>
         </mat-form-field>
-        <mat-form-field class="form-half-width" *ngIf="promotion.applyTo === 3">
+        <mat-form-field class="form-half-width" *ngIf="promotion.applyTo === 3 || promotion.applyTo === 4">
             <mat-select placeholder="{{ 'ottoAG.promotion.applyToProductId' | translate }}" name="product" [(ngModel)]="promotion.applyToProductId" required [disabled]="promotion.applyTo === 4">
                 <mat-option *ngFor="let product of productList" [value]="product.id">
                     {{product.name}}
@@ -94,17 +94,17 @@
         <mat-form-field class="form-half-width" *ngIf="mode === 'Edit'">
             <input matInput placeholder="{{ 'ottoAG.promotion.balance' | translate }}" name="balance" [(ngModel)]="balanceVal" disabled>
         </mat-form-field>
-        <mat-form-field class="form-half-width form-separator" *ngIf="promotion.type === 2 || promotion.type === 4">
-            <input matInput placeholder="{{ 'ottoAG.promotion.maxPromoAmount' | translate }}" name="maxPromoAmount" [(ngModel)]="maxPromoAmountVal" (keyup)="currencyFormat($event, 'maxPromoAmount')" required>
-            <mat-error *ngIf="submitted && form.maxPromoAmount.errors" class="invalid-feedback">
+        <mat-form-field class="form-half-width form-separator">
+            <input matInput placeholder="{{ 'ottoAG.promotion.maxPromoAmount' | translate }}" name="maxPromoAmount" [(ngModel)]="maxPromoAmountVal" (keyup)="currencyFormat($event, 'maxPromoAmount')" [disabled]="promotion.type === 2 || promotion.type === 4">
+            <!-- <mat-error *ngIf="submitted && form.maxPromoAmount.errors" class="invalid-feedback">
                 <div *ngIf="form.maxPromoAmount.errors.required"> {{form.maxPromoAmount.errors.message}}</div>
-            </mat-error>
+            </mat-error> -->
         </mat-form-field>
-        <mat-form-field class="form-half-width" *ngIf="promotion.type === 2 || promotion.type === 4">
-            <input matInput placeholder="{{ 'ottoAG.promotion.minTransAmount' | translate }}" name="minTransAmount" [(ngModel)]="minTransAmountVal" (keyup)="currencyFormat($event, 'minTransAmount')" required>
-            <mat-error *ngIf="submitted && form.minTransAmount.errors" class="invalid-feedback">
+        <mat-form-field class="form-half-width">
+            <input matInput placeholder="{{ 'ottoAG.promotion.minTransAmount' | translate }}" name="minTransAmount" [(ngModel)]="minTransAmountVal" (keyup)="currencyFormat($event, 'minTransAmount')">
+            <!-- <mat-error *ngIf="submitted && form.minTransAmount.errors" class="invalid-feedback">
                 <div *ngIf="form.minTransAmount.errors.required"> {{form.minTransAmount.errors.message}}</div>
-            </mat-error>
+            </mat-error> -->
         </mat-form-field>
         <mat-form-field class="form-half-width form-separator">
             <input matInput placeholder="{{ 'ottoAG.promotion.applyToMemberTypeId' | translate }}" aria-label="Member Type" [matAutocomplete]="auto" [formControl]="billSubsCtrl" required>

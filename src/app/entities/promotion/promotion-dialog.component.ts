@@ -53,8 +53,8 @@ export class PromotionDialogComponent implements OnInit {
     valueVal = '0';
     budgetVal = '0';
     balanceVal = '0';
-    maxPromoAmountVal = '0';
-    minTransAmountVal = '0';
+    maxPromoAmountVal = '';
+    minTransAmountVal = '';
     mode = 'Add';
     submitted = false;
 
@@ -268,6 +268,11 @@ export class PromotionDialogComponent implements OnInit {
             this.billTypeCtrl.disable();
             this.billCompanyCtrl.disable();
         }
+
+        if (this.promotion.type === 1 || this.promotion.type === 3) {
+            this.maxPromoAmountVal = '';
+            this.promotion.maxPromoAmount = null;
+        }
     }
 
     dateFormatter(params): string {
@@ -295,8 +300,8 @@ export class PromotionDialogComponent implements OnInit {
             value: this.promotion.value,
             budget: this.promotion.budget,
             balance: this.promotion.balance,
-            maxPromoAmount: this.promotion.maxPromoAmount,
-            minTransAmount: this.promotion.minTransAmount,
+            maxPromoAmount: (this.promotion.maxPromoAmount === 0 ? null : this.promotion.maxPromoAmount),
+            minTransAmount: (this.promotion.minTransAmount === 0 ? null : this.promotion.minTransAmount),
             applyTo: this.promotion.applyTo,
             applyToTypeId: (this.promotion.applyTo === 1 ? this.billTypeCtrl.value.id : null),
             applyToCompanyId: (this.promotion.applyTo === 2 ? this.billCompanyCtrl.value.id : null),

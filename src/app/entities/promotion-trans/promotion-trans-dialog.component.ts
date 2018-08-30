@@ -65,7 +65,7 @@ export class PromotionTransDialogComponent implements OnInit {
             transTypeId: ['', [CommonValidatorDirective.required]],
             promotionId: ['', [CommonValidatorDirective.required]],
             transDate: ['', [CommonValidatorDirective.required]],
-            rrn: ['', [CommonValidatorDirective.required]],
+            // rrn: ['', [CommonValidatorDirective.required]],
             credit: ['', [CommonValidatorDirective.required]],
             debit: ['', [CommonValidatorDirective.required]],
             balance: ['', [CommonValidatorDirective.required]]
