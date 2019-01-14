@@ -5,6 +5,7 @@ export const GRID_THEME = 'ag-theme-balham';
 
 // develop
 export const SERVER = 'http://localhost:8080/';
+// export const SERVER = 'https://stock-system-01.herokuapp.com/';
 
 // deploy build --prod
 // export const SERVER = '/ottoagbe/';

@@ -1,0 +1,135 @@
+<h1 mat-dialog-title translate="ddabadi.registration.detail.title" [translateParams]="data">
+    <!-- {{data.action}} {{data.entity}} -->
+</h1>
+<form name="outletGroupForm" (ngSubmit)="f.form.valid && onSubmit()" #f="ngForm" novalidate> 
+<mat-dialog-content> 
+    <mat-form-field class="container-full-width" style="margin-left: 70%; margin-right: 3%; width: 27%">
+        <input matInput placeholder="{{ 'ddabadi.registration.registrationNum' | translate }}" 
+                [(ngModel)]="registration.registrationNum" 
+                name ="registrationNum"
+                readonly
+                maxlength="50">
+    </mat-form-field> 
+
+    <mat-form-field class="container-full-width" style="margin-right: 3%; width: 67%">
+        <input matInput placeholder="{{ 'ddabadi.registration.student.name' | translate }}" 
+                [(ngModel)]="registration.student.name" cdkFocusInitial 
+                name ="nm" 
+                required maxlength="50">
+        <mat-error *ngIf="submitted && form.name.errors" class="invalid-feedback">
+            <div *ngIf="form.name.errors.required"> {{form.name.errors.message}}</div>
+        </mat-error> 
+        <!--  [ngClass]="{ 'is-invalid': f.submitted && name.invalid }"  -->
+    </mat-form-field> 
+    <mat-form-field class="container-full-width" style="margin-right: 3%; width: 27%">
+        <input matInput placeholder="{{ 'ddabadi.registration.student.phone' | translate }}" 
+            [(ngModel)]="registration.student.phone"
+            name ="phone" 
+            required maxlength="50">
+    </mat-form-field> 
+    
+    <mat-form-field class="container-half-width"  style="margin-right: 3%; width: 47%">
+        <mat-select placeholder="{{ 'ddabadi.registration.classes' | translate }}"
+            [(ngModel)]="classesSelected" name="sttsClass">
+            <mat-option *ngFor="let classes of statusClasses" [value]="classes.id">
+            {{classes.name}}
+            </mat-option>
+        </mat-select>
+    </mat-form-field>
+
+    <mat-form-field class="container-full-width" style="margin-right: 3%; width: 47%">
+        <input matInput placeholder="{{ 'ddabadi.registration.student.school' | translate }}" 
+            [(ngModel)]="registration.student.school"
+            name ="school" 
+            required maxlength="50">
+        <mat-error *ngIf="submitted && form.school.errors" class="invalid-feedback">
+            <div *ngIf="form.school.errors.required"> {{form.school.errors.message}}</div>
+        </mat-error> 
+    </mat-form-field> 
+
+    <mat-form-field class="container-full-width">
+        <input matInput placeholder="{{ 'ddabadi.registration.student.address1' | translate }}" 
+            [(ngModel)]="registration.student.address1"
+            name ="address1" 
+            required maxlength="50">
+        <mat-error *ngIf="submitted && form.address1.errors" class="invalid-feedback">
+            <div *ngIf="form.address1.errors.required"> {{form.address1.errors.message}}</div>
+        </mat-error> 
+    </mat-form-field> 
+
+    <mat-form-field class="container-full-width">
+        <input matInput placeholder="{{ 'ddabadi.registration.student.address2' | translate }}" 
+            [(ngModel)]="registration.student.address2"
+            name ="address2" 
+            maxlength="50">
+    </mat-form-field> 
+   
+    <mat-form-field class="container-half-width"  style="margin-right: 3%; width: 37%">
+        <mat-select placeholder="{{ 'ddabadi.registration.typeOfCourse' | translate }}"
+            [(ngModel)]="registration.typeOfCourse" name="stts">
+            <mat-option *ngFor="let typeOfCourse of typeOfCourseList" [value]="typeOfCourse">
+            {{typeOfCourse}}
+            </mat-option>
+        </mat-select>
+    </mat-form-field>
+
+    <mat-form-field class="container-full-width"  style="margin-right: 3%; width: 27%">
+        <input matInput placeholder="{{ 'ddabadi.registration.courseDate' | translate }}" 
+        [(ngModel)]="registration.courseDate"
+        name ="courseDate"
+        required maxlength="50">
+        <mat-error *ngIf="submitted && form.courseDate.errors" class="invalid-feedback">
+            <div *ngIf="form.courseDate.errors.required"> {{form.courseDate.errors.message}}</div>
+        </mat-error> 
+    </mat-form-field> 
+    
+    <mat-form-field class="container-full-width" style="margin-right: 3%; width: 27%">
+        <input matInput placeholder="{{ 'ddabadi.registration.courseTime' | translate }}" 
+                [(ngModel)]="registration.courseTime" 
+                name ="courseTime"
+                required maxlength="50">
+        <mat-error *ngIf="submitted && form.courseTime.errors" class="invalid-feedback">
+            <div *ngIf="form.courseTime.errors.required"> {{form.courseTime.errors.message}}</div>
+        </mat-error> 
+    </mat-form-field> 
+
+
+    <!-- <mat-form-field class="container-full-width" style="margin-right: 3%; width: 47%">
+        <input matInput placeholder="{{ 'ddabadi.registration.regDate' | translate }}" 
+            [(ngModel)]="registration.regDate"
+            name ="regDate" 
+            required maxlength="50">
+    </mat-form-field>  -->
+
+    <mat-form-field class="form-half-width"  style="margin-right: 3%; width: 47%">
+        <input  matInput [matDatepicker]="picker" 
+            placeholder="{{ 'ddabadi.registration.regDate' | translate }}" 
+            (dateInput)="addEvent('start', $event)" 
+            (click)="picker.open()" 
+            [max]="dateSCtrl.value" 
+            [formControl]="dateSCtrl" readonly required>
+        <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+        <mat-datepicker #picker></mat-datepicker>
+        <mat-error *ngIf="submitted && form.dateStart.errors" class="invalid-feedback">
+            <div *ngIf="form.dateStart.errors.required"> {{form.dateStart.errors.message}}</div>
+        </mat-error>
+    </mat-form-field>
+    
+    <mat-form-field class="container-full-width" style="margin-right: 3%; width: 47%">
+        <input matInput placeholder="{{ 'ddabadi.registration.officer' | translate }}" 
+            [(ngModel)]="registration.officer" 
+            name ="officer"
+            required maxlength="50">
+        <mat-error *ngIf="submitted && form.officer.errors" class="invalid-feedback">
+            <div *ngIf="form.officer.errors.required"> {{form.officer.errors.message}}</div>
+        </mat-error> 
+    </mat-form-field> 
+    
+    <br><br>
+</mat-dialog-content>
+<mat-dialog-actions align="end">
+    <button mat-button mat-raised-button color="primary" (click)="validate()" >{{ 'entity.action.save' | translate }}</button> 
+    <button mat-button [mat-dialog-close]="'refresh'" >Close</button>
+</mat-dialog-actions>
+
+</form>

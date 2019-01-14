@@ -15,6 +15,7 @@ import { MatSnackBar } from '@angular/material';
 import { Filter } from '../../shared/model/filter';
 import { SharedService } from '../../shared/services/shared.service';
 import { TranslateService } from '@ngx-translate/core';
+import { OutletService, Outlet } from '../outlet';
 
 @Component({
     selector: 'app-user',
@@ -43,6 +44,7 @@ export class UserComponent implements OnInit {
     curPage = 1;
     totalData = 0;
     totalRecord = TOTAL_RECORD_PER_PAGE;
+    outlets: Outlet[];
 
     gridOptions = {
         columnDefs: [
@@ -89,7 +91,8 @@ export class UserComponent implements OnInit {
                     private dialog: MatDialog,
                     public snackBar: MatSnackBar,
                     private userService: UserService,
-                    private sharedService: SharedService ) {
+                    private sharedService: SharedService,
+                    private outletService: OutletService ) {
                         translate.setDefaultLang('en');
                         translate.use('en');
                     }
@@ -175,6 +178,20 @@ export class UserComponent implements OnInit {
                 (res: HttpErrorResponse) => this.onError(res.message),
                 () => { console.log('finally'); }
         );
+
+        this.outletService.filter({
+            page: 1,
+            count: 1000,
+            filter: {
+                id : 0,
+                name : '',
+            },
+        })
+         .subscribe(
+            (res: HttpResponse<Outlet[]>) => this.onSuccessOutlet(res.body, res.headers),
+            (res: HttpErrorResponse) => this.onError(res.message),
+            () => { console.log('finally'); }
+        );
     }
 
     ngOnInit() {
@@ -208,7 +225,7 @@ export class UserComponent implements OnInit {
     openNewDialog(): void {
         const dialogRef = this.dialog.open(UserDialogComponent, {
             width: '850px',
-            data: { action: 'Add', entity: 'User' }
+            data: { action: 'Add', entity: 'User', Outlets : this.outlets }
         });
 
         dialogRef.afterClosed().subscribe(result => {
@@ -228,6 +245,13 @@ export class UserComponent implements OnInit {
         }
         this.totalData = data.totalElements;
         this.gridApi.setRowData(this.user);
+    }
+
+    private onSuccessOutlet(data, headers) {
+        if ( data.content.length < 0 ) {
+            return ;
+        }
+        this.outlets = data.content;
     }
 
     private onError(error) {

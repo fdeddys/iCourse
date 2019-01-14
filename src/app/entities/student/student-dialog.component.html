@@ -1,0 +1,70 @@
+<h1 mat-dialog-title translate="ddabadi.student.detail.title" [translateParams]="data">
+    <!-- {{data.action}} {{data.entity}} -->
+</h1>
+<form name="classesForm" (ngSubmit)="f.form.valid && onSubmit()" #f="ngForm" novalidate> 
+<mat-dialog-content> 
+
+    <mat-form-field class="container-full-width">
+        <input matInput placeholder="{{ 'ddabadi.student.name' | translate }}" 
+                [(ngModel)]="student.name" cdkFocusInitial 
+                name ="nm" 
+                required maxlength="50">
+    </mat-form-field>
+    
+    <mat-form-field class="container-full-width">
+        <input matInput placeholder="{{ 'ddabadi.student.studentCode' | translate }}" 
+                [(ngModel)]="student.studentCode" 
+                disabled="true"
+                name ="studentCode" 
+                required maxlength="50">
+    </mat-form-field>
+    <mat-form-field class="container-full-width">
+        <input matInput placeholder="{{ 'ddabadi.student.address1' | translate }}" 
+                [(ngModel)]="student.address1"  
+                name ="address1" 
+                required maxlength="150">
+    </mat-form-field>
+    <mat-form-field class="container-full-width">
+        <input matInput placeholder="{{ 'ddabadi.student.address2' | translate }}" 
+                [(ngModel)]="student.address2"  
+                name ="address2" 
+                required maxlength="150">
+    </mat-form-field>
+    <mat-form-field class="container-full-width">
+        <input matInput placeholder="{{ 'ddabadi.student.phone' | translate }}" 
+                [(ngModel)]="student.phone"  
+                name ="phone" 
+                required maxlength="150">
+    </mat-form-field>
+    <mat-form-field class="container-full-width">
+        <input matInput placeholder="{{ 'ddabadi.student.school' | translate }}" 
+                [(ngModel)]="student.school"  
+                name ="school" 
+                required maxlength="50">
+    </mat-form-field>
+    <mat-form-field class="container-half-width">
+        <mat-select placeholder="{{ 'ddabadi.student.classes' | translate }}" 
+            [(ngModel)]="student.classesIds"
+             name="classesId">
+            <mat-option *ngFor="let classes of classesList" [value]="classes.id">
+              {{classes.name}}
+            </mat-option>
+        </mat-select>
+    </mat-form-field>
+
+    <mat-form-field class="container-half-width">
+        <mat-select placeholder="{{ 'ddabadi.student.status' | translate }}" [(ngModel)]="student.status" name="stts">
+            <mat-option *ngFor="let status of statusList" [value]="status">
+              {{status}}
+            </mat-option>
+        </mat-select>
+    </mat-form-field>
+    <br>
+    
+</mat-dialog-content>
+<mat-dialog-actions align="end">
+    <button mat-button mat-raised-button color="primary" (click)="validate()" >{{ 'entity.action.save' | translate }}</button> 
+    <button mat-button [mat-dialog-close]="'refresh'" >Close</button>
+</mat-dialog-actions>
+
+</form>

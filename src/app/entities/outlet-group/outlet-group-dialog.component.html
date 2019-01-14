@@ -1,0 +1,25 @@
+<h1 mat-dialog-title translate="ddabadi.outletGroup.detail.title" [translateParams]="data">
+    <!-- {{data.action}} {{data.entity}} -->
+</h1>
+<form name="outletGroupForm" (ngSubmit)="f.form.valid && onSubmit()" #f="ngForm" novalidate> 
+<mat-dialog-content> 
+
+    <mat-form-field class="container-full-width">
+        <input matInput placeholder="{{ 'ddabadi.outletGroup.name' | translate }}" 
+                [(ngModel)]="outletGroup.name" cdkFocusInitial 
+                name ="nm" [(ngModel)]="outletGroup.name" #name="ngModel" 
+                [ngClass]="{ 'is-invalid': f.submitted && name.invalid }" 
+                required maxlength="50">
+        <mat-error *ngIf="submitted && form.name.errors" class="invalid-feedback">
+            <div *ngIf="form.name.errors.required"> {{form.name.errors.message}}</div>
+        </mat-error> 
+    </mat-form-field> 
+    <br><br>
+    
+</mat-dialog-content>
+<mat-dialog-actions align="end">
+    <button mat-button mat-raised-button color="primary" (click)="validate()" >{{ 'entity.action.save' | translate }}</button> 
+    <button mat-button [mat-dialog-close]="'refresh'" >Close</button>
+</mat-dialog-actions>
+
+</form>

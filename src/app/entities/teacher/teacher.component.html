@@ -1,0 +1,44 @@
+<mat-card>
+    <mat-card-header>
+        <mat-card-title style="align-items: center">
+            <!-- <h2 mat-dialog-title>Bill Type</h2> -->
+            <h2 mat-dialog-title translate="ddabadi.teacher.home.title"></h2>
+        </mat-card-title>
+    </mat-card-header>
+    <mat-card-content>
+        <!-- <div style="text-align: left">
+            <button mat-raised-button color="primary"  (click)="openNewDialog()" style="margin-bottom: 10px;">
+                {{ "ddabadi.teacher.home.addLabelButton" | translate }}</button>
+            <button mat-raised-button (click)="exportCSV('csv')" style="margin-bottom: 10px;">{{ "entity.action.exportCSV" | translate }}</button>
+        </div> -->
+        <div>
+            <mat-form-field class="container-half-width" >
+                <input matInput placeholder="{{ 'ddabadi.teacher.filter.name' | translate }}" [(ngModel)]="filter.name">
+            </mat-form-field> 
+            <button mat-raised-button color="primary" (click)="actionfilter()" style="margin-left: 30px; margin-right: 5px">Filter</button>
+            <button mat-raised-button color="basic"  (click)="openNewDialog()" style="margin-bottom: 10px;margin-right: 5px">
+                {{ "ddabadi.teacher.home.addLabelButton" | translate }}</button>
+            <!-- <button mat-raised-button color="primary" (click)="filterBtn()" style="margin-left: 30px">Filter</button> -->
+        </div>
+        <br>
+        <ag-grid-angular 
+        #agGrid
+            style="height: 315px;" 
+            class="{{theme}}"
+            [gridOptions]="gridOptions" 
+            (gridReady)="onGridReady($event)"
+            (rowClicked)="onRowClicked($event)"
+            >
+        </ag-grid-angular>
+        
+        <div >
+            <mat-paginator 
+                [length]="totalData"
+                [pageSize]="totalRecord"
+                [pageSizeOptions]="[totalRecord]"
+                (page)="onPaginateChange($event)">
+            </mat-paginator>
+        </div> 
+    </mat-card-content>
+</mat-card>
+    

@@ -1,40 +1,48 @@
-<h1 mat-dialog-title translate="ottoAG.user.detail.title" [translateParams]="data">
+<h1 mat-dialog-title translate="ddabadi.user.detail.title" [translateParams]="data">
     <!-- {{data.action}} - {{data.entity}} -->
     <!-- {{data.action}} {{data.entity}} -->
 </h1>
 <form name="userForm" (ngSubmit)="f.form.valid && onSubmit()" #f="ngForm" novalidate>   
 <mat-dialog-content>
 
-    <mat-form-field class="container-half-width" style="margin-right: 3%; width: 30%">
+    <mat-form-field class="container-half-width" style="margin-right: 3%; width: 25%">
             <!-- <input matInput placeholder="Name " [(ngModel)]="user.name"  cdkFocusInitial name ="namea" > -->
-            <input matInput placeholder="{{ 'ottoAG.user.name' | translate }}" [(ngModel)]="user.name" cdkFocusInitial name ="nm" #name="ngModel" 
+            <input matInput placeholder="{{ 'ddabadi.user.name' | translate }}" [(ngModel)]="user.name" cdkFocusInitial name ="nm" #name="ngModel" 
                 [ngClass]="{ 'is-invalid': f.submitted && name.invalid }" required maxlength="50"  [disabled]="data.action === 'Edit'">
             <mat-error *ngIf="submitted && form.name.errors" class="invalid-feedback">
                     <div *ngIf="form.name.errors.required"> {{form.name.errors.message}}</div>
             </mat-error> 
     </mat-form-field>
     
-    <mat-form-field class="container-half-width" style="margin-right: 3%; width: 30%">
-        <input matInput placeholder="{{ 'ottoAG.user.email' | translate }}" [(ngModel)]="user.email" cdkFocusInitial name ="emaie" #name="ngModel" 
+    <mat-form-field class="container-half-width" style="margin-right: 3%; width: 25%">
+        <input matInput placeholder="{{ 'ddabadi.user.email' | translate }}" [(ngModel)]="user.email" cdkFocusInitial name ="emaie" #name="ngModel" 
             [ngClass]="{ 'is-invalid': f.submitted && name.invalid }" required maxlength="50"  [disabled]="data.action === 'Edit'" required maxlength="50">
         <mat-error *ngIf="submitted && form.name.errors" class="invalid-feedback">
             <div *ngIf="form.email.errors.required"> {{form.email.errors.message}}</div>
         </mat-error> 
     </mat-form-field>
 
-    <mat-form-field class="container-half-width" style="margin-right: 3%; width: 30%">
-        <mat-select placeholder="{{ 'ottoAG.user.status' | translate }}" [(ngModel)]="user.status" name="sttss">
+    <mat-form-field class="container-half-width" style="margin-right: 2%; width: 15%">
+        <mat-select placeholder="{{ 'ddabadi.user.status' | translate }}" [(ngModel)]="user.status" name="sttss">
             <mat-option *ngFor="let status of statuses" [value]="status.value">
                 {{status.viewValue}}
             </mat-option>
         </mat-select>
     </mat-form-field>
         
+    <mat-form-field class="container-half-width" style="margin-right: 2%; width: 25%">
+        <mat-select placeholder="{{ 'ddabadi.user.outlet' | translate }}" [(ngModel)]="user.outletId" name="outlet">
+            <mat-option *ngFor="let outlet of outlets" [value]="outlet.id">
+                {{outlet.name}}
+            </mat-option>
+        </mat-select>
+    </mat-form-field>
+    
 
 
 
-    <mat-form-field class="container-half-width" style="margin-right: 3%; width: 30%">
-        <input matInput placeholder="{{ 'ottoAG.user.firstName' | translate }}" [(ngModel)]="user.firstName" name ="frnm" #name="ngModel" 
+    <mat-form-field class="container-half-width" style="margin-right: 3%; width: 25%">
+        <input matInput placeholder="{{ 'ddabadi.user.firstName' | translate }}" [(ngModel)]="user.firstName" name ="frnm" #name="ngModel" 
             [ngClass]="{ 'is-invalid': f.submitted && name.invalid }" 
             required maxlength="50"  >
         <mat-error *ngIf="submitted && form.firstName.errors" class="invalid-feedback">
@@ -42,8 +50,8 @@
         </mat-error> 
     </mat-form-field>
 
-    <mat-form-field class="container-half-width" style="margin-right: 3%; width: 30%">
-        <input matInput placeholder="{{ 'ottoAG.user.lastName' | translate }}" [(ngModel)]="user.lastName"  name ="lsnm" #name="ngModel" 
+    <mat-form-field class="container-half-width" style="margin-right: 3%; width: 25%">
+        <input matInput placeholder="{{ 'ddabadi.user.lastName' | translate }}" [(ngModel)]="user.lastName"  name ="lsnm" #name="ngModel" 
         [ngClass]="{ 'is-invalid': f.submitted && name.invalid }" required maxlength="50"  >
         <mat-error *ngIf="submitted && form.lastName.errors" class="invalid-feedback">
             <div *ngIf="form.lastName.errors.required"> {{form.lastName.errors.message}}</div>
@@ -53,7 +61,7 @@
     <mat-form-field class="container-half-width" style="color: red; width: 30%" *ngIf="isReset" >
         <!-- <div *ngIf="isReset"> -->
 
-            <input matInput placeholder="{{ 'ottoAG.user.passwordGenerated' | translate }}" [(ngModel)]="newpass.resetPass"  [readonly]="true"  name ="rstpass" #name="ngModel" > 
+            <input matInput placeholder="{{ 'ddabadi.user.passwordGenerated' | translate }}" [(ngModel)]="newpass.resetPass"  [readonly]="true"  name ="rstpass" #name="ngModel" > 
         <!-- </div> -->
     </mat-form-field>
     
@@ -68,7 +76,7 @@
     <br>
     <fieldset style="border: 1px #ddd solid">
         <mat-form-field class="container-half-width">
-            <mat-select placeholder="{{ 'ottoAG.user.role' | translate }}" [(ngModel)]="roleSelected" name="role">
+            <mat-select placeholder="{{ 'ddabadi.user.role' | translate }}" [(ngModel)]="roleSelected" name="role">
                 <mat-option *ngFor="let role of roleList" [value]="role">
                     {{role.name}}
                 </mat-option>
@@ -77,7 +85,7 @@
         
             <button  type="button"  mat-button mat-raised-button color="primary" 
                 [disabled]=" ( data.action !== 'Edit' || enableAddRole !== true ) "
-                (click)="addRole()" style="margin-left: 5%">{{ 'ottoAG.user.detail.addDetail' | translate }}</button>
+                (click)="addRole()" style="margin-left: 5%">{{ 'ddabadi.user.detail.addDetail' | translate }}</button>
                 <!-- [disabled]="data.action !== 'Edit' || enableAddRole === true" -->
                 <!-- {{data.action}} - {{enableAddRole}} -->
         <ag-grid-angular 

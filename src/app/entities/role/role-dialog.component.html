@@ -1,4 +1,4 @@
-<h1 mat-dialog-title translate="ottoAG.role.detail.title" [translateParams]="data">
+<h1 mat-dialog-title translate="ddabadi.role.detail.title" [translateParams]="data">
     <!-- {{data.action}} {{data.entity}} -->
 </h1>
 <form name="roleForm" (ngSubmit)="f.form.valid && onSubmit()" #f="ngForm" novalidate>
@@ -7,14 +7,14 @@
             <input matInput placeholder="Id" value="{{memberType.id}}" [disabled]="true" >
         </mat-form-field> -->
         <mat-form-field class="container-full-width">  
-            <input matInput placeholder="{{ 'ottoAG.role.name' | translate }}" [(ngModel)]="role.name" cdkFocusInitial name ="nm" [(ngModel)]="role.name" #name="ngModel" [ngClass]="{ 'is-invalid': f.submitted && name.invalid }" required maxlength="50" [disabled]="data.action === 'Edit'">
+            <input matInput placeholder="{{ 'ddabadi.role.name' | translate }}" [(ngModel)]="role.name" cdkFocusInitial name ="nm" [(ngModel)]="role.name" #name="ngModel" [ngClass]="{ 'is-invalid': f.submitted && name.invalid }" required maxlength="50" [disabled]="data.action === 'Edit'">
             <mat-error *ngIf="submitted && form.name.errors" class="invalid-feedback">
                     <div *ngIf="form.name.errors.required"> {{form.name.errors.message}}</div>
             </mat-error> 
 
         </mat-form-field>
         <mat-form-field class="container-full-width"> 
-            <input matInput placeholder="{{ 'ottoAG.role.description' | translate }}" [(ngModel)]="role.description"  name ="descr" [(ngModel)]="role.description" #description="ngModel" [ngClass]="{ 'is-invalid': f.submitted && description.invalid }" required maxlength="255">
+            <input matInput placeholder="{{ 'ddabadi.role.description' | translate }}" [(ngModel)]="role.description"  name ="descr" [(ngModel)]="role.description" #description="ngModel" [ngClass]="{ 'is-invalid': f.submitted && description.invalid }" required maxlength="255">
             <mat-error *ngIf="submitted && form.description.errors" class="invalid-feedback">
                     <div *ngIf="form.description.errors.required"> {{form.description.errors.message}}</div> 
             </mat-error>  

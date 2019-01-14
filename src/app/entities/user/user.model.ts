@@ -1,4 +1,5 @@
 import { BaseEntity } from './../../shared/model/base-entity';
+import { Outlet } from '../outlet';
 
 export class User implements BaseEntity {
     constructor(
@@ -12,6 +13,8 @@ export class User implements BaseEntity {
         public errMsg?: string,
         public firstName?: string,
         public lastName?: string,
+        public outlet?: Outlet,
+        public outletId?: string,
         // public rememberToken?: string,
     ) {
     }

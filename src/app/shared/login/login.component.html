@@ -35,58 +35,113 @@
 <!--  -->
  
 <mat-grid-list cols="3">
-    <mat-grid-tile></mat-grid-tile>
-    <br> <br>
-    <!-- Writing markup for login starts -->
-    <mat-grid-tile class='login-element'>
-        <div class="login-container">
- 
-            <!-- Template Header starts -->
-           
-            <div class="login-box-header">
-                <img src="assets/images/logo_ottopay_color_v1.0.png" style="height: 100px;">
-            </div>
-            <!-- Template Header ends -->
- 
-            <!-- Template Body starts -->
-            <div class="login-box-body">
- 
-                <!-- Markup for getting Username starts -->
-                <mat-grid-list cols="9" rowHeight="75px">
-                    <mat-grid-tile [rowspan]="1" class="login-icon">
-                        <mat-icon>lock</mat-icon>
-                    </mat-grid-tile>
-                    <mat-grid-tile [colspan]="7">
-                        <mat-form-field class="justifier">
-                            <input matInput placeholder="Username" text="text" [(ngModel)]="username" (keyup.enter)="login()" required>
+        <mat-grid-tile></mat-grid-tile>
+        <br> <br>
+        <!-- Writing markup for login starts -->
+        <mat-grid-tile class='login-element'>
+            <div class="login-container">
+     
+                <!-- Template Header starts -->
+               
+                <div class="login-box-header">
+                    <img src="assets/images/angular.png" style="height: 100px;">
+                </div>
+                <!-- Template Header ends -->
+                <br>
+                
+                <!-- Template Body starts -->
+                <div class="login-box-body">
+                    <div class="example-container">
+                        <mat-form-field>
+                          <input matInput 
+                                placeholder="Username" 
+                                text="text" 
+                                [(ngModel)]="username" 
+                                (keyup.enter)="login()" 
+                                required>
                         </mat-form-field>
-                    </mat-grid-tile>
-                </mat-grid-list>
-                <!-- Markup for getting Username ends -->
- 
-                <!-- Markup for getting Password starts -->
-                <mat-grid-list cols="9" rowHeight="75px">
-                    <mat-grid-tile [rowspan]="1"  class="login-icon">
-                        <mat-icon>remove_red_eye</mat-icon>
-                    </mat-grid-tile>
-                    <mat-grid-tile [colspan]="7">
-                        <mat-form-field class="justifier">
-                            <input matInput placeholder="Password" text="password" [(ngModel)]="password" type="password" (keyup.enter)="login()" required>
+                    </div>         
+                    <div class="example-container">
+                        <mat-form-field>
+                        <input matInput placeholder="Password" 
+                                text="password" 
+                                [(ngModel)]="password" 
+                                type="password" 
+                                (keyup.enter)="login()" 
+                                required>
                         </mat-form-field>
-                    </mat-grid-tile>
-                </mat-grid-list>
-                <!-- Markup for getting Password ends -->
- 
-                <button mat-raised-button class="login-button" (click)="login()" color="primary"> 
-                    <mat-icon>input</mat-icon> Login
-                </button>
- 
+                    </div>                      
+                    <!-- <table>
+                        <th style="width:100px" ></th>
+                        <th style="width:25px"></th>
+                        <th style="width:300px"></th>
+                        <tr>
+                            <td>
+                                <mat-icon>lock</mat-icon>
+                            </td>
+                            <td></td>
+                            <td>
+                                <input matInput placeholder="Username" text="text" [(ngModel)]="username" (keyup.enter)="login()" required>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <mat-icon>remove_red_eye</mat-icon>
+                            </td>
+                            <td></td>
+                            <td>
+                                <input matInput placeholder="Password" text="password" [(ngModel)]="password" type="password" (keyup.enter)="login()" required>
+                            </td>
+                        </tr>    
+                    </table> -->
+
+                    <!-- Markup for getting Username starts -->
+                    <!-- <mat-grid-list cols="9" rowHeight="75px">
+                        <mat-grid-tile [rowspan]="1" class="login-icon">
+                            <mat-icon>lock</mat-icon>
+                        </mat-grid-tile>
+                        <mat-grid-tile [colspan]="7">
+                            <mat-form-field class="justifier">
+                                <input matInput placeholder="Username" text="text" [(ngModel)]="username" (keyup.enter)="login()" required>
+                            </mat-form-field>
+                        </mat-grid-tile>
+                    </mat-grid-list> -->
+                    <!-- Markup for getting Username ends -->
+     
+                    <!-- Markup for getting Password starts -->
+                    <!-- <mat-grid-list cols="9" rowHeight="75px">
+                        <mat-grid-tile [rowspan]="1"  class="login-icon">
+                            <mat-icon>remove_red_eye</mat-icon>
+                        </mat-grid-tile>
+                        <mat-grid-tile [colspan]="7">
+                            <mat-form-field class="justifier">
+                                <input matInput placeholder="Password" text="password" [(ngModel)]="password" type="password" (keyup.enter)="login()" required>
+                            </mat-form-field>
+                        </mat-grid-tile>
+                    </mat-grid-list> -->
+                    <!-- Markup for getting Password ends -->
+                    <br>
+                    
+                    <!-- <button mat-raised-button class="login-button" (click)="login()" color="primary"> 
+                        <mat-icon>input</mat-icon> Login
+                    </button> -->
+                    <div class="example-container">
+
+                        <button type="button" class="btn btn-primary" (click)="login()" >
+                            <!-- <img src="assets/open-iconic/svg/check.svg" alt="icon name">  -->
+                            Login
+                            <span class="oi oi-lock-unlocked"></span>  
+                            </button>
+                    </div>
+                    <br>
+                        <br>
+                        <br>
+
+                </div>
+                <!-- Template Body ends -->
             </div>
-            <!-- Template Body ends -->
-            
-        </div>
-    </mat-grid-tile>
-    <!-- Writing markup for login ends -->
-    <mat-grid-tile></mat-grid-tile>
- 
-</mat-grid-list>
+        </mat-grid-tile>
+        <!-- Writing markup for login ends -->
+        <mat-grid-tile></mat-grid-tile>
+     
+    </mat-grid-list>

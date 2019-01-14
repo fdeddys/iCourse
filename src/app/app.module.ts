@@ -35,7 +35,7 @@ import { HttpClientModule, HttpClient } from '@angular/common/http';
 import { EntityModule } from './entities/entity.module';
 import { LayoutModule } from './layouts/layout.module';
 import { ReactiveFormsModule } from '@angular/forms';
-
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { CommonValidatorDirective } from './validators/common.validator';
 
 // AoT requires an exported function for factories
@@ -56,10 +56,12 @@ export function HttpLoaderFactory(http: HttpClient) {
         CommonValidatorDirective
     ],
     entryComponents: [
-        MatActionDeleteButtonComponent
+        MatActionDeleteButtonComponent,
+        MatActionButtonComponent,
     ],
     imports: [
         BrowserModule,
+        NgbModule.forRoot(),
         FormsModule,
         BrowserAnimationsModule,
         CustomMaterialModule,

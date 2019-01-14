@@ -13,6 +13,7 @@ import { CommonValidatorDirective } from '../../validators/common.validator';
 import { MatActionDeleteButtonComponent } from '../../shared/templates/mat-action-delete-button.component';
 import { TranslateService } from '@ngx-translate/core';
 import { MatActionButtonComponent } from '../../shared/templates/mat-action-button.component';
+import { Outlet } from '../outlet';
 
 @Component({
     selector: 'app-user-dialog',
@@ -30,6 +31,7 @@ export class UserDialogComponent implements OnInit {
     roleRegisterd: Role[];
     roleList: Role[];
     roleSelected: Role;
+    outlets: Outlet[];
     messageNoData: string = NO_DATA_GRID_MESSAGE;
     theme: String = GRID_THEME;
     cssButton = CSS_BUTTON  ;
@@ -71,15 +73,6 @@ export class UserDialogComponent implements OnInit {
             // { headerName: 'id', field: 'roleId', width: 50, pinned: 'left', editable: false },
             { headerName: 'Name', field: 'roleName', width: 200, editable: false },
             { headerName: 'Description', field: 'roleDescription', width: 200, editable: false },
-            // { headerName: 'Status', field: 'status', width: 100, editable: false },
-            // { headerName: ' ', suppressMenu: true,
-            // suppressSorting: true,
-            // width: 100,
-            // template:
-            //     `<button mat-raised-button type="button" data-action-type="removeRole"  ${this.cssButton} >
-            //     Change
-            //     </button>
-            //     ` }
             { headerName: 'Status', field: 'status', width: 150, cellRenderer: 'actionRenderer'}
         ],
             rowData: this.roleRegisterd,
@@ -200,6 +193,7 @@ export class UserDialogComponent implements OnInit {
          });
 
         this.user = {};
+        this.outlets = this.data.Outlets;
         if ( this.data.action === 'Edit' ) {
             // search
             console.log('id sending ', this.data.user);

@@ -1,0 +1,63 @@
+<h1 mat-dialog-title translate="ddabadi.outlet.detail.title" [translateParams]="data">
+    <!-- {{data.action}} {{data.entity}} -->
+</h1>
+<form name="outletForm" (ngSubmit)="f.form.valid && onSubmit()" #f="ngForm" novalidate> 
+<mat-dialog-content> 
+        <!-- <mat-form-field class="container-full-width">
+            <input matInput placeholder="Id" value="{{outlet.id}}" [disabled]="true" >
+        </mat-form-field> -->
+    <mat-form-field class="form-full-width">
+        <mat-select placeholder="{{ 'ddabadi.outlet.outletGroup' | translate }}" [(ngModel)]="outlet.groupOutletId" name="billPayType">
+            <mat-option *ngFor="let groupOutlet of outletGroupList" [value]="groupOutlet.id">
+                {{groupOutlet.name}}
+            </mat-option>
+        </mat-select> 
+        <mat-error *ngIf="submitted && form.outletGroup.errors" class="invalid-feedback">
+            <div *ngIf="form.outletGroup.errors.required"> {{form.outletGroup.errors.message}}</div>
+        </mat-error> 
+    </mat-form-field>
+
+    <mat-form-field class="container-full-width">
+        <input matInput placeholder="{{ 'ddabadi.outlet.name' | translate }}" 
+                [(ngModel)]="outlet.name" 
+                cdkFocusInitial name ="nm" 
+                
+                required maxlength="150">
+                <!-- [ngClass]="{ 'is-invalid': f.submitted && name.invalid }"  -->
+        <!-- <mat-error *ngIf="submitted && form.name.errors" class="invalid-feedback">
+                <div *ngIf="form.name.errors.required"> {{form.name.errors.message}}</div>
+        </mat-error>  -->
+    </mat-form-field> 
+
+    <mat-form-field class="container-full-width">
+        <input matInput placeholder="{{ 'ddabadi.outlet.address1' | translate }}" 
+                [(ngModel)]="outlet.address1" 
+                name ="address1" 
+                 
+                required maxlength="150">
+        <!-- <mat-error *ngIf="submitted && form.address1.errors" class="invalid-feedback">
+                <div *ngIf="form.address1.errors.required"> {{form.address1.errors.message}}</div>
+        </mat-error> 
+    [ngClass]="{ 'is-invalid': f.submitted && address1.invalid }" -->
+    </mat-form-field> 
+    
+    <mat-form-field class="container-full-width">
+        <input matInput placeholder="{{ 'ddabadi.outlet.address2' | translate }}" 
+                [(ngModel)]="outlet.address2" 
+                name ="address2" 
+                 
+                required maxlength="150">
+        <!-- <mat-error *ngIf="submitted && form.address2.errors" class="invalid-feedback">
+                [ngClass]="{ 'is-invalid': f.submitted && address2.invalid }"    
+            <div *ngIf="form.address2.errors.required"> {{form.address2.errors.message}}</div>
+        </mat-error>  -->
+    </mat-form-field> 
+    
+      <br><br>
+    
+</mat-dialog-content>
+<mat-dialog-actions align="end">
+  <button mat-button mat-raised-button  color="primary" (click)="validate()" >{{ 'entity.action.save' | translate }}</button> 
+</mat-dialog-actions>
+
+</form>

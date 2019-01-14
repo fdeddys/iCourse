@@ -1,0 +1,67 @@
+<h1 mat-dialog-title translate="ddabadi.teacher.detail.title" [translateParams]="data">
+    <!-- {{data.action}} {{data.entity}} -->
+</h1>
+<form name="classesForm" (ngSubmit)="f.form.valid && onSubmit()" #f="ngForm" novalidate> 
+<mat-dialog-content> 
+
+    <mat-form-field class="container-full-width">
+        <input matInput placeholder="{{ 'ddabadi.teacher.name' | translate }}" 
+                [(ngModel)]="teacher.name" cdkFocusInitial 
+                name ="nm" 
+                required maxlength="50">
+    </mat-form-field>
+    
+    <mat-form-field class="container-full-width">
+        <input matInput placeholder="{{ 'ddabadi.teacher.teacherCode' | translate }}" 
+                [(ngModel)]="teacher.teacherCode" 
+                disabled="true"
+                name ="teacherCode" 
+                required maxlength="50">
+    </mat-form-field>
+    <mat-form-field class="container-full-width">
+        <input matInput placeholder="{{ 'ddabadi.teacher.address1' | translate }}" 
+                [(ngModel)]="teacher.address1"  
+                name ="address1" 
+                required maxlength="150">
+    </mat-form-field>
+    <mat-form-field class="container-full-width">
+        <input matInput placeholder="{{ 'ddabadi.teacher.address2' | translate }}" 
+                [(ngModel)]="teacher.address2"  
+                name ="address2" 
+                required maxlength="150">
+    </mat-form-field>
+    <mat-form-field class="container-full-width">
+        <input matInput placeholder="{{ 'ddabadi.teacher.phone' | translate }}" 
+                [(ngModel)]="teacher.phone"  
+                name ="phone" 
+                required maxlength="150">
+    </mat-form-field>
+    <mat-form-field class="container-full-width">
+        <input matInput placeholder="{{ 'ddabadi.teacher.baseSalary' | translate }}" 
+                [(ngModel)]="teacher.baseSalary"  
+                name ="baseSalary" 
+                required maxlength="50">
+    </mat-form-field>
+    <mat-form-field class="container-full-width">
+        <input matInput placeholder="{{ 'ddabadi.teacher.allowance' | translate }}" 
+                [(ngModel)]="teacher.allowance"  
+                name ="allowance" 
+                required maxlength="50">
+    </mat-form-field>
+
+    <mat-form-field class="container-half-width">
+        <mat-select placeholder="{{ 'ddabadi.teacher.status' | translate }}" [(ngModel)]="teacher.status" name="stts">
+            <mat-option *ngFor="let status of statusList" [value]="status">
+              {{status}}
+            </mat-option>
+        </mat-select>
+    </mat-form-field>
+    <br>
+    
+</mat-dialog-content>
+<mat-dialog-actions align="end">
+    <button mat-button mat-raised-button color="primary" (click)="validate()" >{{ 'entity.action.save' | translate }}</button> 
+    <button mat-button [mat-dialog-close]="'refresh'" >Close</button>
+</mat-dialog-actions>
+
+</form>

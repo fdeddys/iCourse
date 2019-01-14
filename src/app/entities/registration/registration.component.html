@@ -1,0 +1,39 @@
+<mat-card>
+    <mat-card-header>
+        <mat-card-title style="align-items: center">
+            <!-- <h2 mat-dialog-title>Bill Type</h2> -->
+            <h2 mat-dialog-title translate="ddabadi.registration.home.title"></h2>
+        </mat-card-title>
+    </mat-card-header>
+    <mat-card-content>
+        <div>
+            <mat-form-field class="container-half-width" >
+                <input matInput placeholder="{{ 'ddabadi.registration.filter.officer' | translate }}" [(ngModel)]="filter.officer">
+            </mat-form-field> 
+            <button mat-raised-button color="primary" (click)="actionfilter()" style="margin-left: 30px; margin-right: 5px">Filter</button>
+            <button mat-raised-button color="basic"  (click)="openNewDialog()" style="margin-bottom: 10px;margin-right: 5px">
+                {{ "ddabadi.registration.home.addLabelButton" | translate }}</button>
+            <!-- <button mat-raised-button color="primary" (click)="filterBtn()" style="margin-left: 30px">Filter</button> -->
+        </div>
+        <br>
+        <ag-grid-angular 
+        #agGrid
+            style="height: 315px;" 
+            class="{{theme}}"
+            [gridOptions]="gridOptions" 
+            (gridReady)="onGridReady($event)"
+            (rowClicked)="onRowClicked($event)"
+            >
+        </ag-grid-angular>
+        
+        <div >
+            <mat-paginator 
+                [length]="totalData"
+                [pageSize]="totalRecord"
+                [pageSizeOptions]="[totalRecord]"
+                (page)="onPaginateChange($event)">
+            </mat-paginator>
+        </div> 
+    </mat-card-content>
+</mat-card>
+    

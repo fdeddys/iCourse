@@ -1,6 +1,6 @@
 {
     "global": {
-        "title": "OttoAG"
+        "title": "ddabadi"
     },
     "entity": {
         "action": {
@@ -15,7 +15,7 @@
             "resetPass": "Reset Password"
         }
     },
-    "ottoAG": {
+    "ddabadi": {
         "accessMatrix": {
             "home": {
                 "title": "Change Password"
@@ -47,10 +47,10 @@
             "insertDate": "Insert Date",
             "afterValue": "After Value"
         },
-        "billerCompany": {
+        "outletGroup": {
             "home": {
-                "title": "Bill Operator",
-                "addLabelButton": "Add Bill Operator"
+                "title": "Outlet Group",
+                "addLabelButton": "Add Outlet Group"
             },
             "filter": {
                 "name": "Name"
@@ -60,149 +60,129 @@
             },
             "name": "Name"
         },
-        "billerType": {
+        "outlet": {
             "home": {
-                "title": "Bill Type",
-                "addLabelButton": "Add Biller Type"
+                "title": "Outlet",
+                "addLabelButton": "Add Outlet"
             },
             "filter": {
-                "name": "Name",
-                "billPayType": "Type"
+                "name": "Name"
             },
             "detail": {
                 "title": "{{action}} {{entity}}"
             },
             "name": "Name",
-            "billPayType": "Bill Pay Type"
+            "outletGroup": "Outlet Group",
+            "address1": "Alamat 1",
+            "address2": "Alamat 2"
         },
-        "biller": {
+        "classes": {
+            "home": {
+                "title": "Class",
+                "addLabelButton": "Add Class"
+            },
             "filter": {
-                "member": "Member Name",
-                "startDateFrom": "Start Date From :",
-                "startDateTo": "Start Date To :",
-                "endDateFrom": "End Date From :",
-                "endDateTo": "End Date To :"
-            },
-            "description": "Description",
-            "dateStart": "Date Start",
-            "dateThru": "Date Through",
-            "memberType": "Member Type",
-            "member": "Biller",
-            "manualCode": "Set Manual Code",
-            "memberCode": "Member Code",
-            "isRequireDeposit": "Deposit",
-            "currBalance": "Current Balance",
-            "status": "status"
-        },
-        "billerDetail": {
-            "home": {
-                "title": "Biller Supplier",
-                "addLabelButton": "Add Biller Supplier"
+                "name": "Name"
             },
             "detail": {
-                "title": "{{mode}} Biller Supplier",
-                "gridTitle": "Biller Products",
-                "addDetail": "Add Biller Product",
-                "subDetail": {
-                    "title": "{{mode}} Biller Product",
-                    "addLabelButton": "{{mode}} Product"
-                }
+                "title": "{{action}} {{entity}}"
             },
-            "billerType": "Type",
-            "billerCompany": "Company",
-            "denom": "Denom",
-            "buyPrice": "Buy Price",
-            "fee": "Fee",
-            "sellPrice": "Sell Price",
-            "profit": "Profit RTSM",
-            "status": "Status",
-            "externalCode": "External Code"
+            "name": "Name",
+            "classCode":"Code",
+            "monthlyFee":"Biaya Bulanan"
         },
-        "billerPriceDetail": {
+        "room": {
             "home": {
-                "title": "Biller Subscriber",
-                "addLabelButton": "Add Biller Subscriber"
+                "title": "Room",
+                "addLabelButton": "Add Room"
+            },
+            "filter": {
+                "name": "Name"
             },
             "detail": {
-                "title": "{{mode}} Biller Subscriber",
-                "gridTitle": "Biller Subscriber Products",
-                "addDetail": "Add Biller Subscriber Product",
-                "subDetail": {
-                    "title": "{{mode}} Biller Subscriber Product",
-                    "addLabelButton": "{{mode}} Product"
-                }
+                "title": "{{action}} {{entity}}"
             },
-            "billerType": "Product Type",
-            "billerCompany": "Product Company",
-            "denom": "Denom",
-            "sellPrice": "Sell Price",
-            "profit": "Profit Subscriber",
-            "profitDistributorPks": "Profit Distributor",
-            "profitMemberPks": "Profit Member",
-            "dateStart": "Date Start",
-            "dateThru": "Date Through",
-            "status": "Status"
+            "name": "Name"
         },
-        "billerProduct": {
+        "attendance": {
             "home": {
-                "title": "Bill Product",
-                "addLabelButton": "Add Product"
+                "title": "attendance",
+                "addLabelButton": "Add attendance"
+            },
+            "filter": {
+                "name": "Name"
+            },
+            "detail": {
+                "title": "{{action}} {{entity}}",
+                "attendanceDate":"Date",
+                "attendanceTime":"Time",
+                "room":"Room",
+                "teacher":"Teacher"
+            },
+            "name": "Name"
+        },
+        "teacher": {
+            "home": {
+                "title": "Teacher",
+                "addLabelButton": "Add Teacher"
+            },
+            "filter": {
+                "name": "Name"
+            },
+            "detail": {
+                "title": "{{action}} {{entity}}"
+            },
+            "name": "Name",
+            "teacherCode":"Code",
+            "address1":"Address 1",
+            "address2":"Address 2",
+            "phone":"phone 1",
+            "baseSalary":"base Salary",
+            "allowance":"allowance"
+        },
+        "student": {
+            "home": {
+                "title": "Student",
+                "addLabelButton": "Add Student"
+            },
+            "filter": {
+                "name": "Name"
+            },
+            "detail": {
+                "title": "{{action}} {{entity}}"
+            },
+            "name": "Name",
+            "studentCode":"Code",
+            "address1":"Address 1",
+            "address2":"Address 2",
+            "phone":"phone 1",
+            "classes":"Class"
+        },
+        "registration": {
+            "home": {
+                "title": "Registration",
+                "addLabelButton": "Add "
             },
             "filter": {
                 "name": "Name",
-                "productCode": "Product Code",
-                "status": "Status"
+                "officer": "Operator"
             },
             "detail": {
-                "title": "{{mode}} Bill Product"
+                "title": "{{action}} {{entity}}"
             },
-            "billerType": "Type",
-            "billerCompany": "Company",
-            "name": "Product Name",
-            "denom": "Denom",
-            "productCode": "Code",
-            "sellPrice": "Sell Price",
-            "status": "Status",
-            "searchBy": "Biller Selection Method",
-            "searchByMember": "Biller"
-        },
-        "manualRefund": {
-            "home":{
-                "title": "Manual Refund",
-                "addLabelButton": "Add Manual Refund"
+            "student": {
+                "name": "Name",
+                "school": "School",
+                "address1": "Address",
+                "address2": "Address",
+                "phone": "Phone number"
             },
-            "detail": {
-                "title": "{{mode}} Manual Refund"
-            },
-            "biller": "Biller",
-            "transType": "Transaction Type",
-            "amount": "Amount",
-            "transDate": "Transaction Date",
-            "description": "Description"
-        },
-        "manualDeposit": {
-            "home":{
-                "title": "Manual Deposit",
-                "addLabelButton": "Add Manual Deposit"
-            },
-            "detail": {
-                "title": "{{mode}} Manual Deposit"
-            },
-            "biller": "Biller",
-            "transType": "Transaction Type",
-            "amount": "Amount",
-            "transDate": "Transaction Date",
-            "description": "Description"
-        },
-        "depositHistory": {
-            "home":{
-                "title": "Deposit History"
-            },
-            "filter": {
-                "description": "Description",
-                "dateStart": "Date Start",
-                "dateThru": "Date Thru"
-            }
+            "registrationNum": "Registration Number",
+            "officer": "Operator",
+            "typeOfCourse": "Courses Type",
+            "courseDate": "Course Day",
+            "courseTime": "Course Time",
+            "regDate": "Registration Date"
         },
         "globalSettings":{
             "home": {
@@ -221,101 +201,6 @@
             "description": "Description",
             "type": "Global Type"
         },
-        "member": {
-            "home":{
-                "title": "Member",
-                "addLabelButton": "Add Member"
-            },
-            "filter": {
-                "name": "Name",
-                "description": "Description",
-                "status": "Status"
-            },
-            "detail": {
-                "title": "{{action}} Member",
-                "addDetail": "Add Bank Account",
-                "subDetail": {
-                    "title": "{{action}} - {{entity}}",
-                    "name": "Name",
-                    "bank": "Bank",
-                    "accountNumber": "Account Number"
-                }
-            },
-            "name": "Name",
-            "description": "Description",
-            "status": "Status"
-        },
-        "memberType": {
-            "home": {
-                "title": "Member Type",
-                "addLabelButton": "Add Member Type"
-            },
-            "filter": {
-                "name": "Name",
-                "description": "Description"
-            },
-            "detail": {
-                "title": "{{action}} {{entity}}"
-            },
-            "name": "Name",
-            "description": "Description"
-        },
-        "promotion": {
-            "home": {
-                "title": "Promotion",
-                "addLabelButton": "Add Promotion"
-            },
-            "filter": {
-                "name": "Name",
-                "applyToMemberTypeId": "Bill Subscriber",
-                "applyTo": "Category",
-                "onBehalfId": "On Behalf",
-                "type": "Promotion Type"
-            },
-            "detail": {
-                "title": "{{mode}} Promotion"
-            },
-            "name": "Promotion Name",
-            "dateStart": "Date Start",
-            "dateThru": "Date Through",
-            "budget": "Budget",
-            "balance": "Balance",
-            "maxPromoAmount": "Max. Promo Amount",
-            "minTransAmount": "Min. Transaction Amount",
-            "applyTo": "Category",
-            "applyToTypeId": "Sub-Category",
-            "applyToCompanyId": "Sub-Category",
-            "applyToProductId": "Sub-Category",
-            "applyToMemberTypeId": "Bill Subscriber",
-            "onBehalfId": "On Behalf",
-            "type": "Promotion Type",
-            "value": "Value",
-            "budgetRequired": "Budget Required",
-            "status": "Status"
-        },
-        "promotionTrans": {
-            "home": {
-                "title": "Promotion Transaction",
-                "addLabelButton": "Add Promotion Transaction"
-            },
-            "filter": {
-                "startDateFrom": "Transaction Date From :",
-                "startDateTo": "Transaction Date To :",
-                "transTypeId": "Transaction Type",
-                "promotionId": "Promotion",
-                "rrn": "RRN"
-            },
-            "detail": {
-                "title": "{{mode}} Promotion Transaction"
-            },
-            "transTypeId": "Transaction Type",
-            "promotionId": "Promotion",
-            "rrn": "RRN",
-            "transDate": "Transaction Date",
-            "debit": "Debit",
-            "credit": "Credit",
-            "balance": "Balance"
-        },
         "role": {
             "home": {
                 "title": "Role",
@@ -326,70 +211,6 @@
             },
             "name": "Name",
             "description": "Description"
-        },
-        "transactionAdjust": {
-            "home": {
-                "title": "Transactions Adjustment"
-            },
-            "detail": {
-                "title": "Detail Transaction"
-            }
-        },
-        "transactionList": {
-            "home": {
-                "title": "Transactions History"
-            },
-            "filter": {
-                "startDateFrom": "Transaction Date From :",
-                "startDateTo": "Transaction Date To :",
-                "transType": "Transaction Type",
-                "product": "Product",
-                "rcInternal": "Status",
-                "requestor": "Requestor",
-                "responder": "Responder",
-                "rrnType": "RRN Type",
-                "rrnVal": "RRN",
-                "approvalCode": "Approval Code",
-                "customerId": "Customer Id"
-            },
-            "detail": {
-                "title": "Detail Transaction"
-            },
-            "requestor": "Requestor",
-            "responder": "Responder",
-            "transType": "Transaction Type",
-            "product": "Product",
-            "buyPrice": "Buy Price",
-            "fee": "Fee",
-            "profit": "Profit RTSM",
-            "sellPrice": "Sell Price",
-            "sellPriceFromTable": "Sell Price from table",
-            "promotion": "Promotion",
-            "amount": "Amount",
-            "transmission": "Transaction Date",
-            "stan": "STAN",
-            "rrn": "RRN",
-            "rrnRequestor": "RRN Requestor",
-            "rrnResponder": "RRN Responder",
-            "approvalCode": "Approval Code",
-            "rcInternal": "RC Internal",
-            "rcRequestor": "RC Requestor",
-            "rcResponder": "RC Responder",
-            "customerId": "Customer Id"
-        },
-        "transactionType": {
-            "home": {
-                "title": "Transaction Type",
-                "addLabelButton": "Add Transaction Type"
-            },
-            "filter": {
-                "name": "Name"
-            },
-            "detail": {
-                "title": "{{action}} {{entity}}"
-            },
-            "name": "Name",
-            "code": "Code"
         },
         "user": {
             "home": {
@@ -413,44 +234,8 @@
             "email": "Email",
             "status": "Status",
             "passwordGenerated": "Password Generated",
-            "role": "Role"
-        },
-        "responseCode": {
-            "home": {
-                "title": "Response Code",
-                "addLabelButton": "Add Response Code"
-            },
-            "filter": {
-                "responseCode": "Response Code",
-                "description": "Description",
-                "member": "Member",
-                "memberType": "Member Type"
-            },
-            "detail": {
-                "title": "{{action}} {{entity}}",
-                "addDetail": "Add Response Code"
-            },
-            "responseCode": "Response Code",
-            "responseCodeInternal": "Response Code Internal",
-            "description": "Description",
-            "member": "Member",
-            "memberType": "Member Type"
-        },
-        "responseCodeInternal": {
-            "home": {
-                "title": "Response Code Internal",
-                "addLabelButton": "Add Response Code Internal"
-            },
-            "filter": {
-                "responseCode": "Response Code Internal",
-                "description": "Description"
-            },
-            "detail": {
-                "title": "{{action}} {{entity}}",
-                "addDetail": "Add Response Code Internal"
-            },
-            "responseCode": "Response Code Internal",
-            "description": "Description"
+            "role": "Role",
+            "outlet": "Outlet"
         }
     }
 }

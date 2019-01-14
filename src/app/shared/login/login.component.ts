@@ -100,7 +100,11 @@ export class LoginComponent implements OnInit {
             console.log('hasil login gagal ', err);
             // alert(err.status);
             if (err.status === 501) {
-                this.snackBar.open('Error ! Account not register' , 'Close', {
+                this.snackBar.open('Error ! Account not registered' , 'Close', {
+                    duration: this.duration,
+                });
+            } else if (err.status === 403) {
+                this.snackBar.open('Error ! Invalid Setting role or menu ' , 'Close', {
                     duration: this.duration,
                 });
             } else if (err.status === 401) {
@@ -108,7 +112,7 @@ export class LoginComponent implements OnInit {
                     duration: this.duration,
                 });
             } else {
-                this.snackBar.open('Error ! System Unvailable' , 'Close', {
+                this.snackBar.open('Error ! System Unavailable' , 'Close', {
                     duration: this.duration,
                 });
             }

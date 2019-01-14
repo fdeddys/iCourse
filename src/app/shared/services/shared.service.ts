@@ -43,4 +43,12 @@ export class SharedService {
             tap(typeList => { })
         );
     }
+
+    getCourseType(req?: any): Observable<HttpResponse<string[]>> {
+        return this.http.get<string[]>(`${this.utilUrl}coursetype`, { observe: 'response'})
+        .pipe(
+            tap(typeList => { })
+        );
+    }
+
 }

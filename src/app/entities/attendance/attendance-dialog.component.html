@@ -1,0 +1,91 @@
+<h1 mat-dialog-title translate="ddabadi.attendance.detail.title" [translateParams]="data">
+    <!-- {{data.action}} {{data.entity}} -->
+</h1>
+<form name="outletGroupForm" (ngSubmit)="f.form.valid && onSubmit()" #f="ngForm" novalidate> 
+<mat-dialog-content> 
+
+    <mat-form-field class="container-full-width"  style="margin-right: 3%; width: 17%">
+        <input matInput placeholder="{{ 'ddabadi.attendance.detail.attendanceDate' | translate }}" 
+        (click)="picker.open()" 
+        [matDatepicker]="picker"
+        (dateInput)="addEvent('start', $event)" 
+        name ="attendanceDate"
+        [formControl]="dateCtrl"
+        required readonly>
+        <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+        <mat-datepicker #picker></mat-datepicker>
+        <mat-error *ngIf="submitted && form.attendanceDate.errors" class="invalid-feedback">
+            <div *ngIf="form.attendanceDate.errors.required"> {{form.attendanceDate.errors.message}}</div>
+        </mat-error> 
+    </mat-form-field> 
+    
+    <mat-form-field class="container-full-width"  style="margin-right: 3%; width: 17%">
+        <input matInput placeholder="{{ 'ddabadi.attendance.detail.attendanceTime' | translate }}" 
+        [(ngModel)]="attendance.attendanceTime"
+        name ="attendanceTime"
+        required maxlength="50">
+        <mat-error *ngIf="submitted && form.attendanceTime.errors" class="invalid-feedback">
+            <div *ngIf="form.attendanceTime.errors.required"> {{form.attendanceTime.errors.message}}</div>
+        </mat-error> 
+    </mat-form-field> 
+
+    <mat-form-field class="container-half-width"  style="margin-right: 3%; width: 27%">
+        <mat-select placeholder="{{ 'ddabadi.attendance.detail.room' | translate }}"
+            [(ngModel)]="roomSelected" name="room">
+            <mat-option *ngFor="let room of rooms" [value]="room.id">
+            {{room.name}}
+            </mat-option>
+        </mat-select>
+    </mat-form-field>
+
+    <mat-form-field class="container-half-width"  style="margin-right: 3%; width: 27%">
+        <mat-select placeholder="{{ 'ddabadi.attendance.detail.teacher' | translate }}"
+            [(ngModel)]="teacherSelected" name="teacher">
+            <mat-option *ngFor="let teacher of teachers" [value]="teacher.id">
+            {{teacher.name}}
+            </mat-option>
+        </mat-select>
+    </mat-form-field>
+    <hr>
+
+    <mat-form-field class="container-half-width"  style="margin-right: 3%; width: 57%">
+        <mat-select placeholder="{{ 'ddabadi.attendance.detail.student' | translate }}"
+            [(ngModel)]="studentSelected" name="student">
+            <mat-option *ngFor="let student of students" [value]="student.id">
+            {{student.name}}
+            </mat-option>
+        </mat-select>
+    </mat-form-field>
+    <mat-form-field class="container-full-width"  style="margin-right: 3%; width: 17%">
+        <input matInput placeholder="{{ 'ddabadi.attendance.detail.attendanceTime' | translate }}" 
+        [(ngModel)]="attendanceTime"
+        name ="attendanceTime"
+        required maxlength="50">
+        <mat-error *ngIf="submitted && form.attendanceTime.errors" class="invalid-feedback">
+            <div *ngIf="form.attendanceTime.errors.required"> {{form.attendanceTime.errors.message}}</div>
+        </mat-error> 
+    </mat-form-field> 
+    <!-- <mat-form-field class="container-full-width"  style="margin-right: 3%; width: 27%"> -->
+    <button mat-button mat-raised-button 
+        style="margin-right: 3%; width: 17%"color="primary" (click)="addDetil($event)" >{{ 'entity.action.save' | translate }}</button> 
+    <!-- type="button" -->
+        <!-- </mat-form-field>  -->
+    <br>
+    <ag-grid-angular 
+    #agGrid
+        style="height: 315px;" 
+        class="{{theme}}"
+        [gridOptions]="gridOptions" 
+        (gridReady)="onGridReady($event)"
+       
+        >
+         <!-- (rowClicked)="onRowClicked($event)" -->
+    </ag-grid-angular>
+    <br><br>
+</mat-dialog-content>
+<mat-dialog-actions align="end">
+    <button mat-button mat-raised-button color="primary" (click)="validate()" >{{ 'entity.action.save' | translate }}</button> 
+    <button mat-button [mat-dialog-close]="'refresh'" >Close</button>
+</mat-dialog-actions>
+
+</form>

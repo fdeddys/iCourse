@@ -1,15 +1,5 @@
 import { NgModule, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 
-import { BillerModule } from './biller/biller.module';
-import { MemberModule } from './member/member.module';
-import { ProductModule } from './product/product.module';
-import { BillerCompanyModule } from './biller-company/biller-company.module';
-import { BillerTypeModule } from './biller-type/biller-type.module';
-import { MemberTypeModule } from './member-type/member-type.module';
-import { GlobalSettingModule } from './global-setting/global-setting.module';
-import { BillerDetailModule } from './biller-detail/biller-detail.module';
-import { BillerPriceDetailModule } from './biller-price-detail/biller-price-detail.module';
-import { MemberBankModule } from './member-bank/member-bank.module';
 import { UserModule } from './user/user.module';
 import { RoleModule } from './role/role.module';
 import { MenuModule } from './menu/menu.module';
@@ -17,27 +7,19 @@ import { RoleMenuModule } from './role-menu/role-menu.module';
 import { RoleUserModule } from './role-user/role-user.module';
 import { AuditTrailModule } from './audit-trail/audit-trail.module';
 import { AccessMatrixModule } from './access-matrix/access-matrix.module';
-import { TransactionTypeModule } from './transaction-type/transaction-type.module';
-import { ResponseCodeModule} from './response-code/response-code.module';
-import { TransactionListModule } from './transaction-list/transaction-list.module';
-import { DepositHistoryModule } from './deposit-history/deposit-history.module';
-import { DepositModule } from './deposit/deposit.module';
-import { PromotionModule } from './promotion/promotion.module';
-import { PromotionTransModule } from './promotion-trans/promotion-trans.module';
+import { OutletGroupModule } from './outlet-group/outlet-group.module';
+import { OutletModule } from './outlet/outlet.module';
+import { ClassesModule } from './classes/classes.module';
+import { RoomModule } from './room/room.module';
+import { TeacherModule } from './teacher/teacher.module';
+import { StudentModule } from './student/student.module';
+import { RegistrationModule } from './registration/registration.module';
+import { AttendanceModule } from './attendance/attendance.module';
+
 
 
 @NgModule({
     imports: [
-        BillerModule,
-        MemberModule,
-        ProductModule,
-        BillerCompanyModule,
-        BillerTypeModule,
-        MemberTypeModule,
-        GlobalSettingModule,
-        MemberBankModule,
-        BillerDetailModule,
-        BillerPriceDetailModule,
         UserModule,
         RoleModule,
         MenuModule,
@@ -45,13 +27,14 @@ import { PromotionTransModule } from './promotion-trans/promotion-trans.module';
         RoleUserModule,
         AuditTrailModule,
         AccessMatrixModule,
-        TransactionTypeModule,
-        ResponseCodeModule,
-        TransactionListModule,
-        DepositHistoryModule,
-        DepositModule,
-        PromotionModule,
-        PromotionTransModule
+        OutletGroupModule,
+        OutletModule,
+        ClassesModule,
+        RoomModule,
+        TeacherModule,
+        StudentModule,
+        RegistrationModule,
+        AttendanceModule,
     ],
     entryComponents: [],
     providers: [],
